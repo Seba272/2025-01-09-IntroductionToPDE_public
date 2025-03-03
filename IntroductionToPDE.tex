@@ -1225,7 +1225,7 @@ where $\omega_n $ is the volume of the unit ball in $\R^n$.
 	&= - \fint_{\de B(0,\epsilon)} f(x-y) \did S(y) .
 	\end{align*}
 	We conclude that 
-	\begin{equation}
+	\begin{equation}\label{eq67c5daf9}
 		\lim_{\epsilon\to0} K_\epsilon = - f(x) .
 	\end{equation}
 	
@@ -1654,7 +1654,7 @@ The proof of Proposition~\ref{prop67bb09b8} will come after a few lemmas.
 		|\de_ju(x)| 
 		&= \left| \fint_{B(x,\theta r)} \de_ju(y) \did y \right| \\
 		&= \frac{1}{\omega_n  (\theta r)^n} \left| \int_{B(x,\theta r)} \div(ue_j)(y) \did y \right| \\
-		&= \frac{1}{\omega_n  (\theta r)^n} \left| \int_{\de B(x,\theta r)} u(y) e_j\cdot \frac{y}{|y|} \did S(y) \right| \\
+		&= \frac{1}{\omega_n  (\theta r)^n} \left| \int_{\de B(x,\theta r)} u(y) e_j\cdot \frac{y-x}{|y-x|} \did S(y) \right| \\
 		&\le \frac{1}{\omega_n  (\theta r)^n} \int_{\de B(x,\theta r)} |u(y)| \did S(y) . 
 %	\end{align*}
 	\intertext{ This shows~\eqref{eq67bb1919}.
@@ -1722,7 +1722,7 @@ The proof of Proposition~\ref{prop67bb09b8} will come after a few lemmas.
 \begin{theorem}[Analyticity]\label{thm67bb666b}
 	Harmonic functions are analytic.
 \end{theorem}
-\begin{proof}
+\begin{proof}{\color{Red} This proof contains a mistake.}
 	Let $U\subset\R^n$ open and $u\in C^\infty(U)$ a harmonic function.
 	Fix $\hat x\in U$ and set $\hat r = \frac14 \dist(\hat x,\de U)$.
 	We claim that, there exists $\epsilon\in(0,1)$ such that, if
@@ -1816,7 +1816,7 @@ C^2_b(\R^n) = \{u\in C^2(\R^n): \|u\|_{L^\infty}<\infty \} .
 
 \begin{theorem}
 	Suppose $n\ge3$ and fix $f\in C^2_c(\R^n)$.
-	The solutions $u$ of $\laplacian u=f$ in $C^2_b(\R^n)$ are exactly all functions in the family
+	The solutions $u$ of $-\laplacian u=f$ in $C^2_b(\R^n)$ are exactly all functions in the family
 	\begin{equation}
 		\left\{ x\mapsto \int_{\R^n} \Phi(x-y) f(y) \did y + c : c\in \C \right\}
 %		\qquad\forall x\in\R^n .
@@ -1831,7 +1831,8 @@ C^2_b(\R^n) = \{u\in C^2(\R^n): \|u\|_{L^\infty}<\infty \} .
 \end{theorem}
 \begin{proof}
 	We already know that the function $\tilde u(x) = \int_{\R^n} \Phi(x-y) f(y) \did y$ 
-	is of class $C^2$ and solves $\laplacian\tilde u=f$.
+	is of class $C^2$ and solves $-\laplacian\tilde u=f$,
+	see Theorem~\ref{teo67ba14f2}.
 	
 	We claim that $\tilde u\in C^2_b(\R^n)$.
 	Indeed, if $\spt(f)\subset \R^n\setminus B(x,R)$, then
@@ -1845,7 +1846,7 @@ C^2_b(\R^n) = \{u\in C^2(\R^n): \|u\|_{L^\infty}<\infty \} .
 	Therefore, $\lim_{x\to\infty}|\tilde u(x)| = 0$.
 	In particular, $\tilde u$ is bounded on $\R^n$.
 	
-	If $\laplacian u=f$ and if $u$ is bounded, then $u-\tilde u$ is bounded and $\laplacian(u-\tilde u)=0$.
+	If $-\laplacian u=f$ and if $u$ is bounded, then $u-\tilde u$ is bounded and $\laplacian(u-\tilde u)=0$.
 	By Liouville's Theorem~\ref{thm67bb782e}, $u-\tilde u$ is constant.
 \end{proof}
 
@@ -1914,8 +1915,8 @@ Comments:
 	
 	If $u\in C^2(\bar U)$, then, for every $x\in U$,
 	\begin{equation}\label{eq67bb7ef3}
-		u(x) = - \int_{\de U} u(y) \grad G(x,y) \cdot \nu_{\de U}(y) \did S(y)
-			+ \int_U \laplacian u(y) G(x,y) \did y .
+		u(x) = - \int_{\de U} u(y) \grad G(x,y) \cdot \nu_{U}(y) \did S(y)
+			- \int_U \laplacian u(y) G(x,y) \did y .
 	\end{equation}
 	In particular, if $f\in C^0(U)$, $g\in C^0(\de U)$ and $u\in C^2(\bar U)$ are such that
 	\begin{equation}\label{eq67bb7ef9}
@@ -1926,8 +1927,8 @@ Comments:
 	\end{equation}
 	then, for all $x\in U$,
 	\begin{equation}\label{eq67bb7f00}
-		u(x) = - \int_{\de U} g(y) \grad G(x,y) \cdot \nu_{\de U}(y) \did S(y)
-			+ \int_U f(y) G(x,y) \did y .
+		u(x) = - \int_{\de U} g(y) \grad G(x,y) \cdot \nu_{U}(y) \did S(y)
+			- \int_U f(y) G(x,y) \did y .
 	\end{equation}
 \end{theorem}
 \begin{proof}
@@ -1953,18 +1954,18 @@ Comments:
 			- \int_{V_\epsilon} \div_y( u(y)  \grad_y G(x,y) ) \did y \\
 		&\qquad 
 			+ \int_{V_\epsilon} u(y)  \underbrace{\laplacian_y G(x,y)}_{=0} \did y \\
-		&= \int_{\de V_\epsilon} \grad u(y) G(x,y)\cdot\nu_{V_\epsilon}(y) \did y
-			- \int_{\de V_\epsilon} u(y)  \grad_y G(x,y)\cdot\nu_{V_\epsilon}(y) \did y \\
-		&= - \int_{\de B(x,\epsilon)} \grad u(y) G(x,y) \cdot\frac{y-x}{|y-x|} \did y
-			+ \int_{\de U} \grad u(y) \underbrace{G(x,y)}_{=0} \cdot\nu_U(y) \did y \\
+		&= \int_{\de V_\epsilon} \grad u(y) G(x,y)\cdot\nu_{V_\epsilon}(y) \did S(y)
+			- \int_{\de V_\epsilon} u(y)  \grad_y G(x,y)\cdot\nu_{V_\epsilon}(y) \did S(y) \\
+		&= - \int_{\de B(x,\epsilon)} \grad u(y) G(x,y) \cdot\frac{y-x}{|y-x|} \did S(y)
+			+ \int_{\de U} \grad u(y) \underbrace{G(x,y)}_{=0} \cdot\nu_U(y) \did S(y) \\
 		&\qquad
-			- \int_{\de U} u(y) \grad_y G(x,y) \did y 
-			+ \int_{\de B(x,\epsilon)} u(y) \grad_y G(x,y)\cdot\frac{y-x}{|y-x|} \did y \\
-		&= - \int_{\de B(x,\epsilon)} \grad u(y) G(x,y) \cdot\frac{y-x}{|y-x|} \did y
-			- \int_{\de U} u(y) \grad_y G(x,y) \did y \\ 
+			- \int_{\de U} u(y) \grad_y G(x,y) \did S(y) 
+			+ \int_{\de B(x,\epsilon)} u(y) \grad_y G(x,y)\cdot\frac{y-x}{|y-x|} \did S(y) \\
+		&= - \int_{\de B(x,\epsilon)} \grad u(y) G(x,y) \cdot\frac{y-x}{|y-x|} \did S(y)
+			- \int_{\de U} u(y) \grad_y G(x,y) \did S(y) \\ 
 		&\qquad
-			+ \int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did y 
-			+ \int_{\de B(x,\epsilon)} u(y) \grad_y \phi^x(y)\cdot\frac{y-x}{|y-x|} \did y .
+			+ \int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did S(y) 
+			+ \int_{\de B(x,\epsilon)} u(y) \grad_y \phi^x(y)\cdot\frac{y-x}{|y-x|} \did S(y) .
 	\end{align*}
 	Since we have
 	\begin{align}
@@ -1975,7 +1976,9 @@ Comments:
 	\label{eq67c2ccfa}
 		&\lim_{\epsilon\to0}
 			\int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did y 
-			= u(x) ,\\
+			= -u(x) ,
+			\qquad\text{(see~\eqref{eq67c5daf9})}
+			\\
 	\label{eq67c2cd00}
 		&\lim_{\epsilon\to0}
 			\int_{\de B(x,\epsilon)} u(y) \grad_y \phi^x(y)\cdot\frac{y-x}{|y-x|} \did y 
@@ -1986,7 +1989,7 @@ Comments:
 		\int_U \laplacian u(y) G(x,y) \did y
 		&= \lim_{\epsilon\to0} \int_{B(x,\epsilon)} \laplacian u(y) G(x,y) \did y
 			+ \int_{U\setminus B(x,\epsilon)} \laplacian u(y) G(x,y) \did y \\
-		&= u(x) - \int_{\de U} u(y) \grad_y G(x,y) \did y .
+		&= - u(x) - \int_{\de U} u(y) \grad_y G(x,y) \did y .
 	\end{align*}
 	So, we have~\eqref{eq67bb7ef3}.
 \end{proof}
@@ -2008,7 +2011,7 @@ Comments:
 %	\label{eq67c2ccfa}
 		&\lim_{\epsilon\to0}
 			\int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did y 
-			= u(x) ,\\
+			= - u(x) ,\\
 %	\label{eq67c2cd00}
 		&\lim_{\epsilon\to0}
 			\int_{\de B(x,\epsilon)} u(y) \grad_y \phi^x(y)\cdot\frac{y-x}{|y-x|} \did y 
