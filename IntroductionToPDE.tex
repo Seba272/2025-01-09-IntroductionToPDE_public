@@ -1,0 +1,3134 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[a4paper,9pt]{amsart}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%For Japanese kanji and kana: but use XeLaTeX !
+%\usepackage{xeCJK}
+%\setCJKmainfont{MS Mincho} % for \rmfamily
+%\setCJKsansfont{MS Gothic} % for \sffamily
+
+\usepackage{csquotes}
+\usepackage[style=numeric,%alphabetic,%
+	useprefix,%
+	giveninits=true,%
+	hyperref,%
+	doi=false,%
+	url=false,%
+	isbn=false,%
+	backend=bibtex,%
+	maxbibnames=99%
+	]{biblatex}
+\bibliography{./BIB}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACCHETTI
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+%\usepackage[all]{xy} % For \xymatrix
+\usepackage[usenames,dvipsnames]{xcolor}
+\hypersetup{colorlinks,%
+citecolor=Black,%
+filecolor=Black,%
+linkcolor=Black,%
+urlcolor=Black}
+%\hypersetup{colorlinks,%
+%citecolor=OliveGreen,%
+%filecolor=magenta,%
+%linkcolor=RoyalBlue,%
+%urlcolor=cyan}
+%\usepackage{mparhack}	% Per correggere le note a margine, che a volte vengono dalla parte sbagliata.
+%\usepackage{todonotes} % Per le note a margine in stile Thomas Z.
+%\usepackage{comment}	% Per i commenti lunghi: \begin{comment} ... \end{comment}
+%\usepackage{marvosym}	% Per il fulmine: \Lightning
+\usepackage{enumitem}	% Per personalizzare gli elenchi
+%\usepackage{booktabs}	% Per i comandi \toprule \midrule \bottomrule , che fanno righe orrizontali nelle tabelle
+%\usepackage{array}		% Per formattare meglio le celle nelle tabelle.
+\usepackage{mathtools}	% Per \mathclap
+\mathtoolsset{showonlyrefs=true} % Per mostrare solo i numeri che servono. With Mathtools: See https://tex.stackexchange.com/questions/4728/how-do-i-number-equations-only-if-they-are-referred-to-in-the-text
+%\usepackage[pdftex]{graphicx}	% Per il frontespizio...
+%\usepackage{makeidx}	% Per fare l'indice analitico. Già in amsart, amsbook and amsproc. 
+%\makeindex
+\allowdisplaybreaks % per avere equazioni su più pagine
+%\usepackage{tikz}
+%
+%\usepackage{framed} % for the environment ``framed''. For more complicated things, use \usepackage{mdframed}.
+%\usepackage{refcheck} % Mostra i label non usati ``Unused label...'' nel log file. See https://tex.stackexchange.com/questions/209782/get-list-of-unused-labels
+\usepackage[normalem]{ulem} % for strikeout: \sout{striketouted} (preferable over 'soul')
+%\usepackage{soul} % for strikeout: \st{striketouted} (see 'ulem' package, which is preferable)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pgfplots FOR PLOTTING FUNCTIONS: 
+%\documentclass{article}
+\usepackage{pgfplots}
+%
+%\begin{document}
+%\begin{tikzpicture}[>=stealth]
+%    \begin{axis}[
+%        xmin=-4,xmax=4,
+%        ymin=-2,ymax=2,
+%        axis x line=middle,
+%        axis y line=middle,
+%        axis line style=<->,
+%        xlabel={$x$},
+%        ylabel={$y$},
+%        ]
+%        \addplot[no marks,blue,<->] expression[domain=-pi:pi,samples=100]{sin(deg(2*x))+1/2} 
+%                    node[pos=0.65,anchor=south west]{$y=\sin(2x)+\frac{1}{2}$}; 
+%    \end{axis}
+%\end{tikzpicture}
+%\end{document}
+\usepgfplotslibrary{external} % To make pictures only once.
+\tikzexternalize % activate!
+\tikzsetexternalprefix{figures/}
+% From the documentation: If a figure shall be remade, one can simply delete all or selected graphics files and regenerate them. Alternatively, one can use the command \tikzset{external/force remake} somewhere in the document to remake every following picture automatically.
+% -> there is a way to change the names of the files generated.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMANDI
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\scr}[1]{\mathscr{#1}}
+\newcommand{\frk}[1]{\mathfrak{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\cal}[1]{\mathcal{#1}}
+%
+\newcommand{\N}{\mathbb{N}}	% Numeri naturali
+\newcommand{\Z}{\mathbb{Z}}	% Numeri interi
+\newcommand{\C}{\mathbb{C}}	% Numeri complessi
+\newcommand{\R}{\mathbb{R}}	% Numeri reali
+\newcommand{\K}{\mathbb{K}}	% Campo di numeri
+\newcommand{\Id}{\mathrm{Id}}	% Mappa identità
+%\newcommand{\Span}{\mathrm{span}}	% Span
+%\newcommand{\Ker}{\mathrm{Ker}}	% Ker
+\newcommand{\dd}{\mathrm{d}}	% 'd' di derivata
+\newcommand{\did}{\,\mathrm{d}}	% 'd' in integrali
+\newcommand{\diff}{\mathrm{d}}	% 'd' di derivata
+\newcommand{\de}{\partial}		% Derivata parziale
+\newcommand{\Diff}{\mathrm{D}}
+\renewcommand{\div}{\operatorname{div}}	% div di Divergenza.
+%\newcommand{\into}{\hookrightarrow}		% (->  %)
+%\newcommand{\dto}{\dashrightarrow}
+\newcommand{\ol}[1]{\overline{#1}}	% overline breve
+%\DeclareMathOperator{\arctanh}{arctanh}
+\newcommand{\IF}{\Leftarrow}	% <=
+\newcommand{\THEN}{\Rightarrow}	% =>
+\newcommand{\IFF}{\Leftrightarrow}	% <=>
+\newcommand{\ddx}{\framebox[\width]{$\Rightarrow$} }
+\newcommand{\ssx}{\framebox[\width]{$\Leftarrow$} }
+\newcommand{\ci}{\framebox[\width]{$\subset$} }
+\newcommand{\ic}{\framebox[\width]{$\supset$} }
+\newcommand{\lebox}{\framebox[\width]{$\le$} }
+\newcommand{\gebox}{\framebox[\width]{$\ge$} }
+%\renewcommand{\Re}{\operatorname{Re}}
+%\renewcommand{\Im}{\operatorname{Im}}
+% \hel is the left-lower corner for restriction of measures.
+\newcommand{\hel}
+{
+\hskip2.5pt{\vrule height6pt width.5pt depth0pt}
+\hskip-.2pt\vbox{\hrule height.5pt width6pt depth0pt}
+\,
+}
+\newcommand{\Lin}{\mathtt{Lin}}
+\newcommand{\End}{\mathtt{End}}
+\newcommand{\Orth}{\mathtt{O}} % Orthogonal group
+\newcommand{\J}{\mathtt{J}}
+\newcommand{\ad}{\mathrm{ad}}
+\newcommand{\Sym}{\mathtt{Sym}}
+\newcommand{\jet}{\mathfrak{j}}
+\newcommand{\Jet}{\mathtt{J}}
+\newcommand{\HorDer}{\mathtt{HD}}
+\newcommand{\bbar}[1]{\overline{\overline{#1}}}
+\newcommand{\Der}{\mathtt{Der}}
+\newcommand{\Aut}{\mathtt{Aut}}
+\newcommand{\Poly}{\scr P}
+\newcommand{\UniEnvAlg}{\scr U}
+\newcommand{\Tensor}{\scr T}
+\newcommand{\HH}{\bb H}
+\newcommand{\Ad}{\operatorname{Ad}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\Haus}{\scr H}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\spt}{\mathrm{spt}}
+\newcommand{\loc}{\mathrm{loc}}
+\newcommand{\laplacian}{\triangle}
+\newcommand{\grad}{\nabla}
+\newcommand{\trace}{\mathrm{trace}}
+
+\newcommand{\TODO}{{\bf\color{Red}TODO}}
+\newcommand{\angryface}{}
+
+\newcommand{\lcontr}{\lrcorner}
+\newcommand{\rcontr}{\raisebox{\depth}{\scalebox{1}[-1]{$\lrcorner$}}} % serve graphicx
+
+% Per \one, la mappa che vale 1
+\usepackage{dsfont}
+\newcommand{\one}{{\mathds 1\!}}
+
+% Mean integral
+\def\Xint#1{\mathchoice
+      {\XXint\displaystyle\textstyle{#1}}%
+      {\XXint\textstyle\scriptstyle{#1}}%
+      {\XXint\scriptstyle\scriptscriptstyle{#1}}%
+      {\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+      \!\int}
+   \def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+        \vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+%   \def\ddashint{\Xint=}
+%   \def\dashint{\Xint-}
+   \def\fint{\Xint-}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TEOREMI
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}[proposition]{Theorem}
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{corollary}[proposition]{Corollary}
+\newtheorem{thm}{Theorem}[section]
+\renewcommand{\thethm}{\Alph{thm}}
+%\newtheorem{question}{Question}
+
+\theoremstyle{definition}
+\newtheorem{definition}[proposition]{Definition}
+\newtheorem{remark}[proposition]{Remark}
+%\declaretheorem[name=Remark,sibling=proposition,qed={\lower-0.3ex\hbox{$\blacklozenge$}}]{remark} % but with \usepackage{thmtools}
+\newtheorem{exercise}{Exercise}[section]
+
+\theoremstyle{remark}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Subsectioning for notes:
+\renewcommand{\thesubsection}{{\bf\S\arabic{section}.\arabic{subsection}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title[Introduction to PDE]{Introduction to\\Partial Differential Equations\\--Lecture Notes--}
+\author[Nicolussi Golo]{Sebastiano Nicolussi Golo}
+%\date{\today}
+\date{\today. \IfFileExists{./.gittex}{\input{./.gittex}}{}}
+
+\begin{document}
+\maketitle
+
+\setcounter{tocdepth}{2}
+\phantomsection
+\addcontentsline{toc}{section}{Contents}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Introduction}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Bibliography}
+I will closely follow \cite{MR2597943}.
+Other references are:
+\begin{itemize}
+\item \fullcite{MR2597943}
+\item \fullcite{MR1357411}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\setcounter{part}{-1}
+\part{Preliminaries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Coarea formulas}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Intro to surface measures}
+If $\Sigma\subset\R^n$ is an $m$-dimensional immersed $C^1$-submanifold,
+we denote by $S^m$ the $m$-dimensional surface measure on $\Sigma$.
+We can describe $S^m$ as the Hausdorff $m$-dimensional measure, or, being the submanifold smooth, as an integral of $m$-differential forms on $\Sigma$.
+We can also obtain several formulas for its explicit use.
+However, we will use specific set of properties of these measures, and we do not need further details.
+
+First, we need the symmetries of $S^m$: it is translation invariant, rotation invariant and scales properly under dilations. 
+More precisely, if $\Sigma\subset\R^m$ is an immersed submanifold and if $O\in\Orth(n)$ is an orthogonal matrix, $v\in\R^n$ and $r>0$, then
+\begin{equation}\label{eq67a718d1}
+	\int_{r(O\Sigma + v)} u(x) \dd S^m(x) 
+	= r^m \int_{\Sigma} u(r(Ox+v)) \dd S^m(x) ,
+	\qquad\forall u\in C^0(\R^n) .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Coarea formula}
+\begin{theorem}[Coarea Formula:{\cite[Theorem 2.93\& Remark 2.94]{MR1857292}}]\label{teo67a715db}
+	Let $\Omega\subset\R^n$ be an open set and $F:\Omega\to\R^k$ a $C^1$-submersion, that is, a $C^1$-smooth map with surjective differential at each point.
+	As a consequence, we have that $F(\Omega)$ is open in $\R^k$ and that, for every $y\in F(\Omega)$, the set $F^{-1}(y)\subset\Omega$ is an immersed submanifold of dimension $n-k$.
+	
+	Then, for every $u\in L^1(\Omega)$ with compact support,
+	\begin{equation}\label{eq67a715e0}
+		\int_\Omega u(x) J(DF(x)) \did x 
+		= \int_{F(\Omega)} \int_{F^{-1}(y)} u(x) \dd S^{n-k}(x) \dd y ,
+	\end{equation}
+	where
+	\begin{equation}\label{eq67a71bad}
+		J(DF(x)) = \sqrt{ \det(DF(x)\times DF(x)^T) }
+		= \sqrt{\sum_{B\in\{k\times k\text{ minors of }DF(x)\}} \det(B)^2 }  .
+	\end{equation}
+\end{theorem}
+
+%If $k=1$, that is, if $F:\R^n\to\R$ is of class $C^1$, then
+%\[
+%J(DF(x)) = |\grad F(x)| .
+%\]
+\begin{exercise}
+	Compute $J(DF)$ as in~\eqref{eq67a71bad} when $k=1$ and when $k=n-1$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Consequences of the coarea formula: spherical integrals}
+
+\begin{proposition}
+	If $\Omega\subset\R^n$ is open, then 
+	\begin{equation}\label{eq67a71e03}
+		\int_{\Omega} u(x) \did x 
+		= \int_0^\infty \int_{\de B(0,r)\cap \Omega} u(x) \did S^{n-1}(x) \did r 
+		\qquad \forall u\in C^0(\Omega).
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	Consider the function $F:\R^n\setminus\{0\}\to\R$, $F(x) = |x|$.
+	Then $J(DF(x)) = |\grad F(x)| = 1$ for all $x\in \R^n\setminus\{0\}$.
+	So, Coarea Formula~\eqref{eq67a715e0} gives immediately the identity~\eqref{eq67a71e03}.
+%	The second identity in~\eqref{eq67a71e03} is a consequence of~\eqref{eq67a718d1}.
+\end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Consequences of the coarea formula: on the sphere}
+From Theorem~\ref{teo67a715db}, we can deduce seemingly more general results.
+For instance, a coarea formula on the sphere:
+
+\begin{proposition}\label{prop67a71b34}
+	Let $\bb S^{n-1}$ the unit sphere in $\R^n$ centered at $0$.
+	If $f\in C^1(\R^n)$, then, for every $u\in C^0(\bb S^{n-1})$,
+	\begin{equation}
+		\int_{\bb S^{n-1}} u(x) |\grad f(x)-(\grad f(x)\cdot x)x| \did S^{n-1}(x) 
+		= \int_\R \int_{\bb S^{n-1}\cap \{f=z\}} u(x) \did S^{n-2}(x) \did z .
+	\end{equation}
+	For example, if $f(x) = x_n$, then, for every $u\in C^0(\bb S^{n-1})$,
+	\begin{equation}\label{eq67a72eb2}
+		\int_{\bb S^{n-1}} u(x) \sqrt{1-x_n^2} \did S^{n-1}(x) 
+		= \int_{-1}^1 \int_{\bb S^{n-1}\cap \{f=z\}} u(x) \did S^{n-2}(x) \did z .
+	\end{equation}
+	Moreover, we have 
+	\begin{equation}\label{eq67a72eb7}
+		\int_{\bb S^{n-1}} u(x) \did S^{n-1}(x) 
+		= \int_{-1}^1 \int_{\bb S^{n-1}\cap \{x_3=z\}} u(x) \did S^{n-2}(x) \frac1{\sqrt{1-z^2}}\did z ,
+	\end{equation}
+	and
+	\begin{equation}\label{eq67a735b3}
+		\int_{\de B(0,r)} u(x) \did S^{n-1}(x) 
+		= \int_{-r}^r \int_{\de B(0,r)\cap \{x_3=z\}} u(x) \did S^{n-2}(x) \frac1{\sqrt{r^2-z^2}}\did z .
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	Fix $u\in C^0(\bb S^{n-1})$ and $\epsilon>0$.
+	Define $\Omega_\epsilon = B(0,1+\epsilon)\setminus B(0,1)$ and 
+	$\tilde u\in C^0(\Omega_\epsilon)$ by $\tilde u(x) = u(x/|x|)$.
+%	Notice that $J(Df(x)) = |\grad f(x)|$.
+%	\begin{align*}
+%		\int_{\Omega_\epsilon} \tilde u(x) |\grad f(x)| \did x 
+%		&\overset{\eqref{eq67a71e03}}= \int_1^{1+\epsilon} \int_{\de B(0,r)} u(x/r) |\grad f(x)| \dd S^{n-1}(x) \\
+%		&\overset{\eqref{eq67a718d1}}= \int_1^{1+\epsilon} r^{n-1} \int_{\bb S^{n-1}} u(x) |\grad f(rx)| \dd S^{n-1}(x) \dd r\\
+%	\end{align*}
+	
+	Define $F:\R^n\setminus\{0\}\to \R^2$ by $F(x) = (|x|,f(x))$.
+	Notice that
+	\begin{align*}
+		DF(x) &= \begin{pmatrix} \cdots & x/|x| & \cdots \\ \cdots & \grad f(x) & \cdots \end{pmatrix} , \\
+		DF(x)DF(x)^T &= \begin{pmatrix}1&\frac{x}{|x|}\cdot\grad f(x) \\ \frac{x}{|x|}\cdot\grad f(x) & \grad f(x) \cdot \grad f(x)\end{pmatrix} , \\
+		\det( DF(x)DF(x)^T ) &= |\grad f(x)|^2 - \left(\frac{x}{|x|}\cdot\grad f(x)\right)^2 \\
+			&= \left| \grad f(x) - \left(\frac{x}{|x|}\cdot\grad f(x) \right) \frac{x}{|x|} \right|^2 .
+	\end{align*}
+	On the one hand, using the coarea formula for $F$, we have
+	\begin{align*}
+	\int_{\Omega_\epsilon} \tilde u(x) J(DF(x)) \did x 
+	&\overset{\eqref{eq67a715e0}}= \int_{F(\Omega_\epsilon)} \int_{\{F(x)=y\}} \tilde u(x) \did S^{n-2}(x) \did y \\
+	&= \int_1^{1+\epsilon} \int_{f(\de B(0,r))} \int_{\{|x| = r, f(x) = z\}} u(x/r) \did S^{n-2}(x) \did z \did r .
+	\end{align*}
+	On the other hand, using the coarea formula for spheres, that is~\eqref{eq67a71e03},
+	\begin{align*}
+	\int_{\Omega_\epsilon} \tilde u(x) J(DF(x)) \did x 
+	&\overset{\eqref{eq67a71e03}}= \int_1^{1+\epsilon} \int_{\de B(0,r)} \tilde u(x) J(DF(x)) \did S^{n-1}(x) \did r \\
+	&\overset{\eqref{eq67a718d1}}= \int_1^{1+\epsilon} r^{n-1} \int_{\de B(0,1)}  u(x) J(DF(rx)) \did S^{n-1}(x) \did r
+	\end{align*}
+	Therefore,
+	\begin{align*}
+	&\hspace{-1cm}\int_{\bb S^{n-1}} u(x) |\grad f(x)-(\grad f(x)\cdot x)x| \did S^{n-1}(x) \\
+	&= \lim_{\epsilon\to0} \fint_1^{1+\epsilon} r^{n-1} \int_{\de B(0,1)}  u(x) J(DF(rx)) \did S^{n-1}(x) \did r \\
+	&= \lim_{\epsilon\to0} \fint_1^{1+\epsilon} \int_{f(\de B(0,r))} \int_{\{|x| = r, f(x) = z\}} u(x/r) \did S^{n-2}(x) \did z \did r  \\
+	&= \int_\R \int_{\bb S^{n-1}\cap \{f=z\}} u(x) \did S^{n-2}(x) \did z .
+	\end{align*}
+	
+	Formula~\eqref{eq67a72eb2} follows from a direct computation.
+	
+	The subsequent formula~\eqref{eq67a72eb7} is instead the result of a limit.
+	For $u\in C^0(\bb S^{n-1})$, set 
+	\[
+	u_\epsilon(x) := \frac{\min\{ 1 , (1-x_n^2)/\epsilon \}}{\sqrt{1-x_3^2}} \cdot u(x) .
+	\]
+	Then $u_\epsilon(x) \to \frac{u(x)}{\sqrt{1-x_3^2}}$ for all $x$ with $x_n\neq0$.
+	Use then the Dominated Convergence Theorem~\ref{thm6798ec42}.
+	\footnote{This part of the proof needs some further care...} 
+	
+	If we plug $u_\epsilon$ into~\eqref{eq67a72eb2}, then, on the one hand, we have
+	\begin{align*}
+	\int_{\bb S^{n-1}} u_\epsilon(x) \sqrt{1-x_n^2} \did S^{n-1}(x) 
+	&= \int_{\bb S^{n-1}\cap \{1-x_n^2\ge\epsilon\} } u(x) \did S^{n-1}(x) 
+		+ \int_{\bb S^{n-1}\cap \{1-x_n^2<\epsilon\} } u(x) \frac{1-x_n^2}{\epsilon} \did S^{n-1}(x) .
+	\end{align*}
+	If we take the limit $\epsilon\to0$ we obtain
+	\[
+	\lim_{\epsilon\to 0} \int_{\bb S^{n-1}\cap \{1-x_n^2\ge\epsilon\} } u(x) \did S^{n-1}(x)
+	= \int_{\bb S^{n-1}} u(x) \did S^{n-1}(x)
+	\]
+	and
+	\[
+	\lim_{\epsilon\to 0} \int_{\bb S^{n-1}\cap \{1-x_n^2<\epsilon\} } u(x) \frac{1-x_n^2}{\epsilon} \did S^{n-1}(x)
+	= 0 .
+	\]
+	
+	On the other hand, we have
+	\begin{align*}
+		&\hspace{-1cm}\int_{-1}^1 \int_{\bb S^{n-1}\cap \{x_3=z\}} u_\epsilon(x) \did S^{n-2}(x) \did z \\
+		&= \int_{-\sqrt{1-\epsilon}}^{\sqrt{1-\epsilon}} \int_{\bb S^{n-1}\cap \{x_3=z\}} \frac{u(x)}{\sqrt{1-x_n^2}} \did S^{n-2}(x) \did z\\
+		&\qquad+ \int_{[-1,1]\setminus[-\sqrt{1-\epsilon},\sqrt{1-\epsilon}]} \int_{\bb S^{n-1}\cap \{x_3=z\}} u(x) \frac{\sqrt{1-z^2}}{\epsilon} \did S^{n-2}(x) \did z 
+	\end{align*}
+%		\begin{equation}\label{eq67a72eb2}
+%		\int_{\bb S^{n-1}} u(x) \sqrt{1-x_n^2} \did S^{n-1}(x) 
+%		= \int_{-1}^1 \int_{\bb S^{n-1}\cap \{f=z\}} u(x) \did S^{n-2}(x) \did z .
+%	\end{equation}
+	Taking the limit $\epsilon\to0$, we obtain the right-hand side of~\eqref{eq67a72eb7}.
+	
+	The last formula~\eqref{eq67a735b3} follows from the previous~\eqref{eq67a72eb7}:
+	take $\tilde u(x):= u(rx)$. Then
+	\begin{align*}
+	\int_{r\de B(0,r)} u(x) \did S^{n-1}(x)
+	&= r^{n-1}  \int_{\de B(0,1)} u(rx) \did S^{n-1}(x) \\
+	&\overset{\eqref{eq67a72eb7}}= r^{n-1} \int_{-1}^1 \int_{\bb S^{n-1}\cap \{x_3=z\}} u(rx) \did S^{n-2}(x) \frac1{\sqrt{1-z^2}}\did z \\
+	&\overset{\bar z=rz}= r^{n-1} \int_{-r}^r \int_{\bb S^{n-1}\cap \{x_3=\bar z/r\}} u(rx) \did S^{n-2}(x) \frac1{\sqrt{1-(\bar z/r)^2}} \frac{\did \bar z}{r} \\
+	&\overset{\bar x = rx}= \int_{-r}^r \int_{r\bb S^{n-1}\cap \{\bar x_3=\bar z\}} u(\bar x) \did S^{n-2}(\bar x) \frac{r}{\sqrt{r^2-\bar z^2}} \frac{\did \bar z}{r} \\
+	&= \int_{-r}^r \int_{r\bb S^{n-1}\cap \{\bar x_3=\bar z\}} u(\bar x) \did S^{n-2}(\bar x) \frac{1}{\sqrt{r^2-\bar z^2}} \did \bar z .
+	\end{align*}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Change of variables}
+
+\begin{theorem}[Change of variables]\label{thm679f367e}
+	Let $X,Y\in\R^n$ be open sets and $\phi:X\to Y$ a diffeomorphism.
+	Then, for every $u\in L^1(Y)$,
+	\begin{equation}\label{eq679f3376}
+		\int_X u(\phi(x)) |J\phi(x)| \did x = \int_Y u(y) \did y ,
+	\end{equation}
+	where $J\phi(x) = \det(D\phi(x))$.
+\end{theorem}
+
+Formula~\ref{eq679f3376} holds for the {\it non-oriented} integral. 
+When dealing with oriented integrals, we need to take care of the sign of the jacobian $J\phi$.
+For example, line integrals are usually oriented:
+If $a<b$ and $f\in L^1([a,b])$,
+then $\int_a^bf(s)\did s$ is a {\it oriented} integral, while $\int_{[a,b]}f(s)\did s$ is {\it not oriented}.
+This distinction becomes clear by the identities
+\begin{equation}\label{eq679f35fd}
+	\int_{[a,b]} f(s) \did s = \int_a^b f(s) \did s =  - \int_b^a f(s) \did s .
+\end{equation}
+The root of the distinction is the following.
+A non-oriented integral is the integral of a function $f$ over a measure space $(X,\mu)$:
+$\int_X f \did\mu$. 
+A oriented integral is the integral of a differential form:
+for example, $\int_{\R^2} f(x,y) \dd x\wedge\dd y = - \int_{\R^2} f(x,y) \dd y\wedge\dd x$.
+In the case of integrals of differential forms, the change of variables states:
+$\int \phi^* \omega = \int \omega$
+and $\phi^*(\dd x_1\wedge\dots\wedge\dd x_n) = J\phi (\dd x_1\wedge\dots\wedge\dd x_n)$.
+
+On $\R^n$ with $n>1$, we usually think of ``$\dd x$'' as $\dd\cal L^n(x)$, where $\cal L^n$ is the Lebesgue measure, and not as the volume form $\dd x_1\wedge\dots\wedge\dd x_n$.
+On $\R$, instead, we usually think of ``$\dd x$'' as a 1-form.
+
+Forgetting the details, the punchline is that, on line integrals, we need to keep in mind the formula~\eqref{eq679f35fd}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Limits of integrals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dominated Convergence Theorem}
+\begin{theorem}[Dominated Convergence Theorem: {\cite[Theorem 2.24]{MR767633}}]\label{thm6798ec42}
+	Let $(X,\mu)$ be a measure space, $T$ a topological space and $f:T\times X\to\R$ a function such that there exists $g\in L^1(\mu)$ with $|f(t,x)|\le g(x)$ for all $(t,x)\in T\times X$.
+	Suppose that, for $\mu$-a.e.~$x\in X$, the limit $\lim_{t\to \hat t} f(t,x)$ exists.
+	Then
+	\[
+	\lim_{t\to \hat t} \int_X f(t,x) \did \mu(x)
+	= \int_X (\lim_{t\to \hat t} f(t,x)) \did \mu(x) .
+	\]
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Functions defined by integrals}
+
+\subsection{Integral with parameter}
+\begin{theorem}\label{thm679f29de}
+	Let $X\subset\R^m$ be an open set and $(Y,\mu)$ a measure space.
+	Let $K:X\times Y\to\R$ be a measurable function and set 
+	\begin{equation}
+		F(x) = \int_Y K(x,y) \did\mu(y) ,
+	\end{equation}
+	for all $x\in X$ such that $y\mapsto K(x,y)$ is integrable.
+	
+	\begin{enumerate}[label={\bf (\ref{thm679f29de}.\arabic*)}]
+	\item\label{thm679f29de_1}
+	If  
+	\begin{equation}\label{eq679f27fe}
+		\exists g\in L^1(Y)\ \forall (x,y)\in X\times Y
+		\qquad |K(x,y)| \le g(y) 
+	\end{equation}
+	then $F$ is defined for all $x\in X$ and $F\in L^\infty(X)$.
+	In particular, $\|F\|_{L^\infty(X)} \le \|g\|_{L^1(Y)}$.
+	
+	\item\label{thm679f29de_2}
+	If~\eqref{eq679f27fe} holds, and if
+	\begin{equation}\label{eq679f28e5}
+		\forall y\in Y
+		\qquad
+		K(\cdot,y)\in C^0(X),
+	\end{equation}
+	then $F\in C^0(X)$.
+	
+	\item\label{thm679f29de_3}
+	If~\eqref{eq679f27fe} and~\eqref{eq679f28e5} hold, and if 
+	\begin{equation}\label{eq679f2b96}
+		\forall y\in Y
+		\ :\   K(\cdot,y)\in C^1(X),
+		\text{ and }\exists g_1\in L^1(Y)\forall (x,y)\in X\times Y 
+		\ :\ |D_xK(x,y)| \le g_1(y) ,
+	\end{equation}
+	then $F\in C^1(X)$ and, for every $x\in X$,
+	\begin{equation}\label{eq679f2bf4}
+		D_x F(x) = \int_Y D_xK(x,y) \did\mu(y) .
+	\end{equation}
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Proof of~\ref{thm679f29de_1}.
+	The condition~\eqref{eq679f27fe}  implies directly that $K(x,\cdot)\in L^1(Y)$ and that, for every $x\in X$,
+	\[
+	|\int_Y K(x,y) \did\mu(y)| 
+	\le \int_Y |K(x,y)| \did\mu(y) 
+	\le \|g\|_{L^1(Y)} .
+	\]
+	
+	Proof of~\ref{thm679f29de_2}.
+	Let $\{x_j\}_{j\in\N}\subset X$ be a sequence converging to $x_\infty\in X$.
+	Condition~\eqref{eq679f27fe} allows us to apply the Dominated Convergence Theorem~\ref{thm6798ec42},
+	\begin{align*}
+	\lim_{j\to\infty} F(x_j)
+	&= \lim_{j\to\infty}\int_Y K(x_j,y) \did\mu(y)  \\
+	[\text{by LDCT and~\eqref{eq679f27fe}}] 
+	&= \int_Y  \lim_{j\to\infty} K(x_j,y) \did\mu(y)  \\
+	[\text{by }K(\cdot,y)\in C^0(X)] 
+	&= \int_Y K(x_\infty,y) \did\mu(y) \\
+	&= F(x_\infty).
+	\end{align*}
+	This shows that $F\in C^0(X)$.
+	
+	Proof of~\ref{thm679f29de_3}.	
+	Fix $\hat x\in X$ and $i\in\{1,\dots,m\}$ and $\hat h>0$ such that $B(\hat x,\hat h)\Subset X$.
+	For $h\in(-\hat h,\hat h)$, we have
+	\[
+	\frac{F(\hat x + he_i) - F(\hat x)}{h} 
+		= \int_Y \frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} \did\mu(y) .
+	\]
+	Notice that for every $h\in(-\hat h,\hat h)$ and every $y\in Y$ there exists $h'\in (-h,h)$ such that 
+	\[
+	\frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h}
+	= \frac{\de K}{\de x_i} (\hat x + h'e_i , y) .
+	\] 
+	Hence, by~\eqref{eq679f2b96},
+	\[
+	\left|\frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h}\right| 
+	\le \left|	\frac{\de K}{\de x_i} (\hat x + h'e_i , y) \right| 
+	\le g_1(y) .
+	\]
+	Therefore, we can apply the Dominated Convergence Theorem~\ref{thm6798ec42},
+	to obtain
+	\begin{align*}
+		\lim_{h\to0}\frac{F(\hat x + he_i) - F(\hat x)}{h} 
+		&= \lim_{h\to0}\int_Y \frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} \did\mu(y) \\
+		[\text{by LDCT}] 
+		&= \int_Y \lim_{h\to0}\frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} \did\mu(y) \\
+		&= \int_Y \frac{\de K}{\de x_i}(\hat x,y) \did y .
+	\end{align*}
+	This shows that $F$ is differentiable at every point and~\eqref{eq679f2bf4}.
+	By~\ref{thm679f29de_2}, $D_xF$ is continuous.
+\end{proof}
+
+\begin{corollary}\label{cor67b2f278}
+	Let $X\subset\R^m$ be an open set and $(Y,\mu)$ a measure space.
+	Let $K:X\times Y\to\R$ be a measurable function and set 
+	\begin{equation}
+		F(x) = \int_Y K(x,y) \did\mu(y) ,
+	\end{equation}
+	for all $x\in X$ such that $y\mapsto K(x,y)$ is integrable.
+	
+	Suppose that
+	\begin{equation}\label{eq67b2f2bb}
+	\begin{array}{c}
+		\forall y\in Y
+		\ :\   K(\cdot,y)\in C^\infty(X),
+		\text{ and }\\
+	\forall\alpha\in\N^m\;\exists g_\alpha\in L^1(Y)\;\forall (x,y)\in X\times Y 
+		\ :\ |D^\alpha_xK(x,y)| \le g_1(y) .
+	\end{array}
+	\end{equation}
+	
+	Then $F\in C^\infty(X)$.
+\end{corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proposition}\label{prop6798f690}
+	Let $X\subset\R^m$ and $Y\subset\R^n$ be open sets, $k\in\N$ and $p\in[1,\infty]$.
+	Let $K:X\times Y\to\R$ be a measurable function such that:
+	\begin{enumerate}
+	\item	for every $y\in Y$, the function $x\mapsto K(x,y)$ belongs to $C^k(Y)$;
+	\item	for every $E\Subset X$ and $\alpha\in\N^n$ with $|\alpha|\le k$, there exists $g_{\alpha,E}\in L^1(Y)$ such that, for every $x\in E$ and every $y\in Y$,
+	\[
+	\left|\frac{\de^{|\alpha|} K}{\de x^\alpha}(x,y)\right| \le g_{\alpha,E} (y) .
+	\]
+	\end{enumerate}
+	
+	For $q\in[1,\infty]$ with $1/p+1/q=1$ and $f\in L^p(Y)$, define $T_Kf$ as
+	\[
+	T_Kf (x) = \int_Y K(x,y) f(y) \did y .
+	\]
+	Then $T_Kf\in C^k(X)$ and, for every $\alpha\in\N^m$ with $|\alpha|\le k$,
+	\begin{equation}\label{eq6798ef4d}
+	\frac{\de^k}{\de x^\alpha} T_Kf = T_{\frac{\de^kK}{\de x^\alpha}} f .
+	\end{equation}
+\end{proposition}
+{\color{Blue} TODO: write this proof using Theorem~\ref{thm679f29de} .
+\begin{proof}
+	First, notice that, for every $x\in X$, we can estimate using the Hölder inequality
+	\[
+	\int_Y |K(x,y) f(y)| \did y 
+	\le \int_Y  g_{0,E} f(y)\did y 
+	\overset{\text{Hölder}}\le \|g_{0,E}\|_{L^q} \|f\|_{L^p} ,
+	\]
+	where $E$ is any compact set in $X$ with $x\in E$.
+	Therefore $T_Kf (x)$ is well defined and $T_Kf$ is locally bounded.
+	
+	If $\{x_j\}_{j\in\N}\subset X$ is a sequence converging to $x_\infty\in X$, then 
+	\[
+	|K(x_j,y) f(y)| \le g_{0,E}(y) f(y)
+	\qquad
+	\forall y\in Y,
+	\]
+	where $E=\{x_j\}_{j\in\N}\cup\{x_\infty\}$ is a compact subset of $X$
+	and $y\mapsto g_{0,E}(y) f(y)$ is an element of $L^1(Y)$.
+	By the Dominated Convergence Theorem~\ref{thm6798ec42},
+	\begin{align*}
+	\lim_{j\to\infty} T_Kf(x_j)
+	&= \lim_{j\to\infty}\int_Y K(x_j,y) f(y) \did y  \\
+	[\text{by LDCT}] 
+	&= \int_Y  \lim_{j\to\infty} K(x_j,y) f(y) \did y  \\
+	[\text{by }K(\cdot,y)\in C^0(X)] 
+	&= \int_Y K(x_\infty,y) f(y) \did y \\
+	&= T_Kf (x_\infty).
+	\end{align*}
+	This shows that $Tf\in C^0(X)$.
+	
+%	Let $\{\phi_\ell\}_{\ell\in\N}$ be a partition of the unity on $X$, i.e., $\phi_\ell\in C^\infty_c(X)$ and $0\le\phi_\ell\le1$ for each $\ell$, and $\sum_{\ell\in\N}\phi_\ell = 1$ on $X$.
+	
+	It is clear that if~\eqref{eq6798ef4d} holds for $k=1$, then we can iterate it to obtain the statement for every $k$.
+	
+	Fix $\hat x\in X$ and $i\in\{1,\dots,m\}$ and $\hat h>0$ such that $B(\hat x,\hat h)\Subset X$.
+	For $h\in(-\hat h,\hat h)$, % with $|he_i|<{\rm dist}(\hat x,\de X)$,
+	we have
+%	\begin{align*}
+%		&\hspace{-1cm}\left| \frac{T_Kf(\hat x + he_i) - T_Kf(\hat x)}{h} - T_{\frac{\de K}{\de x^i}}f(\hat x) \right| \\
+%		&\le \int_Y \left| \frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} - \frac{\de K}{\de x^i}(\hat x,y) \right| |f(y)| \did y \\
+%		&= \sum_\ell \int_Y \left| \frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} - \frac{\de K}{\de x^i}(\hat x,y) \right| |\phi_\ell(y)f(y)| \did y . 
+%	\end{align*}
+%	
+	\[
+	\frac{T_Kf(\hat x + he_i) - T_Kf(\hat x)}{h} 
+		= \int_Y \frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} f(y) \did y .
+	\]
+%		&= \sum_\ell \int_Y \frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} \phi_\ell(y)f(y) \did y . 
+%	\end{align*}
+	Notice that for every $h\in(-\hat h,\hat h)$ and every $y\in Y$ there exists $h'(h,y)\in (-h,h)$ such that 
+	\[
+	\frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h}
+	= \frac{\de K}{\de x_i} (\hat x + h'e_i , y) .
+	\] 
+	Hence, 
+	\[
+	\left|\frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h}\right| 
+	\le \left|	\frac{\de K}{\de x_i} (\hat x + h'e_i , y) \right| 
+%	\sup\left\{ \left| \frac{\de K}{\de x_i}(x,y)\right| : x\in \bar B(\hat x,\hat h) \right\} 
+	\le g_{i,\bar B(\hat x,\hat h)}(y) .
+	\]
+	Therefore, we can apply the Dominated Convergence Theorem~\ref{thm6798ec42},
+	to obtain
+	\begin{align*}
+		\lim_{h\to0}\frac{T_Kf(\hat x + he_i) - T_Kf(\hat x)}{h} 
+		&= \lim_{h\to0}\int_Y \frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} f(y) \did y \\
+		[\text{by LDCT}] 
+		&= \int_Y \lim_{h\to0}\frac{ K(\hat x + he_i,y) - K(\hat x,y) }{h} f(y) \did y \\
+		&= \int_Y \frac{\de K}{\de x_i}(\hat x,y) f(y) \did y .
+	\end{align*}
+	
+\end{proof}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Divergence theorem}
+
+The divergence of a vector field $v\in C^1(\bar U;\C^n)$ is 
+\[
+\div(v) = \sum_{j=1}^n \frac{\de v_j}{\de x_j} \in C(U) .
+\]
+
+\begin{theorem}[Divergence Theorem: {\cite[Lemma 10.1]{MR0447753}}]\label{teo67a7a31e}
+	Let $U\subset\R^n$ be an open set with $C^1$ boundary $\de U$.
+	We denote by $\nu:\de U\to\bb S^{n-1}$ the outward normal.
+	Let $v\in C^1(\bar U;\C^n)$ be a vector field.
+	Then
+	\begin{equation}\label{eq67a7a3f9}
+		\int_U \div(v) \did x = \int_{\de U} v\cdot \nu \did S(x) .
+	\end{equation}
+\end{theorem}
+
+Recall that the integral in $\did S$ is the surface integral over $\de U$.
+Here $S=S^{n-1}$ is the Hausdorff measure of dimension $n-1$.
+
+\begin{remark}
+	You might have seen the divergence Theorem~\ref{teo67a7a31e} for real vector fields.
+	In the case of a complex vector field, we have
+	$v = v_1 + i v_2$ with $v_1,v_2\in  C^1(\bar U;\R^n)$.
+	Then
+	\begin{align*}
+		\int_U \div(v) \did x
+		&= \int_U \div(v_1) \did x + i \int_U \div(v_2) \did x \\
+		&= \int_{\de U} v_1\cdot \nu \did S(x) + i \int_{\de U} v_2\cdot \nu \did S(x) \\
+		&= \int_{\de U} (v_1+iv_2)\cdot \nu \did S(x) .
+	\end{align*}
+	Notice that $\nu$ has necessarily real components and thus $\bar \nu = \nu$.
+	In other words, we could also write $v\cdot \nu = v \cdot \bar \nu$, as the hermitian product of complex vectors should be.
+\end{remark}
+
+\begin{remark}
+	Formula~\eqref{eq67a7a3f9} is usually paired with the following formula for the divergence:
+	if $f\in C^1(U)$ and $v\in C^1( U;\C^n)$, then
+	\begin{equation}\label{eq67a7a587}
+		\div(fv) = \grad f\cdot v + f\div(v) .
+	\end{equation}
+	Indeed,
+	\begin{align*}
+		\div(fv) 
+		&= \sum_{j=1}^n \frac{\de (fv_j)}{\de x_j} \\
+		&= \sum_{j=1}^n \left( \frac{\de f}{\de x_j} v_j + f \frac{\de v_j}{\de x_j} \right) \\
+		&= \grad f\cdot v + f\div(v) .
+	\end{align*}
+	It follows that
+	\[
+	\int_U (\grad f\cdot v + f\div(v)) \did x = \int_{\de U} f v\cdot \nu \did S(x) .
+	\]
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Spherical averages}\label{sec67bac9ff}
+
+Let $X\subset\R^m$ and $Y\subset\R^n$ be open sets.
+For $u\in L^1_\loc(X\times Y)$, $x\in X$, $y\in Y$ and $r>0$ with $B(y,r)\subset Y$, define
+\begin{equation}\label{eq67bacbb5}
+\begin{aligned}
+	\phi_u(x,y;r) &:= \fint_{B(y,r)} u(x,z) \did z 
+		= \fint_{B_Y(0,1)} u(x,y+rz) \did z , \\
+	\psi_u(x,y;r) &:= \fint_{\de B(y,r)} u(x,z) \did S(z)
+		= \fint_{\de B(0,1)} u(x,y+rz) \did S(z) .
+\end{aligned}
+\end{equation}
+
+If $u$ is continuous, it is clear that 
+\begin{equation}\label{eq67bad1c9}
+	u(x,y) = \lim_{r\to 0}\phi_u(x,y;r) = \lim_{r\to 0}\psi_u(x,y;r) .
+\end{equation}
+
+\begin{lemma}
+	If $u\in C^{a;b}(X\times Y)$, with $a,b\in\N$, then, for every $\epsilon>0$,
+	$\phi_u,\psi_u \in C^{a;b;\lfloor b/2 \rfloor}(X\times Y_\epsilon\times(0,\epsilon))$,
+	where $Y_\epsilon = \{y\in Y: d(y,\de Y)>\epsilon\}$.
+	
+	Moreover, for all $\alpha\in\N^m$ and $\beta\in\N^n$, with $|\alpha|\le a$ and $|\beta|\le b$,
+	\begin{equation}\label{eq67a36bcb}
+		D_x^\alpha D_y^\beta \phi_u 
+		= \phi_{D_x^\alpha D_y^\beta u}
+		\qquad\text{and}\qquad
+		D_x^\alpha D_y^\beta \psi_u 
+		= \psi_{D_x^\alpha D_y^\beta u} .
+	\end{equation}
+	and
+	\begin{equation}\label{eq67bacb9a}
+	\begin{aligned}
+		\de_r\phi_u(x,y;r) &= \frac{n}{r} (\psi_u(x,y;r)- \phi_u(x,y;r) ) , \\
+		\de_r\psi_u(x,y;r) &= \frac{r}{n} \phi_{\laplacian_yu}(x,y;r) 
+			\overset{\eqref{eq67a36bcb}}= \frac{r}{n} \laplacian_y\phi_{u}(x,y;r) .
+	\end{aligned}
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Notice that both definitions of $\phi_u$ and $\psi_u$ falls into the framework of Theorem~\ref{thm679f29de}, which then implies~\eqref{eq67a36bcb}.
+	Moreover,
+	\begin{align*}
+		\phi_u(x,y;r) 
+		&= \frac{1}{\alpha_nr^n} \int_{B(y,r)} u(x,z) \did z \\
+		&= \frac{1}{\alpha_nr^n} \int_0^r \int_{\de B_Y(y,s)} u(x,z) \did S(z) \did s \\
+%		&= \frac{n}{r^n} \int_0^r s^{n-1} \fint_{\de B_Y(y,s)} u(x,z) \did S(z) \did s \\
+		&= nr^{-n} \int_0^r s^{n-1} \psi_u(x,y;s) \did s .
+	\end{align*} 
+	Therefore,
+	\begin{align*}
+		\de_r\phi_u(x,y;r)
+		&= -n^2 r^{-n-1} \int_0^r s^{n-1} \psi(x,y;s) \did s
+			+ nr^{-1} \psi_u(x,y;r) \\
+		&= \frac{n}{r} (- \phi_u(x,y;r) + \psi_u(x,y;r)) .
+	\end{align*}
+	Finally,
+	\begin{align*}
+		\de_r\psi_u(x,y;r)
+		&= \frac1{n\alpha_n}  \de_r \int_{\de B(0,1)} u(x,y+rz) \did S(z) \\
+		[\text{by Theorem~\ref{thm679f29de}}]
+		&= \frac1{n\alpha_n} \int_{\de B(0,1)} (D_yu)(x,y+rz) \cdot z \did S(z) \\
+		[\text{by Divergence Theorem and~\eqref{eq67a371f8}}]
+		&= \frac{r}{n\alpha_n} \int_{B(0,1)} (\laplacian_yu)(x,y+rz) \did z \\
+		&= \frac{r}{n} \phi_{\laplacian_yu}(x,y;r) ,
+	\end{align*}
+	where
+	\begin{equation}\label{eq67a371f8}
+	\div_z((D_yu)(x,y+rz)) 
+	= r(\div_y(D_yu))(x,y+rz)
+	= r(\laplacian_yu)(x,y+rz) .
+	\end{equation}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\part{Four classical PDE}
+
+\section{Transport Equation}
+
+This is \cite[Section 2.1]{MR2597943}.
+The \emph{transport equation} is the initial value problem
+\begin{equation}\label{eq67a79b9b}
+	\begin{cases}
+	\de_t u + b\cdot \grad u = f & \text{ on }\R^n\times I , \\
+	u = g & \text{ on }\R^n\times\{t_0\} ,
+	\end{cases}
+\end{equation}
+where $I\subset\R$ is an interval, $t_0\in I$, $b\in\R^n$, $f:\R^n\times I\to\C$ and $g:\R^n\to\C$.
+The function $u$ is intended as a function in two variables, $u=u(x,t)$, where $x\in\R^n$ and $t\in I$.
+The derivative $\de_tu$ is the derivative along the second variable, $t$, 
+while the gradient $\grad u$ is the derivative of $u$ in the variable $x$.
+A solution to~\eqref{eq67a79b9b} is easily found.
+
+\begin{theorem}
+	Let $I\subset \R$ be an open interval, $t_0\in \bar I$, $b\in\R^n$, $f\in C^0(\R^n\times \bar I)$, and $g\in C^1(\R^n)$.
+	Then the function $u\in C^1(\R^n\times \bar I)$ defined by
+	\begin{equation}\label{eq67a79d37}
+		u(x,t) = g(x-(t-t_0)b) + \int_{t_0}^t f(x+(r-t)b,r) \did r
+	\end{equation}
+	is the unique solution to~\eqref{eq67a79b9b}.
+\end{theorem}
+\begin{proof}
+	To show that $u$ is a solution to~\eqref{eq67a79b9b}, we just compute the derivatives:
+	\begin{align*}
+	\de_t u(x,t) &= - \grad g(x-(t-t_0)b)\cdot b + f(x,t) - \int_{t_0}^t \grad f(x+(r-t)b,r)\cdot b \did r ,\\
+	\grad u(x,t) &= \grad g(x-(t-t_0)b) + \int_{t_0}^t \grad f(x+(r-t)b,r) \did r .
+	\end{align*}
+	It follows that $u$ solves~\eqref{eq67a79b9b}.
+	
+	To show that $u$ is unique, suppose that $\tilde u\in C^1(\R^n\times \bar I)$ is another solution.
+	Then the difference $w := u-\tilde u$ solves~\eqref{eq67a79b9b} with $f=0$ and $g=0$. 
+	Notice that 
+	\[
+	\frac{\dd}{\dd s} w(x+ sb,t+s) = \grad w(x+sb,t+s)\cdot b + \de_t w(x+sb,t+s) = 0
+	\]
+	Therefore, for all $(x,t)\in \R^n\times I$, we have $w(x,t) = w(x+(t_0-t)b,t_0) = 0$.
+\end{proof}
+
+\begin{remark}
+	The function $u$ defined in~\eqref{eq67a79d37} is well defined even in the case $g$ is not smooth.
+	In some sense, these other functions could be regarded as \emph{weak solutions} to~\eqref{eq67a79b9b} when $g$ is not $C^1$.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Laplace Equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Laplace operator}\label{subs67b9d4b5}
+\index{Laplace operator}
+\index{operator!Laplace --}
+For $U\subset\R^n$ open and $u\in C^2(U)$, define
+\begin{equation}
+	\laplacian u = \div(\grad u)) = \sum_{j=1}^n \frac{\de^2 u}{\de x_j^2} .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Harmonic function}\label{subs67b9d542}
+\index{harmonic!-- function}
+\index{function!harmonic --}
+A \emph{harmonic function} on $U\subset\R^n$ open is a function $u\in C^2(U)$ such that $\laplacian u=0$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Symmetries of Laplace operator}\label{subs67b9d638}
+Let $U\subset\R^n$ open, $u\in C^2(U)$, $O\in\Orth(n)$ and $b\in\R^n$.
+Define $\bar u(y) = u(Oy+b)$.
+Then $\bar u\in C^2(O^{-1}(U-b))$ and
+\begin{equation}
+	\laplacian u(y) = (\laplacian u)(Oy+b).
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{How to find the fundamental solution}\label{subs67b9d8f3}
+\TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}\label{fig67b9fcba}
+\resizebox{0.45\textwidth}{!}{
+\begin{tikzpicture}[>=stealth]
+    \begin{axis}[
+        xmin=-0.1,xmax=2.1,
+        ymin=-0.5,ymax=2.1,
+        axis x line=middle,
+        axis y line=middle,
+        axis line style=->,
+%        xlabel={$|x|$},
+%        ylabel={$\Phi(x)$},
+        ]
+        \addplot[no marks,blue,-] 
+        	expression[domain=0.01:1.9,samples=100]{-1/(2*pi)*ln(x)} 
+            node[pos=0.80,anchor=north east]{$n=2$}; 
+         \addplot[no marks,red,-]
+         	expression[domain=0.01:1.9,samples=100]{1/3 1/x}
+			node[pos=0.9,anchor=south]{$n=3$};
+    \end{axis}
+\end{tikzpicture}
+}
+\resizebox{0.45\textwidth}{!}{
+\begin{tikzpicture}
+    \begin{axis}[
+        xmin=-0.1,xmax=2.1,
+        ymin=-0.5,ymax=2.1,
+        axis x line=middle,
+        axis y line=middle,
+        axis line style=->,
+%        xlabel={$|x|$},
+%        ylabel={$\Phi(x)$},
+        ]
+        \addplot[no marks,blue,-] 
+        	expression[domain=0.01:1.9,samples=100]{x^2/4*(1-2*ln(x))}%{x^2/4(1-2*ln(x))} 
+            node[pos=0.95,anchor=north east]{$n=2$}; 
+         \addplot[no marks,red,-]
+         	expression[domain=0.01:1.9,samples=100]{x^2/2}
+			node[pos=0.90,anchor=south east]{$n=3$}; 
+    \end{axis}
+\end{tikzpicture}
+}
+\caption{Plots of $|x|\mapsto\Phi(x)$ (left) and of $R\mapsto\int_{B(0,R)}\Phi(x)\did x$ (right) for $n=2,3$.}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}\label{fig67b9fcba}
+%\resizebox{0.5\columnwidth}{!}{
+%\begin{tikzpicture}
+%    \begin{axis}[
+%        xmin=-0.1,xmax=2.1,
+%        ymin=-0.5,ymax=2.1,
+%        axis x line=middle,
+%        axis y line=middle,
+%        axis line style=->,
+%%        xlabel={$|x|$},
+%%        ylabel={$\Phi(x)$},
+%        ]
+%        \addplot[no marks,blue,-] 
+%        	expression[domain=0.01:1.9,samples=100]{x^2/4*(1-2*ln(x))}%{x^2/4(1-2*ln(x))} 
+%            node[pos=0.95,anchor=north east]{$n=2$}; 
+%         \addplot[no marks,red,-]
+%         	expression[domain=0.01:1.9,samples=100]{x^2/2}
+%			node[pos=0.90,anchor=south east]{$n=3$}; 
+%    \end{axis}
+%\end{tikzpicture}
+%}
+%\caption{A couple of graphs of $R\mapsto\int_{B(0,R)}\Phi(x)\did x$ for $n=2,3$.}
+%\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fundamental solution of the Laplace's equation}\label{subs67b9d63e}
+\index{fundamental solution!-- of the Laplace's equation}
+\index{Laplace!fundamental solution of the --'s equation}
+Define $\Phi:\R^n\setminus\{0\}\to\R$ by
+\begin{equation}\label{eq67b9d6b9}
+	\Phi(x) = 
+	\begin{cases}
+	-\frac{1}{2\pi} \log(|x|) & \text{ if }n=2 , \\
+	\frac1{n(n-2)\omega_n } \frac1{|x|^{n-2}} & \text{ if }n\ge 3 ,
+	\end{cases}
+\end{equation}
+where $\omega_n $ is the volume of the unit ball in $\R^n$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Properties of the fundamental solution}\label{subs67b9d700}
+\begin{proposition}[Properties of the fundamental solution]\label{subs67b9d700}
+	Let $n\ge2$.
+	The fundamental solution $\Phi:\R^n\setminus\{0\}\to\R$ of Laplace's equation,
+	defined in~\eqref{eq67b9d6b9}, satisfies the following statements.
+	\begin{enumerate}
+	\item\label{subs67b9d700_anal}
+	$\Phi$ is an analytic function $\R^n\setminus\{0\}\to\R$.
+	If $n\ge3$, then $\Phi$ is strictly positive valued.
+	\item\label{subs67b9d700_grad}
+	For every $x\in\R^n\setminus\{0\}$,
+	\begin{equation}\label{eq67b9dc62}
+		\grad\Phi(x)
+		= - \frac1{n\omega_n } \frac{x}{|x|^n} .
+	\end{equation}
+	\item\label{subs67b9d700_hess}
+	For every $x\in\R^n\setminus\{0\}$,
+	\begin{equation}\label{eq67b9f252}
+		\Diff^2\Phi(x)
+		= \frac1{\omega_n } \frac{x\otimes x}{|x|^{n+2}} - \frac{1}{n\omega_n } \frac{\Id}{|x|^n} .
+	\end{equation}
+	\item\label{subs67b9d700_laplacian}
+	 $\laplacian\Phi=0$ on $\R^n\setminus\{0\}$.
+	\item\label{subs67b9d700_estimates}
+	There exists $C>0$ such that for every $x\in \R^n\setminus\{0\}$:
+		\begin{enumerate}
+		\item\label{subs67b9d700_2_a}
+		 $0<\Phi(x)\le C |x|^{2-n}$ if $n\ge 3$;
+		\item\label{subs67b9d700_2_b}
+		 $\left| \frac{\de\Phi}{\de x_j}(x)\right| \le \frac{C}{|x|^{n-1}}$, for all $j\in\{1,\dots,n\}$;
+		\item\label{subs67b9d700_2_c}
+		 $\left| \frac{\de^2\Phi}{\de x_j\de x_k}(x)\right| \le \frac{C}{|x|^{n}}$, for all $j,k\in\{1,\dots,n\}$.
+		\end{enumerate}
+	\item\label{subs67b9d700_integrals}
+	$\Phi\in L^1_\loc(\R^n)$ with 
+	\begin{equation}\label{eq67ba10db}
+		\int_{B(0,R)} \Phi(x)\did x =
+		\begin{cases}
+			\frac{R^2}{4} (1 - 2\log(R)) & \text{ if }n=2, \\
+			\frac{R^2}{2(n-2)}  & \text{ if }n\ge3. 
+		\end{cases}
+	\end{equation}
+		See Figure~\ref{fig67b9fcba} for a plot of these quantities.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	Part~\ref{subs67b9d700_anal} is clear.
+	
+	Statement~\ref{subs67b9d700_grad} is proven as follows.
+	If $n=2$ and $x\in\R^2\setminus\{0\}$, then
+	\begin{equation}\label{eq67b9dc00}
+		\grad\Phi(x)
+		= -\frac1{2\pi} \frac1{|x|} \frac{x}{|x|} 
+		= -\frac1{2\pi} \frac{x}{|x|^2} .
+	\end{equation}
+	Therefore,
+	$|\grad\Phi(x)| = \frac1{2\pi} \frac{1}{|x|}$.
+	
+	If $n\ge3$ and $x\in\R^n\setminus\{0\}$, then
+	\begin{equation}\label{eq67b9dc05}
+		\grad\Phi(x)
+		= \frac1{n(n-2)\omega_n } (2-n) |x|^{2-n-1} \frac{x}{|x|}
+		= - \frac1{n\omega_n } \frac{x}{|x|^n} .
+	\end{equation}
+	Therefore, $|\grad\Phi(x)| = \frac1{n\omega_n } \frac1{|x|^{n-1}}$.
+	Notice that~\eqref{eq67b9dc00} and~\eqref{eq67b9dc05} are summarized in~\eqref{eq67b9dc62}, because $\alpha(2)=\pi$.
+	
+	For~\ref{subs67b9d700_hess}, we compute
+	\begin{align*}
+	\Diff^2\Phi(x)
+	&= -\frac{1}{n\omega_n } \left( \frac{\Id}{|x|^n} + x\otimes \left( -n|x|^{-n-1} \frac{x}{|x|} \right) \right) \\
+	&= - \frac{1}{n\omega_n } \frac{\Id}{|x|^n} + \frac1{\omega_n } \frac{x\otimes x}{|x|^{n+2}} .
+	\end{align*}
+	In other words,
+	\begin{align*}
+	\frac{\de^2\Phi}{\de x_j\de x_k}(x)
+	&= \frac{\de}{\de x_j} \left( - \frac1{n\omega_n } \frac{x_k}{|x|^n} \right) \\
+	&= - \frac1{n\omega_n } \left( \frac{\delta_{jk}}{|x|^n} - x_k n |x|^{-n-1} \frac12 (\sum_\ell x_\ell^2)^{1/2} 2x_k \right) \\
+	&= - \frac1{n\omega_n }\frac{\delta_{jk}}{|x|^n} + \frac1{\omega_n } \frac{x_kx_j}{|x|^{n+2}} .
+	\end{align*}
+	So, we have~\eqref{eq67b9f252}.
+	
+	Statement~\ref{subs67b9d700_laplacian} is now an easy computation:
+	if $x\in\R^n\setminus\{0\}$, then
+	\begin{align*}
+		\laplacian\Phi(x)  
+		&= \trace(\Diff^2\Phi(x)) \\
+		&= \frac1{\omega_n } \frac{\trace(x\otimes x)}{|x|^{n+2}} - \frac{1}{n\omega_n } \frac{\trace(\Id)}{|x|^n}  \\
+		&= \frac1{\omega_n } \frac{1}{|x|^n} - \frac{1}{n\omega_n } \frac{n}{|x|^n}
+		= 0 .
+	\end{align*}
+
+	The estimates~\ref{subs67b9d700_estimates} are a consequence of the explicit formulas we have computed.
+	
+	The last two formulas stated in part~\ref{subs67b9d700_integrals} are simply computed as follows.
+	For $n=2$, we have
+	\begin{align*}
+		\int_{B(0,R)} \Phi(x)\did x
+		&= - \frac1{2\pi} \int_0^R\int_0^{2\pi} \log(r) r \did\theta\did r \\
+		&= - \int_0^R \log(r) r\did r \\
+		\text{[Integration by parts]} 
+		&= -\left(\log(r)\frac{r^2}{2}\right|_0^R + \int_0^R \frac1r \frac{r^2}{2} \did r \\
+		&= - \log(R) \frac{R^2}{2} + \frac12 \frac{R^2}{2} 
+		=  \frac{R^2}{4} (1 - 2\log(R)) .
+	\end{align*}
+	For $n\ge3$, we have
+	\begin{align*}
+		\int_{B(0,R)} \Phi(x)\did x
+		&= \frac1{n(n-2)\omega_n } \int_{B(0,R)} \frac1{|x|^{n-2}} \did x \\
+		&= \frac1{n(n-2)\omega_n } \int_0^R \int_{\de B(0,1)} \frac1{|x|^{n-2}} \did S^{n-1}(x) r^{n-1} \did r \\
+		&= \frac{n\omega_n }{n(n-2)\omega_n } \int_0^R r \did r \\
+		&= \frac1{(n-2)} \frac{R^2}{2} .
+	\end{align*}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution to Poisson equation}\label{subs67ba081a}
+\begin{theorem}[Solution to Poisson equation]\label{teo67ba14f2}
+	Let $f\in C^2_c(\R^n)$ and define for $x\in\R^n$
+	\begin{equation}\label{eq67ba08ac}
+		u(x) = \int_{\R^n} \Phi(y) f(x-y) \did y = \int_{\R^n} \Phi(x-y) f(y) \did x  .
+	\end{equation}
+	Then $u\in C^2(\R^n)$ and 
+	\begin{equation}\label{eq67ba14c8}
+		-\laplacian u = f \text{ in }\R^n . 
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Recall that, since $\Phi\in L^1_\loc(\R^n)$ by 
+	Proposition~\ref{subs67b9d700}.\ref{subs67b9d700_integrals},
+	and since $f$ is continuous with bounded support, then, for every $x\in\R^n$, the integrand $y\mapsto \Phi(y)f(x-y)$ is integrable.
+	It follows that $u$ is well defined and that the identity between the second and the third expressions in~\eqref{eq67ba08ac} is a simple change of variables.
+	
+	We need now to prove the regularity of $u$.
+	For $x,y\in\R^n$, define
+	\begin{equation}
+		K_f(x,y) = \Phi(y) f(x-y).
+	\end{equation}
+	Fix $R>0$ and set $X=B(0,R)$. 
+	Let $S>0$ be such that $\spt(f)\subset B(0,S)$: then, for every $x\in X$,
+	\begin{equation}
+		|K_f(x,y)| \le \|f\|_{L^\infty} \cdot \Phi(y) \cdot \one_{B(0,R+S)}(y) .
+	\end{equation}
+	Notice that the function $g_f:y\mapsto \|f\|_{L^\infty} \cdot \Phi(y) \cdot \one_{B(0,R+S)}(y)$ is integrable over $\R^n$.
+	By Theorem~\ref{thm679f29de}, the function $u$ is continuous on $X$.
+	Moreover, since 
+	\[
+	\Diff^\alpha_x K_f = K_{\Diff^\alpha f} ,
+	\]
+	then, again by Theorem~\ref{thm679f29de}, $u\in C^2(X)$.
+	Since this holds for every $R>0$, we conclude that $u\in C^2(\R^n)$.
+	
+	We have also obtained that, always from Theorem~\ref{thm679f29de}, 
+	for ever $\alpha\in\N^n$ with $|\alpha|\le 2$,
+	\[
+	\Diff^\alpha u(x) = \int_{\R^n} \Phi(y) (\Diff^\alpha f)(x-y) \did y .
+	\]
+	We conclude that
+	\[
+	\laplacian u(x) = \int_{\R^n} \Phi(y) (\laplacian f)(x-y) \did y .
+	\]
+	We need to compute the latter integral.
+	
+	For $\epsilon>0$, we set
+	\[
+	\laplacian u(x) = \underbrace{ \int_{B(0,\epsilon)} \Phi(y) (\laplacian f)(x-y) \did y }_{I_\epsilon}
+		+ \underbrace{ \int_{\R^n\setminus B(0,\epsilon)} \Phi(y) (\laplacian f)(x-y) \did y }_{J_\epsilon} .
+	\]
+	From~\eqref{eq67ba10db} we obtain that, if $\epsilon<1/2$, there is $C>0$ (depending on $n$) such that 
+	\[
+	|I_\epsilon| 
+	\le \|\laplacian f\|_{L^\infty} \int_{B(0,\epsilon)} |\Phi(y)| \did y 
+	\le \begin{cases}
+	C \|\laplacian f\|_{L^\infty} \epsilon^2 |\log(\epsilon)| & \text{ if }n=2 , \\
+	C \|\laplacian f\|_{L^\infty} \epsilon^2 & \text{ if }n\ge3 .
+	\end{cases}
+	\]
+	In both cases, we have 
+	\begin{equation}\label{eq67ba10b2}
+		\lim_{\epsilon\to0}I_\epsilon = 0 .
+	\end{equation}
+	
+	For $J_\epsilon$, we compute
+	\begin{align*}
+		J_\epsilon 
+		&= \int_{\R^n\setminus B(0,\epsilon)} \Phi(y) (\laplacian f)(x-y) \did y \\
+		&= \int_{\R^n\setminus B(0,\epsilon)} \Phi(y) \laplacian_y (f(x-y)) \did y \\
+		&= \int_{\R^n\setminus B(0,\epsilon)} \div_y (\Phi(y)  \grad_yf(x-y)) \did y 
+			- \int_{\R^n\setminus B(0,\epsilon)} \grad_y\Phi(y) \cdot \grad_y f(x-y) \did y \\
+		&= \int_{\R^n\setminus B(0,\epsilon)} \div_y (\Phi(y)  \grad_yf(x-y)) \did y
+			+ \int_{\R^n\setminus B(0,\epsilon)} \div_y(\grad_y\Phi(y)) \cdot f(x-y) \did y  \\
+		&\qquad
+			- \int_{\R^n\setminus B(0,\epsilon)} \div_y(f(x-y) \grad_y\Phi(y) ) \did y \\
+		&= \int_{\R^n\setminus B(0,\epsilon)} \div_y (\Phi(y)  \grad_yf(x-y)) \did y
+			- \int_{\R^n\setminus B(0,\epsilon)} \div_y(f(x-y) \grad_y\Phi(y) ) \did y \\
+		&= - \underbrace{ \int_{\de B(0,\epsilon)}  \Phi(y)  \grad_yf(x-y) \cdot \frac{y}{|y|} \did S^{n-1}(y) }_{L_\epsilon}
+			+ \underbrace{ \int_{\de B(0,\epsilon)} f(x-y) \grad_y\Phi(y)  \cdot \frac{y}{|y|} \did S^{n-1}(y) }_{K_\epsilon} .
+	\end{align*}
+	
+	We then have that, for $\epsilon<1/2$, there is $C>0$ (depending on $n$) such that 
+	\begin{align*}
+	|L_\epsilon| 
+	&\le \|\grad f\|_{L^\infty} \int_{\de B(0,\epsilon)}  \Phi(y)  \did S^{n-1}(y) \\
+	&\le \begin{cases}
+	C \|\grad f\|_{L^\infty} |\log(\epsilon)|\epsilon & \text{ if }n=2 , \\
+	C \|\grad f\|_{L^\infty} \epsilon & \text{ if }n\ge3 .
+	\end{cases}
+	\end{align*}
+	In both cases, we have 
+	\begin{equation}\label{eq67ba13a8}
+		\lim_{\epsilon\to0} L_\epsilon = 0 .
+	\end{equation}
+	
+	The remaining quantity is
+	\begin{align*}
+	K_\epsilon 
+	&= \int_{\de B(0,\epsilon)} f(x-y) \grad_y\Phi(y)  \cdot \frac{y}{|y|} \did S^{n-1}(y) \\
+	&= - \frac1{n\omega_n } \int_{\de B(0,\epsilon)} f(x-y) \frac{y}{|y|^n}  \cdot \frac{y}{|y|} \did S^{n-1}(y) \\
+	&= - \frac1{n\omega_n } \int_{\de B(0,\epsilon)} f(x-y) |y|^{2-n-1} \did S^{n-1}(y) \\
+	&= - \frac1{n\omega_n \epsilon^{n-1}} \int_{\de B(0,\epsilon)} f(x-y) \did S^{n-1}(y) \\
+	&= - \fint_{\de B(0,\epsilon)} f(x-y) \did S(y) .
+	\end{align*}
+	We conclude that 
+	\begin{equation}
+		\lim_{\epsilon\to0} K_\epsilon = - f(x) .
+	\end{equation}
+	
+	We conclude that~\eqref{eq67ba14c8} holds.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+	\item We are inverting the Laplacian, in some sense.
+	\item If $\phi\in C^2(\R^n)$ is harmonic (e.g., a harmonic polynomial), then $\laplacian (u+\phi) = \laplacian u = f$. So, the above integral formula select one solution among many.
+	\item Our integral formula is only solving $\laplacian u = f$ on the whole space $\R^n$ and only for $f$ with compact support.
+	There are various direction in which to extend this result: 
+	to $f$ continuous (in fact, $f$ of class $C^2$ looks weird);
+	to $f$ not with compact support (in fact, the selected $u$ does not have compact support);
+	to the case of $f$ defined only on an open subset $U$.
+	I hope we can see all these extensions in this course: we will check!
+	\end{enumerate}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mean value formulas}\label{subs67bac7f9}
+
+See Section~\ref{sec67bac9ff} first.
+
+\begin{theorem}[Mean value formula for harmonic functions]\label{teo67bac805}
+	Let $U\subset\R^n$ be open and $u\in C^2(U)$.
+	The following statements are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+	\item\label{teo67bac805_i}
+		$u$ is harmonic, i.e., $\laplacian u =0$;
+	\item\label{teo67bac805_ii}
+		$\forall x\in U$, $\forall r>0$, such that $\bar B(x,r)\subset U$,
+		\begin{equation}\label{eq67bac950}
+			u(x) = \fint_{\de B(x,r)} u(y) \dd S(y) .
+		\end{equation}
+	\item\label{teo67bac805_iii}
+		$\forall x\in U$, $\forall r>0$, such that $\bar B(x,r)\subset U$,
+		\begin{equation}\label{eq67bac961}
+			u(x) = \fint_{B(x,r)} u(y) \dd S(y) .
+		\end{equation}
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	As in~\eqref{eq67bacbb5}, we set 
+	\[
+	\phi_u(x;r) := \fint_{B(x,r)} u(z) \did z ,
+	\quad\text{and}\quad
+	\psi_u(x;r) := \fint_{\de B(x,r)} u(z) \did S(z) .
+	\]
+	Then, from~\eqref{eq67bacb9a} we have,
+	\begin{align}
+		\label{eq67bace9e}
+		\de_r\phi_u(x;r) &= \frac{n}{r} (\psi_u(x;r)- \phi_u(x;r) ) , \\
+		\label{eq67bacea3}
+		\de_r\psi_u(x;r) &= \frac{r}{n} \phi_{\laplacian_xu}(x;r) .
+	\end{align}
+	
+	$\ref{teo67bac805_i}\THEN\ref{teo67bac805_ii}$:
+	By~\eqref{eq67bacea3}, if $\laplacian u=0$, then $\de_r\psi_u=0$, i.e., $r\mapsto\psi_u(x;r)$ is constant and, since $B(x,r)\subset U$, we have
+	\[
+	u(x) 
+	\overset{\eqref{eq67bad1c9}}= \lim_{\epsilon\to0} \psi_u(x;\epsilon) 
+	= \psi_u(x;r) .
+	\]
+	
+	$\ref{teo67bac805_ii}\THEN\ref{teo67bac805_iii}$:
+	Let $x\in U$ and $r>0$ be such that $\bar B(x,r)\subset U$.
+	Then
+	\begin{align*}
+		\fint_{B(x,r)} u(y) \did y
+		&= \frac1{r^n\omega_n } \int_0^r \int_{\de B(x,s)} u(y) \did S(y)\did r \\
+		&= \frac{n}{r^n} \int_0^r \fint_{\de B(x,s)} u(y) \did S(y) s^{n-1}\did r \\
+		&\overset{\ref{teo67bac805_ii}}= u(x) \frac{n}{r^n} \int_0^r s^{n-1}\did r 
+		= u(x) .
+	\end{align*}
+	
+	$\ref{teo67bac805_iii}\THEN\ref{teo67bac805_ii}$:
+	Let $x\in U$ and $r>0$ be such that $\bar B(x,r)\subset U$.
+	From~\eqref{eq67bace9e}, we obtain,
+	\[
+	0 = \de_r\phi_u(x;r) 
+	= \frac{n}{r} (\psi_u(x;r)- u(x) ) ,
+	\]
+	i.e., $\psi_u(x;r) = u(x)$.
+	
+	$\ref{teo67bac805_ii}\THEN\ref{teo67bac805_i}$:
+	Let $x\in U$. 
+	From~\eqref{eq67bacea3}, we have
+	\[
+	\laplacian u(x) 
+	\overset{\eqref{eq67bad1c9}}= \lim_{r\to0} \phi_{\laplacian u}(x;r) 
+	\overset{\eqref{eq67bacea3}}= \lim_{r\to0} \frac{n}{r}\de_r\psi_u(x;r)
+	\overset{\ref{teo67bac805_ii}}= 0 .
+	\]
+\end{proof}
+
+{\color{blue} Prepare exercises:
+\begin{remark}
+	If $\de B(x,r)\subset U$ but $B(x,r)\not\subset U$, then the mean value formula does not need to hold.
+	To see this, take the fundamental solution $\Phi$ and any ball centered at $0$ (exercise).
+\end{remark}
+}
+
+\begin{exercise}
+	For all $n\ge2$, compute
+	\[
+	\psi_\Phi(0;r) := \fint_{\de B(0,r)} \Phi(y) \did S(y) ,
+	\]
+	where $\Phi$ is the fundamental solution of the Laplace equation.
+	Is $r\mapsto\psi_\Phi(0;r)$ constant? 
+\end{exercise}
+
+\begin{exercise}[Difficult and maybe not useful]
+	In Theorem~\ref{teo67bac805}, we have shown $\ref{teo67bac805_ii}\THEN\ref{teo67bac805_i}$.
+	Give a direct proof of $\ref{teo67bac805_iii}\THEN\ref{teo67bac805_i}$.
+\end{exercise}
+
+\begin{exercise}\label{ex67badfb7}
+	Show the equivalence $\ref{teo67bac805_iii}\IFF\ref{teo67bac805_ii}$
+	assuming only $u\in C^0(U)$.
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Strong maximum principle}\label{subs67bad3fc}
+\index{strong maximum principle}
+\index{maximum!strong -- principle}
+\index{principle!strong maximum --}
+
+\begin{theorem}[Strong maximum principle - First version]\label{teo67bad430}
+	Suppose $U\subset\R^n$ is open and connected,
+	and $u\in C^2(U;\R)$ is harmonic.
+	If there exists $x\in U$ is such that $u(x) = \sup_Uu$, then $u$ is constant.
+\end{theorem}
+\begin{proof}
+	Define
+	\[
+	M = \sup_Uu
+	\quad\text{and}\quad
+	W = \{x\in U:u(x)=M\} = u^{-1}(\{M\}) .
+	\]
+	Since $u$ is continuous, then $W$ is closed in $U$.
+	
+	We claim that $W$ is open.
+	If $x\in W$, then there is $r>0$ such that $B(x,r)\subset U$, because $U$ is open.
+	Therefore, since $u$ is harmonic,
+	\[
+	M = u(x) 
+	= \fint_{B(x,r)} u(y) \did y
+	\overset{(*)}\le M
+	\]
+	where the inequality $(*)$ is strict\footnotemark unless $u(y)=M$ for all $y\in B(x,r)$.
+	\footnotetext{
+	Indeed, if $|B(x,r)\setminus W|>0$, then
+	\begin{align*}
+	\fint_{B(x,r)} u(y) \did y 
+	&= \frac1{|B(x,r)|} \left( \int_{B(x,r)\cap W} u(y)\did y
+		+  \int_{B(x,r)\setminus W} u(y)\did y \right) \\
+	&< \frac1{|B(x,r)|} \left( M |B(x,r)\cap W| 
+		+  M |B(x,r)\setminus W|  \right)
+	= M .
+	\end{align*}
+	}
+	It follows that $B(x,r)\subset W$.
+	
+	In conclusion, since $U$ is connected and $W\subset U$ is both open and closed, 
+	then $W\in\{\emptyset,U\}$.
+	If $W$ is not empty, then $W=U$, i.e., $u$ is constant.
+\end{proof}
+
+\begin{exercise}
+	Show that, if $u\in C^0(B(0,r);\R)$ is such that $u\le M$ on $B(0,r)$, then
+	$\fint_{B(x,r)} u(y) \did y\le M$, with equality if and only if $u=M$ on $B(0,r)$.
+\end{exercise}
+
+\begin{theorem}[Strong maximum principle - Second version]\label{teo67bad761}
+	Suppose $U\subset\R^n$ is open and bounded,
+	and $u\in C^2(U;\R)\cap C^0(\bar U;\R)$ is harmonic.
+	Then
+	\begin{equation}\label{eq67bad7a9}
+		\max_{\bar U} u = \max_{\de U} u .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	We clearly have $\max_{\bar U} u \ge \max_{\de U} u$.
+	Suppose that there exists $x\in U$ with $u(x) = \max_{\bar U}u$.
+	We need to show that there is also a point on $\de U$ with the same value.
+	Let $C\subset U$ be the connected component of $U$ containing $x$.
+	Since $C$ is open and connected, by Theorem~\ref{teo67bad430}, $u$ is constant on $C$.
+	Therefore, if $y\in\de C$, then $u(y) = u(x) = \max_{\bar U}u$.
+	Since $\R^n$ is locally connected, then $\de C\subset \de U$ (see Exercise~\ref{ex67baddda}).
+	Therefore, 
+	\[
+	\max_{\bar U}u = u(x) = \max_{\de C}u \le \max_{\de U} u .
+	\]
+\end{proof}
+
+\begin{exercise}\label{ex67baddda}
+	Show the following statement:
+	{\it Let $X$ be a locally connected topological space and $U\subset X$ open.
+	Let $C\subset U$ be a connected component of $U$.
+	Then $\de C\subset\de U$.}
+	
+	After this, show that the hypothesis of $X$ being locally connected is necessary.
+	In other words, find an example of a topological space $X$ that is not locally connected, and $U\subset X$ open that has a connected component $C\subset U$ with $\de C\cap\de U=\emptyset$.
+\end{exercise}
+\begin{proof}
+	Let $x\in\de C$.
+	Then $x\in\bar U$.
+	If $x\in U^\circ$, then there exists a connected neighborhood $V$ of $x$ with $V\subset U$.
+	Since $x\in\de C$, then $V\cap C\neq\emptyset$.
+	We then have $C\cup V\subset U$ is connected.
+	Since $C$ is a maximal connected subset of $U$, we conclude $V\subset C$, in contradiction with $x\in\de C$.
+\end{proof}
+
+\begin{exercise}
+	State and prove the \emph{Strong Minimum Principle} for harmonic functions, both in the first and second versions.
+\end{exercise}
+
+\begin{exercise}\angryface
+	Show the strong maximum and minimum principles for harmonic functions without using the mean value property, i.e., explicitly using that $\laplacian u=0$.
+	
+	{\it Hint}:
+	First consider $u\in C^2(U;\R)$ with $\laplacian u>0$ in $U$.
+	Suppose $x\in U$ is such that $u(x) = \max_Uu$.
+	Then $t=0$ is a point of maximum for $t\mapsto u(x+te_j)$, 
+	for each $j\in\{1,\dots,n\}$.
+	Therefore $\frac{\de^2u}{\de x_j^2}(x) = \left.\frac{\diff^2}{\diff t^2}\right|_{t=0}u(x+te_j) \le 0$.
+\end{exercise}
+
+\begin{remark}
+	In the following theorems, we actually prove more than what we claim.
+	In fact, do not need ``$u\in C^2(U;\R)\cap C^0(\bar U;\R)$ harmonic'', 
+	but only $u\in C^0(\bar U;\R)$ satisfying the mean value property, as stated in
+	Theorem~\ref{teo67bac805}.\ref{teo67bac805_ii}.	
+	See also Exercise~\ref{ex67badfb7}.
+	Maybe, in your personal notes you can rewrite these statements in the more general form.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Subharmonic functions}\label{subs67bae229}
+\index{subharmonic function}
+\index{function!subharmonic --}
+\index{harmonic!sub-- function}
+
+\begin{exercise}
+	Let $U\subset\R^n$ open.
+	A function $u\in C^2(U)$ is \emph{subharmonic} if and only if $\laplacian u\ge 0$ on $U$.
+	A function $u\in C^2(U)$ is \emph{superharmonic} if and only if $\laplacian u\le 0$ on $U$.
+	(Notice the inversion between ``sub'' and ``$\ge$'').
+
+	State and prove modified versions of Theorem~\ref{teo67bac805} 
+	and Theorem~\ref{teo67bad430}
+	for subharmonic functions.
+	
+	After this, do the same for superharmonic functions.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Monotonicity of Laplace's boundary value problem}\label{subs67baea83}
+
+\begin{corollary}[Name?]\label{cor67bae9fc}
+	Let $U\subset\R^n$ open, bounded and connected.
+	Let $u\in C^2(U;\R)\cap C^0(\bar U;\R)$ and $g\in C^0(\de U;\R)$ be such that
+	\[
+	\begin{cases}
+		\laplacian u = 0 &\text{ in }U ,\\
+		u = g &\text{ on }U .
+	\end{cases}
+	\]
+	If $g$ is not constant and $g\ge 0$ on $\de U$, then $u>0$ on $U$.
+\end{corollary}
+
+\begin{exercise}
+	Write a proof of Corollary~\ref{cor67bae9fc}.
+\end{exercise}
+
+\begin{exercise}
+	Write and prove a version of Corollar~\ref{cor67bae9fc} for sub- and superharmonic functions.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Uniqueness for the Poisson equation}\label{subs67baea7d}
+\begin{theorem}[Uniqueness for the Poisson equation]\label{teo67baea93}
+	Let $U\subset\R^n$ be open and bounded, $f\in C^0(U)$ and $g\in C^0(\de U)$.
+	
+	There exists at most one solution in $C^2(U)\cap C^0(\bar U)$ to the boundary value problem
+	\begin{equation}\label{eq67baeb15}
+	\begin{cases}
+		- \laplacian u = f &\text{ in }U ,\\
+		u = g &\text{ on }U .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Suppose $u_1,u_2\in C^2(U)\cap C^0(\bar U)$ are solutions to~\eqref{eq67baeb15}.
+	Then if $u$ is the real or imaginary part of $u_1-u_2$, then $u\in C^2(U;\R)\cap C^0(\bar U;\R)$ and $u$ solves
+	\begin{equation}\label{eq67baeb46}
+	\begin{cases}
+		\laplacian u = 0 &\text{ in }U ,\\
+		u = 0 &\text{ on }U .
+	\end{cases}
+	\end{equation}
+	By the maximum and minimum principle, $u=0$ on $U$.
+	We conclude that $u_1=u_2$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Smoothness of harmonic functions}\label{subs67baec70}
+
+\begin{theorem}\label{thm67baed2c}
+	Let $U\subset \R^n$ be open and $u\in C^0(U)$.
+	Suppose that $u$ satisfies the spherical mean-value property, i.e.,
+	\begin{equation}\label{eq67baed21}
+		\forall x\in U\ \forall r>0\ \text{ s.t. } \bar B(x,r)\subset U :
+		\qquad u(x) = \fint_{\de B(x,r)} u(y) \did S(y) .
+	\end{equation}
+	Then $u\in C^\infty(U)$.
+\end{theorem}
+\begin{proof}
+	Let $\{\eta_\epsilon\}_{\epsilon>0}$ be the family of standard mollifiers.
+	Recall that $\eta_\epsilon(x) = \tilde\eta(|x|/\epsilon)/\epsilon^n$ for a compactly supported function $\tilde\eta\in C^\infty(\R)$ with $\tilde\eta\ge0$, $\spt(\tilde\eta)\subset[-1,1]$, and $\int_\R\tilde\eta(t)\did t = 1$.
+	In particular, it follows that $\spt(\eta_\epsilon)\subset \bar B(0,\epsilon)$ 
+	and $\int_{\R^n}\eta_\epsilon(x)\did x = 1$.
+
+	We will show that the spherical mean-value property~\eqref{eq67baed21} implies that, for every $\epsilon>0$, $u*\eta_\epsilon = u$ on 
+	\[
+	U_\epsilon = \{x\in U : \dist(x,\de U) > \epsilon\} .
+	\]
+	Since $u*\eta_\epsilon \in C^\infty(U_\epsilon)$, we will conclude $u\in C^\infty(U)$.
+	
+	So, if $x\in U_\epsilon$, then
+	\begin{align*}
+		u*\eta_\epsilon(x)
+		&= \int_{B(x,\epsilon)} u(y) \eta_\epsilon(x-y) \did y \\
+		&= \int_0^\epsilon \int_{\de B(x,r)} u(y)\eta_\epsilon(x-y) \did S(y) \did r\\
+		&= \int_0^\epsilon \tilde\eta_\epsilon(r) \left(\int_{\de B(x,r)}  \did S(y)\right) \fint_{\de B(x,r)} u(y) \did S(y) \did r\\
+		&\overset{\eqref{eq67baed21}}= u(x) \int_0^\epsilon \tilde\eta_\epsilon(r) \int_{\de B(x,r)} \did S(y) \did r\\
+		&= u(x) \int_0^\infty  \int_{\de B(x,r)} \eta_\epsilon(x-y) \did S(y) \did r\\
+		&= u(x) \int_{\R^n} \eta_\epsilon(x-y) \did y 
+		= u(x) .
+	\end{align*}
+\end{proof}
+
+\begin{corollary}
+	Harmonic functions are $C^\infty$ smooth.
+\end{corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Analyticity of harmonic functions}\label{subs67baeff5}
+
+\begin{proposition}[Estimates on derivatives of harmonic functions]\label{prop67bb09b8}
+	Let $U\subset\R^n$ open and $u\in C^\infty(U)$ harmonic.
+	For every $ x\in U$ and $r>0$ with $B( x,r)\subset U$,
+	and for every $\alpha\in\N^n$ with $|\alpha|=k$ we have
+	\begin{equation}\label{eq67baf145}
+		 |\Diff^\alpha u( x)| \le \frac{C_k}{r^{n+k}} \|u\|_{L^1(B(x,r))} ,
+		 \qquad\text{where }
+		 \begin{array}{l}
+		 C_0 = \frac1{\omega_n } , \text{ and }\\
+		 C_k = \frac{(2^{n+1}n k)^k}{\omega_n } \text{for }k\ge1 .
+		 \end{array}
+	\end{equation}
+%	where
+%	\begin{equation}
+%		C_0 = \frac1{\omega_n }
+%		\quad\text{and}\quad
+%		C_k = \frac{(2^{n+1}n)^k}{\omega_n } 
+%		\quad\text{for }k\ge1.
+%	\end{equation}
+\end{proposition}
+
+The proof of Proposition~\ref{prop67bb09b8} will come after a few lemmas.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lemma}[Derivative of harmonic functions]\label{lem67bb0a0c}
+	Every partial derivative of a harmonic function is harmonic.
+\end{lemma}
+\begin{proof}
+	Let $U\subset\R^n$ open and $u\in C^\infty(U)$ harmonic.
+	If $j\in\{1,\dots,n\}$, then 
+	\[
+	\laplacian(\de_ju) = \sum_{k=1}^n \de_k^2\de_ju = \de_j\sum_{k=1}^n \de_k^2u 
+	= \de_j\laplacian u = 0 ,
+	\]
+	because $\de_j\de_k=\de_k\de_j$ for all $j,k$.
+	So, all first-order derivatives of $u$ are harmonic.
+	Iterating, all derivatives of harmonic functions are harmonic harmonic functions.
+\end{proof}
+
+\begin{lemma}[Case $k=0$]\label{lem67bb11e4}
+	Let $U\subset\R^n$ open and $u\in C^\infty(U)$ harmonic.
+	For every $ x\in U$ and $r>0$ with $B( x,r)\subset U$,
+	\begin{equation}\label{eq67bb11da}
+		 |u(x)| \le \frac1{\omega_n r^n}  \|u\|_{L^1(B(x,r))} .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	The ball mean-value property for harmonic functions gives
+	\[
+	|u(x)| 
+	= \left| \fint_{B(x,r)} u(y) \did y \right|
+	\le \frac1{\omega_n r^n}  \|u\|_{L^1(B(x,r))} .
+	\]
+%	This shows~\eqref{eq67baf145} for $k=0$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lemma}[Case $k=1$: Estimate of first derivatives of harmonic functions]\label{lem67bb0fed}
+	Let $U\subset\R^n$ open and $u\in C^\infty(U)$ harmonic.
+	For every $ x\in U$ and $r>0$ with $B( x,r)\subset U$,
+	and for every $j\in\{1,\dots,n\}$ and $\theta\in(0,1)$, we have
+	\begin{equation}\label{eq67bb1919}
+		|\de_ju(x)| \le \frac{1}{\omega_n  (\theta r)^n} \int_{\de B(x,\theta r)} |u(y)| \did S(y) .
+	\end{equation}
+	As a consequence, we also have
+	\begin{equation}\label{eq67bb100e}
+		 |\de_j u(x)| \le \frac{2^{n+1}n}{\omega_n } \frac{1}{r^{n+1}} \|u\|_{L^1(B(x,r))} .
+	\end{equation} 
+\end{lemma}
+\begin{proof}
+	Fix $j\in\{1,\dots,n\}$.
+	By Lemma~\ref{lem67bb0a0c}, $\de_ju$ is also harmonic, and thus it has the mean-value property.
+	Therefore, for every $\theta\in(0,1)$,
+	\begin{align*}
+		|\de_ju(x)| 
+		&= \left| \fint_{B(x,\theta r)} \de_ju(y) \did y \right| \\
+		&= \frac{1}{\omega_n  (\theta r)^n} \left| \int_{B(x,\theta r)} \div(ue_j)(y) \did y \right| \\
+		&= \frac{1}{\omega_n  (\theta r)^n} \left| \int_{\de B(x,\theta r)} u(y) e_j\cdot \frac{y}{|y|} \did S(y) \right| \\
+		&\le \frac{1}{\omega_n  (\theta r)^n} \int_{\de B(x,\theta r)} |u(y)| \did S(y) . 
+%	\end{align*}
+	\intertext{ This shows~\eqref{eq67bb1919}.
+%	Next, take $\theta =1/2$.
+	Next, we use the fact that, if $y\in\de B(x,\theta r)$, then $B(y,(1-\theta)r)\subset B(x,r)$.
+	Thus, applying Lemma~\ref{lem67bb11e4} to the running estimates, we get}
+%	\begin{align*}
+		|\de_ju(x)| 
+		&\le \frac{1}{\omega_n  (\theta r)^n} \int_{\de B(x,\theta r)} |u(y)| \did S(y) \\
+		&\overset{\eqref{eq67bb11da}}\le \frac{1}{\omega_n  (\theta r)^n} \int_{\de B(x,\theta r)} \frac1{\omega_n ((1-\theta)r)^n}  \|u\|_{L^1(B(y,(1-\theta)r))} \did S(y) \\
+		&\le \frac{1}{\omega_n  (\theta r)^n} \frac{1}{\omega_n  ((1-\theta) r)^n} n\omega_n  (\theta r)^{n-1} \|u\|_{L^1(B(x,r))} \\
+		&= \frac{n}{\omega_n \theta (1-\theta)^n r^{n+1}}\|u\|_{L^1(B(x,r))}
+%
+%		|\de_ju(x)| 
+%		&\le \frac{1}{\omega_n  (r/2)^n} \int_{\de B(x,r/2)} |u(y)| \did S(y) \\
+%		&\overset{\eqref{eq67bb11da}}\le \frac{1}{\omega_n  (r/2)^n} \int_{\de B(x,r/2)} \frac1{\omega_n (r/2)^n}  \|u\|_{L^1(B(y,r/2))} \did S(y) \\
+%		&\le \frac{2^n}{\omega_n  r^n} \frac{1}{\omega_n  (r/2)^n} n\omega_n  (r/2)^{n-1} \|u\|_{L^1(B(x,r))} \\
+%		&= \frac{n2^{n+1}}{\omega_n  r^{n+1}}\|u\|_{L^1(B(x,r))}
+	\end{align*}
+	All in all, if we take $\theta =1/2$, we have~\eqref{eq67bb100e}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop67bb09b8}]
+	We shall prove by induction over $k$.
+	
+	For $k=0$ and $k=1$, we have already Lemma~\ref{lem67bb11e4} and Lemma~\ref{lem67bb0fed}, respectively.
+		
+	Let $m\ge1$ and assume that \eqref{eq67baf145} holds for all $k\le m$.
+	We now prove \eqref{eq67baf145} for $k=m+1$.
+	Let $\alpha\in\N^n$ with $|\alpha|=m+1$.
+	Then there is $\beta\in\N^n$ with $|\beta|=m$ and $j\in\{1,\dots,n\}$ such that $\Diff^\alpha = \Diff^\beta\frac{\de}{\de x_j}$.
+	
+	The function $\Diff^\beta u$ is harmonic by Lemma~\ref{lem67bb0a0c}.
+	We apply Lemma~\ref{lem67bb0fed} to the function $\Diff^\beta u$ and get that,
+	for $\theta\in(0,1)$,
+	\begin{align*}
+		|\Diff^\alpha u(x)| 
+		&= |\de_j \Diff^\beta  u(x)| \\
+		&\overset{\eqref{eq67bb1919}}\le \frac{1}{\omega_n  (\theta r)^n} \int_{\de B(x,\theta r)} |\Diff^\beta u(y)| \did S(y) \\
+%		&\le \frac{1}{\omega_n  (\theta r)^n} \frac{(2^{n+1}n m)^m}{\omega_n } \frac{1}{((1-\theta)r)^{n+m}} \|u\|_{L^1(B(x,r))} \int_{\de B(x,\theta r)} \did S(y) \\
+		\text{[inductive hypothesis]}
+		&\le \frac{1}{\omega_n  (\theta r)^n}  \frac{C_m}{((1-\theta)r)^{n+m}} \|u\|_{L^1(B(x,r))} \int_{\de B(x,\theta r)} \did S(y) \\
+%		&= \frac{1}{\omega_n  (r/m)^n} \frac{C_m}{((m-1)r/m)^{n+m}} \|u\|_{L^1(B(x,r))} n\omega_n  (r/m)^{n-1} \\
+		&= C_m n \frac{1}{(1-\theta)^{n+m}\theta} \frac1{r^{n+m+1}} \|u\|_{L^1(B(x,r))} .
+	\end{align*}
+	
+	Taking $\theta = \frac{1}{m+1}$ and $C_m = \frac{(2^nnm)^m}{\omega}$, we get
+	\begin{align*}
+	|\Diff^\alpha u(x)|
+	&\le \frac{(2^nnm)^m}{\omega} \frac{ n(m+1)^{m+n+1} }{ m^{m+n} } \frac1{r^{n+m+1}} \|u\|_{L^1(B(x,r))} \\
+	\text{[computations]}&\le \frac{(2^nn(m+1))^{m+1}}{\omega} \frac1{r^{n+m+1}} \|u\|_{L^1(B(x,r))} .
+	\end{align*}
+\end{proof}
+
+\begin{exercise}
+	Let $a,b<0$ and define $\phi:(0,1)\to\R$, $\phi(\theta) = \theta^a\theta^b$.
+	Find the minimum and the point of minimum of $\phi$ on $(0,1)$.
+	
+	{\it Solution}:
+	$\theta_m = \frac{a}{a+b}$ and $\phi(\theta_m)=\left(\frac{a}{a+b}\right)^{a+b}$.
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Analyticity]\label{thm67bb666b}
+	Harmonic functions are analytic.
+\end{theorem}
+\begin{proof}
+	Let $U\subset\R^n$ open and $u\in C^\infty(U)$ a harmonic function.
+	Fix $\hat x\in U$ and set $\hat r = \frac14 \dist(\hat x,\de U)$.
+	We claim that, there exists $\epsilon\in(0,1)$ such that, if
+	\begin{equation}\label{eq67bb678e}
+		r < %\frac{\hat r}{2^{n+2} n^3 e} = 
+		\epsilon \hat r,
+	\end{equation}
+	then the Taylor series of $u$ centered at $\hat x$ converges on $B(\hat x,r)$ to $u$,
+	that is, for every $x\in B(\hat x,r)$,
+	\begin{equation}\label{eq67bb6792}
+		u(x) = \lim_{N\to\infty} \sum_{k=0}^N \sum_{|\alpha|=k} \frac{\Diff^\alpha u(\hat x)}{\alpha!} (x-\hat x)^\alpha .
+	\end{equation}
+	
+	To this aim, define the reminder function
+	\[
+	R_N(x) = u(x) - \sum_{k=0}^{N-1} \sum_{|\alpha|=k} \frac{\Diff^\alpha u(\hat x)}{\alpha!} (x-\hat x)^\alpha .
+	\]
+	For every $x\in B(\hat x,r)$ there exists $t_x\in[0,1]$ such that
+	\[
+	R_N(x) = \sum_{|\alpha|=N} \frac{\Diff^\alpha u(\hat x+t(x-\hat x))}{\alpha!} (x-\hat x)^\alpha .
+	\]
+	Using Proposition~\ref{prop67bb09b8}, we make the following estimate:
+	since $\hat x+t(x-\hat x)\in B(\hat x,r) \subset B(\hat x,\hat r)$,
+	\begin{align*}
+		|R_N(x)|
+		&\le \sum_{|\alpha|=N} \frac{|\Diff^\alpha u(\hat x+t(x-\hat x))|}{\alpha!} |x-\hat x|^N \\
+		&\overset{\eqref{eq67baf145}}\le  \frac{(2^{n+1}nN)^N \|u\|_{L^1(B(\hat x,\hat r))}}{\omega_n \hat r^{n+N} }  r^N \sum_{|\alpha|=N}\frac1{\alpha!}\\
+		&\overset{\eqref{eq67bb6ddf}}= \frac{\|u\|_{L^1(B(\hat x, \hat r))}}{\omega_n \hat r^n} \epsilon^N (2^{n+1}nN)^N \frac{n^N}{N!} \\
+		&= \frac{\|u\|_{L^1(B(\hat x, \hat r))} }{ \omega_n \hat r^n } \frac{\sqrt{2\pi N} (N/e)^N }{N!} 
+			\frac{(\epsilon 2^{n+1}n^2N)^{N}}{\sqrt{2\pi N} (N/e)^N } \\
+		&= \frac{\|u\|_{L^1(B(\hat x, \hat r))} }{ \omega_n \hat r^n } \frac{\sqrt{2\pi N} (N/e)^N }{N!} 
+			\frac{(\epsilon 2^{n+1}n^2e)^{N}}{\sqrt{2\pi N} } ,\\
+	\end{align*}
+	where we have used the Multinomial Theorem
+	\begin{equation}\label{eq67bb6ddf}
+		n^N = (\sum_{j=1}^n 1)^N = \sum_{|\alpha|=N} \frac{N!}{\alpha!} .
+	\end{equation}
+	Using Stirling's formula
+	\begin{equation}\label{eq67bb6e37}
+		\lim_{N\to\infty} \frac{\sqrt{2\pi N} (N/e)^N }{N!}  = 1 ,
+	\end{equation}
+	we conclude that, if $\epsilon\in(0,1)$ is so that $\epsilon 2^{n+1}n^2e<1$, then $\lim_{N\to\infty}|R_N(x)|=0$.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Liouville's Theorem}\label{subs67bb6f4c}
+
+\begin{theorem}[Liouville's Theorem]\label{thm67bb782e}
+	If $u:\R^n\to\C$ is harmonic and bounded, then $u$ is constant.
+\end{theorem}
+\begin{proof}
+	Fix $ x\in\R^n$.
+	Then, for all $r>0$, we have from Proposition~\ref{prop67bb09b8}, 
+	\begin{align*}
+		|Du( x)| 
+		&\le \sum_{j=1}^n \left| \frac{\de u}{\de x_j}( x) \right| 
+		\le \frac{nC_1}{r^{n+1}} \int_{B( x,r)} |u(y)| \did y \\
+		&\le \frac{nC_1}{r^{n+1}} \|u\|_{L^\infty(\R^n)} \omega_n r^n 
+		= \frac{nC_1\omega_n \|u\|_{L^\infty(\R^n)} }{r} .
+	\end{align*}
+	Since this inequality holds for every $r>0$, then $\Diff u( x)=0$.
+	Since $ x$ is arbitrary, then $\Diff u\equiv0$ on $\R^n$,
+	i.e., $u$ is constant.
+\end{proof}
+
+\begin{exercise}
+	Prove Liouville's Theorem using only the ball mean-value property.
+	
+	{\it Solution}:
+	Fix $\hat x\in\R^n$ and $x\in B(\hat x,1)$.
+	Then 
+	\begin{align*}
+		|u(x)-u(\hat x)|
+		&= \left| \fint_{B(x,r)} u(y) \did y - \fint_{B(\hat x,r)} u(y) \did y \right| \\
+		&= \frac1{\omega_nr^n} \left| \int_{B(x,r)\setminus B(\hat x,r)} u(y) \did y - \int_{B(\hat x,r)\setminus B(x,r)} u(y) \did y \right| \\
+		&\le frac1{\omega_nr^n} \int_{B(\hat x,r+1)\setminus B(\hat x,r-1)} |u(y)| \did y \\
+		&\le \|u\|_{L^\infty(\R^n)} \frac{ (r+1)^n - (r-1)^n }{ r^n } \\
+		&= \|u\|_{L^\infty(\R^n)} \left( (1+1/r)^n - (1-1/r)^n \right) 
+		\overset{r\to\infty}\longrightarrow 0 .
+	\end{align*}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Representation formula}\label{subs67bb761c}
+
+Define
+\[
+C^2_b(\R^n) = \{u\in C^2(\R^n): \|u\|_{L^\infty}<\infty \} .
+\]
+
+\begin{theorem}
+	Suppose $n\ge3$ and fix $f\in C^2_c(\R^n)$.
+	The solutions $u$ of $\laplacian u=f$ in $C^2_b(\R^n)$ are exactly all functions in the family
+	\begin{equation}
+		\left\{ x\mapsto \int_{\R^n} \Phi(x-y) f(y) \did y + c : c\in \C \right\}
+%		\qquad\forall x\in\R^n .
+	\end{equation}
+	
+%	If $u\in C^2(\R^n)$ and $f\in C^2_c(\R^n)$ are such that $\laplacian u=f$ on $\R^n$,
+%	and if $u$ is bounded, then there exists $C\in\C$ such that
+%	\begin{equation}
+%		u(x) = \int_{\R^n} \Phi(x-y) f(y) \did y + C
+%		\qquad\forall x\in\R^n .
+%	\end{equation}
+\end{theorem}
+\begin{proof}
+	We already know that the function $\tilde u(x) = \int_{\R^n} \Phi(x-y) f(y) \did y$ 
+	is of class $C^2$ and solves $\laplacian\tilde u=f$.
+	
+	We claim that $\tilde u\in C^2_b(\R^n)$.
+	Indeed, if $\spt(f)\subset \R^n\setminus B(x,R)$, then
+	\begin{align*}
+		|\tilde u(x)| 
+		&= \left| \int_{\spt(f)} \Phi(x-y) f(y) \did y \right| \\
+		&\le \|f\|_{L^\infty} \Phi(R) |\spt(f)| .
+	\end{align*}
+	So, if $\spt(f)\subset B(0,L)$, then for every $x$ with $|x|\ge L$, we have
+	$\tilde u(x) \le  \|f\|_{L^\infty}|\spt(f)| \Phi(|x|-L)$.
+	Therefore, $\lim_{x\to\infty}|\tilde u(x)| = 0$.
+	In particular, $\tilde u$ is bounded on $\R^n$.
+	
+	If $\laplacian u=f$ and if $u$ is bounded, then $u-\tilde u$ is bounded and $\laplacian(u-\tilde u)=0$.
+	By Liouville's Theorem~\ref{thm67bb782e}, $u-\tilde u$ is constant.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Harnack's Inequality}\label{subs67bb79dd}
+
+\begin{theorem}[Harnack's Inequality]\label{thm67bb79ea}
+	Let $U\subset\R^n$ be open and $V\Subset U$ an open and connected subset.
+	There exists $C>0$ (depending on $U$ and $V$) such that,
+	if $u:U\to[0,+\infty)$ is harmonic on $U$ and non-negative, then
+	\begin{equation}
+		\sup_V u \le C \inf_V u ,
+	\end{equation}
+	or, equivalentely,
+	\begin{equation}
+		\forall x,y\in V:
+		\qquad
+		u(x) \le C u(y) .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Let $r=\frac14\dist(V,\de U)$.
+	If $x,y\in V$ are such that $|x-y|<r$, then, by the Mean-Value Theorem~\ref{teo67bac805},
+	\begin{align*}
+		u(x) 
+		&= \fint_{B(x,2r)} u(z) \did z \\
+		&= \frac1{\omega_n (2r)^n} \left( \int_{B(y,r)} u(z)\did z + \int_{B(x,r2)\setminus B(y,r)} u(z) \did z \right) \\
+		\text{[since $u\ge0$]}
+		&\ge \frac1{2^n} \fint_{B(y,r)} u(z) \did z
+		= \frac1{2^n} u(y) .
+	\end{align*}
+	Since $\bar V$ is compact and connected, there is a finite family of points $x_1,\dots,x_N\in V$ such that $|x_j-x_{j+1}|<r$ and $\bigcup_{j=1}^N B(x_j,r)\supset V$.
+	Then, whenever $x,y\in V$, then
+	\[
+	u(x) \ge \left( \frac1{2^n} \right)^{N+1} u(y) .
+	\]
+\end{proof}
+Comments:
+\begin{enumerate}
+\item	If $\inf_V u=0$, then $u=0$.
+\item	If $\inf_V u=1$, then $\sup_V u \le C$, where the constant $C$ is determined by $U$ and $V$, but independent on $u$.
+\item	Example on $\R$: take $V=(1,2)$ and $U=(0,4)$ and make a picture of affine maps that must be positive on $U$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Green's function}\label{subs67bb7d34}
+(See section 2.2.4 in Evans' book)
+
+\begin{theorem}[Representation formula using Green's function]\label{thm67bb7d61}
+	Let $U\subset\R^n$ be open, bounded and with $C^1$ boundary $\de U$.
+	Suppose that there exists a \emph{corrector function} $\phi:\bar U\times\bar U\to\R$, $\phi(x,y) = \phi^x(y)$, such that, for every $x\in U$,
+	\begin{equation}\label{eq67bb7eeb}
+	\begin{cases}
+		\laplacian \phi^x = 0 & \text{ in }U , \\
+		\phi^x(y) = \Phi(y-x) & \forall y\in\de U ,
+	\end{cases}
+	\end{equation}
+	where $\Phi$ is the fundamental solution in $\R^n$.
+	Define the \emph{Green function of $U$} as 
+	\begin{equation}
+		G : \{(x,y)\in U\times U: x\neq y\} \to \R ,
+		\qquad
+		G(x,y) = \Phi(y-x) - \phi^x(y) .
+	\end{equation}
+	
+	If $u\in C^2(\bar U)$, then, for every $x\in U$,
+	\begin{equation}\label{eq67bb7ef3}
+		u(x) = - \int_{\de U} u(y) \grad G(x,y) \cdot \nu_{\de U}(y) \did S(y)
+			+ \int_U \laplacian u(y) G(x,y) \did y .
+	\end{equation}
+	In particular, if $f\in C^0(U)$, $g\in C^0(\de U)$ and $u\in C^2(\bar U)$ are such that
+	\begin{equation}\label{eq67bb7ef9}
+	\begin{cases}
+		- \laplacian u = f & \text{ in }U , \\
+		u = g & \text{ on }\de U ,
+	\end{cases}
+	\end{equation}
+	then, for all $x\in U$,
+	\begin{equation}\label{eq67bb7f00}
+		u(x) = - \int_{\de U} g(y) \grad G(x,y) \cdot \nu_{\de U}(y) \did S(y)
+			+ \int_U f(y) G(x,y) \did y .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	If $\epsilon>0$ is such that $B(x,\epsilon)\Subset U$, then
+	\[
+	\int_U \laplacian u(y) G(x,y) \did y
+	= \int_{B(x,\epsilon)} \laplacian u(y) G(x,y) \did y
+		+ \int_{U\setminus B(x,\epsilon)} \laplacian u(y) G(x,y) \did y .
+	\]
+	where $\laplacian u$ and $G(x,\cdot)$ both belong to $L^1(U)$ 
+	and thus 
+	\[
+	\lim_{\epsilon\to0} \int_{B(x,\epsilon)} \laplacian u(y) G(x,y) \did y = 0 .
+	\]
+	
+	Set $V_\epsilon = U\setminus B(x,\epsilon)$.
+	Then
+	\begin{align*}
+		&\int_{V_\epsilon} \laplacian u(y) G(x,y) \did y
+		= \int_{V_\epsilon} \div_y(\grad u(y) G(x,y)) \did y
+			- \int_{V_\epsilon} \grad u(y) \cdot \grad_y G(x,y) \did y \\
+		&= \int_{V_\epsilon} \div_y(\grad u(y) G(x,y)) \did y
+			- \int_{V_\epsilon} \div_y( u(y)  \grad_y G(x,y) ) \did y \\
+		&\qquad 
+			+ \int_{V_\epsilon} u(y)  \underbrace{\laplacian_y G(x,y)}_{=0} \did y \\
+		&= \int_{\de V_\epsilon} \grad u(y) G(x,y)\cdot\nu_{V_\epsilon}(y) \did y
+			- \int_{\de V_\epsilon} u(y)  \grad_y G(x,y)\cdot\nu_{V_\epsilon}(y) \did y \\
+		&= - \int_{\de B(x,\epsilon)} \grad u(y) G(x,y) \cdot\frac{y-x}{|y-x|} \did y
+			+ \int_{\de U} \grad u(y) \underbrace{G(x,y)}_{=0} \cdot\nu_U(y) \did y \\
+		&\qquad
+			- \int_{\de U} u(y) \grad_y G(x,y) \did y 
+			+ \int_{\de B(x,\epsilon)} u(y) \grad_y G(x,y)\cdot\frac{y-x}{|y-x|} \did y \\
+		&= - \int_{\de B(x,\epsilon)} \grad u(y) G(x,y) \cdot\frac{y-x}{|y-x|} \did y
+			- \int_{\de U} u(y) \grad_y G(x,y) \did y \\ 
+		&\qquad
+			+ \int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did y 
+			+ \int_{\de B(x,\epsilon)} u(y) \grad_y \phi^x(y)\cdot\frac{y-x}{|y-x|} \did y .
+	\end{align*}
+	Since we have
+	\begin{align}
+	\label{eq67c2ccf1}
+		&\lim_{\epsilon\to0}
+			\int_{\de B(x,\epsilon)}  G(x,y) \grad u(y)\cdot\frac{y-x}{|y-x|} \did y 
+			= 0 ,\\
+	\label{eq67c2ccfa}
+		&\lim_{\epsilon\to0}
+			\int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did y 
+			= u(x) ,\\
+	\label{eq67c2cd00}
+		&\lim_{\epsilon\to0}
+			\int_{\de B(x,\epsilon)} u(y) \grad_y \phi^x(y)\cdot\frac{y-x}{|y-x|} \did y 
+			=0 ,
+	\end{align}
+	then we conclude that
+	\begin{align*}
+		\int_U \laplacian u(y) G(x,y) \did y
+		&= \lim_{\epsilon\to0} \int_{B(x,\epsilon)} \laplacian u(y) G(x,y) \did y
+			+ \int_{U\setminus B(x,\epsilon)} \laplacian u(y) G(x,y) \did y \\
+		&= u(x) - \int_{\de U} u(y) \grad_y G(x,y) \did y .
+	\end{align*}
+	So, we have~\eqref{eq67bb7ef3}.
+\end{proof}
+
+\begin{remark}
+	If $U$ is connected, then for each $x\in U$ there exists at most one corrector function $\phi^x$,
+	by Theorem~\ref{teo67baea93}.
+	At the moment, however, we do not know whether corrector function exist.
+\end{remark}
+
+\begin{exercise}
+	Show~\eqref{eq67c2ccf1}, \eqref{eq67c2ccfa}, and \eqref{eq67c2cd00}, 
+	from the proof of the {\it Representation formula using Green's function}, Theorem~\ref{thm67bb7d61}:
+	\begin{align*}
+%	\label{eq67c2ccf1}
+		&\lim_{\epsilon\to0}
+			\int_{\de B(x,\epsilon)}  G(x,y) \grad u(y)\cdot\frac{y-x}{|y-x|} \did y 
+			= 0 ,\\
+%	\label{eq67c2ccfa}
+		&\lim_{\epsilon\to0}
+			\int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did y 
+			= u(x) ,\\
+%	\label{eq67c2cd00}
+		&\lim_{\epsilon\to0}
+			\int_{\de B(x,\epsilon)} u(y) \grad_y \phi^x(y)\cdot\frac{y-x}{|y-x|} \did y 
+			=0 .
+	\end{align*}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Symmetry of Green functions}\label{subs67c2ce55}
+
+\begin{theorem}[Symmetry of Green functions]\label{thm67c2ce50}
+	Let $U\subset\R^n$ be open and bounded, with $C^1$ boundary $\de U$.
+	Let $G$ be the Green function on $U$.
+	Then
+	\begin{equation}\label{eq67c2ceac}
+		\forall x,y\in U\text{ with } x\neq y
+		\qquad
+		G(x,y) = G(y,x) .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Fox $x,y\in U$ with $x\neq y$.
+	Define
+	\begin{equation}
+		v(z) = G(x,z) = \Phi(z-x) - \phi^x(z) 
+		\quad\text{and}\quad
+		w(z) = G(y,z) = \Phi(z-y) - \phi^y(z) ,
+	\end{equation}
+	where $\Phi$ is the fundamental solution on $\R^n$ and $\phi^y$ is a corrector function.
+	Then $\laplacian v = \laplacian w = 0 $ in $U\setminus\{x,y\}$ and $u=v=0$ on $\de U$.
+	
+	Let $\epsilon>0$ be such that $\bar B(x,\epsilon)\cup \bar B(y,\epsilon)\subset U$ and $\bar B(x,\epsilon)\cap \bar B(y,\epsilon) = \emptyset$.
+	Set $V_\epsilon = U \setminus ( \bar B(x,\epsilon)\cup \bar B(y,\epsilon) )$.
+	Then\footnote{
+\begin{equation}\label{eq67c2d142}
+	\int_U (v\laplacian w - w \laplacian v) \did x
+	= \int_{\de U} (v\grad w - w\grad v)\cdot \nu_U \did S(x) .
+\end{equation}
+}
+	\begin{align*}
+		0
+		&= \int_{V_\epsilon} (v\laplacian w - w \laplacian v) \did z \\
+		&\overset{\eqref{eq67c2d142}}= \int_{\de V_\epsilon} (v\grad w - w\grad v)\cdot \nu_{V_\epsilon} \did S(z) \\
+		&= -\int_{\de B(x,\epsilon)} (v\grad w - w\grad v)\cdot \frac{z-x}{|z-x|} \did S(z) 
+			+ \int_{\de B(y,\epsilon)} (v\grad w - w\grad v)\cdot \frac{z-y}{|z-y|} \did S(z) . \\
+%		&= \int_{\de V_\epsilon} (-v \grad w\cdot \nu_{V_\epsilon} + w \grad v\cdot \nu_{V_\epsilon} ) \did S(z) \\
+%		&= \int_{\de B(x,\epsilon)} (-v\grad w + w \grad v) \cdot \frac{z-x}{\epsilon} \did S(z) 
+%			+ \int_{\de B(y,\epsilon)} (-v\grad w+w\grad v) \cdot \frac{z-y}{\epsilon} \did S(z) .
+	\end{align*}
+	Since
+	\begin{equation}\label{eq67c2d634}
+	\begin{aligned}
+		&\lim_{\epsilon\to 0}
+		\int_{\de B(x,\epsilon)} v\grad w \cdot \frac{z-x}{|z-x|} \did S(z)
+		= 0 ,\\
+		&\lim_{\epsilon\to 0}
+		\int_{\de B(x,\epsilon)}  w\grad v\cdot \frac{z-x}{|z-x|} \did S(z)
+		= w(x) ,
+	\end{aligned}
+	\end{equation}
+	then we obtain $w(x) = v(y)$.
+\end{proof}
+
+\begin{exercise}
+	Show~\eqref{eq67c2d634} in the proof of the {\it Symmetry of Green functions}, Theorem~\ref{thm67c2ce50}:
+	\begin{equation*}%\label{eq67c2d634}
+	\begin{aligned}
+		&\lim_{\epsilon\to 0}
+		\int_{\de B(x,\epsilon)} v\grad w \cdot \frac{z-x}{|z-x|} \did S(z)
+		= 0 ,\\
+		&\lim_{\epsilon\to 0}
+		\int_{\de B(x,\epsilon)}  w\grad v\cdot \frac{z-x}{|z-x|} \did S(z)
+		= w(x) .
+	\end{aligned}
+	\end{equation*}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Uniqueness by Energy methods}\label{subs67c2d8ed}
+
+\begin{theorem}[Uniqueness by Energy methods]\label{thm67c2d8f8}
+	Let $U\subset\R^n$ be open, bounded and with $C^1$ boundary $\de U$.
+	Fix $f\in C^0(U)$ and $g\in C^0(\de U)$.
+	Then there exists at most one solution $u$ in $C^2(\bar U)$ to the boundary value problem
+	\begin{equation}\label{eq67c2d992}
+	\begin{cases}
+		- \laplacian u = f & \text{ in }U , \\
+		u = g & \text{ on }\de U .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Suppose $u_1,u_2\in C^2(\bar U)$ are solutions to~\eqref{eq67c2d992} .
+	Then $u = u_1-u_2\in C^2(\bar U)$ is so that $\laplacian u =0$ in $U$ and $u=0$ on $\de U$.
+	Therefore,
+	\begin{align*}
+		0
+		&= \int_U u\laplacian u \did x \\
+		&= \int_U \div(u \grad u) \did x - \int_U \grad u\cdot\grad u \did x \\
+		&= \int_{\de U} u \grad u\cdot\nu_U \did S(x) - \int_U |\grad u|^2 \did x \\
+		&= - \int_U |\grad u|^2 \did x .
+	\end{align*}
+	Hence, $\grad u = 0 $ in $U$, that is, since $U$ is connected, $u$ is constant.
+	Since $u=0$ on $\de U$, then $u=0$ in $U$.
+\end{proof}
+
+\begin{remark}
+	What is the difference from the previous uniqueness result?
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dirichlet's principle}\label{subs67c2da65}
+\newcommand{\dirichletE}{\mathtt{E}}
+
+\begin{theorem}[Dirichlet's principle]\label{thm67c2da70}
+	Let $U\subset\R^n$ be open, bounded and with $C^1$ boundary $\de U$.
+	Fix $f\in C^0(U)$ and $g\in C^0(\de U)$.
+	
+	Define the \emph{Dirichlet's energy functional}
+	\begin{equation}
+		\dirichletE_f : C^2(\bar U)\to\R,
+		\qquad
+		\dirichletE_f(u) = \int_U (\frac12 |\grad u|^2 - uf) \did x .
+	\end{equation}
+	Define the \emph{admissible set}
+	\begin{equation}
+		\scr A_g = \{ u\in C^2(\bar U) : w = g \text{ on }\de U \} .
+	\end{equation}
+	For all $u\in C^2(\bar U)$, the following statements are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+	\item\label{thm67c2da70_i}
+	\eqref{eq67c2d992} holds, that is,
+		\begin{equation*}
+		\begin{cases}
+			-\laplacian u = f & \text{ in }U , \\
+			u = g & \text{ on }\de U .
+		\end{cases}
+		\end{equation*}
+	\item\label{thm67c2da70_ii}
+		$u\in\scr A_g$ and $\dirichletE_f(u) \le \dirichletE_f(w)$ for all $w\in \scr A_g$, i.e., 
+		$u$ is the arg-min of $\dirichletE_f$ on $\scr A_g$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	$\ref{thm67c2da70_i}\THEN\ref{thm67c2da70_ii}$:
+	The fact that $u\in\scr A_g$ is clear. 
+	We need to show that $\dirichletE_f(u) \le \dirichletE_f(w)$ for all $w\in \scr A_g$.
+	If $w\in \scr A_g$, then
+	\begin{align*}
+	 	\dirichletE_f(u) - \dirichletE_f(w)
+		&= \int_U \left( (|\grad u|^2/2 - uf ) - ( |\grad w|^2/2 - wf ) \right) \did x \\
+		&= \frac12 \int_U (|\grad u|^2 - |\grad w|^2) \did x
+			- \int_U (u-w) f \did x ,
+	\end{align*}
+	where
+	\begin{align*}
+	 	-\int_U (u-w) f \did x
+		&= \int_U (u-w) \laplacian u \did x \\
+		&= \int_U (\div((u-w)\grad u) - \grad(u-w) \cdot \grad u) \did x \\
+		&= \underbrace{\int_{\de U} (u-w) \grad u \cdot \nu_U \did S }_{ =0 \text{ because }uw,\in\scr A_g}
+			- \int_U |\grad u|^2 \did x 
+			+ \int_U \grad w \cdot\grad u \did x .
+	\end{align*}
+	Therefore,
+	\begin{align*}
+	 	\dirichletE_f(u) - \dirichletE_f(w)
+		&= - \int_U ( |\grad u|^2/2 + |\grad w|^2/2 - \grad w\cdot \grad u ) \did x \\
+		&= - \int_U |\grad u-\grad w|^2 \did x 
+		\le 0 .
+	\end{align*}
+	
+	\begin{remark}
+		We see from this calculation that, if $\dirichletE_f(u) = \dirichletE_f(w)$,
+		then $u=w$.
+		This is indeed the proof of the uniqueness in disguised terms.
+	\end{remark}
+	
+	$\ref{thm67c2da70_ii}\THEN\ref{thm67c2da70_i}$:
+	Fix $\phi\in C^\infty_c(U)$ and define $\iota_\phi:\R\to\R$ by
+	\[
+	\iota_\phi(\tau) := \dirichletE_f(u + \tau\phi) .
+	\]
+	Notice that $u+\tau\phi\in\scr A_g$ for all $\tau\in\R$,
+	because $\phi=0$ on $\de U$.
+	If $\iota_\phi$ is differentiable at $0$, then $\frac{\dd}{\dd \tau}\iota_\phi(0) = 0$.
+	In fact, we have
+	\begin{align*}
+	 	\iota_\phi(\tau)
+		&= \int_U (|\grad(u+\tau\phi)|^2/2 - (u+\tau\phi)f) \did x \\
+		&= \tau^2 \int_U |\grad\phi|^2/2 \did x
+			+ \tau \int_U (\grad u\cdot\grad\phi - \phi f) \did x 
+			+ \int_U (|\grad u|^2/2 - uf) \did x .
+	\end{align*}
+	So, $\iota_\phi(\tau)$ is polynomial in $\tau$ and it has a minimum at $0$ if and only if
+	$\int_U (\grad u\cdot\grad\phi - \phi f) \did x = 0$,
+	where
+	\begin{align*}
+		\int_U (\grad u\cdot\grad\phi - \phi f) \did x
+		&= \underbrace{\int_{\de U} \phi\grad u\cdot \nu_U \did S }{=0\text{ because }\phi=0\text{ on }\de U}
+			- \int_U \phi(f+\laplacian u) \did x \\
+		&= - \int_U \phi\cdot(f+\laplacian u) \did x .
+	\end{align*}
+	We conclude that, if $u$ is as in \ref{thm67c2da70_ii}, then 
+	\begin{equation}\label{eq67c2eb31}
+		\forall\phi\in C^\infty_c(U) ,
+		\qquad
+		\int_U \phi\cdot(f+\laplacian u) \did x = 0 .
+	\end{equation}
+	By the Fundamental Theorem of Calculus of Variations~\ref{thm67c2eb77}, 
+	we~\eqref{eq67c2eb31} is equivalent to $-\laplacian u=f$ on $U$.
+\end{proof}
+
+\begin{theorem}[Fundamental Theorem of Calculus of Variations]\label{thm67c2eb77}
+	If $u\in L^1_\loc(\R^n)$ is such that
+	\begin{equation}\label{eq67c2ebaf}
+		\forall\phi\in C^\infty_c(U) ,
+		\qquad
+		\int_U \phi\cdot u \did x = 0 ,
+	\end{equation}
+	then $u=0$ almost everywhere in $\R^n$.
+\end{theorem}
+
+\begin{exercise}
+	Prove the Fundamental Theorem of Calculus of Variations~\ref{thm67c2eb77}.
+\end{exercise}
+
+\begin{remark}
+	We have not proven yet that the boundary value problem~\eqref{eq67c2d992} has any solution at all.
+	Do you have an idea of how to prove it? Think about it.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Heat Equation}
+
+For $U\subset\R^n$ open and $I\subset\R$ open interval, e.g., $I=(0,+\infty)$,
+$u\in C^2(U\times I)$ and $f\in C^0(U\times I)$,
+the \emph{heat equation} is
+\begin{equation}
+	\de_t u - \laplacian u = 0 \text{ in } U\times I ,
+\end{equation}
+and the \emph{nonhomogeneous heat equation} is
+\begin{equation}
+	\de_t u - \laplacian u = f \text{ in } U\times I .
+\end{equation}
+In these expressions, $\de_tu$ is the derivative of $u$ in the direction of $I$ in the product $U\times I$, 
+while the Laplacian $\laplacian u = \laplacian_x u$ is with respect to the space variable, that is, in the directions $U$ in $U\times I$.
+In other words, if $(x,t)$ are the coordinates of $U\times I$, with $x\in U$ and $t\in I$,
+then
+\[
+(\de_t - \laplacian) u
+=\de_t u - \laplacian u 
+= \frac{\de u}{\de t}(x,t) - \sum_{j=1}^n \frac{\de^2u}{\de x_j^2}(x,t).
+\]
+We call $\de_t - \laplacian$ the \emph{heat operator}.
+The heat operator $\de_t - \laplacian$ is a parabolic linear differential operator of order 2.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example of solutions}\label{subs67c45976}
+
+\begin{exercise}
+	Define 
+	\begin{equation}
+		\psi_+ : \R^n \times (0,+\infty) \to \R ,
+		\qquad
+		\psi_+(x,t) = \frac{1}{t^{n/2}} \exp\left(-\frac{|x|^2}{4t} \right) .
+	\end{equation}
+	Show that $(\de_t-\laplacian)\psi_+=0$ in $\R^n \times (0,+\infty)$.
+	Draw a graph of $x\mapsto \psi_+(x,t)$ for positive $t$ when $n=1$
+	(We will see that this function represents a forward propagation: this is why we have a plus.)
+\end{exercise}
+
+\begin{exercise}
+	Define 
+	\begin{equation}
+		\psi_- : \R^n \times (0,+\infty) \to \R ,
+		\qquad
+		\psi_-(x,t) = \frac{1}{t^{n/2}} \exp\left(\frac{|x|^2}{4t} \right) .
+	\end{equation}
+	Show that $(\de_t-\laplacian)\psi_+=0$ in $\R^n \times (0,+\infty)$.
+	Draw a graph of $x\mapsto \psi_+(x,t)$ for positive $t$ when $n=1$.
+	(We will see that this function represents a backward propagation: this is why we have a minus.)
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Symmetries of the heat operator}
+Let $U\subset\R^n$ open, $I\subset\R$ an open interval, $u\in C^2(U\times I)$, $O\in\Orth(n)$ and $b\in\R^n$, $\tau\in\R$.
+Define $\tilde  u(y,s) = u(Oy+b,s+\tau)$.
+Then $\tilde bar u\in C^2(O^{-1}(U-b)\times (I-\tau))$ and
+\begin{equation}\label{eq67c3002d}
+	(\de_t - \laplacian) \tilde u(y,t) = (\laplacian u)(Oy+b,s+\tau).
+\end{equation}
+
+\begin{exercise}
+	Show the identity~\eqref{eq67c3002d}.
+\end{exercise}
+
+\begin{exercise}
+	Let $U\subset\R^n$ open, $I\subset\R$ an open interval, $u\in C^2(U\times I)$, $O\in\Orth(n)$ and $b\in\R^n$, $\tau\in\R$ and $\lambda,\sigma\in\R\setminus\{0\}$
+	Define 
+	\[
+	\tilde  u(y,s) = u(\lambda Oy+b,\sigma s+\tau) .
+	\]
+	Compute $(\de_t - \laplacian) \tilde u$ in terms of $(\de_t - \laplacian) u$.
+	Determine for which choices of transformations we have that, if $u$ is a solution to the heat equation, i.e., $(\de_t - \laplacian) u=0$, then $\tilde u$ is also a solution to the heat equation, i.e., $(\de_t - \laplacian) \tilde u=0$.
+\end{exercise}
+
+\begin{exercise}
+	Show that, if $\lambda>0$ and if $(\de_t - \laplacian) u=0$, 
+	then $(\de_t - \laplacian) \tilde u=0$,
+	where $\tilde u(x,t) = u(\lambda x,\lambda^2 t)$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fundamental solution for the heat equation}
+
+The \emph{fundamental solution for the heat equation} is the function 
+$\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
+\begin{equation}\label{eq67c3022e}
+	\Phi(x,t) = \begin{cases}
+	\frac{1}{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right)
+		& \text{ for $x\in\R^n$ and $t>0$,} \\
+	0 & \text{otherwise, i.e., }(x,t)\in(\R^n\times(-\infty,0])\setminus\{(0,0)\} .
+	\end{cases}
+\end{equation}
+
+\begin{exercise}
+	Find the formula for the fundamental solution for the heat equation by yourself in the following way:
+	look for $\Phi$ of the form 
+	$\Phi(x,t) = \frac1{t^\alpha} v\left( \frac{|x|}{t^\beta} \right)$,
+	or
+	$\Phi(x,t) = \frac1{t^\alpha} v\left( \frac{|x|^2}{t^\beta} \right)$,
+	with $(\de_t-\laplacian_x)\Phi=0$ in $\R^n\times(0,+\infty)$.
+\end{exercise}
+
+\begin{lemma}
+	\begin{equation}\label{eq67c3065f}
+		\int_\R e^{-x^2}\did x = \sqrt{\pi} .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	See \href{https://math.stackexchange.com/questions/154968/is-there-really-no-way-to-integrate-e-x2}{stackexchange}.
+\end{proof}
+
+\begin{exercise}
+	Find a proof (by yourself or in the literature) for~\eqref{eq67c3065f}, that is,
+	\begin{equation}
+		\int_\R e^{-x^2}\did x = \sqrt{\pi} .
+	\end{equation}
+\end{exercise}
+
+\begin{proposition}[Properties of the fundamental solution]\label{prop67c302e8}
+	The function $\Phi$ defined in~\eqref{eq67c3022e} has the following properties:
+	\begin{enumerate}
+	\item\label{prop67c302e8_smooth}
+	$\Phi\in C^\infty(\R^n\times\R\setminus\{(0,0)\})$.
+	\item\label{prop67c302e8_diff}
+	for every $t>0$ and $x\in\R^n$, 
+	\begin{align*}
+		\grad_x\Phi(x,t) 
+		&= - \frac1{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right) \frac{x}{2t}
+		= - \Phi(x,t) \frac{x}{2t} , \\
+		\de_t \Phi(x,t) 
+		&= \frac1{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right) 
+			\left( \frac{|x|^2}{4t^2} - \frac{n}{2} \frac1{4\pi t} \right) 
+		= \Phi(x,t) \left( \frac{|x|^2}{4t^2} - \frac{n}{2t} \right) , \\
+		\Diff^2_x\Phi(x,t)
+		&= \Phi(x,t) \left( \frac{x\otimes x}{4t^2} - \frac{\Id}{2t} \right) .
+	\end{align*} 
+	\item\label{prop67c302e8_heat}
+	$(\de_t-\laplacian)\Phi = 0$ in $\R^n\times\R\setminus\{(0,0)\}$.
+	\item\label{prop67c302e8_intr}
+	for every $t>0$, $\int_{\R^n} \Phi(x,t) \did x = 1$
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	\fbox{Proof of~\ref{prop67c302e8_smooth}:}
+	To show that $\Phi$ is smooth, we proceed as follows.
+	Define
+	\begin{equation*}
+		\scr F = \left\{ 
+			\phi:\R^n\times\R\setminus\{(0,0)\} \to \R :
+			\begin{array}{l}
+			\exists P(x,t) \text{ polynomial with }\\
+			\phi(x,t) = P(x,t^{-1/2})\exp\left( -\frac{|x|^2}{4t} \right)\text{ for $t>0$,}\\
+			\text{while $\phi(x,t)=0$ for $t\le 0$}
+			\end{array}
+		\right\}
+	\end{equation*}
+	Then we have the following two facts (whose proof is left as an exercise):
+	First, $\scr F\subset C^0(\R^n\times\R)$.
+	Second, if $\phi\in\scr F$, then $\frac{\de\phi}{\de x_j},\frac{\de\phi}{\de t}\in\scr F$, for all $j\in\{1,\dots,n\}$.
+	We conclude that $\scr F\subset C^\infty(\R^n\times\R\setminus\{(0,0)\})$.
+	Since $\Phi\in\scr F$, we the proof is complete.
+	
+	\fbox{Proofs of~\ref{prop67c302e8_diff} and~\ref{prop67c302e8_heat}}
+	are left as exercise.
+	
+	\fbox{Proof of~\ref{prop67c302e8_intr}:}
+	Fix $t>0$. Then we have
+	\begin{align*}
+		\int_{\R^n} \Phi(x,t) \did x
+		&= \int_{\R^n} \exp\left( -\frac{|x|^2}{4t} \right) \frac{\did x}{(4\pi t)^{n/2}} \did x \\
+		[y=\frac{x}{2\sqrt{t}}]
+		&= \frac1{\pi^{n/2}} \int_{\R^n} \exp(-|y|^2) \did y \\
+		&= \frac1{\pi^{n/2}} \prod_{j=1}^n \int_\R \exp(-y_j^2) \did y_j \\
+		&\overset{\eqref{eq67c3065f}}= 1 .
+	\end{align*}
+	
+\end{proof}
+
+\begin{exercise}
+	Complete the proof of part~\ref{prop67c302e8_smooth} in Proposition~\ref{prop67c302e8}.
+	Specifically, define
+	\begin{equation*}
+		\scr F = \left\{ 
+			\phi:\R^n\times\R\setminus\{(0,0)\} \to \R :
+			\begin{array}{l}
+			\exists P(x,t) \text{ polynomial with }\\
+			\phi(x,t) = P(x,t^{-1/2})\exp\left( -\frac{|x|^2}{4t} \right)\text{ for $t>0$,}\\
+			\text{while $\phi(x,t)=0$ for $t\le 0$}
+			\end{array}
+		\right\} .
+	\end{equation*}
+	Then show
+	\begin{enumerate}
+	\item	$\scr F\subset C^0(\R^n\times\R)$.
+	\item if $\phi\in\scr F$, then $\frac{\de\phi}{\de x_j},\frac{\de\phi}{\de t}\in\scr F$, for all $j\in\{1,\dots,n\}$.
+	\end{enumerate}
+	Conclude that $\scr F\subset C^\infty(\R^n\times\R\setminus\{(0,0)\})$.
+\end{exercise}
+
+\begin{exercise}
+	Prove parts~\ref{prop67c302e8_diff} and~\ref{prop67c302e8_heat} in Proposition~\ref{prop67c302e8}.
+	Specifically, show that 
+	for every $t>0$ and $x\in\R^n$, 
+	\begin{align*}
+		\grad_x\Phi(x,t) 
+		&= - \frac1{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right) \frac{x}{2t}
+		= - \Phi(x,t) \frac{x}{2t} , \\
+		\de_t \Phi(x,t) 
+		&= \frac1{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right) 
+			\left( \frac{|x|^2}{4t^2} - \frac{n}{2} \frac1{4\pi t} \right) 
+		= \Phi(x,t) \left( \frac{|x|^2}{4t^2} - \frac{n}{2t} \right) , \\
+		\Diff^2_x\Phi(x,t)
+		&= \Phi(x,t) \left( \frac{x\otimes x}{4t^2} - \frac{\Id}{2t} \right) ,
+	\end{align*} 
+	where $\Phi$ is the fundamental solution of the heat operator.
+	Conclude that $(\de_t-\laplacian_x)\Phi=0$ in $\R^n\times\R\setminus\{(0,0)\}$.
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution to the Cauchy problem}\label{subs67c30b65}
+
+\begin{theorem}\label{thm67c30be5}
+	Let $g\in C^0(\R^n)\cap L^\infty(\R^n)$ and define $u:\R^n\times (0,+\infty) \to \C$ as
+	\begin{equation}
+		u(x,t) = \int_{\R^n} \Phi(x-y,t) g(y) \did y
+		= \frac1{(4\pi t)^{n/2}} \int_{\R^n} \exp\left( -\frac{|x|^2}{4t} \right) g(y) \did y ,
+	\end{equation}
+	for $x\in\R^n$ and $t>0$.
+	\begin{enumerate}
+	\item\label{thm67c30be5_smooth}
+		$u\in C^\infty(\R^n\times (0,+\infty))$ and, for every $\alpha\in\N^n$,
+		\begin{equation}\label{eq67c33d51}
+			\Diff^\alpha u(x,t) = \int_{\R^n} \Diff_x^\alpha\Phi(x-y,t) g(y) \did y .
+		\end{equation}
+	\item\label{thm67c30be5_heat}
+		$(\de_t-\laplacian)u=0$ in $\R^n\times (0,+\infty)$;
+	\item\label{thm67c30be5_init}
+		for each $\hat x\in\R^n$, 
+		\begin{equation}\label{eq67c342bb}
+			\lim_{\substack{(x,t)\to(\hat x,0) \\ x\in\R^n,t>0}} u(x,t) = g(x) .
+		\end{equation}
+	\end{enumerate}
+	In particular, $u$ has a continuous extension $u\in C^0(\R^n\times [0,+\infty))\cap C^\infty(\R^n\times (0,+\infty))$ and
+	\begin{equation}\label{eq67c30ca6}
+	\begin{cases}
+		\de_t u - \laplacian u = 0 & \text{ in }\R^n\times (0,+\infty) , \\
+		u = g & \text{ on }\R^n\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	\fbox{Proof of~\ref{thm67c30be5_smooth}:}
+	\[
+	K(x,t;y) = \frac1{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right) g(y) .
+	\]
+	For $R>0$ and $\epsilon>0$, we have, for every $x\in\R^n$ with $|x|< R$ and all $t>\epsilon$,
+	\[
+	|K(x,t;y)|\le h_{R,\epsilon}(y)
+	:= \begin{cases}
+	\frac{\|g\|_{L^\infty}}{(4\pi \epsilon)^{n/2}} & \text{ if }|y|\le R \\
+	\frac{\|g\|_{L^\infty}}{(4\pi \epsilon)^{n/2}} \exp\left( -\frac{(|y|-R)^2}{4 \epsilon} \right) & \text{ if }|y| > R \\
+	\end{cases}
+	\]
+	Since $h_R\in L^1(\R^n)$, satisfy the conditions of~Theorem~\ref{thm679f29de_2}, so $u\in C^0(B(0,R)\times (\epsilon,+\infty))$.
+	Since this holds for every $R>0$ and $\epsilon>0$, we conclude $u\in C^0(\R^n\times (0,+\infty))$.
+	To prove the smoothness of $u$, one uses the same strategy as in the proof of Proposition~\ref{prop67c302e8}.\ref{prop67c302e8_smooth};
+	see Exercise~\ref{exr67c33c9d}.
+	Also~\eqref{eq67c33d51} follows from Proposition~\ref{prop67c302e8}.
+	
+	\fbox{Proof of~\ref{thm67c30be5_heat}:}
+	From~\eqref{eq67c33d51}, we have
+	\begin{equation}
+		(\de_t-\laplacian)u(x,t) 
+		= \int_{\R^n} (\de_t-\laplacian_x)\Phi(x-y,t) g(y) \did y 
+		= 0 ,
+	\end{equation}
+	because $(\de_t-\laplacian_x)\Phi(x-y,t) = 0$ for every $y\in\R^n$ and $t>0$,
+	thanks to Proposition~\ref{prop67c302e8}.\ref{prop67c302e8_heat}.
+	
+	\fbox{Proof of~\ref{thm67c30be5_init}:}
+	Fix $\hat x\in\R^n$ and $\epsilon>0$.
+	Since $g$ is continuous, there exists $\delta>0$ such that $|g(y)-g(\hat x)|<\epsilon$ for all $y\in B(\hat x,\delta)$.
+	\begin{align*}
+	 	|u(x,t)-g(\hat x)|
+		&= \left| \int_{\R^n} \Phi(x-y,t) g(y) \did y - g(\hat x) \int_{\R^n} \Phi(x-y,t)\did y \right| \\
+		&\le \int_{\R^n} \Phi(x-y,t) |g(y)-g(\hat x)| \did y \\
+		&= \int_{B(\hat x,\delta)} \Phi(x-y,t) \underbrace{|g(y)-g(\hat x)|}_{<\epsilon} \did y \\
+		&\quad + \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y)-g(\hat x)| \did y \\
+		&\le \epsilon \underbrace{\int_{\R^n} \Phi(x-y,t) \did y}_{=1}
+			+ \underbrace{ \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y)-g(\hat x)| \did y }_{=: J_\delta(x)} .
+	\end{align*}
+	If $x\in B(\hat x,\delta/2)$, then, for all $y\in \R^n\setminus B(\hat x,\delta)$,
+	\begin{equation}\label{eq67c340a0}
+		|y-x| 
+		\ge |y-\hat x|-|\hat x-x|
+		\ge |y-\hat x|-\delta/2
+		\ge |y-\hat x| - |y-\hat x|/2
+		= |y-\hat x|/2 .
+	\end{equation}
+	Hence, if $x\in B(\hat x,\delta)$, 
+	\begin{align*}
+	 	J_\delta(x) 
+		&\le 2 \|g\|_{L^\infty} \int_{\R^n\setminus B(\hat x,\delta)} \frac{ \exp(-\frac{|x-y|^2}{4t} ) }{ (4\pi t)^{n/2} } \did y \\
+		&\overset{\eqref{eq67c340a0}}\le \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}}
+			\int_{\R^n\setminus B(\hat x,\delta)} \frac{ \exp(-\frac{|y-\hat x|^2}{16t} ) }{  t^{n/2} } \did y \\
+		[z = \frac{y-\hat x}{\sqrt{t}}]
+		&\le \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} 
+			\underbrace{\int_{\R^n\setminus B(\hat x,\delta/\sqrt{t})} \exp(-\frac{|z|^2}{16} ) \did y }_{=:E(\delta,t)} .
+	\end{align*}
+	Since $\delta>0$ and since the integrand in $E(\delta,t)$ is integrable over $\R^n$, then $\lim_{t\to0^+}E(\delta,t) = 0$.
+	Therefore, there exists $\tau>0$ such that $E(\delta,t)<\epsilon$ for all $t\in(0,\tau)$.
+	All in all, we conclude that
+	\begin{equation}\label{eq67c342cf}
+		\forall\epsilon>0\exists \delta,\tau>0 \forall x\in B(\hat x,\delta/2)\ \forall t\in(0,\tau)
+		\qquad
+		|u(x,t) - g(\hat x)| \le \epsilon + \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} \epsilon .
+	\end{equation}
+	\eqref{eq67c342cf} is~\eqref{eq67c342bb}.
+\end{proof}
+
+\begin{exercise}\label{exr67c33c9d}
+	Show part~\ref{thm67c30be5_smooth} in Theorem~\ref{thm67c30be5}.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Approximation of the identity}\label{subs67c41af0}
+From the proof of Theorem~\ref{thm67c30be5}, we can extract the following lemma:
+\begin{lemma}\label{lem67c41d25}
+	Let $T>0$ and $g\in C^0(\R^n\times[0,T])\cap L^\infty(\R^n\times[0,T])$.
+	Then, for every $\hat x\in\R^n$,
+	\begin{equation}\label{eq67c41b8a}
+		\lim_{\substack{(x,t)\to(\hat x,0)\\t>0}}
+		\int_{\R^n} \Phi(z,t) g(\hat x - z,t) \did z = g(\hat x,0) .
+	\end{equation}
+\end{lemma}
+\begin{exercise}
+	Prove Lemma~\ref{lem67c41d25}.
+\end{exercise}
+\begin{proof}
+	Define
+	\begin{equation}
+		u(x,t) = \int_{\R^n} \Phi(z,t) g(x - z,t) \did z 
+		= \int_{\R^n} \Phi(x-z,t) g(z,t) \did z  .
+	\end{equation}
+	Fix $\hat x\in\R^n$ and $\epsilon>0$.
+	Since $g$ is continuous, there exists $\delta>0$ such that $|g(y,t)-g(\hat x,t)|<\epsilon$ for all $y\in B(\hat x,\delta)$ and all $t\in[0,T]$.
+	Then
+	\begin{align*}
+	 	|u(x,t)-g(\hat x,t)|
+		&= \left| \int_{\R^n} \Phi(x-y,t) g(y,t) \did y - g(\hat x,t) \int_{\R^n} \Phi(x-y,t)\did y \right| \\
+		&\le \int_{\R^n} \Phi(x-y,t) |g(y,t)-g(\hat x,t)| \did y \\
+		&= \int_{B(\hat x,\delta)} \Phi(x-y,t) \underbrace{|g(y,t)-g(\hat x,t)|}_{<\epsilon} \did y \\
+		&\quad + \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y,t)-g(\hat x,t)| \did y \\
+		&\le \epsilon \underbrace{\int_{\R^n} \Phi(x-y,t) \did y}_{=1}
+			+ \underbrace{ \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y,t)-g(\hat x,t)| \did y }_{=: J_\delta(x)} .
+	\end{align*}
+	If $x\in B(\hat x,\delta/2)$, then, for all $y\in \R^n\setminus B(\hat x,\delta)$,
+	\begin{equation}\label{eq67c41ccb}
+		|y-x| 
+		\ge |y-\hat x|-|\hat x-x|
+		\ge |y-\hat x|-\delta/2
+		\ge |y-\hat x| - |y-\hat x|/2
+		= |y-\hat x|/2 .
+	\end{equation}
+	Hence, if $x\in B(\hat x,\delta)$, 
+	\begin{align*}
+	 	J_\delta(x) 
+		&\le 2 \|g\|_{L^\infty} \int_{\R^n\setminus B(\hat x,\delta)} \frac{ \exp(-\frac{|x-y|^2}{4t} ) }{ (4\pi t)^{n/2} } \did y \\
+		&\overset{\eqref{eq67c41ccb}}\le \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}}
+			\int_{\R^n\setminus B(\hat x,\delta)} \frac{ \exp(-\frac{|y-\hat x|^2}{16t} ) }{  t^{n/2} } \did y \\
+		[z = \frac{y-\hat x}{\sqrt{t}}]
+		&\le \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} 
+			\underbrace{\int_{\R^n\setminus B(\hat x,\delta/\sqrt{t})} \exp(-\frac{|z|^2}{16} ) \did y }_{=:E(\delta,t)} .
+	\end{align*}
+	Since $\delta>0$ and since the integrand in $E(\delta,t)$ is integrable over $\R^n$, then $\lim_{t\to0^+}E(\delta,t) = 0$.
+	Therefore, there exists $\tau>0$ such that $E(\delta,t)<\epsilon$ for all $t\in(0,\tau)$.
+	All in all, we conclude that
+	\begin{equation}\label{eq67c342cf_bis}
+		\forall\epsilon>0\exists \delta,\tau>0 \forall x\in B(\hat x,\delta/2)\ \forall t\in(0,\tau)
+		\qquad
+		|u(x,t) - g(\hat x)| \le \epsilon + \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} \epsilon .
+	\end{equation}
+	\eqref{eq67c342cf_bis} is~\eqref{eq67c41b8a}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution to the nonhomogeneous Cauchy problem}\label{subs67c34370}
+
+The construction of a solution for the nonhomogeneous Cauchy problem~\eqref{eq67c344a9} is constructed as follows.
+For every $s>0$ let $u_s$ be the solution constructed in the previous Theorem for the Cauchy problem
+\begin{equation}
+\begin{cases}
+	\de_t u_s - \laplacian u_s = 0 & \text{ in }\R^n\times (s,+\infty) , \\
+	u_s = f(\cdot,s) & \text{ on }\R^n\times\{s\} .
+\end{cases}
+\end{equation}
+So, $u_s(x,t) = \int_{\R^n} \Phi(x-y,t-s) f(y,s) \did y$.
+Then, we set $u(x,t) = \int_0^t u_s(x,t) \did s$, that is,~\eqref{eq67c34492}.
+
+\begin{theorem}[Solution to the nonhomogeneous Cauchy problem]\label{thm67c3437d}
+	Let $f\in C^{2;1}_c(\R^n\times[0,+\infty))$ and define $u:\R^n\times(0,+\infty)\to\R$ by
+	\begin{equation}\label{eq67c34492}
+	\begin{aligned}
+		u(x,t) &= \int_0^t \int_{\R^n} \Phi(x-y,t-s) f(y,s) \did y\did s \\
+		&= \int_0^t \frac{1}{(4\pi(t-s))^{n/2}} \int_{\R^n} \exp\left( - \frac{ |x-y|^2 }{ 4(t-s) } \right) f(y,s) \did y \did s .
+	\end{aligned}
+	\end{equation}
+	Then the following holds:
+	\begin{enumerate}
+	\item\label{thm67c3437d_smooth}
+		$u\in C^{2;1}(\R^n\times(0,+\infty))$;
+	\item\label{thm67c3437d_heat}
+		$(\de_t-\laplacian)u = f$ in $\R^n\times(0,+\infty)$;
+	\item\label{thm67c3437d_init}
+		for every $\hat x\in\R^n$, 
+		\begin{equation}\label{eq67c3448d}
+			\lim_{\substack{(x,t)\to(\hat x,0) \\ x\in\R^n,t>0}} u(x,t) = 0 .
+		\end{equation}
+	\end{enumerate}
+	In particular, $u$ has a continuous extension $u\in C^0(\R^n\times [0,+\infty))\cap C^\infty(\R^n\times (0,+\infty))$ and
+	\begin{equation}\label{eq67c344a9}
+	\begin{cases}
+		\de_t u - \laplacian u = f & \text{ in }\R^n\times (0,+\infty) , \\
+		u = 0 & \text{ on }\R^n\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	\fbox{Proof of~\ref{thm67c3437d_smooth}.}
+	First, notice that the integrand in the definition~\eqref{eq67c34492} of $u$ is integrable and thus $u$ is well defined.
+	Moreover,
+	\begin{equation}
+		u(x,t) = \int_0^t \int_{\R^n} \Phi(z,r) f(x-z,t-r) \did z\did r .
+	\end{equation}
+	Define
+	\begin{equation}
+		K(x,t;z,r) := \Phi(z,r) f(x-z,t-r) \one_{[0,t]}(r).
+	\end{equation}
+	Then $|K(x,t;z,r)| \le \|f\|_{L^\infty} \Phi(z,r)$ for all $(x,t),(z,r)\in\R^n\times\R\setminus\{(0,0)\}$.
+	So, we can apply Theorem~\ref{thm679f29de}.
+	
+	\fbox{Proof of~\ref{thm67c3437d_heat}.}
+	With the support of Theorem~\ref{thm679f29de}, we can compute, for $x\in\R^n$, $t>0$, and $\alpha\in\N^n$ with $|\alpha|\le 2$,
+	\begin{align*}
+	 	\de_t u(x,t) 
+		&= \int_{\R^n} \Phi(z,t) f(x-z,0) \did z
+			+ \int_0^t \int_{\R^n} \Phi(z,r) \de_tf(x-z,t-r) \did z\did r , \\
+		\Diff^\alpha u(x,y)
+		&= \int_0^t \int_{\R^n} \Phi(z,r) \Diff^\alpha f(x-z,t-r) \did z\did r .
+	\end{align*}
+	Therefore, for $x\in\R^n$, $t>0$ and $\epsilon\in(0,t)$,
+	\begin{align*}
+		(\de_t - \laplacian)u(x,t)
+		&= \int_{\R^n} \Phi(z,t) f(x-z,0) \did z \\
+		&\qquad
+			+ \int_0^t \int_{\R^n} \Phi(z,r) (\de_t - \laplacian)f(x-z,t-r) \did z\did r \\
+		&= \underbrace{ \int_{\R^n} \Phi(z,t) f(x-z,0) \did z }_{:= K}\\
+		&\qquad
+			+ \underbrace{ \int_0^\epsilon \int_{\R^n} \Phi(z,r) (\de_t - \laplacian)f(x-z,t-r) \did z\did r }_{:= J_\epsilon} \\
+		&\qquad
+			+ \underbrace{ \int_\epsilon^t \int_{\R^n} \Phi(z,r) (\de_t - \laplacian)f(x-z,t-r) \did z\did r }_{:= I_\epsilon} .
+	\end{align*}
+	Now, 
+	\begin{align*}
+		|J_\epsilon| 
+		&\le (\|\de_t f\|_{L^\infty} + \|\Diff^2f\|_{L^\infty} )
+			\int_0^\epsilon \int_{\R^n} \Phi(z,r) \did z\did r \\
+		&= \epsilon (\|\de_t f\|_{L^\infty} + \|\Diff^2f\|_{L^\infty} ) .
+	\end{align*}
+	Next,
+	\begin{align*}
+	 	I_\epsilon 
+		&= \int_\epsilon^t \int_{\R^n} \Phi(z,r) (\de_t - \laplacian_x)f(x-z,t-r) \did z\did r \\
+		&= \int_\epsilon^t \int_{\R^n} \Phi(z,r) (-\de_r - \laplacian_z)f(x-z,t-r) \did z\did r \\
+		&= \int_\epsilon^t \int_{\R^n} (-\de_r(\Phi(z,r)f(x-z,t-r)) + \de_r\Phi(z,r)f(x-z,t-r) ) \did z\did r \\
+		&\qquad
+			- \int_\epsilon^t \int_{\R^n} (\div_z(\Phi(z,r)\grad_zf(x-z,t-r) - \grad_z\Phi(z,r)f(x-z,t-r)) \did z\did r \\
+		&\qquad
+			- \int_\epsilon^t \int_{\R^n} \laplacian\Phi(z,r)f(x-z,t-r)) \did z\did r \\
+		&\overset{(*)}= -K + \int_{\R^n} \Phi(z,\epsilon)f(x-z,t-\epsilon) \did z\did r ,
+	\end{align*}
+	where we used in $(*)$ the fact that $\Phi$ solves the homogeneous heat equation and that $f$ has compact support.
+	So, we conclude that
+	\begin{align*}
+		(\de_t - \laplacian)u(x,t)
+		&= \lim_{\epsilon\to0} \int_{\R^n} \Phi(z,\epsilon)f(x-z,t-\epsilon) \did z\did r \\
+		[\text{Lemma~\ref{lem67c41d25}}]
+		&= f(x,t) .
+	\end{align*}
+	
+	
+	\fbox{Proof of~\ref{thm67c3437d_init}.}
+	We easily conclude with the following estimate:
+	\begin{align*}
+		|u(x,t)|
+%		&\le \int_0^t \int_{\R^n} \Phi(x-y,t-s) |f(y,s)| \did y\did s \\
+		&\le \|f\|_{L^\infty} \int_0^t \int_{\R^n} \Phi(x-y,t-s) \did y\did s \\
+		\text{[by~\ref{prop67c302e8}.\ref{prop67c302e8_intr}]}&= \|f\|_{L^\infty} t .
+	\end{align*}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mean-value formula}\label{subs67c44996}
+\TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Strong maximum and minimum principles}\label{subs67c44a2b}
+
+For $U\subset\R^n$ and $T>0$, define:
+\begin{enumerate}
+\item
+the \emph{closed parabolic cylinder} $\bar U_T := \bar U\times[0,T]$;
+\item
+the \emph{parabolic interior} $U_T := U\times(0,T]$ (notice that $T$ is included);
+\item
+the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\}) \cup (\de U\times [0,T) )$.
+\end{enumerate}
+
+\begin{theorem}[Strong maximum principle]\label{thm67c44b0d}
+	Let $U\subset\R^n$ be open and bounded.
+	Let $u\in C^{2;1}(U_T;\R)\cap C^0(\bar U_T;\R)$ be a real-valued function such that $(\de_t-\laplacian)u=0$ in $U_T$.
+	Then
+	\begin{equation}\label{eq67c45475}
+		\max_{\bar U_T} u = \max_{\Gamma_T} u .
+	\end{equation}
+	Moreover, if $U$ is connected and there exists $(x,t)\in U_T$ such that $u(x,t) = \max_{\bar U_T} u$, then $u$ is constant on $\bar U_t$.
+\end{theorem}
+\begin{proof}
+	(From Folland \cite[Thm 4.16]{MR1357411})
+	
+	In~\eqref{eq67c45475}, the inequality $\max_{\bar U_T} u \ge \max_{\Gamma_T} u$ is clear.
+	We need to show $\max_{\bar U_T} u \le \max_{\Gamma_T} u$.
+	
+	Let $\epsilon>0$ and define $v_\epsilon(x,t) = u(x,t) + \epsilon |x|^2$.
+	Let $T'\in (0,T)$.
+	We claim that
+	\begin{equation}\label{eq67c4531d}
+		\max_{\bar U_{T'}} v_\epsilon = \max_{\Gamma_{T'}} v_\epsilon .
+	\end{equation}
+	First of all, notice that, in $U_T$,
+	\begin{equation}\label{eq67c452da}
+	\de_tv_\epsilon - \laplacian v_\epsilon 
+	= \de_t u - \laplacian u + \epsilon \laplacian(|x|^2) 
+	= +2\epsilon n >0 .
+	\end{equation}
+	Suppose that $(x,t)\in U_{T'}$ is a point of maximum for $v_\epsilon$ on $\bar U_{T'}$.
+	Then $\laplacian v_\epsilon(x,t) \le 0$ and $\de_t v_\epsilon \ge 0$.
+	However, this is in contradiction with~\eqref{eq67c452da}.
+	We conclude that~\eqref{eq67c4531d} must hold.
+	
+	To prove the statement about $u$, we see that
+	\begin{align*}
+	 	\max_{\bar U_{T'}} u 
+		&\le \max_{\bar U_{T'}} v_\epsilon \\
+		&\overset{\eqref{eq67c452da}}= \max_{\Gamma_{T'}} v_\epsilon \\
+		&\le \max_{\Gamma_{T'}} u + \epsilon \max_{\bar U_{T'}} |x|^2 .
+	\end{align*}
+	Since $U$ is bounded, then $ \max_{\bar U_{T'}} |x|^2<\infty$.
+	So, letting $\epsilon\to0$, we obtain the desired inequality.
+\end{proof}
+
+\begin{exercise}
+	Prove the \emph{strong minimum principle} for the heat operator.
+\end{exercise}
+
+\begin{exercise}
+	Prove the strong maximum principle for the heat operator using the mean-value property; see \cite{MR2597943}.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Uniqueness on bounded domains}\label{subs67c4558e}
+\begin{theorem}[Uniqueness on bounded domains]\label{thm67c455a4}
+	Suppose $U\subset\R^n$ is open and bounded, and $T>0$.
+	Let $g\in C^0(\Gamma_T)$ and $f\in C(U_T)$.
+	Then there exist not two distinct solutions in $C^{2;1}(U_T)\cap C(\bar U_T)$ to the boundary value problem
+	\begin{equation}\label{eq67c456eb}
+	\begin{cases}
+		(\de_t-\laplacian)u = f & \text{ in }U_T , \\
+		u = g & \text{ on }\Gamma_T .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Let $u_1,u_2\in C^{2;1}(U_T)\cap C(\bar U_T)$ be two solutions to~\eqref{eq67c456eb}.
+	Then $u=u_1-u_2 \in C^{2;1}(U_T)\cap C(\bar U_T)$ satisfies $(\de_t-\laplacian)u =0$ in $U_T$ and $u = 0$ on $\Gamma_T$.
+	By the strong maximum and minimum principles, see~\ref{subs67c44a2b}, both the real and the imaginary parts of $u$ are zero on $U_T$, i.e., $u_1=u_2$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Maximum and minimum principles for the unbounded Cauchy problem}\label{subs67c45d73}
+
+\begin{theorem}[Maximum principle for the unbounded $U$]\label{thm67c4584f}
+	Let $T>0$.
+	Let $u\in C^{2;1}(\R^n\times(0,T];\R)\cap C^0(\R^n\times[0,T];\R)$ be a real-valued function such that $(\de_t-\laplacian)u=0$ in $\R^n\times(0,T]$.
+	Suppose also that there are $A,a>0$ such that
+	\begin{equation}\label{eq67c45e15}
+		u(x,t) \le A\exp(a|x|^2) .
+	\end{equation}
+	Then
+	\begin{equation}\label{eq67c4584a}
+		\max_{\R^n\times[0,T]} u = \max_{\R^n} u(\cdot,0) .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+\TODO: Recheck the proof!
+
+	Set $g\in C^0(\R^n)$ by $g(x) = u(x,0)$.
+	
+	Fix $\hat y\in\R^n$ and $\mu>0$.
+	Let $0<b\le T$ be such that
+	\begin{equation}
+		\frac1{4b} - a > 0 ,
+		\text{ i.e., }
+		0<b<\frac1{4a} .
+	\end{equation}
+	Define, for $x\in\R^n$ and $t\in(0,b)$,
+	\begin{equation}\label{eq67c4590e}
+		v(x,t) = u(x,t) - \frac{\mu}{(b-t)^{n/2}} \exp\left( \frac{|x-y|^2}{4(b-t)} \right) .
+	\end{equation}
+	So, we have 
+	$v\in C^{2;1}(\R^n\times(0,b);\R)\cap C^0(\R^n\times[0,b);\R)$
+	and $(\de_t-\laplacian)v = 0$ in $\R^n\times(0,b)$;
+	see~\ref{subs67c45976}.
+	
+	By the strong maximum principle~\ref{},
+	for every $r>0$,
+	\begin{equation}
+		\sup\left\{ v(x,t) : 
+		x\in B(y,r),\ t\in[0,b)
+		\right\}
+		=
+		\sup\left\{ v(x,t) : 
+		x\in B(y,r)\text{ and }t=0,
+		\text{ or }
+		x\in\de B(y,r)\text{ and }t\in[0,b)
+		\right\} .
+	\end{equation}
+	If $|x-y|\le r$, then 
+	$v(x,0) = u(x,0) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{|x-y|^2}{4b} \right)
+	\le g(x) \le \|g\|_{L^\infty}$.
+	
+	If $|x-y|=r$ and $t\in[0,b)$, then 
+	\begin{align*}
+	 	v(x,t) 
+		&= u(x,t) - \frac{\mu}{(b-t)^{n/2}} \exp\left( \frac{r^2}{4(b-t)} \right) \\
+		&\le A\exp(a|x|^2) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} \right) \\
+		&\le A\exp(a(|y|+r)^2) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} \right) \\
+		&= \exp(a(|y|+r)^2) \left( A - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} - a (|y|+r)^2 \right) \right) =: J_r .
+	\end{align*}
+	Since $\lim_{r\to\infty} J_r = -\infty$, 
+	we can choose $r$ large enough that the $J_r < \|g\|_{L^\infty}$.
+	We conclude that, for $t\in[0,b)$,
+	\begin{equation}
+		u(\hat y,t) - \frac{\mu}{(b-t)^{n/2}}
+		= v(\hat y,t)
+		\le \sup\{ u(x,t) : x\in B(\hat y,r), t\in[0,b)\} 
+		\le J_r \le \|g\|_{L^\infty} .
+	\end{equation}
+	So, if we fix $t\in [0,b)$, then 
+	$u(\hat y,t) = \lim_{\mu\to0} u(\hat y,t) - \frac{\mu}{(b-t)^{n/2}} \le \|g\|_{L^\infty}$.
+	We can then say that $u(y,t)\le u(y,t-b)$ for all $t\in [b,T]$.
+	This concludes the proof.
+\end{proof}
+
+\begin{exercise}\label{ex67c45e75}
+	State and prove the strong minimum principle for the unbounded Cauchy problem.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Uniqueness for the unbounded Cauchy problem}\label{subs67c45ca2}
+
+\begin{theorem}[Uniqueness for the unbounded Cauchy problem]\label{thm67c45cb9}
+	Let $T>0$, $g\in C^0(\R^n)$ and $f\in C^0(\R^n\times[0,T]$.
+	Set 
+	\begin{equation}\label{eq67c45e49}
+		\scr A = \left\{
+		u\in C^{2;1}(\R^n\times(0,T])\cap C^0(\R^n\times[0,T])
+		: \exists A,a>0,\ |u(x,t)| \le A\exp(a|x|^2)
+		\right\} .
+	\end{equation}
+	There does not exist two solutions in $\scr A$ of
+	\begin{equation}\label{eq67c45d58}
+	\begin{cases}
+		(\de_t-\laplacian)u = f & \text{ in }\R^n\times(0,T] , \\
+		u = g & \text{ on }\R^n\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	If $u_1,u_2\in\scr A$ solve~\eqref{eq67c45d58}, then $u=u_1-u_2\in\scr A$
+	is such that $(\de_t-\laplacian)u = 0$ in $\R^n\times(0,T]$ and
+	$u=0$ for $t=0$.
+	By the maximum and minimum principles~\ref{subs67c45d73},
+	$u\equiv 0$.
+\end{proof}
+\begin{remark}
+	The growth condition~\eqref{eq67c45e15} is necessary: there are counter-examples.
+	See \cite{J2, chapter 7}.
+\end{remark}
+\begin{remark}
+	Notice that in the definition of $\scr A$ in~\eqref{eq67c45e49}, 
+	we require the growth condition~\eqref{eq67c45e15} both as an upper bound and as a lower bound.
+	You should have noticed this already in Exercise~\ref{ex67c45e75}.
+\end{remark}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Wave Equation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\part{Distributions}
+
+\section{Topological vector spaces}
+
+\subsection{Sequential topology}
+
+
+\subsection{Topological vector space}
+A \emph{topological vector space} is a pair $(V,\tau)$ where $V$ is a vector space over $\K\in\{\R,\C\}$ and $\tau$ is a topology on $V$ such that
+\begin{enumerate}
+\item	The sum operation $+:V\times V\to V$ is continuous;
+\item	The inverse operation $-:V\to V$ is continuous;
+\item	The scalar multiplication $\cdot:\K\times V\to V$ is continuous.
+\end{enumerate}
+We will usually just write $V$ for $(V,\tau)$.
+
+
+
+
+\subsection{Dual space}
+If $V$ is a vector space over $\K\in\{\R,\C\}$, then 
+we have an \emph{algebraic dual space}
+\[
+V^* = \{f:V\to \K\text{ linear}\}
+\]
+and a \emph{topological dual} (or just \emph{dual}) 
+\[
+V' = \{f\in V^*\text{ continuous}\} .
+\]
+If $V$ is finite dimensional, then $V'=V^*$.
+
+\subsection{Continuous bilinear maps}
+Let $V$ be a vector space over $\K\in\{\R,\C\}$ and $B\in \Lin^2(V;\K)$ be a continuous bilinear map.
+Define a function $A_B:V\to V'$ by
+\[
+\langle A_B(v) | w \rangle = B(v,w) .
+\]
+Then $A_B$ is a linear continuous operator.
+
+Linearity is trivial.
+Continuity is proven using nets: 
+If $\{v_n\}_{n\in\scr N}\subset V$ is a net converging to $v_\infty\in V$,
+then, for every $w\in W$, $A_B(v_n)w \to A_B(v_\infty)w$, by the continuity of $B$.
+
+In fact, we also have a uniform continuity: if $v_n\to v_\infty$ and $w_n\to w_\infty$, then $A_B(v_n)w_n\to A_B(v_\infty)w_\infty$.
+
+If $V$ is a Banach space with norm $\|\cdot\|$, and $B$ is strongly continuous, that is, there exists $C>0$ such that
+\begin{equation}\label{eq67aa7654}
+|B[v,w]| \le C \|v\| \|w\| ,
+\end{equation}
+ then $A_B$ is strongly continuous.
+Indeed, 
+\[
+\|A_B(v)\| 
+= \sup_{\|w\|\le 1} \|B[v,w]\|
+\le C \|v\| .
+\]
+
+Moreover, if there exists $c>0$ such that
+\begin{equation}\label{eq67aa6d2b}
+|B[v,v]| \ge c \|v\|^2 ,
+\end{equation}
+then $A_B$ is injective.
+%First,~\eqref{eq67aa6d2b} implies that $A_B$ is injective.
+Indeed, if $A_Bv=0$, then $0 = A_B(v)v \overset{\eqref{eq67aa6d2b}}\ge c \|v\|^2$ and thus $v=0$.
+
+If in addition to~\eqref{eq67aa7654} and~\eqref{eq67aa6d2b},
+we assume that $V$ is locally convex and reflexive, then $A_B$ is an isomorphism.
+(See Lemma~\ref{lem67aa726c}.)
+
+%Second,~\eqref{eq67aa6d2b} implies that $A_B$ is surjective.
+For this aim, define $\||v\|| := \sqrt{|B[v,v]|}$.
+Then, $\||\cdot\||$ is a norm, because
+\begin{align*}
+	\||av+bw\|| 
+	&\le \sqrt{|a|^2 |B[v,v]| + |ab| (|B[v,w]|+|B[w,v]|) + |b|^2 |B[w,w]|} \\
+	&\le \sqrt{|a|^2 |B[v,v]| + 2 |ab| C \|v\|\|w\| + |b|^2 |B[w,w]|} \\
+	&\le \sqrt{|a|^2 |B[v,v]| + 2 |ab| C/c \sqrt{|B[v,v]||B[w,w]|} + |b|^2 |B[w,w]|} \\
+	&\le \max\{\sqrt{C/c},1\} \sqrt{|a|^2 |B[v,v]| + 2 |ab| \sqrt{|B[v,v]||B[w,w]|} + |b|^2 |B[w,w]|} \\
+	&= \max\{\sqrt{C/c},1\} \sqrt{ (|a|\sqrt{|B[v,v]|} + |b| \sqrt{|B[w,w]|} )^2 } \\
+	&= \max\{\sqrt{C/c},1\} (|a| \||v\|| + |b| \||w\||) .
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Reflexivity}
+
+\begin{lemma}\label{lem67aa73f6}
+	Let $V$ be a topological vector space and $\alpha,\beta\in V'$ such that $\ker(\alpha)=\ker(\beta)$.
+	Then $\alpha$ and $\beta$ are linearly dependent.
+\end{lemma}
+\begin{proof}
+	Let $W:=\ker(\alpha)$ and suppose $W\neq V$.
+	Let $\hat v\notin W$.
+	We claim that $V=W\oplus\K\hat v$.
+	Indeed, if $ v\in V\setminus W$, then
+	there is $(a,b)$ with $ab\neq0$ such that
+	$\alpha(a\hat v + b  v) = a \alpha(\hat v) + b \alpha( v) = 0$
+	and thus $a\hat v + b v\in W$, i.e., $v \in  W + \frac{a}{b} \hat v$.
+	
+	So, returning to the original statement, $\alpha$ and $\beta$ are determined by their values on $\hat v$, and thus they are linearly dependent.
+\end{proof}
+
+\begin{lemma}\label{lem67aa726c}
+	Let $V$ be a locally convex topological vector space.
+	The following statements are equivalent
+	\begin{enumerate}[label=(\roman*)]
+	\item\label{lem67aa726c_1}
+	$V$ is reflexive, that is, the canonical embedding $\iota:V\to V''$, $\langle \iota(v)|\alpha \rangle = \langle \alpha|v \rangle$ for all $\alpha\in V'$, is an isomorphism.
+	\item\label{lem67aa726c_2}
+	For every closed subspace  $W\lhd V'$ of the dual, there exists $v\in V\setminus\{0\}$ such that $\langle \alpha|w \rangle=0$ for all $\alpha\in W$.
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	$\ref{lem67aa726c_1}\THEN\ref{lem67aa726c_2}$.
+	Let $W\lhd V'$ be closed.
+	Define $\alpha:W\to \K$ by setting $\alpha(W)=\{0\}$.
+	Let $\hat w\in V'\setminus W$ and set $\alpha(\hat w) = 1$.
+	Then, by the Hahn--Banach Theorem~\ref{} $\alpha$ can be extended to a linear continuous function on the whole $V'$, that is, $\alpha\in V''$.
+	Since $V$ is assumed to be reflexive, $\alpha=\iota(v)$ for some $v$, and such $v$ is the one aimed at.
+	
+	$\ref{lem67aa726c_2}\THEN\ref{lem67aa726c_1}$.
+	Suppose $V$ is not reflexive.
+	Then there exists $\alpha\in V''\setminus \iota(V)$.
+	Let $W = \ker(\alpha)$.
+	We clearly have that $W\lhd V'$ is a closed subspace.
+	If $v\in V$ is such that $W\subset\ker(\iota(v))$, then, by Lemma~\ref{lem67aa73f6} there is $\lambda\in\K$ such that $\iota(v) = \lambda\alpha$.
+	Since $\alpha\notin\iota(V)$, then $\lambda=0$ and $v=0$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+%\printindex
+\printbibliography
+\end{document}
