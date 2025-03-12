@@ -135,6 +135,7 @@ urlcolor=Black}
 \newcommand{\Lin}{\mathtt{Lin}}
 \newcommand{\End}{\mathtt{End}}
 \newcommand{\Orth}{\mathtt{O}} % Orthogonal group
+\newcommand{\GL}{\mathtt{GL}}
 \newcommand{\J}{\mathtt{J}}
 \newcommand{\ad}{\mathrm{ad}}
 \newcommand{\Sym}{\mathtt{Sym}}
@@ -754,7 +755,7 @@ Here $S=S^{n-1}$ is the Hausdorff measure of dimension $n-1$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
-\section{Spherical averages}\label{sec67bac9ff}
+\section{Spherical averages (or means)}\label{sec67bac9ff}
 
 Let $X\subset\R^m$ and $Y\subset\R^n$ be open sets.
 For $u\in L^1_\loc(X\times Y)$, $x\in X$, $y\in Y$ and $r>0$ with $B(y,r)\subset Y$, define
@@ -772,7 +773,7 @@ If $u$ is continuous, it is clear that
 	u(x,y) = \lim_{r\to 0}\phi_u(x,y;r) = \lim_{r\to 0}\psi_u(x,y;r) .
 \end{equation}
 
-\begin{lemma}
+\begin{lemma}\label{lem67cd4b64}
 	If $u\in C^{a;b}(X\times Y)$, with $a,b\in\N$, then, for every $\epsilon>0$,
 	$\phi_u,\psi_u \in C^{a;b;\lfloor b/2 \rfloor}(X\times Y_\epsilon\times(0,\epsilon))$,
 	where $Y_\epsilon = \{y\in Y: d(y,\de Y)>\epsilon\}$.
@@ -1230,6 +1231,26 @@ where $\omega_n $ is the volume of the unit ball in $\R^n$.
 	\end{equation}
 	
 	We conclude that~\eqref{eq67ba14c8} holds.
+\end{proof}
+
+From the proof of the above Theorem~\ref{teo67ba14f2}, we obtain the following corollary
+\begin{corollary}[Fundamental property of the fundamental solution]\label{cor67c6cc59}
+	Let $U\subset\R^n$ open and $f\in C^0(U)$.
+	For every $x\in U$,
+	\begin{equation}\label{eq67c6cca3}
+%		\lim_{\epsilon\to0} \int_{\de B(0,\epsilon)} f(x-y) \grad_y\Phi(y)  \cdot \frac{y}{|y|} \did S(y) 
+		\lim_{\epsilon\to0} \int_{\de B(x,\epsilon)} f(y) \grad_y\Phi(x-y)  \cdot \frac{y-x}{|y-x|} \did S(y)
+		= -f(x) ;
+	\end{equation}
+	or, equivalentely,
+	\begin{equation}
+		\lim_{\epsilon\to0} \int_{\de B(0,\epsilon)} f(x-y) \grad_y\Phi(y)  \cdot \frac{y}{|y|} \did S(y) 
+%		= \lim_{\epsilon\to0} \int_{\de B(x,\epsilon)} f(y) \grad_y\Phi(x-y)  \cdot \frac{y-x}{|y-x|} \did S(y)
+		= -f(x) .
+	\end{equation}
+\end{corollary}
+\begin{proof}
+	See~\eqref{eq67c5daf9}.
 \end{proof}
 
 \begin{remark}
@@ -1977,7 +1998,7 @@ Comments:
 		&\lim_{\epsilon\to0}
 			\int_{\de B(x,\epsilon)} u(y) \grad_y \Phi(y-x)\cdot\frac{y-x}{|y-x|} \did y 
 			= -u(x) ,
-			\qquad\text{(see~\eqref{eq67c5daf9})}
+			\qquad\text{(see~Cor.~\ref{cor67c6cc59})}
 			\\
 	\label{eq67c2cd00}
 		&\lim_{\epsilon\to0}
@@ -2061,7 +2082,7 @@ Comments:
 %		&= \int_{\de B(x,\epsilon)} (-v\grad w + w \grad v) \cdot \frac{z-x}{\epsilon} \did S(z) 
 %			+ \int_{\de B(y,\epsilon)} (-v\grad w+w\grad v) \cdot \frac{z-y}{\epsilon} \did S(z) .
 	\end{align*}
-	Since
+	Since, using also Corollary~\ref{cor67c6cc59},
 	\begin{equation}\label{eq67c2d634}
 	\begin{aligned}
 		&\lim_{\epsilon\to 0}
@@ -2069,7 +2090,7 @@ Comments:
 		= 0 ,\\
 		&\lim_{\epsilon\to 0}
 		\int_{\de B(x,\epsilon)}  w\grad v\cdot \frac{z-x}{|z-x|} \did S(z)
-		= w(x) ,
+		= - w(x) ,
 	\end{aligned}
 	\end{equation}
 	then we obtain $w(x) = v(y)$.
@@ -2084,7 +2105,7 @@ Comments:
 		= 0 ,\\
 		&\lim_{\epsilon\to 0}
 		\int_{\de B(x,\epsilon)}  w\grad v\cdot \frac{z-x}{|z-x|} \did S(z)
-		= w(x) .
+		= - w(x) .
 	\end{aligned}
 	\end{equation*}
 \end{exercise}
@@ -2114,8 +2135,18 @@ Comments:
 		&= \int_{\de U} u \grad u\cdot\nu_U \did S(x) - \int_U |\grad u|^2 \did x \\
 		&= - \int_U |\grad u|^2 \did x .
 	\end{align*}
+	Or:
+	\begin{align*}
+		\int_U|\grad u|^2 \did x
+		&= \int_U \grad u\cdot\grad u \did x \\
+		&= \int_U (\div(u\grad u) - u \laplacian u) \did x \\
+		&= \int_{\de U} u\grad u \did S(x) 
+		= 0 .
+	\end{align*}
 	Hence, $\grad u = 0 $ in $U$, that is, since $U$ is connected, $u$ is constant.
 	Since $u=0$ on $\de U$, then $u=0$ in $U$.
+	
+
 \end{proof}
 
 \begin{remark}
@@ -2152,7 +2183,7 @@ Comments:
 		\end{equation*}
 	\item\label{thm67c2da70_ii}
 		$u\in\scr A_g$ and $\dirichletE_f(u) \le \dirichletE_f(w)$ for all $w\in \scr A_g$, i.e., 
-		$u$ is the arg-min of $\dirichletE_f$ on $\scr A_g$.
+		$u$ is the (unique) arg-min of $\dirichletE_f$ on $\scr A_g$.
 	\end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -2297,10 +2328,10 @@ The heat operator $\de_t - \laplacian$ is a parabolic linear differential operat
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Symmetries of the heat operator}
+\subsection{Symmetries of the heat operator}\label{subs67d16430}
 Let $U\subset\R^n$ open, $I\subset\R$ an open interval, $u\in C^2(U\times I)$, $O\in\Orth(n)$ and $b\in\R^n$, $\tau\in\R$.
 Define $\tilde  u(y,s) = u(Oy+b,s+\tau)$.
-Then $\tilde bar u\in C^2(O^{-1}(U-b)\times (I-\tau))$ and
+Then $\tilde u\in C^2(O^{-1}(U-b)\times (I-\tau))$ and
 \begin{equation}\label{eq67c3002d}
 	(\de_t - \laplacian) \tilde u(y,t) = (\laplacian u)(Oy+b,s+\tau).
 \end{equation}
@@ -2326,7 +2357,7 @@ Then $\tilde bar u\in C^2(O^{-1}(U-b)\times (I-\tau))$ and
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Fundamental solution for the heat equation}
+\subsection{Fundamental solution for the heat equation}\label{subs67c6d9a8}
 
 The \emph{fundamental solution for the heat equation} is the function 
 $\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
@@ -2471,14 +2502,15 @@ $\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
 	Let $g\in C^0(\R^n)\cap L^\infty(\R^n)$ and define $u:\R^n\times (0,+\infty) \to \C$ as
 	\begin{equation}
 		u(x,t) = \int_{\R^n} \Phi(x-y,t) g(y) \did y
-		= \frac1{(4\pi t)^{n/2}} \int_{\R^n} \exp\left( -\frac{|x|^2}{4t} \right) g(y) \did y ,
+		= \frac1{(4\pi t)^{n/2}} \int_{\R^n} \exp\left( -\frac{|x-y|^2}{4t} \right) g(y) \did y ,
 	\end{equation}
-	for $x\in\R^n$ and $t>0$.
+	for $x\in\R^n$ and $t>0$,
+	where $\Phi$ is the fundamental solution for the heat operator~\eqref{eq67c3022e}.
 	\begin{enumerate}
 	\item\label{thm67c30be5_smooth}
-		$u\in C^\infty(\R^n\times (0,+\infty))$ and, for every $\alpha\in\N^n$,
+		$u\in C^\infty(\R^n\times (0,+\infty))$ and, for every $\alpha\in\N^{n+1}$,
 		\begin{equation}\label{eq67c33d51}
-			\Diff^\alpha u(x,t) = \int_{\R^n} \Diff_x^\alpha\Phi(x-y,t) g(y) \did y .
+			\Diff^\alpha u(x,t) = \int_{\R^n} \Diff_{x,t}^\alpha\Phi(x-y,t) g(y) \did y .
 		\end{equation}
 	\item\label{thm67c30be5_heat}
 		$(\de_t-\laplacian)u=0$ in $\R^n\times (0,+\infty)$;
@@ -2499,7 +2531,7 @@ $\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
 \begin{proof}
 	\fbox{Proof of~\ref{thm67c30be5_smooth}:}
 	\[
-	K(x,t;y) = \frac1{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right) g(y) .
+	K(x,t;y) = \frac1{(4\pi t)^{n/2}} \exp\left( -\frac{|x-y|^2}{4t} \right) g(y) .
 	\]
 	For $R>0$ and $\epsilon>0$, we have, for every $x\in\R^n$ with $|x|< R$ and all $t>\epsilon$,
 	\[
@@ -2578,7 +2610,7 @@ From the proof of Theorem~\ref{thm67c30be5}, we can extract the following lemma:
 	Then, for every $\hat x\in\R^n$,
 	\begin{equation}\label{eq67c41b8a}
 		\lim_{\substack{(x,t)\to(\hat x,0)\\t>0}}
-		\int_{\R^n} \Phi(z,t) g(\hat x - z,t) \did z = g(\hat x,0) .
+		\int_{\R^n} \Phi(z,t) g( x - z,t) \did z = g(\hat x,0) .
 	\end{equation}
 \end{lemma}
 \begin{exercise}
@@ -2591,16 +2623,16 @@ From the proof of Theorem~\ref{thm67c30be5}, we can extract the following lemma:
 		= \int_{\R^n} \Phi(x-z,t) g(z,t) \did z  .
 	\end{equation}
 	Fix $\hat x\in\R^n$ and $\epsilon>0$.
-	Since $g$ is continuous, there exists $\delta>0$ such that $|g(y,t)-g(\hat x,t)|<\epsilon$ for all $y\in B(\hat x,\delta)$ and all $t\in[0,T]$.
+	Since $g$ is continuous, there exists $\delta>0$ such that $|g(y,t)-g(\hat x,0)|<\epsilon$ for all $y\in B(\hat x,\delta)$ and all $t\in[0,\delta]$.
 	Then
 	\begin{align*}
-	 	|u(x,t)-g(\hat x,t)|
-		&= \left| \int_{\R^n} \Phi(x-y,t) g(y,t) \did y - g(\hat x,t) \int_{\R^n} \Phi(x-y,t)\did y \right| \\
-		&\le \int_{\R^n} \Phi(x-y,t) |g(y,t)-g(\hat x,t)| \did y \\
-		&= \int_{B(\hat x,\delta)} \Phi(x-y,t) \underbrace{|g(y,t)-g(\hat x,t)|}_{<\epsilon} \did y \\
-		&\quad + \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y,t)-g(\hat x,t)| \did y \\
+	 	|u(x,t)-g(\hat x,0)|
+		&= \left| \int_{\R^n} \Phi(x-y,t) g(y,t) \did y - g(\hat x,0) \int_{\R^n} \Phi(x-y,t)\did y \right| \\
+		&\le \int_{\R^n} \Phi(x-y,t) |g(y,t)-g(\hat x,0)| \did y \\
+		&= \int_{B(\hat x,\delta)} \Phi(x-y,t) \underbrace{|g(y,t)-g(\hat x,0)|}_{<\epsilon} \did y \\
+		&\quad + \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y,t)-g(\hat x,0)| \did y \\
 		&\le \epsilon \underbrace{\int_{\R^n} \Phi(x-y,t) \did y}_{=1}
-			+ \underbrace{ \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y,t)-g(\hat x,t)| \did y }_{=: J_\delta(x)} .
+			+ \underbrace{ \int_{\R^n\setminus B(\hat x,\delta)} \Phi(x-y,t) |g(y,t)-g(\hat x,0)| \did y }_{=: J_\delta(x)} .
 	\end{align*}
 	If $x\in B(\hat x,\delta/2)$, then, for all $y\in \R^n\setminus B(\hat x,\delta)$,
 	\begin{equation}\label{eq67c41ccb}
@@ -2610,23 +2642,23 @@ From the proof of Theorem~\ref{thm67c30be5}, we can extract the following lemma:
 		\ge |y-\hat x| - |y-\hat x|/2
 		= |y-\hat x|/2 .
 	\end{equation}
-	Hence, if $x\in B(\hat x,\delta)$, 
+	Hence, if $x\in B(\hat x,\delta/2)$, 
 	\begin{align*}
 	 	J_\delta(x) 
 		&\le 2 \|g\|_{L^\infty} \int_{\R^n\setminus B(\hat x,\delta)} \frac{ \exp(-\frac{|x-y|^2}{4t} ) }{ (4\pi t)^{n/2} } \did y \\
 		&\overset{\eqref{eq67c41ccb}}\le \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}}
 			\int_{\R^n\setminus B(\hat x,\delta)} \frac{ \exp(-\frac{|y-\hat x|^2}{16t} ) }{  t^{n/2} } \did y \\
 		[z = \frac{y-\hat x}{\sqrt{t}}]
-		&\le \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} 
+		&= \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} 
 			\underbrace{\int_{\R^n\setminus B(\hat x,\delta/\sqrt{t})} \exp(-\frac{|z|^2}{16} ) \did y }_{=:E(\delta,t)} .
 	\end{align*}
 	Since $\delta>0$ and since the integrand in $E(\delta,t)$ is integrable over $\R^n$, then $\lim_{t\to0^+}E(\delta,t) = 0$.
-	Therefore, there exists $\tau>0$ such that $E(\delta,t)<\epsilon$ for all $t\in(0,\tau)$.
+	Therefore, there exists $\tau\in(0,\delta)$ such that $E(\delta,t)<\epsilon$ for all $t\in(0,\tau)$.
 	All in all, we conclude that
 	\begin{equation}\label{eq67c342cf_bis}
 		\forall\epsilon>0\exists \delta,\tau>0 \forall x\in B(\hat x,\delta/2)\ \forall t\in(0,\tau)
 		\qquad
-		|u(x,t) - g(\hat x)| \le \epsilon + \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} \epsilon .
+		|u(x,t) - g(\hat x,0)| \le \epsilon + \frac{2 \|g\|_{L^\infty}}{(4\pi)^{n/2}} \epsilon .
 	\end{equation}
 	\eqref{eq67c342cf_bis} is~\eqref{eq67c41b8a}.
 \end{proof}
@@ -2634,7 +2666,7 @@ From the proof of Theorem~\ref{thm67c30be5}, we can extract the following lemma:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Solution to the nonhomogeneous Cauchy problem}\label{subs67c34370}
 
-The construction of a solution for the nonhomogeneous Cauchy problem~\eqref{eq67c344a9} is constructed as follows.
+A solution for the nonhomogeneous Cauchy problem~\eqref{eq67c344a9} is constructed as follows.
 For every $s>0$ let $u_s$ be the solution constructed in the previous Theorem for the Cauchy problem
 \begin{equation}
 \begin{cases}
@@ -2644,6 +2676,7 @@ For every $s>0$ let $u_s$ be the solution constructed in the previous Theorem fo
 \end{equation}
 So, $u_s(x,t) = \int_{\R^n} \Phi(x-y,t-s) f(y,s) \did y$.
 Then, we set $u(x,t) = \int_0^t u_s(x,t) \did s$, that is,~\eqref{eq67c34492}.
+This strategy is called \emph{Duhamel's principle}.
 
 \begin{theorem}[Solution to the nonhomogeneous Cauchy problem]\label{thm67c3437d}
 	Let $f\in C^{2;1}_c(\R^n\times[0,+\infty))$ and define $u:\R^n\times(0,+\infty)\to\R$ by
@@ -2722,7 +2755,7 @@ Then, we set $u(x,t) = \int_0^t u_s(x,t) \did s$, that is,~\eqref{eq67c34492}.
 		&= \int_\epsilon^t \int_{\R^n} \Phi(z,r) (-\de_r - \laplacian_z)f(x-z,t-r) \did z\did r \\
 		&= \int_\epsilon^t \int_{\R^n} (-\de_r(\Phi(z,r)f(x-z,t-r)) + \de_r\Phi(z,r)f(x-z,t-r) ) \did z\did r \\
 		&\qquad
-			- \int_\epsilon^t \int_{\R^n} (\div_z(\Phi(z,r)\grad_zf(x-z,t-r) - \grad_z\Phi(z,r)f(x-z,t-r)) \did z\did r \\
+			- \int_\epsilon^t \int_{\R^n} \div_z\Big(\Phi(z,r)\grad_zf(x-z,t-r) - \grad_z\Phi(z,r)f(x-z,t-r)\Big) \did z\did r \\
 		&\qquad
 			- \int_\epsilon^t \int_{\R^n} \laplacian\Phi(z,r)f(x-z,t-r)) \did z\did r \\
 		&\overset{(*)}= -K + \int_{\R^n} \Phi(z,\epsilon)f(x-z,t-\epsilon) \did z\did r ,
@@ -2736,7 +2769,6 @@ Then, we set $u(x,t) = \int_0^t u_s(x,t) \did s$, that is,~\eqref{eq67c34492}.
 		&= f(x,t) .
 	\end{align*}
 	
-	
 	\fbox{Proof of~\ref{thm67c3437d_init}.}
 	We easily conclude with the following estimate:
 	\begin{align*}
@@ -2749,7 +2781,57 @@ Then, we set $u(x,t) = \int_0^t u_s(x,t) \did s$, that is,~\eqref{eq67c34492}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Mean-value formula}\label{subs67c44996}
-\TODO
+For $(x,t)\in R^n\times\R$ and $r>0$, define
+\begin{equation}\label{eq67ceb710}
+\begin{aligned}
+	E(x,t;r)
+	&= \{(y,s) \in \R^n\times\R : s\le t,\ \Phi(x-y,t-s) \ge \frac1{r^n} \} \\
+	&= (x,t) + E(0,0;r)
+	= (x,t) + \delta_r(E(0,0;1)) ,
+\end{aligned}
+\end{equation}
+where $\delta_r(y,s) = (ry,r^2 s)$.
+Notice that $E(0,0;1) = \{(y,s): \Phi(-y,-s) \ge 1\}$.
+See Figure~\ref{fig67cf14e8} for a drawing of the shape of $E(x,t;r)$.
+Since
+\begin{align}
+	\Phi(-y,-s) \ge 1
+	&\IFF \frac{(4\pi|s|)^{n/2}} \exp\left(-\frac{|y|^2}{4|s|}\right) \ge 1 \\
+	&\IFF \frac{n}{2} \log(4\pi|s|) \le -\frac{|y|^2}{4|s|} \\
+	&\IFF -\frac{1}{4\pi} < s < 0 \qquad |y|^2 \le - 2n |s| \log(4\pi|s|) .
+\end{align}
+
+\begin{theorem}\label{thm67cf158e}
+	Let $\Omega\subset\R^n\times\R$ be open and $u\in C^{2;1}(\Omega)$ such that $(\de_t-\laplacian)u=0$ in $\Omega$.
+	Then, for all $(x,t)\in\Omega$ and $r>0$ such that $E(x,t;r)\subset \Omega$, we have
+	\begin{equation}
+		u(x,t) = \frac{1}{4r^n} \iint_{E(x,t;r)} u(y,s) \frac{|x-y|^2}{(t-s)^2} \did y \did s .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	See \cite[pag.53]{MR2597943}.
+\end{proof}
+
+\begin{figure}\label{fig67cf14e8}
+\usepgfplotslibrary{fillbetween}
+\begin{tikzpicture}
+    \begin{axis}[
+        xmin=-1,xmax=1,
+        ymin=-1.25,ymax=0.25,
+        axis x line=middle,
+        axis y line=middle,
+        axis line style=-,
+        xtick=\empty,ytick=\empty,
+        ]
+		\addplot+ [name path=A,black,smooth,no markers,domain=-1:0,variable=\t,samples=50]  ({ sqrt(t*ln(abs(t)))} ,{ t });
+		\addplot+ [name path=B,black,smooth,no markers,domain=-1:0,variable=\t,samples=50]  ({ -sqrt(t*ln(abs(t)))} ,{ t });
+		\addplot[blue!50] fill between[of=A and B];
+		\addplot [only marks] coordinates {(0,0)} node[above right] {$(x,t)$};
+		\addplot [no marks] coordinates {(0.3,-0.5)} node {$E(x,t;r)$};
+    \end{axis}
+\end{tikzpicture}
+\caption{The shape of the set $E(x,t;r)$ defined in~\ref{subs67c44996}.}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Strong maximum and minimum principles}\label{subs67c44a2b}
@@ -2771,11 +2853,9 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	\begin{equation}\label{eq67c45475}
 		\max_{\bar U_T} u = \max_{\Gamma_T} u .
 	\end{equation}
-	Moreover, if $U$ is connected and there exists $(x,t)\in U_T$ such that $u(x,t) = \max_{\bar U_T} u$, then $u$ is constant on $\bar U_t$.
 \end{theorem}
 \begin{proof}
-	(From Folland \cite[Thm 4.16]{MR1357411})
-	
+	(From Folland \cite[Thm 4.16]{MR1357411}).	
 	In~\eqref{eq67c45475}, the inequality $\max_{\bar U_T} u \ge \max_{\Gamma_T} u$ is clear.
 	We need to show $\max_{\bar U_T} u \le \max_{\Gamma_T} u$.
 	
@@ -2788,8 +2868,8 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	First of all, notice that, in $U_T$,
 	\begin{equation}\label{eq67c452da}
 	\de_tv_\epsilon - \laplacian v_\epsilon 
-	= \de_t u - \laplacian u + \epsilon \laplacian(|x|^2) 
-	= +2\epsilon n >0 .
+	= \de_t u - \laplacian u - \epsilon \laplacian(|x|^2) 
+	= -2\epsilon n >0 .
 	\end{equation}
 	Suppose that $(x,t)\in U_{T'}$ is a point of maximum for $v_\epsilon$ on $\bar U_{T'}$.
 	Then $\laplacian v_\epsilon(x,t) \le 0$ and $\de_t v_\epsilon \ge 0$.
@@ -2806,6 +2886,16 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	Since $U$ is bounded, then $ \max_{\bar U_{T'}} |x|^2<\infty$.
 	So, letting $\epsilon\to0$, we obtain the desired inequality.
 \end{proof}
+
+\begin{exercise}
+	Show the following statement:
+	{\it 
+	Let $U\subset\R^n$ be open, bounded and connected, $T>0$,
+	and $u\in C^{2;1}(U_T;\R)\cap C^0(\bar U_T;\R)$ such that $(\de_t-\laplacian)u=0$ in $U_T$.
+	If there exists $(x,t)\in U_T$ such that $u(x,t) = \max_{\bar U_T} u$, then $u$ is constant on $\bar U_t$.}
+	
+	[This exercise turned out to be more difficult than I expected: It is proven by Evans using the mean value formula from Theorem~\ref{thm67cf158e}.]
+\end{exercise}
 
 \begin{exercise}
 	Prove the \emph{strong minimum principle} for the heat operator.
@@ -2850,64 +2940,79 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	\end{equation}
 \end{theorem}
 \begin{proof}
-\TODO: Recheck the proof!
-
-	Set $g\in C^0(\R^n)$ by $g(x) = u(x,0)$.
-	
-	Fix $\hat y\in\R^n$ and $\mu>0$.
 	Let $0<b\le T$ be such that
 	\begin{equation}
 		\frac1{4b} - a > 0 ,
 		\text{ i.e., }
 		0<b<\frac1{4a} .
 	\end{equation}
-	Define, for $x\in\R^n$ and $t\in(0,b)$,
+	We will show that
+	\begin{equation}\label{eq67cff4fc}
+		\forall s,t\in[0,T]\text{ with $0<t-s<b$, }
+		\sup_{x\in\R^n} u(x,t) \le \sup_{x\in\R^n} u(x,s) .
+	\end{equation}
+	
+	Since both~\eqref{eq67c45e15} and the heat equation are invariant under time translations (see~\ref{subs67d16430}), we can prove~\eqref{eq67cff4fc} for $s=0$ without loss of generality.
+	
+	Set $g\in C^0(\R^n)$ by $g(x) = u(x,0)$.
+	Fix $\hat y\in\R^n$ and $\hat t\in(0,b)$: we need to show that
+	\begin{equation}\label{eq67cff5ae}
+		u(\hat y,\hat t) \le \|g\|_{L^\infty(\R^n)} .
+	\end{equation}
+	For $\mu>0$, define, for $x\in\R^n$ and $t\in(0,b)$,
 	\begin{equation}\label{eq67c4590e}
-		v(x,t) = u(x,t) - \frac{\mu}{(b-t)^{n/2}} \exp\left( \frac{|x-y|^2}{4(b-t)} \right) .
+		v(x,t) = u(x,t) - \frac{\mu}{(b-t)^{n/2}} \exp\left( \frac{|x-\hat y|^2}{4(b-t)} \right) .
 	\end{equation}
 	So, we have 
 	$v\in C^{2;1}(\R^n\times(0,b);\R)\cap C^0(\R^n\times[0,b);\R)$
 	and $(\de_t-\laplacian)v = 0$ in $\R^n\times(0,b)$;
 	see~\ref{subs67c45976}.
 	
-	By the strong maximum principle~\ref{},
-	for every $r>0$,
+	We claim that there exists $r>0$ such that
+	\begin{equation}\label{eq67cff772}
+		\sup_{B(\hat y,r)\times[0,b)}v  \le \|g\|_{L^\infty} .
+	\end{equation}
+	
+	By the strong maximum principle, Theorem~\ref{thm67c44b0d},
+	for every $r>0$, we have
 	\begin{equation}
-		\sup\left\{ v(x,t) : 
-		x\in B(y,r),\ t\in[0,b)
-		\right\}
+%		\sup\left\{ v(x,t) : 
+%		x\in B(\hat y,r),\ t\in[0,b)
+%		\right\}
+		\sup_{B(\hat y,r)\times[0,b)}v
 		=
 		\sup\left\{ v(x,t) : 
-		x\in B(y,r)\text{ and }t=0,
-		\text{ or }
-		x\in\de B(y,r)\text{ and }t\in[0,b)
+		\begin{array}{l}
+			x\in B(\hat y,r)\text{ and }t=0,\text{ or } \\
+			x\in\de B(\hat y,r)\text{ and }t\in[0,b)
+		\end{array}
 		\right\} .
 	\end{equation}
-	If $|x-y|\le r$, then 
-	$v(x,0) = u(x,0) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{|x-y|^2}{4b} \right)
+	If $|x-\hat y|\le r$, then 
+	$v(x,0) = u(x,0) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{|x-\hat y|^2}{4b} \right)
 	\le g(x) \le \|g\|_{L^\infty}$.
-	
-	If $|x-y|=r$ and $t\in[0,b)$, then 
+	If $|x-\hat y|=r$ and $t\in[0,b)$, then 
 	\begin{align*}
 	 	v(x,t) 
 		&= u(x,t) - \frac{\mu}{(b-t)^{n/2}} \exp\left( \frac{r^2}{4(b-t)} \right) \\
 		&\le A\exp(a|x|^2) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} \right) \\
-		&\le A\exp(a(|y|+r)^2) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} \right) \\
-		&= \exp(a(|y|+r)^2) \left( A - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} - a (|y|+r)^2 \right) \right) =: J_r .
+		&\le A\exp(a(|\hat y|+r)^2) - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} \right) \\
+		&= \exp(a(|\hat y|+r)^2) \left( A - \frac{\mu}{b^{n/2}} \exp\left(  \frac{r^2}{4b} - a (|\hat y|+r)^2 \right) \right) =: J_r .
 	\end{align*}
 	Since $\lim_{r\to\infty} J_r = -\infty$, 
 	we can choose $r$ large enough that the $J_r < \|g\|_{L^\infty}$.
-	We conclude that, for $t\in[0,b)$,
-	\begin{equation}
-		u(\hat y,t) - \frac{\mu}{(b-t)^{n/2}}
-		= v(\hat y,t)
-		\le \sup\{ u(x,t) : x\in B(\hat y,r), t\in[0,b)\} 
-		\le J_r \le \|g\|_{L^\infty} .
+	We conclude that, for $r$ large enough,~\eqref{eq67cff772} holds.
+	
+	In particular, from~\eqref{eq67cff772} we obtain that, for every $\mu>0$,
+%	We conclude that, for every $t\in[0,b)$,
+	\begin{equation}\label{eq67cff890}
+		u( \hat y,\hat t) - \frac{\mu}{(b-\hat t)^{n/2}}
+		= v( \hat y,\hat t)
+%		\le \sup\{ u(x,t) : x\in B(\hat y,r), t\in[0,b)\} 
+%		\le J_r 
+		\le \|g\|_{L^\infty} .
 	\end{equation}
-	So, if we fix $t\in [0,b)$, then 
-	$u(\hat y,t) = \lim_{\mu\to0} u(\hat y,t) - \frac{\mu}{(b-t)^{n/2}} \le \|g\|_{L^\infty}$.
-	We can then say that $u(y,t)\le u(y,t-b)$ for all $t\in [b,T]$.
-	This concludes the proof.
+	Taking the limit $\mu\to0$ in~\eqref{eq67cff890}, we conclude~\eqref{eq67cff5ae}.
 \end{proof}
 
 \begin{exercise}\label{ex67c45e75}
@@ -2918,12 +3023,15 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 \subsection{Uniqueness for the unbounded Cauchy problem}\label{subs67c45ca2}
 
 \begin{theorem}[Uniqueness for the unbounded Cauchy problem]\label{thm67c45cb9}
-	Let $T>0$, $g\in C^0(\R^n)$ and $f\in C^0(\R^n\times[0,T]$.
+	Let $T>0$, $g\in C^0(\R^n)$ and $f\in C^0(\R^n\times[0,T])$.
 	Set 
 	\begin{equation}\label{eq67c45e49}
 		\scr A = \left\{
-		u\in C^{2;1}(\R^n\times(0,T])\cap C^0(\R^n\times[0,T])
-		: \exists A,a>0,\ |u(x,t)| \le A\exp(a|x|^2)
+		u\in C^{2;1}(\R^n\times(0,T])\cap C^0(\R^n\times[0,T]) : 
+		\begin{array}{c}
+		\exists A,a>0 \text{ s.t.}\\
+		|u(x,t)| \le A\exp(a|x|^2)
+		\end{array}
 		\right\} .
 	\end{equation}
 	There does not exist two solutions in $\scr A$ of
@@ -2943,7 +3051,7 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 \end{proof}
 \begin{remark}
 	The growth condition~\eqref{eq67c45e15} is necessary: there are counter-examples.
-	See \cite{J2, chapter 7}.
+	See \cite[chapter 7]{zbMATH03739988}.
 \end{remark}
 \begin{remark}
 	Notice that in the definition of $\scr A$ in~\eqref{eq67c45e49}, 
@@ -2951,12 +3059,312 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	You should have noticed this already in Exercise~\ref{ex67c45e75}.
 \end{remark}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Smoothness}\label{subs67cc46da}
+\TODO: Fix proof of Lemma~\ref{lem67cc828c} .
+\begin{lemma}\label{lem67cc828c}
+	For $(x,t)\in\R^n\times\R$ and $r>0$, define
+	\begin{equation}
+		C(x,t;r) = \bar B(x,r)\times [t-r^2,t] \subset\R^n\times\R .
+	\end{equation}
+	Let $\Omega\subset\R^n\times\R$ open.
+	Fix $(\hat x,\hat t)\in \Omega$ and $\hat r>0$ such that $C:= C(\hat x,\hat t;\hat r)\subset \Omega$.
+	Define $C':= C(\hat x,\hat t;\dfrac{3}{4} \hat r)$
+	and $C'' := C(\hat x,\hat t;\dfrac{1}{2} \hat r)$.
+
+	Let $\zeta\in C^\infty_c(\R^n\times(-\infty,\hat t])$ be such that
+	$C' \subset \{\zeta = 1\}$ and 
+	$\spt(\zeta)\subset C$, i.e., $\R^n\setminus C\subset \{\zeta=0\}$.
+	
+	Then, for every $u\in C^{2;1}(\Omega)$ and all $(x,t)\in C''$,
+	\begin{equation}
+	\begin{aligned}
+		u(x,t) 
+		&= \iint_C \bigg( \Phi(x-y,t-s) (\de_s\zeta(y,s)+\laplacian_y\zeta(y,s) )
+			+ 2\Diff_y \Phi(x-y,t-s) \Diff_y\zeta(y,s) \bigg) \cdot u(y,s) \did y\did s \\
+		&\qquad+ \iint_C \Phi(x-y,t-s) \zeta(y,s) \bigg(\de_su(y,s) - \laplacian_y u(y,s)\bigg) \did y\did s .
+	\end{aligned}
+	\end{equation}
+\end{lemma}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\begin{tikzpicture}
+	% Define points
+	\coordinate (hatX) at (0,0);
+	\coordinate (A1) at (-2,0);
+	\coordinate (B1) at (-3,0);
+	\coordinate (C1) at (-4,0);
+
+	\coordinate (A2) at (-2,-1);
+	\coordinate (B2) at (-3,-9/4);
+	\coordinate (C2) at (-4,-4);	
+
+	\coordinate (A3) at (2,-1);
+	\coordinate (B3) at (3,-9/4);
+	\coordinate (C3) at (4,-4);
+
+	\coordinate (A4) at (2,0);
+	\coordinate (B4) at (3,0);
+	\coordinate (C4) at (4,0);
+	
+	\coordinate (F0) at (-5,-5);
+	\coordinate (F1) at (5,-5);
+	\coordinate (Fi) at (-5,1);
+
+	% Draw triangle
+	\draw (A1) -- (A2) -- (A3) -- (A4) ;
+	\draw (B1) -- (B2) -- (B3) -- (B4) ;
+	\draw (C1) -- (C2) -- (C3) -- (C4) ;
+	\draw (C1) -- (C4) ;
+	
+	\node[above right] at (A2) {$C''$};
+	\node[above right] at (B2) {$C'$};
+	\node[above right] at (C2) {$C$};
+	\filldraw (hatX) circle (2pt);
+	\node[above] at (hatX) {$(\hat x,\hat t)$};
+	\draw (Fi) -- (F0) node[midway, left] {$\R$};
+	\draw (F0) -- (F1) node[midway, below] {$\R^n$};
+\end{tikzpicture}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+	Assume $\hat t>\hat r>0$.
+	Define $v:=\zeta\cdot u\in C^{2;1}_c(\R^n\times(-\infty,\hat t])$ and compute
+%	\begin{align*}
+%	\de_tv &= \de_t\zeta\cdot y + \zeta\de_tu \\
+%	\laplacian v &= \laplacian\zeta\cdot y + 2\Diff\zeta\cdot\Diff u + \zeta\cdot\laplacian u \\
+%	(\de_t-\laplacian)v &= (\de_t-\laplacian)\zeta\cdot u + \zeta (\de_t-\laplacian)u - 2 \Diff\zeta\cdot\Diff u =: \tilde f .
+%	\end{align*}
+	\begin{equation}
+		\tilde f := (\de_t-\laplacian)v
+		= (\de_t-\laplacian)\zeta\cdot u + \zeta (\de_t-\laplacian)u - 2 \Diff\zeta\cdot\Diff u .
+	\end{equation}
+	Set then 
+	\begin{equation}
+		\tilde v(x,t) := \int_0^t \int_{\R^n} \Phi(x-y,t-s) \tilde f(y,s) \did y\did s .
+	\end{equation}
+	By the definition of $\tilde f$ and by~\eqref{eq67c34492}, 
+	both $v$ and $\tilde v$ are solutions to the Cauchy problem 
+	$(\de_t-\laplacian)v=\tilde f$ in $\R^n\times(0,\hat t)$,
+	with $v=0$ on $\R^n\times\{0\}$.
+	Moreover, we have both $\|v\|_{L^\infty}<\infty$ and $\|\tilde f\|_{L^\infty}<\infty$.
+	Therefore, $|\tilde v(x,t)|\le t \|\tilde f\|_{L^\infty}$.
+	From Theorem~\ref{thm67c45cb9}, it follows that $v=\tilde v$.
+	
+	Since $(x,t)\in C''$, then $\zeta(x,t)=1$ and
+	\begin{align*}
+	u(x,t) 
+	&= \zeta(x,t) u(x,t)
+	= v(x,t)
+	= \tilde v(x,t) \\
+	&= \int_0^t \int_{\R^n} \Phi(x-y,t-s) \bigg(
+	(\de_s-\laplacian_y)\zeta(y,s)\cdot u(y,s) + \zeta(y,s)\cdot (\de_s-\laplacian_y)u(y,s) 
+	\\&\qquad\qquad
+	- 2 \Diff\zeta(y,s)\cdot\Diff u(y,s)
+	\bigg) \did y\did s .
+	\end{align*}
+	{\color{Red} WRONG:
+	Notice that the integral is in fact on $C$, because $\spt(\zeta)\subset C$. }
+	Moreover,
+	\begin{align*}
+	\iint_C \Phi(x-y,t-s) \Diff\zeta\cdot\Diff u \did y\did s
+	&= \int_{\hat t-\hat r^2}^{\hat t} \int_{\bar B(\hat x,\hat r)}
+		\bigg( \div_y( \Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) ) \\
+	&\qquad		- \Diff_y\Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) \\
+	&\qquad\qquad		- \Phi(x-y,t-s) u(y,s) \laplacian\zeta(y,s) 
+		\bigg) \did y\did s ,\\
+	\end{align*}
+	where
+	\begin{align*}
+	 	\int_{\bar B(\hat x,\hat r)} \div_y( \Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) \did y 
+%		&= \int_{\bar B(\hat x,\hat r) \setminus B(\hat x,\epsilon)} \div_y( \Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) \did y \\
+		&= 0 .
+	\end{align*}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Smoothness of solutions to the homogeneous heat equation]\label{thm67cc8194}
+	Let $\Omega\subset\R^n\times\R$ be open and $u\in C^{2;1}(\Omega)$ such that
+	$(\de_t-\laplacian)u=0$ in $\Omega$.
+	Then $u\in C^\infty(\Omega)$.
+\end{theorem}
+\begin{proof}
+	By the Lemma~\ref{lem67cc828c}, we have for $(x,t)\in C''$
+	\begin{equation}
+		u(x,t) = \iint_C K(x,t;y,s) u(y,s) \did y\did s ,
+	\end{equation}
+	where, for $(x,t)\in C''$, $K(x,t;\cdot)\in C^\infty(\bar C)$.
+	{\color{Red} TRUE? Therefore, $u$ is smooth on $C''$ by Theorem~\ref{thm679f29de}, or Proposition~\ref{prop6798f690}. -> $C''$ is not open!}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Quantitative smoothness]\label{thm67cc82d1}
+	Let $\Omega\subset\R^n\times\R$ be an open set.
+	For every $\alpha\in\N^n$, $\ell\in\N$, there exists $C_{\alpha,\ell}\in\R$
+	such that, for every $u\in C^\infty(\Omega)$ with $(\de_t-\laplacian)u=0$ in $\Omega$,
+	if $C(x,t;r)\subset \Omega$, then
+	\begin{equation}\label{eq67cc83af}
+		\sup_{C(x,t;r/2)} \left| \frac{\de^{|\alpha|}}{\de x^\alpha} \frac{\de^\ell}{\de t^\ell} u \right|
+		\le 
+		\frac{C_{\alpha,\ell}}{r^{|\alpha|+2\ell+n+2}} \|u\|_{L^1(C(x,t;r))} .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	From Lemma~\ref{lem67cc828c} we get that, if $u\in C^\infty(C(0,0;1))$, then, 
+	for every $(x,t)\in C(0,0;1/2)$, 
+	\begin{equation}
+		u(x,t) = \iint_{C(0,0;1)} K(x,t;y,s) u(y,s) \did y\did s ,
+	\end{equation}
+	where $K\in C^\infty(\overline{C(0,0;1/2)\times C(0,0;1)})$.
+	By Proposition~\ref{prop6798f690}, or Theorem~\ref{thm679f29de},
+	for every $(x,t)\in C(0,0;1/2)$ we have
+	\begin{equation}
+		\Diff^{\alpha,\ell}_{x,t}u(x,t) = \iint_{C(0,0;1)} \Diff^{\alpha,\ell}_{x,t}K(x,t;y,s) u(y,s) \did y\did s .
+	\end{equation}
+	Hence, if we take as constants
+	\begin{equation}
+		C_{\alpha,\ell} 
+		= \sup\{ |\Diff^{\alpha,\ell}_{x,t}K(x,t;y,s)| : (x,t)\in C(0,0;1/2),\ (y,s)\in C(0,0;1) \},
+	\end{equation}
+	we obtain~\eqref{eq67cc83af} in this specific case.
+	
+	In the general case, if $(\hat x,\hat t)\in \Omega$ and $\hat r>0$ are such that $C(\hat x,\hat t;\hat r)\subset\Omega$, and if $u\in C^\infty(\Omega)$ is such that $(\de_t-\laplacian)u=0$ in $\Omega$,
+	then the function
+	\begin{equation}
+		\hat u(x,t) := u(\hat x+\hat r x, \hat t + \hat r^2 t) 
+	\end{equation}
+	is such that $(\de_t-\laplacian)u=0$ in $C(0,0;1)$.
+	Therefore, for every $(x,t) \in C(0,0;1/2)$,
+	\begin{align*}
+	 	|\Diff^{\alpha,\ell}_{x,t}u(\hat x+\hat r x,\hat t + \hat r^2 t )| \hat r^{|\alpha| + 2\ell}
+		&= |\Diff^{\alpha,\ell}_{x,t} \hat u(x,t)| \\
+		&\le C_{\alpha,\ell} \iint_{C(0,0;1)} \hat u(y,s) \did y\did s \\
+		&= C_{\alpha,\ell} \iint_{C(0,0;1)}  u(\hat x+\hat r y,\hat t + \hat r^2 s) \did y\did s \\
+		&= C_{\alpha,\ell} \iint_{C(\hat x,\hat t;\hat r)} u(\bar y,\bar s) \frac{\did \bar y}{\hat r^n} \frac{\did \bar s}{\hat r^2} .
+	\end{align*}
+	Hence, we conclude with~\eqref{eq67cc83af}.
+\end{proof}
+
+\begin{remark}
+	Notice that this smoothness result tells us that time cannot be inverted!
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Energy Methods}
+\begin{lemma}\label{lem67cc8a6c}
+	Let $U\subset\R^n$ open and bounded with $C^1$ boundary $\de U$, and let $T>0$.
+	For $u:U_T\to\C$ define $e_u:[0,T]\to\R$,
+	\begin{equation}
+		e_u(t) = \int_U |u(x,t)|^2 \did x ,
+	\end{equation}
+	whenever it is well defined.
+	If $u\in C^{2;1}(\bar U_T)$ is such that $(\de_t-\laplacian)u=0$ in $U_T$, then $e_u\in C^1([0,T])$ and
+	\begin{equation}
+		\dot e_u(t) = 2 \int_{\de U} u \Diff u\cdot\nu_U \did S 
+			- 2 \int_U |\Diff u|^2 \did x .
+	\end{equation}
+	If $u=0$ on $\de U\times [0,T]$, then $\dot e_u(t) \le 0$ and so, $e_t$ is decreasing.
+\end{lemma}
+\begin{proof}
+	Since $U$ is bounded and $u$ is continuous on $\bar U$, then $\|u\|_{L^\infty(\bar U_T)} < \infty$.
+	Since $U$ is bounded, then constants belong to $L^2(U)$.
+	Therefore, by Theorem~\ref{thm679f29de}, $e_u\in C^1((0,T))$ and
+	\begin{align*}
+	 	\dot e_u(t) 
+		&= 2\int_U \de_t u(x,t) u(x,t) \did x \\
+		&= 2 \int_U \laplacian u(x,t) u(x,t) \did x \\
+		&= 2 \int_{\de U} \Diff u(x,t) \cdot \nu_U(x) \did S(x)
+			- 2 \int_U |\Diff u(x,t)|^2 \did x .
+	\end{align*} 
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Uniqueness by Energy methods]\label{thm67cc8975}
+	Let $T>0$ and $U\subset\R^n$ be an open, bounded subset with $C^1$ boundary $\de U$.
+	Let $f\in C^0(U_T)$ and $g\in C^0(\Gamma_T)$.
+	Then there do not exist two distinct solutions in $C^{2;1}(\bar U_T)$ to
+	\begin{equation}\label{eq67cc89f9}
+	\begin{cases}
+		(\de_t-\laplacian)u = f & \text{ in }U_T , \\
+		u = g & \text{ on }\Gamma_T .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Suppose there are two solutions $u_1,u_2\in C^{2;1}(\bar U_T)$ to~\eqref{eq67cc89f9}.
+	Then $w=u_1-u_2 \in C^{2;1}(\bar U_T)$ solves~\eqref{eq67cc89f9} with $f=0$ and $g=0$.
+%	Therefore, $w\in C^\infty(U_T)$ by Theorem~\ref{thm67cc8194} 
+%	and, 
+	By Lemma~\ref{lem67cc8a6c}, $0 = e_w(0) \ge e_w(t) = \int_U |w(x,t)|^2 \did x \ge 0$ for all $t>0$.
+	It follows that $w=0$ and thus $u_1=u_2$.
+\end{proof}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Backward uniqueness}\label{subs67cc8a9b}
 
+\begin{theorem}[Backward uniqueness]
+	Let $T>0$ and $U\subset\R^n$ be an open, bounded subset with $C^1$ boundary $\de U$.
+	Let $g\in C^0(\de U\times[0,T])$.
+	Suppose that $u_1,u_2\in C^2(\bar U_T)$ solve the Cauchy problem
+	\begin{equation}\label{eq67cc8aec}
+	\begin{cases}
+		(\de_t-\laplacian)u = 0 & \text{ in }U_T , \\
+		u = g & \text{ on }\de U\times[0,T] .
+	\end{cases}
+	\end{equation}
+	If $u_1(x,T) = u_2(x,T)$ for all $x\in U$, then $u_1=u_2$ in $U_T$.
+\end{theorem}
+\begin{proof}
+	Take $w=u_1-u_2 \in C^2(\bar U_T)$, which solves~\eqref{eq67cc8aec} with $g=0$.
+	By the Lemma~\ref{lem67cc8a6c}, 
+	\begin{align*}
+		e_w(t) &= \int_U |w(x,t)|^2 \did x ; \\
+		\dot e_w(t) &= 2 \int_U |\Diff w(x,t)|^2 \did x ; \\
+		\ddot e_w(t) &= [...] = 4 \int_U | \laplacian w(x,t)|^2 \did x .
+	\end{align*}
+	Moreover, using the Hölder inequality,
+	\begin{align*}
+		\int_U | \Diff w(x,t) |^2 \did x
+		&= \int_U \Diff w(x,t)\cdot \Diff w(x,t) \did x \\
+		&= - \int_U \laplacian w(x,t) \cdot w(x,t) \did x \\
+		&\le \left(\int_U |\laplacian w(x,t)|^2 \did x\right)^{1/2}
+			\cdot \left(\int_U |w(x,t)| \did x\right)^{1/2} .
+	\end{align*}
+	Hence, 
+	\begin{equation}
+		\dot e_w(t)^2 \le \ddot e_w(t) \cdot e(t) .
+	\end{equation}
+	Suppose that $e_w$ is not zero on $[0,T]$.
+	Let $(a,b)\subset[0,T]$ be a maximal interval where $e_w>0$.
+	Then $e_w(a) = 0$.
+	By Lemma~\ref{lem67cc8da8}, for all $[t_1,t_2]\subset(a,b)$,
+	\begin{equation}
+		e(1/2 t_1 + 1/2 t_2 ) 
+		\le e(t_1)^{1/2} e(t_2)^{1/2} .
+	\end{equation}
+	Taking the limit to $t_1\to a$ and $t_2\to b$ we obtain $e(\dfrac{a+b}{2}) = 0$, in contradiction with $e_w>0$ on $(a,b)$.
+	We conclude that $e_w=0$ on $[0,T]$.
+\end{proof}
 
-
+\begin{lemma}\label{lem67cc8da8}
+	Let $I\subset\R$ be an interval and $e:I\to (0,+\infty)$ be a $C^2$ function with 
+	$\dot e \le \dd e \dot e$.
+	Then, for every $t_1<t_2$ belonging to $I$, and every $\tau\in(0,1)$,
+	\begin{equation}\label{eq67cc8d9e}
+		e((1-\tau)t_1 + \tau t_2) \le e(t_1)^{1-\tau} e(t_2)^\tau .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Set $f(t) = \log(e(t))$, which is well defined because $e(t)>0$.
+	Then $f'(t) = \frac{\dot e(t)}{e(t)}$ and 
+	\begin{equation}
+		f''(t) = - \frac1{e(t)^2} \dot e(t)^2 + \frac{\ddot e(t)}{e(t)} 
+	\ge \frac{ - \ddot e e + \ddot e e }{e^2} = 0 .
+	\end{equation}
+	Therefore $f$ is convex.
+	From the convexity of $f$, we get~\eqref{eq67cc8d9e}.
+\end{proof}
 
 
 
@@ -2973,6 +3381,378 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \section{Wave Equation}
+
+\subsection{The wave operator}\label{subs67cd41c5}
+\newcommand{\waveop}{\square}
+
+
+Let $U\subset\R^n$ open and $I\subset\R$ an open interval.
+For $u:U\times I\to \C$, we call
+\begin{itemize}
+\item the (homogeneous) wave equation $\frac{\de^2u}{\de t^2} - \laplacian u = 0$ in $U\times I$;
+\item the \emph{nonhomogeneous wave equation} $\frac{\de^2u}{\de t^2} - \laplacian u = f$ in $U\times I$, for some $f:U\times I\to\C$.
+\end{itemize}
+A common abbreviation is to denote the \emph{wave operator} by
+\begin{equation}
+	\waveop w = \de_t^2 - \laplacian .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Symmetries of $\waveop$}\label{subs67cd41e1}
+The wave operator $\waveop$ is a linear homogeneous hyperbolic differential operator of order 2.
+
+Define $v(x,t) = u(Ax+a, Bt+b)$ with $A\in \GL(n)$, $a\in \R^n$, $B,b\in\R$
+with $AA^T = \lambda^2\Id$.
+Then
+\begin{align*}
+	\waveop v 
+	&= (B^2\de_t^2u - \lambda^2 \laplacian u)(Ax+a,Bt+b) \\
+	\text{[If $B^2=\lambda^2$:]}
+	&= \lambda^2 \waveop u(Ax+a,Bt+b) .
+\end{align*}
+
+\begin{exercise}
+	Compute $\waveop u$ for $u(x,t) = \exp((a+bi)\cdot x+\phi t)$, where $a,b\in\R^n$ and $\phi\in\R$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution  by spherical means: case $n=1$, d'Alambert's formula}\label{subs67cd4319}
+We consider the case $n=1$.
+We will solve the PDE
+\begin{equation}\label{eq67cd4386}
+\begin{cases}
+	\waveop u = 0 & \text{ in }\R\times(0,+\infty) , \\
+	u = g,\ \de_tu = h & \text{ on }\R\times\{0\} ,
+\end{cases}
+\end{equation}
+with $g$ and $h$ given functions $\R\to\C$.
+Before we give the full statement that we can prove at the moment, we will see how to find such a formula.
+So, we forget about the regularity of $u$, or, in other words, we assume that $u$ is $C^\infty$ (or $C^2$, which is enough to justify our reasoning).
+
+First, we notice that we can rewrite~\eqref{eq67cd4386} as
+\begin{equation}
+	(\de_t+\de_x)(\de_t-\de_x) u = 0 .
+\end{equation}
+Therefore, if $v=\de_tu - \de_x u$, then $v$ solves the transport equation~\eqref{} (with $b=1$:
+\begin{equation}
+\begin{cases}
+	\de_t v + \de_x v = 0 & \text{ in }\R\times(0,+\infty) , \\
+	v = h-g' & \text{ on }\R\times\{0\} .
+\end{cases}
+\end{equation}
+If $u$ is $C^2$, then $v$ is $C^1$ and we know that
+\begin{equation}
+	v(x,t) = v(x-t,0) = h(x-t) - g'(x-t) .
+\end{equation}
+Next, $u$ solves $\de_tu-\de_xu = v$ in $\R\times(0,+\infty)$.
+By the nonhomogeneous transport equation~\eqref{} (with $b=-1$ and $f=v$), we have
+\begin{align*}
+ 	u(x,t)
+	&= u(x+t,0) + \int_0^t v(x-(r-t),r) \did r \\
+	&= g(x+t) + \int_0^t (h(x-r+t-r) - g'(x-r+t-r)) \did r \\
+	&= g(x+t + \left. \frac{g(x+t-2r)}{2} \right|^t_0 + \int_0^t h(x+t-2r) \did r \\
+	\text{[$\bar r = x+t-2r$]}
+	&= \frac12 (g(x+t)+g(x-t)) - \int_{x+t}^{x-t} h(\bar r) \frac{\did \bar r}{2} \\
+	&= \frac12 (g(x+t)+g(x-t)) + \frac12 \int_{x-t}^{x+t} h(r) \did r .
+\end{align*}
+We thus obtain \emph{D'Alambert's formula}
+\begin{equation}\label{eq67cd45ee}
+	u(x,t) = \frac12 (g(x+t)+g(x-t)) + \frac12 \int_{x-t}^{x+t} h(r) \did r .
+\end{equation}
+
+\begin{theorem}[Solution to $\waveop=0$ for $n=1$]\label{thm67cd4667}
+	Let $g\in C^2(\R)$ and $h\in C^1(\R)$.
+	Define $u:\R\times\R\to \C$ by D'Alambert's formula~\eqref{eq67cd45ee}.
+	Then
+	\begin{enumerate}
+	\item
+	$u\in C^2(\R\times\R)$;
+	\item
+	$\de_t^2u-\de_x^2u = \waveop u=0$ in $\R\times\R$;
+	\item
+	for every $\hat x\in\R$, $u(\hat x,0) = g(\hat x)$ and $\de_tu(\hat x,0) = h(\hat x)$.
+	\end{enumerate}	
+\end{theorem}
+\begin{proof}
+	The proof is left as an exercise.
+\end{proof}
+
+\begin{exercise}
+	Prove Theorem~\ref{thm67cd4667}.
+\end{exercise}
+
+\begin{remark}
+	Solutions to the wave equation given by D'Alambert's formula~\eqref{eq67cd45ee} are of the form
+	\begin{equation}
+		u(x,t) = F(x+t) + G(x-t) ,
+	\end{equation}
+	with $F,G\in C^2(\R)$.
+	The two functions represent a forward-moving wave %($G(x-t)$) 
+	and a backward-moving wave. % ($F(x+t)$)
+	Can you say which is which?
+\end{remark}
+
+\begin{remark}
+	The solutions we have found with D'Alambert's formula~\eqref{eq67cd45ee} extend to negative time!
+\end{remark}
+
+\begin{remark}
+	The solutions we have found with D'Alambert's formula~\eqref{eq67cd45ee} are not $C^\infty$ smooth if $g$ and $h$ are not $C^\infty$.
+	This is different from the other equations we have studied so far.
+	Can you spot the difference in the equation? 
+	In fact, the highest order part in the Laplace and in the heat equations is the laplacian, while here the whole $\waveop$ is homogeneous of order 2.
+\end{remark}
+
+\begin{remark}
+	For $n>1$, we can define $\tilde u(x,t) = u(x_1,t)$, where $u$ is a solution in dimension $1$ to the wave equation.
+	It follows that $\tilde u$ is a solution to the wave equation in $\R^n\times\R$.
+	Therefore, we have found non-smooth solutions to $\waveop u=0$ in all dimensions!
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{TODO}
+\begin{itemize}
+\item A reflection method
+\item Vibrating string pinched in two points, eigenvalues, harmonics...
+\item Change of coordinates
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Spherical means: Euler--Poisson--Darboux equation}\label{subs67cd4983}
+
+\begin{lemma}[Euler--Poisson--Darboux equation]\label{lem67cd498e}
+	Let $n\ge2$, $m\ge 2$, $u\in C^m(\R^n\times[0,+\infty))$, $g,h\in C^m(\R^n)$.
+	Suppose
+	\begin{equation}\label{eq67cd4bec}
+	\begin{cases}
+		\de_t^2u-\laplacian u = 0 & \text{ in }\R^n\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^n\times\{0\} . \\
+	\end{cases}
+	\end{equation}
+	Referring to~\ref{sec67bac9ff},
+	set $U(x;r,t) = \psi_u(t,x;r)$, $G(x;r):= \psi_g(x,r)$, $H(x;r) = \psi_h(x;r)$.
+	Here $\psi_{(\cdot)}$ is defined in~\eqref{eq67bacbb5}.
+	Then $U(x;\cdot)\in C^m([0,+\infty)\times[0,+\infty))$ and
+	\begin{equation}\label{eq67cd4b9e}
+	\begin{cases}
+		\de_t^2 U - \de_r^2 U - \frac{n-1}{r} \de_t U = 0 & \text{ in }(0,+\infty)\times(0,+\infty) , \\
+		U = G,\ \de_t U = H & \text{ on }(0,+\infty)\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	The regularity of all functions $U$, $G$ and $H$ is proven in Lemma~\ref{lem67cd4b64}.
+	To show~\eqref{eq67cd4b9e}, we just need to perform the following computations, using again Lemma~\ref{lem67cd4b64}.
+	\begin{align}
+		\de_r\psi_u(x,t;r) 
+		&= \frac{r}{n} \phi_{\laplacian u} (x,t;r) \\
+		&\overset{\eqref{eq67cd4bec}}= \frac{r}{n} \phi_{\de_t^2 u} (x,t;r) \\
+		&= \frac{r}{n} \de_t^2 \phi_u(x,t;r) , \\
+		\de_r^2\psi_u(x,t;r)
+		&= \frac1n \de_t^2\phi_u + \frac{r}{n} \de_t^2\left( \frac{n}{r}(\psi_u-\phi_u)\right) \\
+		&= \de_t^2 \psi_u + \frac{1-n}{n} \de_t^2\phi_u \\
+		&= \de_t^2 \psi_u + \frac{1-n}{n} \left(\frac{n}{r} \de_r\psi_u \right) \\
+		&= \de_t^2 \psi_u + \frac{1-n}{r} \de_r \psi_u .
+	\end{align}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution by spherical means: case $n=3$}\label{subs67ce94a5}
+Let $u\in C^2(\R^3\times[0,+\infty))$ be such that~\eqref{eq67cd4bec} holds, that is
+\begin{equation}
+\begin{cases}
+	\de_t^2u-\laplacian u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+	u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} . \\
+\end{cases}
+\end{equation}
+Define $U$, $G$ and $H$ as in Lemma~\ref{lem67cd498e} and then set
+\begin{align}
+	\tilde U(x;r,t) = r U(x;r,t) ,
+	&& 
+	\tilde G(x;r) = r G(x;r) ,
+	&&
+	\tilde H(x;r) = r H(x;r) .
+\end{align}
+Then a direct computation shows that, for each $x\in\R^3$,
+\begin{equation}
+\begin{cases}
+	\de_t^2 \tilde U - \de_r^2 \tilde U = 0 & \text{ for }r,t>0 \\
+	\tilde U(x;r,0) = \tilde G(x;r) \ 
+	\de_t \tilde U(x;r,0) = \tilde H(x;r)
+	& \text{ for }r>0 .
+\end{cases}
+\end{equation}
+So, for each $x\in\R^3$, the function $U(x;\cdot,\cdot)$ solves the pinched string problem~\ref{subs67cd4e88}, from which we obtain
+\begin{equation}
+	\tilde U (x;r,t) = \frac12 (\tilde G(x;r+t)-\tilde G(x;t-r)) + \frac12 \int_{-r+t}^{r+t} \tilde H(x;s) \did s .
+\end{equation}
+So,
+\begin{align*}
+ 	u(x,t)
+	&= \lim_{r\to0} U(x;r,t) 
+	= \lim_{r\to0} \frac{ \tilde U(x;r,t)}{r} \\
+	&= \lim_{r\to0} \left( \frac{\tilde G(x;r+t) - \tilde G(x;t-r) }{2r} 
+		+ \fint_{t-r}^{t+r} \tilde H(x;s) \did s \right) \\
+	&= \de_r\tilde G(x;t) + \tilde H(x;t) \\
+	&= (G(x;t) + t\de_t G(x;t)) + t H(x;t) \\
+	&= \fint_{\de B(x,t)} g(y) \did S(y) 
+		+ \frac{t^2}{3} \fint_{B(x,t)} \laplacian g(y) \did y 
+		+ t \fint_{\de B(x,t)} h(y) \did S(y) \\
+	&= \fint_{\de B(x,t)} \left( g(y) + t \Diff g(y)\cdot \frac{y-x}{|y-x|} + th(y) \right) \did S(y) \\
+	&= \fint_{\de B(x,t)} \left( g(y) + \Diff g(y)\cdot (y-x) + th(y) \right) \did S(y) .
+\end{align*}
+
+\begin{theorem}\label{thm67ce9378}
+	Let $u\in C^2(\R^3\times[0,+\infty))$ be such that $\waveop u =0$ in $\R^3\times(0,+\infty)$.
+	Then, for every $s\ge 0$ and every $t>0$,
+	\begin{equation}\label{eq67ce93f5}
+		u(x,s+t) = \fint_{\de B(x,t)} \left( u(y,s) + \Diff_yu(y,s) \cdot (y-x) + t \de_s u(y,s) \right) \did S(y) .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	•
+\end{proof}
+
+\begin{remark}
+	Notice that the integral in~\eqref{eq67ce93f5} is supported on the sphere!
+\end{remark}
+
+\begin{theorem}
+	Let $g\in C^2(\R^3)$ and $h\in C^1(\R^2)$.
+	Then there exists a unique $u\in C^2(\R^3\times[0,+\infty))$ such that 
+	\begin{equation}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	We take $u$ defined in~\eqref{eq67ce93f5} and then we apply the Proposition about spherical means.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution by spherical means: case $n=2$}\label{subs67ce94b2}
+
+\begin{remark}
+	The issue here is that, for $n=2$, the Euler--Poisson--Darboux equation~\eqref{} cannot be transformed into a wave equation.
+	(Why?)
+\end{remark}
+
+Let $u\in C^2(\R^2\times[0,+\infty))$ be a solution to the system
+\begin{equation}
+\begin{cases}
+	\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^2\times(0,+\infty) , \\
+	u = g,\ \de_t u = h & \text{ on }\R^2\times\{0\} .
+\end{cases}
+\end{equation}
+We define $\tilde u\in C^2(\R^2\times[0,+\infty))$ by $\tilde u(x_1,x_2,x_3,t) = u(x_1,x_2,t)$,
+$\tilde g(x_1,x_2,x_3) = g(x_1,x_2)$
+and $\tilde h(x_1,x_2,x_3) = u(x_1,x_2)$.
+Therefore, $\tilde u$ solves
+\begin{equation}
+\begin{cases}
+	\waveop \tilde u = ( \de_t^2-\laplacian )\tilde u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+	\tilde u = g,\ \de_t \tilde u = h & \text{ on }\R^3\times\{0\} .
+\end{cases}
+\end{equation}
+To avoid confusion, we denote by $B_3$ balls in $\R^3$ and by $B_2$ balls in $\R^2$.
+Theorem~\ref{thm67ce9378} tells us that, 
+denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ for each given $x=(x_1,x_2)\in\R^2$, then
+\begin{align*}
+	u(x_1,x_2,t)
+ 	&= \tilde u(x_1,x_2,0,t) 
+	= \fint_{\de B_3(\tilde x,t)} \left( g(\tilde y) + \Diff g(\tilde y)\cdot (\tilde y-\tilde x) + th(\tilde y) \right) \did S(\tilde y)  \\
+	&\overset{??}= \frac{1}{3\omega_3 t^2} \int_{-t}^t \int_{\de B_2(x,\sqrt{t^2-s^2})}
+		\left( g(y) + t h(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{1}{\sqrt{t^2-s^2}} \did s \\
+	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,\sqrt{t^2-s^2})}
+		\left( g(y) + t h(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{1}{\sqrt{t^2-s^2}} \did s \\
+	\text{[$r=\sqrt{t^2-s^2}$]}
+	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,r)} \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{r}{\sqrt{t^2-r^2}} \frac{\did r}{r} \\
+	&= [...] \\
+	&= \frac12 \fint_{B_2(x,r)} \frac{g + th + \Diff g\cdot (y-x) }{ ( t^2 - |y-x|^2 )^{1/2} } \did S(y) .
+\end{align*}
+
+\begin{exercise}
+	Compute $\omega_3$, the volume of the unit ball in $\R^3$.
+	
+	{\it Solution:}
+	\begin{align*}
+	 	\omega_3
+		&= 2\int_{B_2(x,1)} \sqrt{1-|x|^2} \did x \\
+		&= 2 \int_0^1 \int_0^{2\pi} \sqrt{1-r^2} \did \theta r \did r \\
+		&= 4\pi \int_0^1 r \sqrt{1-r^2} \did r \\
+		\text{[$r=\sin t$]}
+		&= 4\pi \int_0^{\pi/2} \sin t \cos t \did t
+		= [...] = \frac{4\pi}{3} .
+	\end{align*}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Finite propagation speed}\label{subs67ce9a17}
+\begin{theorem}[Finite propagation speed]\label{thm67ce9a24}
+	Let $U\subset \R^n$ be open, $\hat x\in U$ and $R>0$.
+	Define
+	\begin{equation}
+		K(\hat x,R) = \{ (x,t)\in\R^n\times [0,R] : |x|\le R \} .
+	\end{equation}
+	Suppose $\bar B(\hat x,R)\subset U$ and that $u\in C^\infty(U\times[0,R])$ is such that
+	$\waveop u = 0$ in $U\times(0,R)$,
+	and $u=\de_tu =0 $ on $U\times\{0\}$.
+	Then $u= 0$ in $K(\hat x,R)$.
+\end{theorem}
+\begin{proof}
+	Fix $t\ge 0$, define 
+	\begin{equation}
+		E(t) = \frac12 \int_{B(\hat x,R-t)} (|\de_tu(x,t)|^2 + |\Diff u(x,t)|^2 ) \did x .
+	\end{equation}
+	Then, if $t\in (0,R)$,
+	\begin{align*}
+	 	\de_t E(t) 
+		&= \frac12 \left.\frac{\dd}{\dd h}\right|_{h=0}
+			\bigg( \int_{B(\hat x,R-t-h)} (|\de_tu(x,t)|^2 + |\Diff_xu(x,t)|^2 ) \did x
+		\\&\qquad
+				+ \int_{B(\hat x,R-t)} (|\de_tu(x,t+h)|^2 + |\Diff_xu(x,t+h)|^2 ) \did x 
+			\bigg) \\
+		&= \frac12 \bigg( - \int_{\de B(\hat x,R-t)} (|\de_tu(x,t)|^2 + |\Diff_xu(x,t)|^2 ) \did S(x)
+		\\&\qquad
+			+ \int_{B(\hat x, R-t)} (2\de_tu\de_t^2u + 2\Diff u \Diff\de_t u) \did x 
+			\bigg) \\
+		&= \int_{\de B(\hat x,R-t)} \bigg( - \frac{|\de_tu|^2}{2} - \frac{|\Diff u|^2}{2} + \de_t u \Diff u\cdot \nu \bigg) \did S(x) \\
+		&\overset{(*)}\le  -\int_{\de B(x,R-t)} (|\de_tu|-|\Diff u|)^2 \did S
+		\le 0 ,
+	\end{align*}
+	where we have used in $(*)$ that
+	\begin{equation}
+		(|\de_tu|-|\Diff u|)^2
+		= |\de_tu|^2 + |\Diff u|^2 - 2 |\de_tu|\cdot|\Diff u|
+		\le |\de_tu|^2 + |\Diff u|^2 - 2 |\de_tu|\cdot|\Diff u\cdot \nu|,
+	\end{equation}
+	because $|\nu|=1$.
+	It follows that $0\le E(t) \le E(0) = 0$.
+	So, $u$ is constant in $K(\hat x,R)$.
+\end{proof}
+\begin{remark}
+	Notice that we actually only need $u$ constant in $B(\hat x,R)$ at time $0$ to obtain that $u$ is constant in $K(\hat x,R)$.
+\end{remark}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
