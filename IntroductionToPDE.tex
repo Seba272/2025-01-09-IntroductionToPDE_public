@@ -28,7 +28,7 @@
 \usepackage{amssymb}
 \usepackage{mathrsfs}
 \usepackage{hyperref}
-%\usepackage[all]{xy} % For \xymatrix
+\usepackage[all]{xy} % For \xymatrix
 \usepackage[usenames,dvipsnames]{xcolor}
 \hypersetup{colorlinks,%
 citecolor=Black,%
@@ -830,6 +830,172 @@ If $u$ is continuous, it is clear that
 	\end{equation}
 \end{proof}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Change of coordinates}
+
+\subsection{Differential operator}\label{subs67d7dce6}
+Let $\Omega\subset\R^n$.
+A \emph{differential operator} on $\Omega$ is a map $P:C^\infty(\Omega) \to C^\infty(\Omega)$ of the form
+\begin{equation}
+	P\phi = \sum_{\alpha\in\N^n} P_\alpha \Diff^\alpha \phi ,
+\end{equation}
+for some $P_\alpha\in C^\infty(\Omega)$, all zero but for finitely many indices.
+
+%.
+%We usually assume that $P$ is linear and local, that is, if $\spt(P\phi) \subset\spt(\phi)$.
+%This ensures that $P$ is 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{An abstract overview}\label{subs67d7dc9c}
+Let $\Omega_1,\Omega_2\subset\R^n$ be open sets and $\Phi:\Omega_1\to\Omega_2$ a diffeomorphism.
+We have pull-backs and push-forwards of both functions and differential operators:
+\begin{itemize}
+\item	Pull-back of functions: $\Phi^*:C^\infty(\Omega_2)\to C^\infty(\Omega_1)$, $\Phi^*\psi = \psi\circ\Phi$ for $\psi\in C^\infty(\Omega_2)$;
+\item	Push-forward of functions: $\Phi_*:C^\infty(\Omega_1)\to C^\infty(\Omega_2)$, $\Phi_*\phi = \phi\circ\Phi^{-1}$ for $\psi\in C^\infty(\Omega_2)$;
+\item	Push-forward of differential operators: if $P_1:C^\infty(\Omega_1)\to C^\infty(\Omega_1)$ is a differential operator, then $\Phi_*P_1 = \Phi_*\circ P_1 \circ \Phi^*$;
+\item	Pull-back of differential operators: if $P_2:C^\infty(\Omega_2)\to C^\infty(\Omega_2)$ is a differential operator, then $\Phi^*P_2 = \Phi^*\circ P_2 \circ \Phi_*$.
+\end{itemize}
+The following diagrams might help:
+\begin{equation}\label{eq67d7e093}
+	\xymatrix{
+	\Omega_1 \ar[r]^{\Phi} & \Omega_2 \\
+	C^\infty(\Omega_1)\ar[d]_{P_1} & C^\infty(\Omega_2) \ar[l]_{\Phi^*}\ar[d]^{\Phi_*P_1} \\
+	C^\infty(\Omega_1)\ar[r]^{\Phi_*} & C^\infty(\Omega_2) \\
+	}
+	\qquad
+	\xymatrix{
+	\Omega_1 \ar[r]^{\Phi} & \Omega_2 \\
+	C^\infty(\Omega_1)\ar[d]_{\Phi^*P_2}\ar[r]^{\Phi_*} & C^\infty(\Omega_2) \ar[d]^{P_2} \\
+	C^\infty(\Omega_1) & C^\infty(\Omega_2)\ar[l]_{\Phi^*} \\
+	}
+\end{equation}
+
+Notice that, for all functions $\phi\in C^\infty(\Omega_1)$, $\psi\in C^\infty(\Omega_2)$, 
+and all differential operators $P_1:C^\infty(\Omega_1)\to C^\infty(\Omega_1)$ and $P_2:C^\infty(\Omega_2)\to C^\infty(\Omega_2)$,
+\begin{align*}
+	\Phi_*\phi &= (\Phi^{-1})^*\phi = (\Phi^*)^{-1}\phi ;\\
+	(\Phi_*P_1)\psi & = (P_1(\phi\circ \Phi))\circ\Phi^{-1} ; \\
+	(\Phi^*P_2)\phi &=  (P_2(\phi\circ\Phi^{-1}))\circ \Phi ; \\
+	\Phi_* \Phi^* &= \Id,\text{ and }\Phi^*\Phi_* = \Id .
+\end{align*}
+
+Notice that, if $P_j,Q_j$ are  differential operators, then
+\begin{equation}\label{eq67d7eb47}
+	\Phi^*(P_2\circ Q_2) = (\Phi^*P_2)\circ (\Phi^*Q_2),
+	\text{ and }
+	\Phi_*(P_1\circ Q_1) = (\Phi_*P_1)\circ(\Phi_*Q_1) .
+\end{equation}
+
+\begin{exercise}
+	A differential operator of order zero on $\Omega$ is of the form $P\phi = f\cdot\phi$ for some $f\in C^\infty(\Omega)$.
+	Compute $\Phi_*P$ and $\Phi^*P$ for differential operators $P$ of order zero.
+	Is it coherent with pull-back and push-forward of functions?
+\end{exercise}
+
+\begin{exercise}\label{ex67d7e500}
+	Let $\Phi:\Omega_1\to\Omega_2$ be a diffeomorphism between open subsets of $\R^n$.
+	For $j\in\{1,\dots,n\}$, compute $\Phi_*\de_j$ and $\Phi^*\de_j$.
+\end{exercise}
+
+\begin{exercise}[Harder]
+	Consider $\Phi:\R^n\to\R^n$, $\Phi(x) = Ax$ for $A\in\GL(\R^n)$, that is $A$ is a $n\times n$ invertible matrix.
+	For $\alpha\in\N^n$, compute $\Phi^*\Diff^\alpha$ and $\Phi_*\Diff^\alpha$.
+\end{exercise}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{An example: Laplacian in polar coordinates}
+Consider 
+\begin{equation}
+	\Phi : (0,+\infty) \times (-\pi,\pi) \to \R^2 \setminus (\{0\}\times[-\infty,0]),
+	\qquad
+	\Phi(r,\theta) = (r\cos(\theta),r\sin(\theta)) .
+\end{equation}
+This function $\Phi$ is a \emph{polar parametrization} of the plane:
+\emph{polar coordinates} are in fact the inverse function of $\Phi$.
+In other words, we can define functions 
+\begin{equation}\label{eq67d7eca2}
+	r,\theta: \R^2 \setminus (\{0\}\times[-\infty,0])\to\R ,
+	\text{ such that }\Phi(r(x,y),\theta(x,y)) = (x,y) .
+\end{equation}
+
+Anyway, with the function $\Phi$ above, we want to compute $\Phi^*\laplacian$.
+To do this, using Exercise~\ref{ex67d7e500}, we first compute
+\begin{equation}
+	\Diff\Phi(r,\theta) 
+	= \begin{pmatrix} \cos\theta & - r\sin\theta \\ \sin\theta & r\cos\theta \end{pmatrix} ,
+	\qquad
+	\Diff\Phi(r,\theta)^{-1}
+	= \frac1r \begin{pmatrix} r \cos\theta & r\sin\theta \\ - \sin\theta & \cos\theta\end{pmatrix} .
+\end{equation}
+Therefore,
+\begin{align*}
+ 	(\Phi^*\de_x)(r,\theta) 
+	&= \Diff\Phi(r,\theta)^{-1} \left(\de_x|_{\Phi(r,\theta)}\right)
+	= \cos\theta \de_r - \frac{\sin\theta}{r} \de_\theta \\
+	(\Phi^*\de_y)(r,\theta)
+	&= \Diff\Phi(r,\theta)^{-1} \left(\de_y|_{\Phi(r,\theta)}\right)
+	= \sin\theta\de_r + \frac{\cos\theta}{\de r} .
+\end{align*}
+Using now~\eqref{eq67d7eb47}, we obtain
+\begin{equation}\label{eq67d7ec01}
+	\Phi^*\laplacian  
+	= (\Phi^*\de_x)^2 + (\Phi^*\de_y)^2
+	= [...]
+	= \de_r^2 + \frac{1}{r^2} \de_\theta^2 + \frac1r \de_r .
+\end{equation}
+This formula represents ``the laplacian in polar coordinates''.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Another interpretation of the previous change of variables}
+We have another interpretation of the computation we made in~\eqref{eq67d7ec01}.
+Define the vector fields
+\begin{align*}
+	\vec v_r(x,y) &= \cos\theta \de_x + \sin\theta\de_ y 
+		= \frac{x\de_x-y\de_y}{\sqrt{x^2+y^2}} , \\
+	\vec v_\theta(x,y) &= r\sin\theta \de_r + r\cos\theta \de_y 
+		= -y\de_x + x\de_y ,
+\end{align*}
+where we see $\theta$ and $r$ as the functions defined in~\eqref{eq67d7eca2}.
+These are the push-forward vector fields $\Phi_*\de_r$ and $\Phi_*\de_\theta$, respectively.
+As such, one usually simply writes $\de_r$ and $\de_\theta$ for $\vec v_r$ and $\vec v_\theta$.
+We keep the distinction here for purely educational purposes.
+
+At this point, we can write $\de_x$ and $\de_y$ in terms of $\vec v_r$ and $\vec v_\theta$:
+\begin{align*}
+ 	\de_x = \cos\theta \vec v_r - \frac{\sin\theta}{r} \vec v_\theta ,\\
+	\de_y = \sin\theta \vec v_r + \frac{\cos\theta}{r} \vec v_\theta .
+\end{align*}
+
+We can now perform the computation~\eqref{eq67d7ec01} again as
+\begin{equation}
+	\laplacian
+	= \de_x^2 + \de_y^2
+	= (\cos\theta \vec v_r - \frac{\sin\theta}{r} \vec v_\theta)^2	
+		+ (\sin\theta \vec v_r + \frac{\cos\theta}{r} \vec v_\theta)^2
+	= [...]
+	= \vec v_r^2 + \frac{1}{r^2} \vec v_\theta^2 + \frac1r \vec v_r ,
+\end{equation}
+where, we recall, $r,\theta$ are the functions defined in~\eqref{eq67d7eca2},
+and ``$\vec v_r = \de_r$'', and ``$\vec v_\theta = \de_\theta$''.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Exercise: Laplacian in polar coordinates in arbitrary dimension}
+\begin{exercise}
+	Consider the polar coordinates in $\R^n$ given by the function
+	$\Phi:(0,+\infty)\times \R^{n-1}\to\R^n$,
+	\begin{equation}
+		\Phi(r,\theta_1,\dots,\theta_{n-1})
+		= r ( \cos\theta_1, \sin\theta_1\cos\theta_2, \sin\theta_1\sin\theta_2\cos\theta_3, \dots, \sin\theta_1\cdots \sin\theta_{n-1} ) .
+	\end{equation}
+	\begin{enumerate}
+	\item	Determine domain and image of $\Phi$ so that it becomes a diffeomorphism;
+	\item	Compute the laplacian in polar coordinates in $\R^n$.
+	\end{enumerate}
+\end{exercise}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -852,9 +1018,13 @@ where $I\subset\R$ is an interval, $t_0\in I$, $b\in\R^n$, $f:\R^n\times I\to\C$
 The function $u$ is intended as a function in two variables, $u=u(x,t)$, where $x\in\R^n$ and $t\in I$.
 The derivative $\de_tu$ is the derivative along the second variable, $t$, 
 while the gradient $\grad u$ is the derivative of $u$ in the variable $x$.
+
+If $f=0$, then we call~\eqref{eq67a79b9b} the \emph{homogeneous transport equation}.
+If $f\neq0$, then~\eqref{eq67a79b9b} is the \emph{nonhomogeneous transport equation}.
+
 A solution to~\eqref{eq67a79b9b} is easily found.
 
-\begin{theorem}
+\begin{theorem}\label{thm67d7b17c}
 	Let $I\subset \R$ be an open interval, $t_0\in \bar I$, $b\in\R^n$, $f\in C^0(\R^n\times \bar I)$, and $g\in C^1(\R^n)$.
 	Then the function $u\in C^1(\R^n\times \bar I)$ defined by
 	\begin{equation}\label{eq67a79d37}
@@ -3080,9 +3250,9 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	\begin{equation}
 	\begin{aligned}
 		u(x,t) 
-		&= \iint_C \bigg( \Phi(x-y,t-s) (\de_s\zeta(y,s)+\laplacian_y\zeta(y,s) )
+		&= \int_0^t\int_{\R^n} \bigg( \Phi(x-y,t-s) (\de_s\zeta(y,s)+\laplacian_y\zeta(y,s) )
 			+ 2\Diff_y \Phi(x-y,t-s) \Diff_y\zeta(y,s) \bigg) \cdot u(y,s) \did y\did s \\
-		&\qquad+ \iint_C \Phi(x-y,t-s) \zeta(y,s) \bigg(\de_su(y,s) - \laplacian_y u(y,s)\bigg) \did y\did s .
+		&\qquad+ \int_0^t\int_{\R^n} \Phi(x-y,t-s) \zeta(y,s) \bigg(\de_su(y,s) - \laplacian_y u(y,s)\bigg) \did y\did s .
 	\end{aligned}
 	\end{equation}
 \end{lemma}
@@ -3163,18 +3333,19 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	- 2 \Diff\zeta(y,s)\cdot\Diff u(y,s)
 	\bigg) \did y\did s .
 	\end{align*}
-	{\color{Red} WRONG:
-	Notice that the integral is in fact on $C$, because $\spt(\zeta)\subset C$. }
+%	{\color{Red} WRONG:
+%	Notice that the integral is in fact on $C$, because $\spt(\zeta)\subset C$. }
 	Moreover,
 	\begin{align*}
-	\iint_C \Phi(x-y,t-s) \Diff\zeta\cdot\Diff u \did y\did s
-	&= \int_{\hat t-\hat r^2}^{\hat t} \int_{\bar B(\hat x,\hat r)}
+	\int_0^t\int_{\R^n} \Phi(x-y,t-s) \Diff\zeta\cdot\Diff u \did y\did s
+%	&= \int_{\hat t-\hat r^2}^{\hat t} \int_{\bar B(\hat x,\hat r)}
+	&= \int_0^t \int_{\bar B(\hat x,\hat r)}
 		\bigg( \div_y( \Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) ) \\
 	&\qquad		- \Diff_y\Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) \\
 	&\qquad\qquad		- \Phi(x-y,t-s) u(y,s) \laplacian\zeta(y,s) 
 		\bigg) \did y\did s ,\\
 	\end{align*}
-	where
+	where, for all $s<t$,
 	\begin{align*}
 	 	\int_{\bar B(\hat x,\hat r)} \div_y( \Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) \did y 
 %		&= \int_{\bar B(\hat x,\hat r) \setminus B(\hat x,\epsilon)} \div_y( \Phi(x-y,t-s) \Diff\zeta(y,s) u(y,s) \did y \\
@@ -3333,17 +3504,17 @@ the \emph{parabolic boundary} $\Gamma_T := \bar U_T \setminus U_T = (U\times\{0\
 	\end{align*}
 	Hence, 
 	\begin{equation}
-		\dot e_w(t)^2 \le \ddot e_w(t) \cdot e(t) .
+		\dot e_w(t)^2 \le \ddot e_w(t) \cdot e_w(t) .
 	\end{equation}
 	Suppose that $e_w$ is not zero on $[0,T]$.
 	Let $(a,b)\subset[0,T]$ be a maximal interval where $e_w>0$.
 	Then $e_w(a) = 0$.
 	By Lemma~\ref{lem67cc8da8}, for all $[t_1,t_2]\subset(a,b)$,
 	\begin{equation}
-		e(1/2 t_1 + 1/2 t_2 ) 
-		\le e(t_1)^{1/2} e(t_2)^{1/2} .
+		e_w(1/2 t_1 + 1/2 t_2 ) 
+		\le e_w(t_1)^{1/2} e_w(t_2)^{1/2} .
 	\end{equation}
-	Taking the limit to $t_1\to a$ and $t_2\to b$ we obtain $e(\dfrac{a+b}{2}) = 0$, in contradiction with $e_w>0$ on $(a,b)$.
+	Taking the limit to $t_1\to a$ and $t_2\to b$ we obtain $e_w(\dfrac{a+b}{2}) = 0$, in contradiction with $e_w>0$ on $(a,b)$.
 	We conclude that $e_w=0$ on $[0,T]$.
 \end{proof}
 
@@ -3415,277 +3586,57 @@ Then
 	Compute $\waveop u$ for $u(x,t) = \exp((a+bi)\cdot x+\phi t)$, where $a,b\in\R^n$ and $\phi\in\R$.
 \end{exercise}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Solution  by spherical means: case $n=1$, d'Alambert's formula}\label{subs67cd4319}
-We consider the case $n=1$.
-We will solve the PDE
-\begin{equation}\label{eq67cd4386}
-\begin{cases}
-	\waveop u = 0 & \text{ in }\R\times(0,+\infty) , \\
-	u = g,\ \de_tu = h & \text{ on }\R\times\{0\} ,
-\end{cases}
-\end{equation}
-with $g$ and $h$ given functions $\R\to\C$.
-Before we give the full statement that we can prove at the moment, we will see how to find such a formula.
-So, we forget about the regularity of $u$, or, in other words, we assume that $u$ is $C^\infty$ (or $C^2$, which is enough to justify our reasoning).
-
-First, we notice that we can rewrite~\eqref{eq67cd4386} as
-\begin{equation}
-	(\de_t+\de_x)(\de_t-\de_x) u = 0 .
-\end{equation}
-Therefore, if $v=\de_tu - \de_x u$, then $v$ solves the transport equation~\eqref{} (with $b=1$:
-\begin{equation}
-\begin{cases}
-	\de_t v + \de_x v = 0 & \text{ in }\R\times(0,+\infty) , \\
-	v = h-g' & \text{ on }\R\times\{0\} .
-\end{cases}
-\end{equation}
-If $u$ is $C^2$, then $v$ is $C^1$ and we know that
-\begin{equation}
-	v(x,t) = v(x-t,0) = h(x-t) - g'(x-t) .
-\end{equation}
-Next, $u$ solves $\de_tu-\de_xu = v$ in $\R\times(0,+\infty)$.
-By the nonhomogeneous transport equation~\eqref{} (with $b=-1$ and $f=v$), we have
-\begin{align*}
- 	u(x,t)
-	&= u(x+t,0) + \int_0^t v(x-(r-t),r) \did r \\
-	&= g(x+t) + \int_0^t (h(x-r+t-r) - g'(x-r+t-r)) \did r \\
-	&= g(x+t + \left. \frac{g(x+t-2r)}{2} \right|^t_0 + \int_0^t h(x+t-2r) \did r \\
-	\text{[$\bar r = x+t-2r$]}
-	&= \frac12 (g(x+t)+g(x-t)) - \int_{x+t}^{x-t} h(\bar r) \frac{\did \bar r}{2} \\
-	&= \frac12 (g(x+t)+g(x-t)) + \frac12 \int_{x-t}^{x+t} h(r) \did r .
-\end{align*}
-We thus obtain \emph{D'Alambert's formula}
-\begin{equation}\label{eq67cd45ee}
-	u(x,t) = \frac12 (g(x+t)+g(x-t)) + \frac12 \int_{x-t}^{x+t} h(r) \did r .
-\end{equation}
-
-\begin{theorem}[Solution to $\waveop=0$ for $n=1$]\label{thm67cd4667}
-	Let $g\in C^2(\R)$ and $h\in C^1(\R)$.
-	Define $u:\R\times\R\to \C$ by D'Alambert's formula~\eqref{eq67cd45ee}.
-	Then
-	\begin{enumerate}
-	\item
-	$u\in C^2(\R\times\R)$;
-	\item
-	$\de_t^2u-\de_x^2u = \waveop u=0$ in $\R\times\R$;
-	\item
-	for every $\hat x\in\R$, $u(\hat x,0) = g(\hat x)$ and $\de_tu(\hat x,0) = h(\hat x)$.
-	\end{enumerate}	
-\end{theorem}
-\begin{proof}
-	The proof is left as an exercise.
-\end{proof}
-
 \begin{exercise}
-	Prove Theorem~\ref{thm67cd4667}.
+	Show that $\waveop$ is invariant under the Lorentz group of transformations.
+	Recall that the Lorentz group is the group of linear automorphisms of the Minkowski space.
+	More explicitely, if $M$ is the $(n+1)\times(n+1)$ matrix
+	\begin{equation}
+		M = \begin{pmatrix}\Id & 0 \\ 0 & -1 \end{pmatrix} ,
+	\end{equation}
+	then the Minkowski space is $(\R^n\times\R,M)$
+	and the Lorentz group is made of matrices $A\in \GL(\R^n\times\R)$ such that $A^TMA = M$.
+	
+	{\it Hint.}
+	If it seems too hard, try to solve the exercise at leas for $n=1$.
 \end{exercise}
 
-\begin{remark}
-	Solutions to the wave equation given by D'Alambert's formula~\eqref{eq67cd45ee} are of the form
-	\begin{equation}
-		u(x,t) = F(x+t) + G(x-t) ,
-	\end{equation}
-	with $F,G\in C^2(\R)$.
-	The two functions represent a forward-moving wave %($G(x-t)$) 
-	and a backward-moving wave. % ($F(x+t)$)
-	Can you say which is which?
-\end{remark}
-
-\begin{remark}
-	The solutions we have found with D'Alambert's formula~\eqref{eq67cd45ee} extend to negative time!
-\end{remark}
-
-\begin{remark}
-	The solutions we have found with D'Alambert's formula~\eqref{eq67cd45ee} are not $C^\infty$ smooth if $g$ and $h$ are not $C^\infty$.
-	This is different from the other equations we have studied so far.
-	Can you spot the difference in the equation? 
-	In fact, the highest order part in the Laplace and in the heat equations is the laplacian, while here the whole $\waveop$ is homogeneous of order 2.
-\end{remark}
-
-\begin{remark}
-	For $n>1$, we can define $\tilde u(x,t) = u(x_1,t)$, where $u$ is a solution in dimension $1$ to the wave equation.
-	It follows that $\tilde u$ is a solution to the wave equation in $\R^n\times\R$.
-	Therefore, we have found non-smooth solutions to $\waveop u=0$ in all dimensions!
-\end{remark}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{TODO}
-\begin{itemize}
-\item A reflection method
-\item Vibrating string pinched in two points, eigenvalues, harmonics...
-\item Change of coordinates
-\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Spherical means: Euler--Poisson--Darboux equation}\label{subs67cd4983}
-
-\begin{lemma}[Euler--Poisson--Darboux equation]\label{lem67cd498e}
-	Let $n\ge2$, $m\ge 2$, $u\in C^m(\R^n\times[0,+\infty))$, $g,h\in C^m(\R^n)$.
-	Suppose
-	\begin{equation}\label{eq67cd4bec}
-	\begin{cases}
-		\de_t^2u-\laplacian u = 0 & \text{ in }\R^n\times(0,+\infty) , \\
-		u = g,\ \de_t u = h & \text{ on }\R^n\times\{0\} . \\
-	\end{cases}
-	\end{equation}
-	Referring to~\ref{sec67bac9ff},
-	set $U(x;r,t) = \psi_u(t,x;r)$, $G(x;r):= \psi_g(x,r)$, $H(x;r) = \psi_h(x;r)$.
-	Here $\psi_{(\cdot)}$ is defined in~\eqref{eq67bacbb5}.
-	Then $U(x;\cdot)\in C^m([0,+\infty)\times[0,+\infty))$ and
-	\begin{equation}\label{eq67cd4b9e}
-	\begin{cases}
-		\de_t^2 U - \de_r^2 U - \frac{n-1}{r} \de_t U = 0 & \text{ in }(0,+\infty)\times(0,+\infty) , \\
-		U = G,\ \de_t U = H & \text{ on }(0,+\infty)\times\{0\} .
-	\end{cases}
-	\end{equation}
-\end{lemma}
-\begin{proof}
-	The regularity of all functions $U$, $G$ and $H$ is proven in Lemma~\ref{lem67cd4b64}.
-	To show~\eqref{eq67cd4b9e}, we just need to perform the following computations, using again Lemma~\ref{lem67cd4b64}.
-	\begin{align}
-		\de_r\psi_u(x,t;r) 
-		&= \frac{r}{n} \phi_{\laplacian u} (x,t;r) \\
-		&\overset{\eqref{eq67cd4bec}}= \frac{r}{n} \phi_{\de_t^2 u} (x,t;r) \\
-		&= \frac{r}{n} \de_t^2 \phi_u(x,t;r) , \\
-		\de_r^2\psi_u(x,t;r)
-		&= \frac1n \de_t^2\phi_u + \frac{r}{n} \de_t^2\left( \frac{n}{r}(\psi_u-\phi_u)\right) \\
-		&= \de_t^2 \psi_u + \frac{1-n}{n} \de_t^2\phi_u \\
-		&= \de_t^2 \psi_u + \frac{1-n}{n} \left(\frac{n}{r} \de_r\psi_u \right) \\
-		&= \de_t^2 \psi_u + \frac{1-n}{r} \de_r \psi_u .
-	\end{align}
-\end{proof}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Solution by spherical means: case $n=3$}\label{subs67ce94a5}
-Let $u\in C^2(\R^3\times[0,+\infty))$ be such that~\eqref{eq67cd4bec} holds, that is
+\subsection{Examples}
+For $a,b\in\C$,
+consider the following functions $u_{a,b}:\R\times\R\to\C$,
 \begin{equation}
-\begin{cases}
-	\de_t^2u-\laplacian u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
-	u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} . \\
-\end{cases}
+	u_{a,b}(x,t) = \exp(ax + bt) ,
 \end{equation}
-Define $U$, $G$ and $H$ as in Lemma~\ref{lem67cd498e} and then set
-\begin{align}
-	\tilde U(x;r,t) = r U(x;r,t) ,
-	&& 
-	\tilde G(x;r) = r G(x;r) ,
-	&&
-	\tilde H(x;r) = r H(x;r) .
-\end{align}
-Then a direct computation shows that, for each $x\in\R^3$,
-\begin{equation}
-\begin{cases}
-	\de_t^2 \tilde U - \de_r^2 \tilde U = 0 & \text{ for }r,t>0 \\
-	\tilde U(x;r,0) = \tilde G(x;r) \ 
-	\de_t \tilde U(x;r,0) = \tilde H(x;r)
-	& \text{ for }r>0 .
-\end{cases}
-\end{equation}
-So, for each $x\in\R^3$, the function $U(x;\cdot,\cdot)$ solves the pinched string problem~\ref{subs67cd4e88}, from which we obtain
-\begin{equation}
-	\tilde U (x;r,t) = \frac12 (\tilde G(x;r+t)-\tilde G(x;t-r)) + \frac12 \int_{-r+t}^{r+t} \tilde H(x;s) \did s .
-\end{equation}
-So,
-\begin{align*}
- 	u(x,t)
-	&= \lim_{r\to0} U(x;r,t) 
-	= \lim_{r\to0} \frac{ \tilde U(x;r,t)}{r} \\
-	&= \lim_{r\to0} \left( \frac{\tilde G(x;r+t) - \tilde G(x;t-r) }{2r} 
-		+ \fint_{t-r}^{t+r} \tilde H(x;s) \did s \right) \\
-	&= \de_r\tilde G(x;t) + \tilde H(x;t) \\
-	&= (G(x;t) + t\de_t G(x;t)) + t H(x;t) \\
-	&= \fint_{\de B(x,t)} g(y) \did S(y) 
-		+ \frac{t^2}{3} \fint_{B(x,t)} \laplacian g(y) \did y 
-		+ t \fint_{\de B(x,t)} h(y) \did S(y) \\
-	&= \fint_{\de B(x,t)} \left( g(y) + t \Diff g(y)\cdot \frac{y-x}{|y-x|} + th(y) \right) \did S(y) \\
-	&= \fint_{\de B(x,t)} \left( g(y) + \Diff g(y)\cdot (y-x) + th(y) \right) \did S(y) .
-\end{align*}
-
-\begin{theorem}\label{thm67ce9378}
-	Let $u\in C^2(\R^3\times[0,+\infty))$ be such that $\waveop u =0$ in $\R^3\times(0,+\infty)$.
-	Then, for every $s\ge 0$ and every $t>0$,
-	\begin{equation}\label{eq67ce93f5}
-		u(x,s+t) = \fint_{\de B(x,t)} \left( u(y,s) + \Diff_yu(y,s) \cdot (y-x) + t \de_s u(y,s) \right) \did S(y) .
-	\end{equation}
-\end{theorem}
-\begin{proof}
-	•
-\end{proof}
-
-\begin{remark}
-	Notice that the integral in~\eqref{eq67ce93f5} is supported on the sphere!
-\end{remark}
-
-\begin{theorem}
-	Let $g\in C^2(\R^3)$ and $h\in C^1(\R^2)$.
-	Then there exists a unique $u\in C^2(\R^3\times[0,+\infty))$ such that 
-	\begin{equation}
-	\begin{cases}
-		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
-		u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} .
-	\end{cases}
-	\end{equation}
-\end{theorem}
-\begin{proof}
-	We take $u$ defined in~\eqref{eq67ce93f5} and then we apply the Proposition about spherical means.
-\end{proof}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Solution by spherical means: case $n=2$}\label{subs67ce94b2}
-
-\begin{remark}
-	The issue here is that, for $n=2$, the Euler--Poisson--Darboux equation~\eqref{} cannot be transformed into a wave equation.
-	(Why?)
-\end{remark}
-
-Let $u\in C^2(\R^2\times[0,+\infty))$ be a solution to the system
-\begin{equation}
-\begin{cases}
-	\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^2\times(0,+\infty) , \\
-	u = g,\ \de_t u = h & \text{ on }\R^2\times\{0\} .
-\end{cases}
-\end{equation}
-We define $\tilde u\in C^2(\R^2\times[0,+\infty))$ by $\tilde u(x_1,x_2,x_3,t) = u(x_1,x_2,t)$,
-$\tilde g(x_1,x_2,x_3) = g(x_1,x_2)$
-and $\tilde h(x_1,x_2,x_3) = u(x_1,x_2)$.
-Therefore, $\tilde u$ solves
-\begin{equation}
-\begin{cases}
-	\waveop \tilde u = ( \de_t^2-\laplacian )\tilde u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
-	\tilde u = g,\ \de_t \tilde u = h & \text{ on }\R^3\times\{0\} .
-\end{cases}
-\end{equation}
-To avoid confusion, we denote by $B_3$ balls in $\R^3$ and by $B_2$ balls in $\R^2$.
-Theorem~\ref{thm67ce9378} tells us that, 
-denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ for each given $x=(x_1,x_2)\in\R^2$, then
-\begin{align*}
-	u(x_1,x_2,t)
- 	&= \tilde u(x_1,x_2,0,t) 
-	= \fint_{\de B_3(\tilde x,t)} \left( g(\tilde y) + \Diff g(\tilde y)\cdot (\tilde y-\tilde x) + th(\tilde y) \right) \did S(\tilde y)  \\
-	&\overset{??}= \frac{1}{3\omega_3 t^2} \int_{-t}^t \int_{\de B_2(x,\sqrt{t^2-s^2})}
-		\left( g(y) + t h(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{1}{\sqrt{t^2-s^2}} \did s \\
-	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,\sqrt{t^2-s^2})}
-		\left( g(y) + t h(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{1}{\sqrt{t^2-s^2}} \did s \\
-	\text{[$r=\sqrt{t^2-s^2}$]}
-	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,r)} \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{r}{\sqrt{t^2-r^2}} \frac{\did r}{r} \\
-	&= [...] \\
-	&= \frac12 \fint_{B_2(x,r)} \frac{g + th + \Diff g\cdot (y-x) }{ ( t^2 - |y-x|^2 )^{1/2} } \did S(y) .
-\end{align*}
+\begin{exercise}
+	For which $a,b\in\C$ we have $\waveop u_{a,b}=0$?
+	
+	{\it Hint:} $a=b$ or $a=-b$.
+\end{exercise}
+\begin{exercise}
+	For which $a,b\in\C$ we have $u_{a,b}$ 1-periodic (i.e., $u_{a,b}(0) = u_{a,b}(1)$)
+	and $\waveop u_{a,b}=0$?
+	
+	{\it Hint:} $a,b\in 2\pi i\Z$ with $a=b$ or $a=-b$.
+\end{exercise}
+\begin{exercise}
+	For every $k\in\N$ and $\ell>0$, find $u:[0,\ell]\times\R\to\R$ such that 
+	\begin{enumerate}
+	\item	$\waveop u = 0$,
+	\item	$u(0,t) = u(\ell,t) = 0$ for all $t$, and
+	\item	there are $0\le x_0 < x_1 < \dots < x_k \le \ell$ such that $u(x_j,t) = 0$ for all $j$ and all $t$.
+	\end{enumerate}	
+	These functions are the Harmonics of the string pinched at the two ends.
+\end{exercise}
 
 \begin{exercise}
-	Compute $\omega_3$, the volume of the unit ball in $\R^3$.
-	
-	{\it Solution:}
-	\begin{align*}
-	 	\omega_3
-		&= 2\int_{B_2(x,1)} \sqrt{1-|x|^2} \did x \\
-		&= 2 \int_0^1 \int_0^{2\pi} \sqrt{1-r^2} \did \theta r \did r \\
-		&= 4\pi \int_0^1 r \sqrt{1-r^2} \did r \\
-		\text{[$r=\sin t$]}
-		&= 4\pi \int_0^{\pi/2} \sin t \cos t \did t
-		= [...] = \frac{4\pi}{3} .
-	\end{align*}
+	Let $c\in\C$.
+	Find $u:\R^n\times\R\to\C$ such that
+	\begin{equation}
+		\waveop u = c u .
+	\end{equation}
+%
+%	{\it Hint.}
+%	First take $n=1$ and look at the functions $u_{a,b}$ we saw above.
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3736,6 +3687,517 @@ denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ for each given $x=(x_1,x_2)\in\R^2$,
 	Notice that we actually only need $u$ constant in $B(\hat x,R)$ at time $0$ to obtain that $u$ is constant in $K(\hat x,R)$.
 \end{remark}
 
+\begin{exercise}
+	Let $\hat x\in\R^n$ and $R>0$.
+	Prove the following uniqueness result: if $u_1,u_2\in C^2(K(\hat x,R))$ are such that $\waveop u_1 = \waveop u_2$ in $K(\hat x,R)$ and $u_1=u_2$ on $K(\hat x,R) \cap \R^n\times\{0\}$, then $u_1 = u_2$.
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Uniqueness of solution to the wave equation}\label{subs67d92277}
+
+\begin{theorem}[Uniqueness of solution to the wave equation]\label{thm67da8593}
+	Let $U\subset\R^n$ be an open set with $C^1$ boundary $\de U$, and fix $T>0$.
+	Let $f\in C^0(U_T)$, $g\in C^0(\Gamma_T)$, and $h\in C^0(U)$.
+	Then there is at most one solution in $C^2(\bar U_T)$ to 
+	\begin{equation}\label{eq67d923d6}
+	\begin{cases}
+		\waveop u = f & \text{ in } U_T , \\
+		u = g & \text{ on }\Gamma_T , \\
+		\de_t u = h & \text{ on } U\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	As usual, if $u_1,u_2\in C^2(\bar U \times[0,T])$ solve~\eqref{eq67d923d6}, 
+	then their difference $w = u_2-u_1$ solve the same problem with $f=0$, $g=0$, and $h=0$.
+	Define
+	\begin{equation}
+		E(t) = \int_U (\de_tw(x,t)^2 + |\grad w(x,t)|^2) \did x .
+	\end{equation}
+	Then
+	\begin{align*}
+	 	E'(t)
+		&= \int_U (2\de_tw \de_t^2w + 2 \grad w\grad\de_tw) \did x \\
+		&= 2 \int_U\de_t w \de_t^2w + \int_{\de U} \de_t w \grad w\cdot \nu_U \did S(x) 
+			- \int_U \laplacian w \de_tw \did x \\
+		&= 0 ,
+	\end{align*}
+	because $\de_tw = 0 $on $\de U$ for all $t$ (because $w=0$ on $\de U\times [0,T]$),
+	and because $\de_t^2 w = \laplacian w $ on $U\times(0,T)$.
+	Therefore, $E$ is constant.
+	Since $E(0)=0$, then $E\equiv 0$.
+	It follows that $w$ is constant, and thus $0$ since $w=0$ on $U\times\{0\}$.
+\end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution  by spherical means: case $n=1$, d'Alambert's formula}\label{subs67cd4319}
+We consider the case $n=1$.
+We will solve the PDE
+\begin{equation}\label{eq67cd4386}
+\begin{cases}
+	\waveop u = 0 & \text{ in }\R\times(0,+\infty) , \\
+	u = g,\ \de_tu = h & \text{ on }\R\times\{0\} ,
+\end{cases}
+\end{equation}
+with $g$ and $h$ given functions $\R\to\C$.
+Before we give the full statement that we can prove at the moment, we will see how to find such a formula.
+So, we forget about the regularity of $u$, or, in other words, we assume that $u$ is $C^\infty$ (or $C^2$, which is enough to justify our reasoning).
+
+First, we notice that we can rewrite~\eqref{eq67cd4386} as
+\begin{equation}
+	(\de_t+\de_x)(\de_t-\de_x) u = 0 .
+\end{equation}
+Therefore, if $v=\de_tu - \de_x u$, then $v$ solves the transport equation~\eqref{eq67a79b9b} (with $b=1$):
+\begin{equation}
+\begin{cases}
+	\de_t v + \de_x v = 0 & \text{ in }\R\times(0,+\infty) , \\
+	v = h-g' & \text{ on }\R\times\{0\} .
+\end{cases}
+\end{equation}
+If $u$ is $C^2$, then $v$ is $C^1$ and we know that
+\begin{equation}
+	v(x,t) = v(x-t,0) = h(x-t) - g'(x-t) .
+\end{equation}
+Next, $u$ solves $\de_tu-\de_xu = v$ in $\R\times(0,+\infty)$.
+By the solution to the nonhomogeneous transport equation given by Theorem~\ref{thm67d7b17c} (with $b=-1$ and $f=v$), we have
+\begin{align*}
+ 	u(x,t)
+	&= u(x+t,0) + \int_0^t v(x-(r-t),r) \did r \\
+	&= g(x+t) + \int_0^t (h(x-r+t-r) - g'(x-r+t-r)) \did r \\
+	&= g(x+t + \left. \frac{g(x+t-2r)}{2} \right|^t_0 + \int_0^t h(x+t-2r) \did r \\
+	\text{[$\bar r = x+t-2r$]}
+	&= \frac12 (g(x+t)+g(x-t)) - \int_{x+t}^{x-t} h(\bar r) \frac{\did \bar r}{2} \\
+	&= \frac12 (g(x+t)+g(x-t)) + \frac12 \int_{x-t}^{x+t} h(r) \did r .
+\end{align*}
+We thus obtain \emph{D'Alambert's formula}
+\begin{equation}\label{eq67cd45ee}
+	u(x,t) = \frac12 (g(x+t)+g(x-t)) + \frac12 \int_{x-t}^{x+t} h(r) \did r .
+\end{equation}
+
+\begin{theorem}[Solution to $\waveop=0$ for $n=1$]\label{thm67cd4667}
+	Let $g\in C^2(\R)$ and $h\in C^1(\R)$.
+	Define $u:\R\times\R\to \C$ by D'Alambert's formula~\eqref{eq67cd45ee}.
+	Then
+	\begin{enumerate}
+	\item
+	$u\in C^2(\R\times\R)$;
+	\item
+	$\de_t^2u-\de_x^2u = \waveop u=0$ in $\R\times\R$;
+	\item
+	for every $\hat x\in\R$, $u(\hat x,0) = g(\hat x)$ and $\de_tu(\hat x,0) = h(\hat x)$.
+	\end{enumerate}	
+	Moreover, $u$ is the only solution to~\eqref{eq67cd4386}.
+\end{theorem}
+\begin{proof}
+	The proof is left as an exercise.
+	Uniqueness is given by Theorem~\ref{thm67da8593}.
+\end{proof}
+
+\begin{exercise}
+	Prove Theorem~\ref{thm67cd4667}.
+\end{exercise}
+
+\begin{exercise}
+	Try to solve the nonhomogeneous version of~\eqref{eq67cd4386}, that is,
+	\begin{equation}\label{eq67d7bc33}
+	\begin{cases}
+		\waveop u = f & \text{ in }\R\times(0,+\infty) , \\
+		u = g,\ \de_tu = h & \text{ on }\R\times\{0\} ,
+	\end{cases}
+	\end{equation}
+	for some given $f$.
+\end{exercise}
+
+\begin{remark}\label{rmk67da8652}
+	Solutions to the wave equation given by D'Alambert's formula~\eqref{eq67cd45ee} are of the form
+	\begin{equation}
+		u(x,t) = F(x+t) + G(x-t) ,
+	\end{equation}
+	with $F,G\in C^2(\R)$.
+	The two functions represent a forward-moving wave %($G(x-t)$) 
+	and a backward-moving wave. % ($F(x+t)$)
+	Can you say which is which?
+\end{remark}
+
+\begin{remark}
+	The solutions we have found with D'Alambert's formula~\eqref{eq67cd45ee} extend to negative time!
+\end{remark}
+
+\begin{remark}
+	The solutions we have found with D'Alambert's formula~\eqref{eq67cd45ee} are not $C^\infty$ smooth if $g$ and $h$ are not $C^\infty$.
+	This is different from the other equations we have studied so far.
+	Can you spot the difference in the equation? 
+	In fact, the highest order part in the Laplace and in the heat equations is the laplacian, while here the whole $\waveop$ is homogeneous of order 2.
+\end{remark}
+
+\begin{remark}
+	For $n>1$, we can define $\tilde u(x,t) = u(x_1,t)$, where $u$ is a solution in dimension $1$ to the wave equation.
+	It follows that $\tilde u$ is a solution to the wave equation in $\R^n\times\R$.
+	Therefore, we have found non-smooth solutions to $\waveop u=0$ in all dimensions!
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A Reflexion method: solution on the half-line}\label{subs67cd4e88}
+
+We want to solve the PDE
+\begin{equation}\label{eq67d7b898}
+	\begin{cases}
+		\waveop u =0 & \text{ in }\R_+\times(0,+\infty) , \\
+		u(x,0)=g(x),\ \de_tu(x,0) = h(x) & \forall x\in\R_+ , \\
+		u(0,t) = 0 & \forall t>0 .
+	\end{cases}
+\end{equation}
+This PDE represent a vibrating string that is pinched at one end and infinite in the other direction.
+A solution is given in the following Theorem~\ref{thm67d7b770},
+whose proof is a direct calculation.
+The formula~\eqref{eq67d7b859} is obtained by a \emph{reflection method},
+that is, we extend the problem~\eqref{eq67d7b898} to a PDE on the whole line $\R$ by taking
+\begin{align*}
+	\tilde u(x,t) &= 
+	\begin{cases}
+		u(x,t) & \text{ if } x\ge 0 ,\\
+		-u(-x,t) & \text{ if } x\le 0 ;
+	\end{cases} \\
+	\tilde g(x) &= 
+	\begin{cases}
+		g(x) & \text{ if } x\ge 0 ,\\
+		-g(-x) & \text{ if } x\le 0 ;
+	\end{cases} \\
+	\tilde h(x) &= 
+	\begin{cases}
+		h(x) & \text{ if } x\ge 0 ,\\
+		-h(-x) & \text{ if } x\le 0 .
+	\end{cases} 
+\end{align*}
+Then one can convince themselves that $\tilde u$ solves the 1D wave equation and thus, we can take $\tilde u$ as given from the D'Alambert's formula~\eqref{eq67cd45ee}.
+From there, we can obtain~\eqref{eq67d7b859}.
+
+\begin{theorem}\label{thm67d7b770}
+	Let $\R_+ = (0,+\infty)$.
+	Let $g\in C^2(\bar \R_+)$ and $h\in C^1(\bar \R_+)$ be such that $g(0)=h(0) = g''(0)= 0$.
+	The function $u:\R_+ \times[0,+\infty)\to\C$,
+	\begin{equation}\label{eq67d7b859}
+		u(x,t) = 
+		\begin{cases}
+			\frac12 (g(x+t)+g(x-t)) + \frac12 \int_{x-t}^{x+t} h(y)\did y
+				& \text{ if }0\le t\le x ,\\
+			\frac12 (g(x+t)-g(x-t)) + \frac12 \int_{-x+t}^{x+t} h(y)\did y
+				& \text{ if }0\le x\le t ,\\
+		\end{cases}
+	\end{equation}
+	belongs to $C^2(\R_+\times(0,+\infty))\cap C^0(\bar\R_+\times[0,+\infty))$ and
+	it is THE solution to 
+	\begin{equation}\label{eq67da86cc}
+	\begin{cases}
+		\waveop u =0 & \text{ in }\R_+\times(0,+\infty) , \\
+		u(x,0)=g(x),\ \de_tu(x,0) = h(x) & \forall x\in\R_+ , \\
+		u(0,t) = 0 & \forall t>0 .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Left as an exercise. Uniqueness is given by Theorem~\ref{thm67da8593}.
+	
+	{\it Hint.} The assumption $g''(0)=0$ implies that $\tilde g$ is $C^2$.
+\end{proof}
+
+\begin{exercise}
+	Prove Theorem~\ref{thm67d7b770}.
+\end{exercise}
+
+\begin{exercise}
+	For $F,G\in C^2(\R)$, define
+	$\tilde u(x,t) = F(x+t) + G(x-t)$. 
+	Then we know that $\waveop\tilde u$, see Remark~\ref{rmk67da8652}.
+	For which $F$ and $G$ we have $\tilde u(0,t) = 0$ for all $t$?
+	Solve~\eqref{eq67da86cc} finding the correct $F$ and $G$.
+\end{exercise}
+
+\begin{exercise}
+	Solve the string problem
+	\begin{equation}\label{eq67da8881}
+	\begin{cases}
+		\waveop u =0 & \text{ in }[0,1]\times(0,+\infty) , \\
+		u(x,0)=g(x),\ \de_tu(x,0) = h(x) & \forall x\in[0,1] , \\
+		u(0,t) = u(1,t) = 0 & \forall t>0 .
+	\end{cases}
+	\end{equation}
+	You need to find some conditions on $g$ and $h$ to make $u$ of class $C^2$: it is part of the exercise.
+	
+	Next, for every $n\in\N$, find $u_n\in C^2([0,1]\times\R)$ such that $\waveop u_n=0$ and $u_n(k/n,t)=0$ for all $k\in\{1,\dots,n\}$.
+	These functions $u_n$ are called \emph{harmonics} of the string.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{\TODO}
+%\begin{itemize}
+%%\item A reflection method
+%%\item Vibrating string pinched in two points, eigenvalues, harmonics...
+%\item Change of coordinates
+%\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Spherical means: Euler--Poisson--Darboux equation}\label{subs67cd4983}
+
+\begin{lemma}[Euler--Poisson--Darboux equation]\label{lem67cd498e}
+	Let $n\ge2$, $m\ge 2$, $u\in C^m(\R^n\times[0,+\infty))$, $g,h\in C^m(\R^n)$.
+	Suppose
+	\begin{equation}\label{eq67cd4bec}
+	\begin{cases}
+		\de_t^2u-\laplacian u = 0 & \text{ in }\R^n\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^n\times\{0\} . \\
+	\end{cases}
+	\end{equation}
+	Referring to~\ref{sec67bac9ff},
+	set $U(x;r,t) = \psi_u(t,x;r)$, $G(x;r):= \psi_g(x,r)$, $H(x;r) = \psi_h(x;r)$.
+	Here $\psi_{(\cdot)}$ is defined in~\eqref{eq67bacbb5}.
+	Then $U(x;\cdot)\in C^m([0,+\infty)\times[0,+\infty))$ and
+	\begin{equation}\label{eq67cd4b9e}
+	\begin{cases}
+		\de_t^2 U - \de_r^2 U - \frac{n-1}{r} \de_r U = 0 & \text{ in }(0,+\infty)\times(0,+\infty) , \\
+		U = G,\ \de_t U = H & \text{ on }(0,+\infty)\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	The regularity of all functions $U$, $G$ and $H$ is proven in Lemma~\ref{lem67cd4b64}.
+	To show~\eqref{eq67cd4b9e}, we just need to perform the following computations, using again Lemma~\ref{lem67cd4b64}.
+	\begin{align}
+		\de_r\psi_u(x,t;r) 
+		&= \frac{r}{n} \phi_{\laplacian u} (x,t;r) \\
+		&\overset{\eqref{eq67cd4bec}}= \frac{r}{n} \phi_{\de_t^2 u} (x,t;r) \\
+		&= \frac{r}{n} \de_t^2 \phi_u(x,t;r) , \\
+		\de_r^2\psi_u(x,t;r)
+		&= \frac1n \de_t^2\phi_u + \frac{r}{n} \de_t^2\left( \frac{n}{r}(\psi_u-\phi_u)\right) \\
+		&= \de_t^2 \psi_u + \frac{1-n}{n} \de_t^2\phi_u \\
+		&= \de_t^2 \psi_u + \frac{1-n}{n} \left(\frac{n}{r} \de_r\psi_u \right) \\
+		&= \de_t^2 \psi_u + \frac{1-n}{r} \de_r \psi_u .
+	\end{align}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution by spherical means: case $n=3$}\label{subs67ce94a5}
+Here we show how to obtain \emph{Kirchhoff's formula}~\eqref{eq67ce93f5},
+where we can assume $s=0$ without loss of generality by~\ref{subs67cd41e1}.
+
+So, let $u\in C^2(\R^3\times[0,+\infty))$ be such that~\eqref{eq67d7f53c} holds, that is
+\begin{equation}
+\begin{cases}
+	\de_t^2u-\laplacian u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+	u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} . \\
+\end{cases}
+\end{equation}
+Define $U$, $G$ and $H$ as in Lemma~\ref{lem67cd498e} and then set
+\begin{align}
+	\tilde U(x;r,t) = r U(x;r,t) ,
+	&& 
+	\tilde G(x;r) = r G(x;r) ,
+	&&
+	\tilde H(x;r) = r H(x;r) .
+\end{align}
+Then a direct computation shows that, for each $x\in\R^3$,
+\begin{equation}
+\begin{cases}
+	\de_t^2 \tilde U - \de_r^2 \tilde U = 0 & \text{ for }r,t>0 \\
+	\tilde U(x;r,0) = \tilde G(x;r) , \ 
+	\de_t \tilde U(x;r,0) = \tilde H(x;r)
+	& \text{ for }r>0 .
+\end{cases}
+\end{equation}
+So, for each $x\in\R^3$, the function $U(x;\cdot,\cdot)$ solves the pinched string problem~\ref{subs67cd4e88}.
+Since the solution to the pinched string problem~\ref{subs67cd4e88} is the only one,
+we obtain, for $r\in(0,t)$,
+\begin{equation}
+	\tilde U (x;r,t) = \frac12 (\tilde G(x;r+t)-\tilde G(x;t-r)) + \frac12 \int_{-r+t}^{r+t} \tilde H(x;s) \did s .
+\end{equation}
+So,
+\begin{align*}
+ 	u(x,t)
+	&= \lim_{r\to0} U(x;r,t) 
+	= \lim_{r\to0} \frac{ \tilde U(x;r,t)}{r} \\
+	&= \lim_{r\to0} \left( \frac{\tilde G(x;r+t) - \tilde G(x;t-r) }{2r} 
+		+ \fint_{t-r}^{t+r} \tilde H(x;s) \did s \right) \\
+	&= \de_r\tilde G(x;r)|_{r=t} + \tilde H(x;t) \\
+	&= (G(x;t) + t\de_r G(x;r)|_{r=t}) + t H(x;t) \\
+	&\overset{\eqref{eq67bacb9a}}= \fint_{\de B(x,t)} g(y) \did S(y) 
+		+ \frac{t^2}{3} \fint_{B(x,t)} \laplacian g(y) \did y 
+		+ t \fint_{\de B(x,t)} h(y) \did S(y) \\
+	&= \fint_{\de B(x,t)} \left( g(y) + t \grad g(y)\cdot \frac{y-x}{|y-x|} + th(y) \right) \did S(y) \\
+	&= \fint_{\de B(x,t)} \left( g(y) + \grad g(y)\cdot (y-x) + th(y) \right) \did S(y) .
+\end{align*}
+
+We have thus obtained the \emph{Kirchhoff's formula}.
+
+\begin{theorem}[Kirchhoff's formula]\label{thm67ce9378}
+	Let $u\in C^2(\R^3\times[0,+\infty))$ be such that $\waveop u =0$ in $\R^3\times(0,+\infty)$.
+	Then, for every $s\ge 0$ and every $t>0$,
+	\begin{equation}\label{eq67ce93f5}
+		u(x,s+t) = \fint_{\de B(x,t)} \left( u(y,s) + \grad_yu(y,s) \cdot (y-x) + t \de_s u(y,s) \right) \did S(y) .
+	\end{equation}
+	
+	Vice-versa, let $g\in C^2(\R^3)$ and $h\in C^1(\R^2)$, and define
+	\begin{equation}\label{eq67d7f537}
+		u(x,t) = \fint_{\de B(x,t)} \left( g(y) + \grad_yg(y) \cdot (y-x) + t h(y) \right) \did S(y) .
+	\end{equation}
+	Then $u\in C^2(\R^3\times[0,+\infty))$ and $u$ is a solution to 
+	\begin{equation}\label{eq67d7f53c}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	The second part of the theorem, that is, that the function~\eqref{eq67d7f537} is of class $C^2$ and that it solves the problem~\eqref{eq67d7f537}, follows from Lemma~\ref{lem67cd4b64} and direct computations.
+	
+	The first part of the theorem, that is, that every solution to 
+	$\waveop u =0$ in $C^2(\R^3\times[0,+\infty))$ satisfies Kirchhoff's formula~\eqref{eq67ce93f5}, is the result of the discussion before the theorem.
+%	
+%	needs some type of uniqueness result, which we do not have at the moment.
+%	For this reason, we cannot really state~\eqref{eq67ce93f5}...
+%	Let's prove the first part of the theorem.
+%	Without loss of generality, by~\ref{subs67cd41e1}, we can assume $s=0$.
+%	So, let $u\in C^2(\R^3\times[0,+\infty))$ be such that~\eqref{eq67d7f53c} holds.
+%%	 that is
+%%	\begin{equation}
+%%	\begin{cases}
+%%		\de_t^2u-\laplacian u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+%%		u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} . \\
+%%	\end{cases}
+%%	\end{equation}
+%	Define $U$, $G$ and $H$ as in Lemma~\ref{lem67cd498e} and then set
+%	\begin{align}
+%		\tilde U(x;r,t) = r U(x;r,t) ,
+%		&& 
+%		\tilde G(x;r) = r G(x;r) ,
+%		&&
+%		\tilde H(x;r) = r H(x;r) .
+%	\end{align}
+%	Then a direct computation shows that, for each $x\in\R^3$,
+%	\begin{equation}
+%	\begin{cases}
+%		\de_t^2 \tilde U - \de_r^2 \tilde U = 0 & \text{ for }r,t>0 \\
+%		\tilde U(x;r,0) = \tilde G(x;r) \ 
+%		\de_t \tilde U(x;r,0) = \tilde H(x;r)
+%		& \text{ for }r>0 .
+%	\end{cases}
+%	\end{equation}
+%	So, for each $x\in\R^3$, the function $U(x;\cdot,\cdot)$ solves the pinched string problem~\ref{subs67cd4e88}, from which we obtain, for $r\in(0,t)$,
+%	\begin{equation}
+%		\tilde U (x;r,t) = \frac12 (\tilde G(x;r+t)-\tilde G(x;t-r)) + \frac12 \int_{-r+t}^{r+t} \tilde H(x;s) \did s .
+%	\end{equation}
+%	So,
+%	\begin{align*}
+%	 	u(x,t)
+%		&= \lim_{r\to0} U(x;r,t) 
+%		= \lim_{r\to0} \frac{ \tilde U(x;r,t)}{r} \\
+%		&= \lim_{r\to0} \left( \frac{\tilde G(x;r+t) - \tilde G(x;t-r) }{2r} 
+%			+ \fint_{t-r}^{t+r} \tilde H(x;s) \did s \right) \\
+%		&= \de_r\tilde G(x;r)|_{r=t} + \tilde H(x;t) \\
+%		&= (G(x;t) + t\de_r G(x;r)|_{r=t}) + t H(x;t) \\
+%		&\overset{\eqref{eq67bacb9a}}= \fint_{\de B(x,t)} g(y) \did S(y) 
+%			+ \frac{t^2}{3} \fint_{B(x,t)} \laplacian g(y) \did y 
+%			+ t \fint_{\de B(x,t)} h(y) \did S(y) \\
+%		&= \fint_{\de B(x,t)} \left( g(y) + t \grad g(y)\cdot \frac{y-x}{|y-x|} + th(y) \right) \did S(y) \\
+%		&= \fint_{\de B(x,t)} \left( g(y) + \grad g(y)\cdot (y-x) + th(y) \right) \did S(y) .
+%	\end{align*}
+\end{proof}
+
+
+
+\begin{remark}
+	Notice that the integral in~\eqref{eq67ce93f5} is supported on the sphere!
+\end{remark}
+%
+%\begin{theorem}
+%	Let $g\in C^2(\R^3)$ and $h\in C^1(\R^2)$, and define
+%	\begin{equation}\label{eq67d7f537}
+%		u(x,t) = \fint_{\de B(x,t)} \left( g(y) + \grad_yg(y) \cdot (y-x) + t h(y) \right) \did S(y) .
+%	\end{equation}
+%	Then $u\in C^2(\R^3\times[0,+\infty))$ and $u$ is a solution to 
+%	\begin{equation}
+%	\begin{cases}
+%		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+%		u = g,\ \de_t u = h & \text{ on }\R^3\times\{0\} .
+%	\end{cases}
+%	\end{equation}
+%\end{theorem}
+%\begin{proof}
+%	The proof that the function~\eqref{eq67d7f537} is of class $C^2$ and that it solves the problem~\eqref{eq67d7f537}, is a direct application of Lemma~\ref{lem67cd4b64} and some computations.
+%\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solution by spherical means: case $n=2$}\label{subs67ce94b2}
+
+\begin{remark}
+	The issue here is that, for $n=2$, the Euler--Poisson--Darboux equation~\eqref{eq67cd4b9e} cannot be transformed into a wave equation.
+	(Why?)
+\end{remark}
+
+Let $u\in C^2(\R^2\times[0,+\infty))$ be a solution to the system
+\begin{equation}
+\begin{cases}
+	\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^2\times(0,+\infty) , \\
+	u = g,\ \de_t u = h & \text{ on }\R^2\times\{0\} .
+\end{cases}
+\end{equation}
+We define $\tilde u\in C^2(\R^2\times[0,+\infty))$ by $\tilde u(x_1,x_2,x_3,t) = u(x_1,x_2,t)$,
+$\tilde g(x_1,x_2,x_3) = g(x_1,x_2)$
+and $\tilde h(x_1,x_2,x_3) = u(x_1,x_2)$.
+Therefore, $\tilde u$ solves
+\begin{equation}
+\begin{cases}
+	\waveop \tilde u = ( \de_t^2-\laplacian )\tilde u = 0 & \text{ in }\R^3\times(0,+\infty) , \\
+	\tilde u = g,\ \de_t \tilde u = h & \text{ on }\R^3\times\{0\} .
+\end{cases}
+\end{equation}
+To avoid confusion, we denote by $B_3$ balls in $\R^3$ and by $B_2$ balls in $\R^2$.
+Theorem~\ref{thm67ce9378} tells us that, 
+denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ for each given $x=(x_1,x_2)\in\R^2$, then
+\begin{align*}
+	u(x_1,x_2,t)
+ 	&= \tilde u(x_1,x_2,0,t) 
+	= \fint_{\de B_3(\tilde x,t)} \left( g(\tilde y) + \Diff g(\tilde y)\cdot (\tilde y-\tilde x) + th(\tilde y) \right) \did S(\tilde y)  \\
+	&\overset{\eqref{eq67a735b3}}= \frac{1}{3\omega_3 t^2} \int_{-t}^t \int_{\de B_2(x,\sqrt{t^2-s^2})}
+		\left( g(y) + t h(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{1}{\sqrt{t^2-s^2}} \did s \\
+	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,\sqrt{t^2-s^2})}
+		\left( g(y) + t h(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{1}{\sqrt{t^2-s^2}} \did s \\
+	\text{[$r=\sqrt{t^2-s^2}$]}
+	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,r)} \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{r}{\sqrt{t^2-r^2}} \frac{\did r}{r} \\
+	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,r)} \frac{ \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) }{ (t^2 - |y-x|^2)^{1/2} } \did S(y) \did r \\
+	&= \frac{2}{3\omega_3 t^2} \int_{B_t(x,t)} \frac{ \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) }{ (t^2 - |y-x|^2)^{1/2} } \did y \\
+	&= \frac12 \fint_{B_2(x,t)} \frac{g + th + \Diff g\cdot (y-x) }{ ( t^2 - |y-x|^2 )^{1/2} } \did S(y) .
+\end{align*}
+
+\begin{theorem}
+	\TODO
+\end{theorem}
+
+\begin{exercise}
+	Compute $\omega_3$, the volume of the unit ball in $\R^3$.
+	
+	{\it Solution:}
+	\begin{align*}
+	 	\omega_3
+		&= 2\int_{B_2(x,1)} \sqrt{1-|x|^2} \did x \\
+		&= 2 \int_0^1 \int_0^{2\pi} \sqrt{1-r^2} \did \theta r \did r \\
+		&= 4\pi \int_0^1 r \sqrt{1-r^2} \did r \\
+		\text{[$r=\sin t$]}
+		&= 4\pi \int_0^{\pi/2} \sin t \cos t \did t
+		= [...] = \frac{4\pi}{3} .
+	\end{align*}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\TODO}
+\begin{itemize}
+\item	Formula for all $n$ (see also Folland)
+\item	Formula for non-homogeneous wave equation
+\item	
+\end{itemize}
 
 
 
