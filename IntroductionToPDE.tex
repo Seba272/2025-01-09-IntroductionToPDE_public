@@ -110,7 +110,7 @@ urlcolor=Black}
 \newcommand{\de}{\partial}		% Derivata parziale
 \newcommand{\Diff}{\mathrm{D}}
 \renewcommand{\div}{\operatorname{div}}	% div di Divergenza.
-%\newcommand{\into}{\hookrightarrow}		% (->  %)
+\newcommand{\into}{\hookrightarrow}		% (->  %)
 %\newcommand{\dto}{\dashrightarrow}
 \newcommand{\ol}[1]{\overline{#1}}	% overline breve
 %\DeclareMathOperator{\arctanh}{arctanh}
@@ -4038,7 +4038,7 @@ We have thus obtained the \emph{Kirchhoff's formula}.
 		u(x,s+t) = \fint_{\de B(x,t)} \left( u(y,s) + \grad_yu(y,s) \cdot (y-x) + t \de_s u(y,s) \right) \did S(y) .
 	\end{equation}
 	
-	Vice-versa, let $g\in C^2(\R^3)$ and $h\in C^1(\R^2)$, and define
+	Vice-versa, let $g\in C^2(\R^3)$ and $h\in C^1(\R^3)$, and define
 	\begin{equation}\label{eq67d7f537}
 		u(x,t) = \fint_{\de B(x,t)} \left( g(y) + \grad_yg(y) \cdot (y-x) + t h(y) \right) \did S(y) .
 	\end{equation}
@@ -4144,9 +4144,9 @@ Let $u\in C^2(\R^2\times[0,+\infty))$ be a solution to the system
 	u = g,\ \de_t u = h & \text{ on }\R^2\times\{0\} .
 \end{cases}
 \end{equation}
-We define $\tilde u\in C^2(\R^2\times[0,+\infty))$ by $\tilde u(x_1,x_2,x_3,t) = u(x_1,x_2,t)$,
-$\tilde g(x_1,x_2,x_3) = g(x_1,x_2)$
-and $\tilde h(x_1,x_2,x_3) = u(x_1,x_2)$.
+We define $\tilde u\in C^2(\R^3\times[0,+\infty))$ by $\tilde u(x_1,x_2,x_3,t) = u(x_1,x_2,t)$,
+$\tilde g\in C^2(\R^3)$ by $\tilde g(x_1,x_2,x_3) = g(x_1,x_2)$,
+and $\tilde h\in C^1(\R^3)$ by $\tilde h(x_1,x_2,x_3) = u(x_1,x_2)$.
 Therefore, $\tilde u$ solves
 \begin{equation}
 \begin{cases}
@@ -4156,7 +4156,7 @@ Therefore, $\tilde u$ solves
 \end{equation}
 To avoid confusion, we denote by $B_3$ balls in $\R^3$ and by $B_2$ balls in $\R^2$.
 Theorem~\ref{thm67ce9378} tells us that, 
-denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ for each given $x=(x_1,x_2)\in\R^2$, then
+denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ the lift of the point $x=(x_1,x_2)\in\R^2$, then
 \begin{align*}
 	u(x_1,x_2,t)
  	&= \tilde u(x_1,x_2,0,t) 
@@ -4168,13 +4168,30 @@ denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ for each given $x=(x_1,x_2)\in\R^2$,
 	\text{[$r=\sqrt{t^2-s^2}$]}
 	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,r)} \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) \did S(y) \frac{r}{\sqrt{t^2-r^2}} \frac{\did r}{r} \\
 	&= \frac{2}{3\omega_3 t^2} \int_0^t \int_{\de B_2(x,r)} \frac{ \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) }{ (t^2 - |y-x|^2)^{1/2} } \did S(y) \did r \\
-	&= \frac{2}{3\omega_3 t^2} \int_{B_t(x,t)} \frac{ \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) }{ (t^2 - |y-x|^2)^{1/2} } \did y \\
-	&= \frac12 \fint_{B_2(x,t)} \frac{g + th + \Diff g\cdot (y-x) }{ ( t^2 - |y-x|^2 )^{1/2} } \did S(y) .
+	&= \frac{2}{3\omega_3 t^2} \int_{B_2(x,t)} \frac{ \left(g(y) + th(y) + \Diff g(y)\cdot (y-x) \right) }{ (t^2 - |y-x|^2)^{1/2} } \did y \\
+	&= \frac12 \fint_{B_2(x,t)} \frac{g + th + \Diff g\cdot (y-x) }{ ( t^2 - |y-x|^2 )^{1/2} } \did (y) .
 \end{align*}
 
-\begin{theorem}
-	\TODO
+\begin{theorem}[Poisson's formula]\label{thm67e1265b}
+	Let $u\in C^2(\R^2\times[0,+\infty))$ be such that $\waveop u =0$ in $\R^2\times(0,+\infty)$.
+	Then, for every $s\ge 0$ and every $t>0$,
+	\begin{equation}\label{eq67e12659}
+		u(x,s+t) = \frac12 \fint_{B_2(x,t)} \frac{u(y,s) + t\de_t(y,s) + \grad u(y,s)\cdot (y-x) }{ ( t^2 - |y-x|^2 )^{1/2} } \did (y) .
+	\end{equation}
+	
+	Vice-versa, let $g\in C^2(\R^2)$ and $h\in C^1(\R^2)$, and define
+	\begin{equation}\label{eq67d7f537}
+		u(x,t) = \frac12 \fint_{B_2(x,t)} \frac{g(y) + th(y) + \grad g(y)\cdot (y-x) }{ ( t^2 - |y-x|^2 )^{1/2} } \did (y) .
+	\end{equation}
+	Then $u\in C^2(\R^2\times[0,+\infty))$ and $u$ is a solution to 
+	\begin{equation}\label{eq67d7f53c}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^2\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^2\times\{0\} .
+	\end{cases}
+	\end{equation}
 \end{theorem}
+
 
 \begin{exercise}
 	Compute $\omega_3$, the volume of the unit ball in $\R^3$.
@@ -4192,161 +4209,134 @@ denoting by $\tilde x= (x_1,x_2,0)\in \R^3$ for each given $x=(x_1,x_2)\in\R^2$,
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\TODO}
-\begin{itemize}
-\item	Formula for all $n$ (see also Folland)
-\item	Formula for non-homogeneous wave equation
-\item	
-\end{itemize}
+\subsection{Solution of the wave equation in all dimensions}
 
+For the next theorem, see \cite[Th. 5.15, page 170]{MR1357411} or \cite[Th. 2.4.2, page 77]{MR2597943}.
+\begin{theorem}[Odd dimensions]\label{thm67e1275d}
+	Let $n\ge3$ odd, say $n= 2m-1$ for $m\ge2$, or $m=\frac{n+1}{2}$.
+	Let $g\in C^{m+1}(\R^n)$, $h\in C^m(\R^n)$, and define
+	\begin{equation}\label{eq67e16805}
+	\begin{aligned}
+		u(x,t) &= \frac1{\gamma_n} 
+		\bigg[ 
+		\left(\frac{\de}{\de t}\right) \left( \frac1t \frac{\de}{\de t} \right)^{\frac{n-3}{2}} \left( t^{n-2} \fint_{\de B(x,t)} g(y) \did S(y) \right) \\
+		&\qquad\qquad\qquad\qquad\qquad\qquad
+		+ \left(\frac1t \frac{\de}{\de t}\right)^{\frac{n-3}{2}} \left( t^{n-2} \fint_{\de B(x,t)} h(y) \did S(y) \right)
+		\bigg] ,
+	\end{aligned}
+	\end{equation}
+	where $\gamma_n$ is the product of the odd numbers from 1 to $n-2$.
+	
+	Then $u\in C^2(\R^n\times[0,+\infty)$ and $u$ is a solution to
+	\begin{equation}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^n\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^n\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
 
+For the next theorem, see \cite[Th. 5.17, page 171]{MR1357411} or \cite[Th. 2.4.3, page 80]{MR2597943}.
+\begin{theorem}[Even dimensions]\label{thm67e12abf}
+	Let $n\ge2$ even, say $n= 2m-2$ for $m\ge2$, or $m=\frac{n+2}{2}$.
+	Let $g\in C^{m+1}(\R^n)$, $h\in C^m(\R^n)$, and define
+	\begin{equation}\label{eq67e16844}
+	\begin{aligned}
+		u(x,t) &= \frac1{\beta_n} 
+		\bigg[ 
+		\left(\frac{\de}{\de t}\right) \left( \frac1t \frac{\de}{\de t} \right)^{\frac{n-2}{2}} \left( t^{n} \fint_{B(x,t)} \frac{g(y)}{(t^2-|y-x|^2)^{1/2}} \did S(y) \right) \\
+		&\qquad\qquad\qquad\qquad\qquad\qquad
+		+ \left(\frac1t \frac{\de}{\de t}\right)^{\frac{n-2}{2}} \left( t^{n} \fint_{B(x,t)} \frac{h(y)}{(t^2-|y-x|^2)^{1/2}}\did S(y) \right)
+		\bigg] ,
+	\end{aligned}
+	\end{equation}
+	where $\beta_n$ is the product of the even numbers from 1 to $n$.
+	
+	Then $u\in C^2(\R^n\times[0,+\infty)$ and $u$ is a solution to
+	\begin{equation}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^n\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^n\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
 
+\begin{remark}
+	Notice that in both theorems~\ref{thm67e1275d} and~\ref{thm67e12abf},
+	\begin{equation}
+		m = \left\lfloor \frac{n}{2} \right\rfloor + 1 .
+	\end{equation}
+\end{remark}
 
+\begin{exercise}
+	Recover Kirchhoof's formula~\eqref{eq67d7f537} from~\eqref{eq67e16805}.
+\end{exercise}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+\begin{exercise}
+	Recover Poisson's formula~\eqref{eq67d7f537} from~\eqref{eq67e16844}.
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\part{Distributions}
+\subsection{Solution to the nonhomogeneous wave equation: Duhamel's principle}\label{subs67e12d15}
 
-\section{Topological vector spaces}
+For the next theorem, see \cite[Th. 5.25, page 175]{MR1357411} or \cite[Th. 2.4.4, page 81]{MR2597943}.
+\begin{theorem}[Nonhomogeneous equation with null initial data]\label{thm67e131b9}
+	Let $n\ge2$ and $f\in C^{\left\lfloor \frac{n}{2} \right\rfloor + 1} (\R^n\times[0,+\infty))$.
+	For every $s>0$, let $u_s:\R^n\times[s,+\infty)\to\C$ be the solution 
+	in $C^2(\R^n\times[0,+\infty))$ to 
+	\begin{equation}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = 0 & \text{ in }\R^n\times(s,+\infty) , \\
+		u = 0,\ \de_t u = f(\cdot,s) & \text{ on }\R^n\times\{s\} .
+	\end{cases}
+	\end{equation}
+	Define $u:\R^n\times[0,+\infty)\to\C$ by
+	\begin{equation}
+		u(x,t) = \int_0^t u_s(x,t) \did s .
+	\end{equation}
+	Then $u\in C^2(\R^n\times[0,+\infty))$ and $u$ is a solution to
+	\begin{equation}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = f & \text{ in }\R^n\times(0,+\infty) , \\
+		u = 0,\ \de_t u = 0 & \text{ on }\R^n\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
 
-\subsection{Sequential topology}
+\begin{exercise}
+	Prove Theorem~\ref{thm67e131b9}.
+\end{exercise}
 
+\begin{exercise}
+	Write explicitly $u$ from Theorem~\ref{thm67e131b9} for $n=2$ and $n=3$.
+\end{exercise}
 
-\subsection{Topological vector space}
-A \emph{topological vector space} is a pair $(V,\tau)$ where $V$ is a vector space over $\K\in\{\R,\C\}$ and $\tau$ is a topology on $V$ such that
-\begin{enumerate}
-\item	The sum operation $+:V\times V\to V$ is continuous;
-\item	The inverse operation $-:V\to V$ is continuous;
-\item	The scalar multiplication $\cdot:\K\times V\to V$ is continuous.
-\end{enumerate}
-We will usually just write $V$ for $(V,\tau)$.
-
-
-
-
-\subsection{Dual space}
-If $V$ is a vector space over $\K\in\{\R,\C\}$, then 
-we have an \emph{algebraic dual space}
-\[
-V^* = \{f:V\to \K\text{ linear}\}
-\]
-and a \emph{topological dual} (or just \emph{dual}) 
-\[
-V' = \{f\in V^*\text{ continuous}\} .
-\]
-If $V$ is finite dimensional, then $V'=V^*$.
-
-\subsection{Continuous bilinear maps}
-Let $V$ be a vector space over $\K\in\{\R,\C\}$ and $B\in \Lin^2(V;\K)$ be a continuous bilinear map.
-Define a function $A_B:V\to V'$ by
-\[
-\langle A_B(v) | w \rangle = B(v,w) .
-\]
-Then $A_B$ is a linear continuous operator.
-
-Linearity is trivial.
-Continuity is proven using nets: 
-If $\{v_n\}_{n\in\scr N}\subset V$ is a net converging to $v_\infty\in V$,
-then, for every $w\in W$, $A_B(v_n)w \to A_B(v_\infty)w$, by the continuity of $B$.
-
-In fact, we also have a uniform continuity: if $v_n\to v_\infty$ and $w_n\to w_\infty$, then $A_B(v_n)w_n\to A_B(v_\infty)w_\infty$.
-
-If $V$ is a Banach space with norm $\|\cdot\|$, and $B$ is strongly continuous, that is, there exists $C>0$ such that
-\begin{equation}\label{eq67aa7654}
-|B[v,w]| \le C \|v\| \|w\| ,
-\end{equation}
- then $A_B$ is strongly continuous.
-Indeed, 
-\[
-\|A_B(v)\| 
-= \sup_{\|w\|\le 1} \|B[v,w]\|
-\le C \|v\| .
-\]
-
-Moreover, if there exists $c>0$ such that
-\begin{equation}\label{eq67aa6d2b}
-|B[v,v]| \ge c \|v\|^2 ,
-\end{equation}
-then $A_B$ is injective.
-%First,~\eqref{eq67aa6d2b} implies that $A_B$ is injective.
-Indeed, if $A_Bv=0$, then $0 = A_B(v)v \overset{\eqref{eq67aa6d2b}}\ge c \|v\|^2$ and thus $v=0$.
-
-If in addition to~\eqref{eq67aa7654} and~\eqref{eq67aa6d2b},
-we assume that $V$ is locally convex and reflexive, then $A_B$ is an isomorphism.
-(See Lemma~\ref{lem67aa726c}.)
-
-%Second,~\eqref{eq67aa6d2b} implies that $A_B$ is surjective.
-For this aim, define $\||v\|| := \sqrt{|B[v,v]|}$.
-Then, $\||\cdot\||$ is a norm, because
-\begin{align*}
-	\||av+bw\|| 
-	&\le \sqrt{|a|^2 |B[v,v]| + |ab| (|B[v,w]|+|B[w,v]|) + |b|^2 |B[w,w]|} \\
-	&\le \sqrt{|a|^2 |B[v,v]| + 2 |ab| C \|v\|\|w\| + |b|^2 |B[w,w]|} \\
-	&\le \sqrt{|a|^2 |B[v,v]| + 2 |ab| C/c \sqrt{|B[v,v]||B[w,w]|} + |b|^2 |B[w,w]|} \\
-	&\le \max\{\sqrt{C/c},1\} \sqrt{|a|^2 |B[v,v]| + 2 |ab| \sqrt{|B[v,v]||B[w,w]|} + |b|^2 |B[w,w]|} \\
-	&= \max\{\sqrt{C/c},1\} \sqrt{ (|a|\sqrt{|B[v,v]|} + |b| \sqrt{|B[w,w]|} )^2 } \\
-	&= \max\{\sqrt{C/c},1\} (|a| \||v\|| + |b| \||w\||) .
-\end{align*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Reflexivity}
-
-\begin{lemma}\label{lem67aa73f6}
-	Let $V$ be a topological vector space and $\alpha,\beta\in V'$ such that $\ker(\alpha)=\ker(\beta)$.
-	Then $\alpha$ and $\beta$ are linearly dependent.
-\end{lemma}
-\begin{proof}
-	Let $W:=\ker(\alpha)$ and suppose $W\neq V$.
-	Let $\hat v\notin W$.
-	We claim that $V=W\oplus\K\hat v$.
-	Indeed, if $ v\in V\setminus W$, then
-	there is $(a,b)$ with $ab\neq0$ such that
-	$\alpha(a\hat v + b  v) = a \alpha(\hat v) + b \alpha( v) = 0$
-	and thus $a\hat v + b v\in W$, i.e., $v \in  W + \frac{a}{b} \hat v$.
+\begin{theorem}[Nonhomogeneous wave equation]\label{thm67e132f7}
+	Let $n\ge2$ and $m=\left\lfloor \frac{n}{2} \right\rfloor + 1$.
+	Let $f\in C^m (\R^n\times[0,+\infty))$,
+	Let $g\in C^{m+1}(\R^n)$, and $h\in C^m(\R^n)$.
 	
-	So, returning to the original statement, $\alpha$ and $\beta$ are determined by their values on $\hat v$, and thus they are linearly dependent.
-\end{proof}
+	Let $u_0$ be the function given by Theorem~\ref{thm67e1275d} and~\ref{thm67e12abf},
+	and $u_1$ the function given by Theorem~\ref{thm67e131b9}.
+	Set $u=u_0+u_1$.
+	Then $u \in C^2(\R^n\times[0,+\infty))$ and $u$ is a solution to
+	\begin{equation}
+	\begin{cases}
+		\waveop u = ( \de_t^2-\laplacian )u = f & \text{ in }\R^n\times(0,+\infty) , \\
+		u = g,\ \de_t u = h & \text{ on }\R^n\times\{0\} .
+	\end{cases}
+	\end{equation}
+\end{theorem}
 
-\begin{lemma}\label{lem67aa726c}
-	Let $V$ be a locally convex topological vector space.
-	The following statements are equivalent
-	\begin{enumerate}[label=(\roman*)]
-	\item\label{lem67aa726c_1}
-	$V$ is reflexive, that is, the canonical embedding $\iota:V\to V''$, $\langle \iota(v)|\alpha \rangle = \langle \alpha|v \rangle$ for all $\alpha\in V'$, is an isomorphism.
-	\item\label{lem67aa726c_2}
-	For every closed subspace  $W\lhd V'$ of the dual, there exists $v\in V\setminus\{0\}$ such that $\langle \alpha|w \rangle=0$ for all $\alpha\in W$.
-	\end{enumerate}
-\end{lemma}
-\begin{proof}
-	$\ref{lem67aa726c_1}\THEN\ref{lem67aa726c_2}$.
-	Let $W\lhd V'$ be closed.
-	Define $\alpha:W\to \K$ by setting $\alpha(W)=\{0\}$.
-	Let $\hat w\in V'\setminus W$ and set $\alpha(\hat w) = 1$.
-	Then, by the Hahn--Banach Theorem~\ref{} $\alpha$ can be extended to a linear continuous function on the whole $V'$, that is, $\alpha\in V''$.
-	Since $V$ is assumed to be reflexive, $\alpha=\iota(v)$ for some $v$, and such $v$ is the one aimed at.
-	
-	$\ref{lem67aa726c_2}\THEN\ref{lem67aa726c_1}$.
-	Suppose $V$ is not reflexive.
-	Then there exists $\alpha\in V''\setminus \iota(V)$.
-	Let $W = \ker(\alpha)$.
-	We clearly have that $W\lhd V'$ is a closed subspace.
-	If $v\in V$ is such that $W\subset\ker(\iota(v))$, then, by Lemma~\ref{lem67aa73f6} there is $\lambda\in\K$ such that $\iota(v) = \lambda\alpha$.
-	Since $\alpha\notin\iota(V)$, then $\lambda=0$ and $v=0$.
-\end{proof}
+\begin{exercise}
+	Prove Theorem~\ref{thm67e132f7}.
+\end{exercise}
+
+
+
+
+
+
 
 
 
