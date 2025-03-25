@@ -43,7 +43,7 @@ urlcolor=Black}
 %\usepackage{mparhack}	% Per correggere le note a margine, che a volte vengono dalla parte sbagliata.
 %\usepackage{todonotes} % Per le note a margine in stile Thomas Z.
 %\usepackage{comment}	% Per i commenti lunghi: \begin{comment} ... \end{comment}
-%\usepackage{marvosym}	% Per il fulmine: \Lightning
+\usepackage{marvosym}	% Per il fulmine: \Lightning
 \usepackage{enumitem}	% Per personalizzare gli elenchi
 %\usepackage{booktabs}	% Per i comandi \toprule \midrule \bottomrule , che fanno righe orrizontali nelle tabelle
 %\usepackage{array}		% Per formattare meglio le celle nelle tabelle.
@@ -4356,7 +4356,435 @@ For the next theorem, see \cite[Th. 5.25, page 175]{MR1357411} or \cite[Th. 2.4.
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\part{Distributions}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Distributions}
+
+Here we run trhough the fundamentals of the theory of distributions omitting a few details.
+The details can be recovered by thinking through this material, or reading Rudin's book~\cite{MR1157815}, which I strongly recommend:
+
+• \fullcite{MR1157815}\\
+
+Another valuable reference is Hörmander's first book of his series on linear partial differential operators~\cite{MR717035}:
+
+• \fullcite{MR717035}
+
+Hörmander monograph is one of the most important resources on PDE.
+The text is has a very high density, and this can lead to obscurity: if you read it slowly, it will become crystalline clear!\\
+
+An even denser reference is Chapter Four of Federer's book~\cite{MR0257325}:
+
+• \fullcite{MR0257325}
+
+There, you can find a more general construction of distributions, where test functions are smooth functions $\Omega\to Y$, where $\Omega$ is an open set in a Banach space and $Y$ is another Banach space. 
+As for Hörmander, Federer's style is at times obscure, but extremely precise, abstract and general.
+Read it slowly.\\
+
+Never forget to check out Wikipedia:
+
+• \url{https://en.wikipedia.org/wiki/Distribution_(mathematics)}\\
+
+Finally, the founding father of distributional calculus was Laurent Schwartz\footnote{\url{https://en.wikipedia.org/wiki/Laurent_Schwartz}}, who won the Fields medal in 1950 for the reason\footnote{\url{https://www.mathunion.org/fileadmin/IMU/Prizes/Fields/1950/index.html}}:
+\begin{quotation}
+	Developed the theory of distributions, a new notion of generalized function motivated by the Dirac delta-function of theoretical physics.
+\end{quotation}
+He then wrote a beautiful autobiography \cite{zbMATH01571670}, which I suggest everyone to read:
+
+• \fullcite{zbMATH01571670}.
+
+This is the English translation. I have an Italian translation at home, but the original is in French. Probably, there is a German translation too.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Test Functions}\label{subs67def15f}
+For every set $E\subset\R^n$,
+we define
+\begin{equation}
+	\scr D(E) = \{\phi\in C^\infty_c(\R^n): \spt(\phi)\subset E \} .
+\end{equation}
+
+If $\Omega\subset\R^n$ is an open set,
+then $\scr D(\Omega)$ is the space $C^\infty_c(\Omega)$ of smooth functions $\Omega\to\C$ with compact support.
+We call elements of $\scr D(\Omega)$ \emph{test functions}.
+We write just $\scr D$ for $\scr D(\R^n)$.
+
+We endow $\scr D(\Omega)$ with a topology that has the following property:
+For every sequence $\{\phi_j\}_{j\in\N}\subset\scr D(\Omega)$ and $\phi\in\scr D(\Omega)$,
+\begin{equation}\label{eq67e16d22}
+	\phi_j\overset{\scr D(\Omega)}\longrightarrow \phi
+	\quad\IFF\quad
+	\begin{array}{c}
+		\exists K\Subset\Omega\ \forall j\in\N\ \spt(\phi_j)\subset K ,\text{ and }\\
+		\forall \alpha\in\N^n\ \lim_{j\to\infty}\|\Diff^\alpha\phi_j-\Diff^\alpha\phi\|_{L^\infty} = 0 .
+	\end{array}
+\end{equation}
+
+\begin{exercise}
+	We can see $\scr D(\Omega)$ as a subspace of $\scr D(\R^n)$, but not as a closed subspace.
+	Why?
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The topology of test functions}\label{subs67e16d33}
+We will use only the 
+In most of the situations,
+Property~\eqref{eq67e16d22} is everything we need to know about the topology of $\scr D(\Omega)$.
+However, the fact that this notion of convergence descends from a topology, is a non-trivial fact which needs precise definition of that topology.
+
+There are three ways to construct the topology of test functions.
+First of all, for $K\subset\R^n$ compact, the space $\scr D(K)$ is a Frechét space when endowed with the family of pseudonorms 
+\begin{equation}
+	\|u\|_\alpha = \|\Diff^\alpha u\|_{L^\infty(K)} ,
+	\qquad\alpha\in\N^n . 
+\end{equation}
+
+The first way to construct the topology of $\scr D(\Omega)$ is defining the collection
+$\beta$ of all convex balanced sets $W\subset\scr D(\Omega)$ such that $\scr D(K)\cap W$ is open $\scr D(K)$ for all $K\subset\Omega$ compact.
+A a set $W$ is \emph{balanced} if $\lambda W \subset W$ for all $\lambda\in\C$ with $|\lambda|\le 1$.
+The collection $\beta$ induces a topology $\tau$ make of unions of elements of $\{x+W:x\in\scr D(K),\ w\in\beta\}$.
+Then $\tau$ makes $\scr D(\Omega)$ into a locally convex topological vector space.
+
+The other two ways are in terms of initial and final topologies:
+
+\begin{definition}[Initial, or projective, topology]
+	Given a set $Y$ and a family of topological spaces $\{Z_i\}_{i\in I}$ and functions $f_i:Y\to Z_i$.
+	The \emph{initial topology} or \emph{projective topology} induced by the family of functions $f_i$ is the coarsest (i.e., smallest) topology in $Y$ that makes all functions $f_i$ continuous.
+\end{definition}
+ 
+\begin{definition}[Final, or inductive, topology]
+	Given a set $Y$ and a family of topological spaces $\{X_i\}_{i\in I}$ and functions $f_i:X_i\to Y$.
+	The \emph{final topology} or \emph{inductive topology} induced by the family of functions $f_i$ is the finest (i.e., largest) topology in $Y$ that makes all functions $f_i$ continuous.
+\end{definition}
+
+So, we start with the Banach spaces
+\begin{equation}
+	C^m_c(K) = \{\phi:\R^n\to\C\text{ of class $C^m$ with }\spt(\phi)\subset K\} ,
+\end{equation}
+where the norm is 
+\begin{equation}\label{eq67deff0b}
+	\|\phi\|_{C^m(\Omega)} = \max\{ \|\Diff^\alpha\phi\|_{L^\infty(\Omega)} : |\alpha|\le m \} .
+\end{equation}
+%$\|\phi\|_m = \max\{\|\Diff^\alpha\phi\|_{L^{\infty}}:|\alpha|\le m\}$.
+
+Then we set
+\begin{equation}
+	C^\infty_c(K) = \bigcap_{m\in\N} C^m_c(K)
+\end{equation}
+endowed with the initial topology induced by the functions $C^\infty_c(K)\into C^m_c(K)$;
+and then
+\begin{equation}\label{eq67e2591e}
+	\scr D(\Omega) = C^\infty_c(\Omega) = \bigcup_{K\Subset\Omega} C^\infty_c(K) 
+	= \bigcup_{K\Subset\Omega}\bigcap_{m\in\N} C^m_c(K) ,
+\end{equation}
+endowed with the final topology induced by the functions $C^\infty_c(K)\into C^\infty_c(\Omega)$.
+
+An equivalent way is to take first
+\begin{equation}
+	C^m_c(\Omega) = \bigcup_{K\Subset\Omega} C^m_c(K)
+\end{equation}
+endowed with the final topology induced by the functions $C^m_c(K)\into C^m_c(\Omega)$,
+and then
+\begin{equation}\label{eq67e2593b}
+	\scr D(\Omega) = C^\infty_c(\Omega) = \bigcap_{m\in\N} C^m_c(\Omega)
+	= \bigcap_{m\in\N}\bigcup_{K\Subset\Omega} C^m_c(K)
+\end{equation}
+endowed with the initial topology induced by the functions $C^\infty_c(\Omega)\into C^m_c(\Omega)$.
+
+
+\begin{exercise}
+	Show that the two topologies coming from~\eqref{eq67e2591e} and~\eqref{eq67e2593b} are the same.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Continuity of linear operators}\label{subs67e26996}
+
+\begin{proposition}\label{prop67e26a2f}
+	Let $Y$ be a locally convex space and $L:\scr D(\Omega) \to Y$ linear.
+	Then the following are equivalent:
+	\begin{enumerate}
+	\item
+	$L$ is continuous;
+	\item
+	if $\phi_j\to 0$ in $\scr D(\Omega)$ then $L\phi_j\to 0$ in $Y$;
+	\item
+	the restrictions of $L$ to every $C^\infty_c(K)\subset\scr D(\Omega)$, for $K\Subset\Omega$, are continuous.
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	The equivalence $(2)\IFF(3)$ is clear, as it is clear $(1)\THEN(2)$.
+	The implication $(3)\THEN(1)$ follows from the properties of the topology in $\scr D(\Omega)$.
+	See Rudin~\cite[Thm.6.6]{MR1157815}.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distributions}\label{subs67def3c0}
+A distribution is an element of the dual space $\scr D'(\Omega)$, that is, 
+a continuous linear functional $\scr D(\Omega)\to\C$.
+The topology of $\scr D'(\Omega)$ is the weak* topology:
+For every sequence $\{A_j\}_{j\in\N}\subset\scr D'(\Omega)$ and $A\in\scr D(\Omega)$,
+\begin{equation}
+	A_j\overset{\scr D'(\Omega)}\longrightarrow A
+	\quad\IFF\quad
+	\forall \phi\in\scr D(\Omega)\ \lim_{j\to\infty} A_j[\phi] = A[\phi] .
+\end{equation}
+We write just $\scr D'$ for $\scr D'(\R^n)$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Functions as distributions}\label{sub67def4a2}
+To every $f\in L^1_\loc(\Omega)$, we associate a distribution $A_f\in \scr D'(\Omega)$ defined by, for $\phi\in\scr D(\Omega)$,
+\begin{equation}
+	A_f[\phi] = \int_\Omega f(x) \phi(x) \did x .
+\end{equation}
+Let's show that $A_f$ is a distribution.
+Clearly $A_f$ is linear. We need to show it is continuous.
+If $\phi_j\to \phi$ in $\scr D(\Omega)$, then there is $K\Subset\Omega$ with $\spt(\phi_j)\subset K$ and $\|\phi_j-\phi\|_{L^\infty(\Omega)} \to 0$.
+Therefore, 
+\begin{equation}
+	|A_f[\phi_j] - A_f[\phi]|
+	\le \int_\Omega |f(x)| |\phi_j(x) - \phi(x)| \did x
+	\le \int_K |f(x)|\did x \|\phi_j-\phi\|_{L^\infty(\Omega)}
+	\to 0 .
+\end{equation}
+This shows that $A_f$ is continuous.
+
+The Fundamental Theorem of Calculus implies that, if $f,g\in L^1_\loc(\Omega)$ are such that $A_f = A_g$ as distributions, then $f=g$ almost everywhere, that is, $f=g$ in $L^1_\loc(\Omega)$.
+We thus have an inclusion $L^1_\loc(\Omega)\into \scr D(\Omega)$.
+
+We can say more about this inclusion: it is continuous.
+Here we consider on $L^1_\loc(\Omega)$ the topology of local convergence in $L^1$, that is, $f_j\to f$ in $L^1_\loc(\Omega)$ if and only if, for every $K\Subset\Omega$, we have $f_j|_K\to f|_K$ in $L^1(K)$, i.e., $\|f_j-f\|_{L^1(K)} \to 0$.
+So, if $f_j\to f$ in $L^1_\loc(\Omega)$ and $\phi\in\scr D(\Omega)$, 
+$| A_{f_j}[\phi] - A_{f}[\phi] | \le \int_{\spt(\phi)} |f_j(x)-f(x)| |\phi(x)| \did x 
+\le \|f_j-f\|_{L^1(\spt(\phi))} \|\phi\|_{L^\infty} \to 0$.
+
+\begin{exercise}
+	Find a sequence $f_j\in L^1_\loc(\R)$ such that $\|f_j\|_{L^1([0,1])}=1$ but $A_{f_j}\to 0$ in $\scr D'(\R)$.
+	
+	{\it Hint}:
+	Take $f_j(x) = \sum_{j=1}^{2^n} (-1)^j \one_{((j-1)/2^n,j/2^n)}(x)$.
+	Then $\int_0^1|f_j(x)| \did x = 1$.
+	If $\phi\in\scr D(\Omega)$, then there is $L$ such that $|\phi(x)-\phi(y)|<L|x-y|$
+	for every $x,y\in\R$.
+	\begin{align*}
+	 	\left| \int_\R f_j(x)\phi(x) \did x \right|
+		&= \left| \sum_{j=1}^{2^n} (-1)^j \int_{(j-1)/2^n}^{j/2^n} \phi(x)\did x \right|\\
+		&= \left| \sum_{j=1}^{2^{n-1}} \int_{0}^{1/2^n} \left(- \phi\left(\frac{j-1}{2^{n-1}} + x \right) + \phi\left(\frac{j-1}{2^{n-1}} + \frac{1}{2^n} + x \right) \right)\did x \right|\\
+		&\le \sum_{j=1}^{2^{n-1}} \int_{0}^{1/2^n} \frac{L}{2^n} \did x \\
+		&= \frac{L}{2^n} \frac{2^{n-1}}{2^n} = \frac{L}{2^{n+1}} .
+	\end{align*}
+	\qed
+\end{exercise}
+
+\begin{exercise}
+	Show that $f_j\to 0$ weakly* in $L^1_\loc(\R^n)$, if and only if $A_{f_j}\to 0$ in $\scr D'(\R^n)$.
+	The weak* convergence is $\int_\R f_j g \did x \to 0$ for all $g\in L^\infty(\R^n)$ with compact support.
+\end{exercise}
+
+%Finally, we can say that this inclusion is an embedding, that is, if $A_{f_j}\to A_f$ in $\scr D'(\Omega)$, then $f_n\to f$ in $L^1_\loc(\Omega)$.
+%Indeed, up to taking $f_n-f$ instead of $f_n$, we can assume $A_f=0$.
+%So, $A_{f_n}\to0$ in $\scr D'(\Omega)$.
+%\TODO....
+
+%A note: a sequence $A_{f_n}$ could converge to some distribution $A$ that is not a function. 
+%This does not contradict our discussion above: there, we assumed that the limit $A$ is a function.
+
+After this, we can denote still by $f$ the distribution $A_f$, that is,
+\begin{equation}
+	L^1_\loc(\Omega) \subset \scr D'(\Omega) .
+\end{equation}
+
+\begin{exercise}
+	Let $\{u_k\}_{k\in\N}\subset C^\infty(\Omega)$ be a sequence of harmonic functions
+	and suppose that $u_k\to A$ in $\scr D'(\Omega)$.
+	Show that $A$ is a harmonic function.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Measures as distributions}\label{subs67def74c}
+\newcommand{\radon}{\mathtt{Rad}}
+Let $\mu$ be a Radon measure on $\Omega$: $\mu\in\radon(\Omega)$.
+Then we define the distribution
+\begin{equation}
+	A_\mu[\phi] = \int_\Omega \phi(x) \did \mu(x) .
+\end{equation}
+As we saw with functions, the map $\mu\mapsto A_\mu$ is a continuous embedding:
+\begin{equation}
+	\radon(\Omega) \subset \scr D'(\Omega) .
+\end{equation}
+
+Examples of Radon measures:
+\begin{enumerate}
+\item The \emph{Dirac delta} centered at $x\in\Omega$ is the measure $\delta_x$ defined by: $\delta_x(E) = 1$ if $x\in E$, $\delta_x(E)=0$ if $x\notin E$.
+On test functions, the Dirac delta acts as an evaluation: $\delta_x[\phi] = \phi(x)$.
+\item If $E\subset\Omega$ closed or open, the measure $\scr L^n|_E$ is Radon.
+\item Integration over embedded submanifolds of $\Omega$ are Radon measures.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Order of a distribution}\label{subs67defb33}
+A distribution $A\in\scr D'(\Omega)$ \emph{has order (up to) $N$} is there is $C<\infty$ with
+\begin{equation}
+	\forall \phi\in\scr D(\Omega),\qquad
+	A[\phi] \le C \|\phi\|_{C^N(\Omega)} .
+\end{equation}
+Recall that the norm $\|\phi\|_{C^N(\Omega)}$ was defined in~\eqref{eq67deff0b}.
+Notice that if $A$ has order $N$, then it has also order $N+1$.
+We say that $A$ has order exactly $N$ if it has order $N$ but not order $N-1$.
+
+\begin{proposition}\label{prop67defc54}
+	A linear functional $A:\scr D'(\Omega)\to\C$ is continuous, i.e., a distribution,
+	if and only if it has locally finite order, that is, for every $K\Subset\Omega$ there are $N\in\N$ and $C<\infty$ such that, for every $\phi\in\scr D(\Omega)$ with $\spt(\phi)\subset K$, $A[\phi]\le C\|\phi\|_{C^N(\Omega)}$.
+\end{proposition}
+\begin{proof}
+	In this proof, we use two key facts.
+	First, the norms defined in~\eqref{eq67deff0b} satisfy 
+	$\|\phi\|_{C^N(\Omega)} \ge \|\phi\|_{C^k(\Omega)}$ whenever $k\le N$.
+	Second, if we fix $k\in\N$ and $K\Subset\Omega$, then $A$ is a continuous linear functional $(\scr D(K) , \|\cdot \|_{C^k(K)}) \to\C$,
+	that is, there is $C_k$ such that $A[\phi]\le C_k\|\phi\|_{C^k(\Omega)}$ for every $\phi\in\scr D(K)$.
+	This follows from the very definition of distribution.
+	
+	So, arguing by contradiction, assume our proposition is false,
+	that is, there is $K\Subset\Omega$ such that, for every $N\in\N$ there is $\phi_N\in\scr D(\Omega)$ with $\spt(\phi_N)\subset K$, and $A[\phi_N]\ge N\|\phi_N\|_{C^N(K)}$.
+	We have reached a contradiction: for every $N\ge k$, we should also have 
+	$N\|\phi_N\|_{C^k(\Omega)} \le N\|\phi_N\|_{C^N(\Omega)} \le A[\phi_N] \le C_k \|\phi_N\|_{C^k(\Omega)}$.
+	Since $A[\phi_N]\neq0$, then $\|\phi_N\|_{C^k(\Omega)}\neq0$,
+	and thus we get $N\le C_k$ for all $N\ge k$: \Lightning.
+	
+	We conclude that such a sequence $\{\phi_N\}_N$ cannot exists.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distributions of order 0}\label{subs67df019e}
+
+If $X$ is a topological space, we define $C_c(X)$ as the space of continuous functions $X\to\C$ with compact support endowed with the $L^\infty$ norm.
+The closure of $C_c(X)$ in $C(X)$ is $C_0(X)$, which is the space of continuous functions vanishing ``at infinity'', that is,
+\begin{equation}
+	C_0(X) = \{f\in C(X): \text{for every $\epsilon>0$ the set $\{|f|\ge\epsilon\}$ is compact}\} .
+\end{equation}
+The space $C_0(X)$ is a Banach space when endowed with the $L^\infty$ norm.
+Its (topological) dual $C_0(X)'$ is also a Banach space when endowed with the operator norm $\|\xi\|_{ C_0(X)'} = \sup\{\xi[\phi] : \phi\in C_0(X),\ \|\phi_{L^\infty}\le 1\}$.
+
+We define $\radon(X;\C)$ as the space of all $\C$-valued Radon measures: the precise definition goes as follows.
+Let $\scr B(X)$ be the $\sigma$-algebra of all Borel sets.
+A \emph{positive Radon measure} on $X$ is a measure $\lambda:\scr B(X)\to[0,+\infty]$ such that (see \cite[page 212]{MR767633}):
+\begin{enumerate}
+\item
+	$\lambda$ is outer regular on all Borel sets, that is, if $E\in\scr B(X)$, then
+	\begin{equation}
+		\lambda(E) = \inf\{\lambda(U) : E\subset U,\ U\text{ open}\} ;
+	\end{equation}
+\item
+	$\lambda$ is inner regular on all open sets, that is, if $E\subset X$ is open, then
+	\begin{equation}
+		\lambda(E) = \sup\{\lambda(K) : K\subset E,\ K\text{ compact}\} ;
+	\end{equation}
+\item
+	$\lambda$ is finite on compact sets, that is, $\lambda(K)<\infty$ for all $K\subset X$ compact.
+\end{enumerate}
+We denote by $\radon(X;[0,+\infty])$ the space of all positive Radon measures on $X$.
+A complex-valued or real-valued Radon measure is a Borel measure $\mu:\scr B(X)\to\K$ with $\K\in\{\R,\C\}$ whose total variation is $|\mu|\in\radon(X;[0,+\infty])$.
+We call the space of these measures $\radon(X;\K)$ for $\K\in\{\R,\C\}$.
+In fact, if $\mu\in\radon(X;\K)$, then $|\mu|(X)<\infty$.
+Moreover, if $\mu\in\radon(X;\R)$, then there are $\mu_+,\mu_-\in\radon(X;[0,+\infty))$ such that $\mu=\mu_+-\mu_-$.
+If $\mu\in\radon(X;\C)$, then there are $\mu_r,\mu_i\in\radon(X;\R)$ such that $\mu=\mu_r + i\mu_i$.
+
+%Define 
+%\begin{equation}
+%	\scr B_b(X) = \{B\in\scr B(X):\exists K\subset X\text{ compact, with }B\subset K\} .
+%\end{equation}
+%A \emph{real-valued Radon measure} on $X$ is a function $\mu:\scr B_b(X)\to \R$ such that there are $\mu_+,\mu_-\in\radon(X;[0,+\infty])$ such that $\mu=\mu_+-\mu_-$.
+%We denote by $\radon(X;\R)$ the space of real-valued Radon measures.
+%
+%A \emph{complex-valued Radon measure} on $X$ is a function $\mu:\scr B_b(X)\to \C$ such that there are $\mu_r,\mu_i\in\radon(X;\R)$ such that $\mu=\mu_r + i\mu_i$.
+%
+%Notice that such a real-valued and complex-valued Radon measures are not measures in general.
+%To understand why, simply take the Radon measure $\mu\in\radon(\R;\R)$, $\mu(E) = \int_E x\did x$.
+%Then $\mu_+(E) = \int_{[0,+\infty)\cap E} x\did x$ and $\mu_-(E) = \int_{(-\infty,0]\cap E} |x| \did x$.
+%So, if we want $\mu$ to be a measure, we should have $\mu([0,+\infty))= +\infty$, $\mu([-\infty,0))=-\infty$, 
+%and $\mu(\R) = \mu([0,+\infty)) + \mu([-\infty,0)) = +\infty - \infty$, which is not well defined.
+%However, real-valued and complex-valued Radon measures are indeed measures on compact subsets of $X$.
+
+
+Recall the following result (see \cite[Thm 7.17, page 223]{MR767633})
+\begin{theorem}[Riesz Representation Theorem]\label{thm67e2d9b5}
+	Let $X$ be a topological space that is locally compact\footnote{locally compact: for every $x\in X$ and every $U\subset X$ open with $x\in U$ there exists $V\subset U$ compact with $x\in{\rm interior}(K)$} and Hausdorff\footnote{Hausdorff: for every $x,y\in X$ distinct there are $U,V\subset X$ open such that $x\in U$, $y\in V$ and $U\cap V=\emptyset$.}.
+	For $\mu\in\radon(X;\C)$ and $f\in C_0(X)$, define $I_\mu(f) = \int_X f\did\mu$.
+	Then $I_\mu$ is an element of the dual $C_0(X)'$ and the map $\mu\mapsto I_\mu$ is an isometric equivalence of $\radon(X;\C)$ with $C_0(X)'$.
+\end{theorem}
+
+
+\begin{proposition}
+	A distribution $A\in\scr D'(\Omega)$ has order zero if and only if it is a Radon measure.
+\end{proposition}
+\begin{proof}
+	We already know that Radon measures are distributions of order zero.
+	Let's prove the other implication.
+	
+	If $A\in\scr D'(\Omega)$ has order zero, then there is $C$ such that $A[\phi]\le C\|\phi\|_{L^\infty}$ for all $\phi\in \scr D(\Omega)$.
+	Since $ \scr D(\Omega)$ is dense in $C_0(\Omega)$, 
+	it follows that $A$ continuously extends to a linear operator $C_0(\Omega)\to\C$.
+	By Riesz Representation Theorem~\ref{thm67e2d9b5}, there is a Radon measure $\mu\in\radon(\Omega;\C)$ such that $A=I_\mu$.
+	This means for us that $A$ is a Radon measure.
+\end{proof}
+
+\begin{exercise}\label{ex67df0243}
+	Show that $\scr D(\Omega)$ is dense in $( C^0_0(\Omega),\|\cdot\|_{L^\infty})$.
+\end{exercise}
+
+\begin{exercise}
+	Show that, if $\Omega$ is bounded, then $\radon(\Omega) = C^0_0(\Omega)'$.
+	Show also that $\radon(\R^n) = C^0_b(\R^n)'$, where $C^0_b(\R^n)$ is the Banach space of continuous and bounded functions on $\R^n$ endowed with the $L^\infty$ norm.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distributions of order 1}\label{subs67df056f}
+Here are some examples of distributions of order $1$.
+\begin{enumerate}
+\item	
+$A[\phi] = \de_x\phi(0)$;
+\item
+$A[\phi] = \int_{\de B(x,r)} \grad\phi(y)\cdot\frac{(y-x)}{r} \did S(y)$.
+\item
+In general, if $\Sigma\subset\R^n$ is a smooth submanifold, $v:\Sigma\to\R^n$ a smooth vector field, and $\did S$ is the surface measure on $\Sigma$, then 
+$A[\phi] = \int_\Sigma \grad\phi(y)\cdot v(y) \did S(y)$ is a distribution of order 1.
+\item
+For example,
+\begin{equation}
+	A_{x,r}[\phi] = \fint_{\de B(x,r)} \grad\phi(y) \cdot (y-x) \did y .
+\end{equation}
+\item 
+	the distribution $A[\phi] = \int_0^1 \phi'(x)\did x$ is a distribution of order one on $\R$: $|A[\phi]| \le \int_0^1 |\phi'(x)|\did x \le \|\phi\|_{C^1} $.
+	However, $A$ is actually of order zero: $|A[\phi]| = |\phi(1)-\phi(0)| \le 2\|\phi\|_{C^0}$.
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Principal value}\label{subs67e1b7b7}
+\newcommand{\pv}{\text{p.v.}}
+The function $f:\R\setminus\{0\}\to\R$, $f(x)= \frac1x$, is not integrable in a neighborhood of $0$.
+For this reason, we cannot see it as a distribution on $\R$, although it is a distribution on $\R\setminus\{0\}$, because $f\in L^1_\loc(\R\setminus\{0\})$.
+However, we can define a distribution on $\R$ as follows:
+\begin{equation}\label{eq67e1bd0c}
+	\scr D(\R) \ni \phi \mapsto \lim_{\epsilon\to0} \int_{\R\setminus[-\epsilon,\epsilon]} \frac{\phi(x)}{x} \did x 
+	= \pv \int_\R \frac{\phi(x)}{x} \did x
+\end{equation}
+If $\spt(\phi)\subset[-a,a]$, then
+\begin{equation}
+ 	\int_{\R\setminus[-\epsilon,\epsilon]} \frac{\phi(x)}{x} \did x
+	= \int_{[-a,a]\setminus[-\epsilon,\epsilon]} \frac{\phi(x)-\phi(0)}{x} \did x .
+\end{equation}
+Since
+$\left|\frac{\phi(x)-\phi(0)}{x}\right| \le \|\phi'\|_{L^\infty}$,
+then the latter integral converges as $\epsilon\to0$:
+\begin{equation}
+	\pv \int_\R \frac{\phi(x)}{x} \did x
+	= \lim_{\epsilon\to0} \int_{[-a,a]\setminus[-\epsilon,\epsilon]} \frac{\phi(x)-\phi(0)}{x} \did x
+	= \int_{[-a,a]} \frac{\phi(x)-\phi(0)}{x} \did x .
+\end{equation}
+So,~\eqref{eq67e1bd0c} defines a distribution by Proposition~\ref{prop67defc54}.
 
 
 
