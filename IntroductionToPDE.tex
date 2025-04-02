@@ -199,6 +199,11 @@ urlcolor=Black}
 \newtheorem{remark}[proposition]{Remark}
 %\declaretheorem[name=Remark,sibling=proposition,qed={\lower-0.3ex\hbox{$\blacklozenge$}}]{remark} % but with \usepackage{thmtools}
 \newtheorem{exercise}{Exercise}[section]
+%\AtEndEnvironment{exercise}{\hfill$\blacksquare$\endexercise}
+%\AtEndEnvironment{exercise}{\hfill$\clubsuit$\endexercise}
+\AtEndEnvironment{exercise}{\hfill$\Diamond$\endexercise}
+
+
 
 \theoremstyle{remark}
 
@@ -4360,10 +4365,13 @@ For the next theorem, see \cite[Th. 5.25, page 175]{MR1357411} or \cite[Th. 2.4.
 \newpage
 \part{Distributions}
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
 \section{Distributions}
 
-Here we run trhough the fundamentals of the theory of distributions omitting a few details.
+Here we run through the fundamentals of the theory of distributions omitting a few details.
 The details can be recovered by thinking through this material, or reading Rudin's book~\cite{MR1157815}, which I strongly recommend:
 
 • \fullcite{MR1157815}\\
@@ -4575,7 +4583,7 @@ $| A_{f_j}[\phi] - A_{f}[\phi] | \le \int_{\spt(\phi)} |f_j(x)-f(x)| |\phi(x)| \
 		&\le \sum_{j=1}^{2^{n-1}} \int_{0}^{1/2^n} \frac{L}{2^n} \did x \\
 		&= \frac{L}{2^n} \frac{2^{n-1}}{2^n} = \frac{L}{2^{n+1}} .
 	\end{align*}
-	\qed
+%	\qed
 \end{exercise}
 
 \begin{exercise}
@@ -4656,6 +4664,10 @@ We say that $A$ has order exactly $N$ if it has order $N$ but not order $N-1$.
 	We conclude that such a sequence $\{\phi_N\}_N$ cannot exists.
 \end{proof}
 
+\begin{exercise}
+	Show that, if $A\in\scr D'(\Omega)$ has finite order $N$, then $A$ extends as a continuous linear operator from $\scr D(\Omega)$ to $C^N(\Omega)$.
+\end{exercise}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Distributions of order 0}\label{subs67df019e}
 
@@ -4731,13 +4743,13 @@ Recall the following result (see \cite[Thm 7.17, page 223]{MR767633})
 \end{proof}
 
 \begin{exercise}\label{ex67df0243}
-	Show that $\scr D(\Omega)$ is dense in $( C^0_0(\Omega),\|\cdot\|_{L^\infty})$.
+	Show that $\scr D(\Omega)$ is dense in $( C_0(\Omega),\|\cdot\|_{L^\infty})$.
 \end{exercise}
 
-\begin{exercise}
-	Show that, if $\Omega$ is bounded, then $\radon(\Omega) = C^0_0(\Omega)'$.
-	Show also that $\radon(\R^n) = C^0_b(\R^n)'$, where $C^0_b(\R^n)$ is the Banach space of continuous and bounded functions on $\R^n$ endowed with the $L^\infty$ norm.
-\end{exercise}
+%\begin{exercise}
+%	Show that, if $\Omega$ is bounded, then $\radon(\Omega) = C^0_0(\Omega)'$.
+%	Show also that $\radon(\R^n) = C^0_b(\R^n)'$, where $C^0_b(\R^n)$ is the Banach space of continuous and bounded functions on $\R^n$ endowed with the $L^\infty$ norm.
+%\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Distributions of order 1}\label{subs67df056f}
@@ -4786,6 +4798,1159 @@ then the latter integral converges as $\epsilon\to0$:
 \end{equation}
 So,~\eqref{eq67e1bd0c} defines a distribution by Proposition~\ref{prop67defc54}.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Adjoint operators}\label{subs67df0783}
+\begin{proposition}\label{prop67df0940}
+	Let $\Omega_1$ and $\Omega_2$ be open subsets of $\R^n$.
+	Let $\Phi:\scr D(\Omega_1)\to\scr D(\Omega_2)$ be a continuous linear operator.
+	Then there is a sequentially\footnotemark continuous linear operator $\Phi^*:\scr D'(\Omega_2)\to\scr D'(\Omega_1)$ such that, for every $A\in\scr D'(\Omega_2)$ and $\phi\in \scr D(\Omega_1)$,
+	\begin{equation}\label{eq67df0824}
+		\Phi^*A[\phi] = A[\Phi\phi] .
+	\end{equation}
+	\footnotetext{Recall that $T:X\to Y$ is \emph{sequentially continuous} if for every $x_j\to x_\infty$ in $X$ we have $Tx_j\to T_x\infty$ in $Y$.
+	Instead, $T$ is (topologically) continuous if for every open set $V\subset Y$ the preimage $T^{-1}(V)$ is open in $X$.
+	In topological spaces, (topological) continuity implies sequential continuity.
+	The converse is false in this generality.
+	
+	(A way to recover continuity from convergence is by means of \emph{nets}, a generalization of sequences: a \emph{sequence in $X$} is a function $\N\to X$, a \emph{net in $X$} is a function $\omega\to X$ for some ordinal $\omega$. ``Netial'' continuity implies continuity.)
+	
+	It remains unclear to me if sequential continuity implies continuity in the context of Proposition~\ref{subs67df0783}.
+	}
+\end{proposition}
+\begin{proof}
+	For every $A\in\scr D'(\Omega_2)$, define $\Phi^*A$ by~\eqref{eq67df0824}.
+	Notice that, $\Phi^*A = A\circ\Phi$.
+	Therefore, since both $A$ and $\Phi$ are linear and continuous, then $\Phi^*A$ is linear and continuous.
+	We need to show that $\Phi^*$ is continuous.
+	Let $A_j\to A$ in $\scr D'(\Omega_2)$.
+	Then, for every $\phi\in \scr D(\Omega_1)$, we have
+	$\lim_{j\to\infty} \Phi^*A_j[\phi] = \lim_{j\to\infty} A_j[\Phi\phi] = A[\Phi\phi] = \Phi^*A[\phi]$.
+	This shows that $\Phi^*$ is sequentially continuous.
+\end{proof}
+
+Proposition~\ref{prop67df0940}, combined with Proposition~\ref{prop67e26a2f}, is the key tool to extend operations from functions to distributions.
+We will use it all the time!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Derivatives of distributions}\label{subs67df096d}
+If $A\in\scr D'(\Omega)$ and $\alpha\in\N^n$, define, for every $\phi\in\scr D(\Omega)$,
+\begin{equation}\label{eq67df24c8}
+	\Diff^\alpha A[\phi] = (-1)^{|\alpha|} A[\Diff^\alpha \phi] .
+\end{equation}
+
+\begin{exercise}\label{ex67df0a00}
+	Show that, if $\alpha\in\N^n$, the function $\phi\mapsto \Diff^\alpha\phi$ is a continuous linear operator $\scr D(\Omega)\to\scr D(\Omega)$.
+\end{exercise}
+
+By Exercise~\ref{ex67df0a00} and Proposition~\ref{prop67df0940},
+the $A\mapsto \Diff^\alpha A$ is a continuous operator $\scr D'(\Omega)\to\scr D'(\Omega)$.
+
+\begin{exercise}\label{ex67df246e}
+	Let $f\in C^N(\Omega)$ and $\phi\in\scr D(\Omega)$.
+	Show that, for every $\alpha\in\N^n$ with $|\alpha|\le N$,
+	\begin{equation}
+		\int_\Omega \Diff^\alpha f(x) \phi(x) \did x 
+		= (-1)^{|\alpha|} \int_\Omega f(x) \Diff^\alpha \phi(x) \did x .
+	\end{equation}
+	In other words, $\Diff^\alpha A_f = A_{\Diff^\alpha f}$.
+\end{exercise}
+
+\begin{exercise}
+	Show that, if $A\in\scr D'(\Omega)$, then $\Diff^\alpha\Diff^\beta A = \Diff^{\alpha+\beta}A = \Diff^\beta\Diff^\alpha A$ for all $\alpha,\beta\in\N^n$.
+\end{exercise}
+
+Distributions are thus infinitely differentiable: this is one of the main features of distributions.
+In particular, we have derivatives of every order for each function in $L^1_\loc(\Omega)$.
+Exercise~\ref{ex67df246e} shows that, if a distribution $A_f$ is a function $f$ of class $C^N$, then derivatives defined by~\eqref{eq67df24c8} are coherent with derivatives of $f$.
+
+\begin{proposition}
+	Let $f\in L^1_\loc(\R)$ be such that there is $g\in L^1(\R)$ with 
+	$\Diff A_f = A_g$, i.e., $\Diff f = g$ in distributional sense.
+	Then, for almost every $x\in\R$,
+	\begin{equation}
+		f(x) = \int_{-\infty}^x g(y)\did y .
+	\end{equation}
+	Consequently, up to changing $f$ on a set of measure zero, $f$ is absolutely continuous and $f'=g$.
+	In particular, if $f$ and $g$ are continuous, then $f\in C^1(\R)$ and $f'=g$.
+\end{proposition}
+\begin{proof}
+	The identity $\Diff A_f = A_g$ means that, for every $\phi\in\scr D(\R)$,
+	\begin{equation}\label{eq67e9028e}
+		\int_{-\infty}^\infty g(x) \phi(x) \did x
+		= - \int_{-\infty}^\infty f(x) \phi'(x) \did x .
+	\end{equation}
+	Define
+	\begin{equation}
+		v(x) = \int_{-\infty}^x g(y)\did y .
+	\end{equation}
+	We claim that $A_f = A_v$.
+	If $\phi\in\scr D(\R)$, then
+	\begin{align*}
+	 	A_v [\phi] 
+		&= \int_{-\infty}^\infty v(x) \phi(x) \did x \\
+		&= \int_{-\infty}^\infty \int_{-\infty}^x g(y) \phi(x) \did y\did x \\
+		[\text{Change of variables}]
+		&= \int_{-\infty}^\infty \int_0^\infty g(t) \phi(t+s) \did s\did t \\
+		&= \int_0^\infty\int_{-\infty}^\infty  g(t) \phi(t+s) \did t\did s \\
+		&\overset{\eqref{eq67e9028e}}= -\int_0^\infty \int_{-\infty}^\infty  f(t) \phi'(t+s) \did t\did s \\
+		&= - \int_{-\infty}^\infty  f(t) (-\phi(t)) \did t 
+		= A_f[\phi] .
+	\end{align*}
+	where we performed the following change of variables:
+	$x=t+s$, $y=t$, $\did x\wedge\did y = (\did t+\did s)\wedge\did t = \did s\wedge\did t$, and $\{x\in\R,\ y\in(-\infty,x]\} = \{y\in\R,\ x\in[y,+\infty)\} = \{t\in\R,\ s\in[0,+\infty)\}$.
+	We have thus obtained that $A_v=A_f$ as distributions, 
+	and we know that this means that $f=v$ almost everywhere (see~\ref{sub67def4a2}),
+	that is,~\eqref{eq67e9028e}.
+\end{proof}
+
+\begin{exercise}
+	Show the following proposition:
+	
+	\begin{proposition}
+		Let $\Omega\subset\R^n$ be open
+		and $f\in C(\Omega)$ a continuous function.
+		Suppose that, for every $j\in\{1,\dots,n\}$, there is a continuous function $g_j\in C(\Omega)$ such that $\Diff^jA_f = A_{g_j}$, i.e., $\Diff^jf=g_j$ in distributional sense.
+		Then $f\in C^1(\Omega)$ and $\Diff^jf = g_j$.
+	\end{proposition}
+\end{exercise}
+
+\begin{exercise}
+	Let $f:\R\to\R$ be a function with bounded variation.
+	For instance, the Cantor staircase function.
+	Show that $\Diff A_f = A_\mu$, where $\mu\in\radon(\R)$ is the measure defined by 
+	\begin{equation}
+		\mu([a,b)) = f(b)-f(a)
+	\end{equation}
+	for all $a,b\in\R$ with $a<b$.
+	For instance, if $f$ is the Cantor staircase function, then we know that,
+	for almost every $x\in\R$, $f$ is differentiable at $x$ and $f'(x)=0$.
+	However, $\Diff A_f\neq0$.
+	
+	{\it Hint:} see \cite[\S6.14]{MR1157815}.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Intermezzo: Banach--Steinhaus Theorem}\label{subs67e9629a}
+We will need to cite Banach--Steinhaus Theorem. 
+Here we see a version of its statement that is less general than the original, but it is what we will need later on.
+Before stating the theorem, we fix the terms used.
+
+A family $\Gamma$ of linear functions $\gamma:X\to Y$ between topological vector spaces is 
+\emph{equicontinuous} if for every open neighborhood $V$ of $0$ in $Y$ there exists an open neighborhood $U$ of $0$ in $X$ such that $\gamma(U)\subset V$ for all $\gamma\in\Gamma$.
+As as short notation, for $\Gamma\subset\Lin(X;Y)$ and $E\subset X$, we define
+\begin{equation}
+	\Gamma(E) = \{\gamma(x):\gamma\in \Gamma,\ x\in E\}\subset Y .
+\end{equation}
+
+In the finite-dimensional case, i.e., when both $X$ and $Y$ have finite dimension,
+equicontinuity is equivalent to boundedness (in the operator norm) and pre-compactness.
+In the infinite dimensional case, this is not the case.
+
+A \emph{Fréchet space} is a topological vector space $(X,\tau)$ such that
+\begin{enumerate}
+\item	the topology $\tau$ is generated by a complete \emph{invariant metric} (i.e., a complete distance function $d:X\times X\to(0,+\infty)$ such that $d(x+z,y+z) = d(x,y)$ for all $x,y,z\in X$);
+\item	$X$ is locally convex, that is, for every $U\subset X$ open with $0\in U$ there exists $V\subset U$ open with $0\in V$ and $V$ convex.
+\end{enumerate}
+
+A subset $E\subset X$ in a topological vector space $X$ is \emph{bounded} if for every $U\subset X$ open with $0\in U$ there exists $\lambda>0$ such that $E\subset \lambda U$.
+This notion of boundedness might look abstract, but you can easily show the following statement:
+{\it If $E=\{x_j\}_{j\in\N}$ is a convergent sequence in $X$, then $E$ is bounded.}
+
+\begin{exercise}
+	Show that, if $E=\{x_j\}_{j\in\N}$ is a convergent sequence in $X$, then $E$ is bounded.
+\end{exercise}
+
+\begin{theorem}[(Consequence of) Banach--Steinhaus Theorem]\label{thm67e96360}
+	Suppose that $X$ is a Fréchet space and $Y$ a topological vector space, 
+	$\Gamma$ is a collection of continuous linear maps from $X$ to $Y$.
+	If 
+	\begin{equation}
+		\forall x\in X\qquad \Gamma(x) \text{ is bounded in $Y$} ,
+%		B = \{x\in X: \Gamma(x) \text{ is bounded in $Y$} \} .
+	\end{equation}
+	then $\Gamma$ is equicontinuous.
+%	If $B$ is of the second category in $X$, then $B=X$ and $\Gamma$ is equicontinuous.
+\end{theorem}
+
+See \cite[\S2.1--\S2.6]{MR1157815}, and also the~\href{https://en.wikipedia.org/wiki/Uniform_boundedness_principle}{\underline{Wikipedia page}}.
+
+\begin{corollary}\label{cor67e96e59}
+	Let $X$ be a Fréchet space, $Y$ and $Z$ topological vector spaces,
+	and $B:X\times Y\to Z$ a bilinear map.
+	Suppose that $B$ is continuous in each entry separately, i.e., 
+	for every $x\in X$ the linear map $Y\to Z$, $y\mapsto B(x,y)$, is continuous,
+	and for every $y\in Y$ the linear map $X\to Z$, $x\mapsto B(x,y)$, is continuous.
+	
+	If $\{x_j\}_{i\in\N}\subset X$ and $\{y_j\}_{j\in\N}\subset Y$ are sequences with $\lim_{j\to\infty} x_j = x_\infty$ in $X$ and $\lim_{j\to\infty} y_j = y_\infty$ in $Y$,
+	then
+	\begin{equation}\label{eq67e96b48}
+		\lim_{j\to\infty} B(x_j,y_j) = B(x_\infty,y_\infty) .
+	\end{equation}
+\end{corollary}
+\begin{proof}
+	For $j\in\N\cup\{\infty\}$, define $b_j:X\to Z$, $b_j(x) = B(x,y_j)$.
+	Set $\Gamma = \{b_j\}_{j\in\N\cup\{\infty\}}$.
+	Since $B$ is continuous in each entry, the functions $b_j$ are continuous.
+	If $x\in X$, since $\Gamma(x)$ is a sequence in $Z$ convergent to $b_\infty(x)$,
+	then $\Gamma(x)$ is bounded.
+	By the Banach--Steinhaus Theorem~\ref{thm67e96360}, $\Gamma$ is equicontinuous.
+	
+	We are now ready to prove~\eqref{eq67e96b48}.
+	Let $U\subset Z$ be a neighborhood of $0$ in $Z$.
+	We want to show that there is $N\in\N$ such that 
+	\begin{equation}\label{eq67e96dba}
+		\exists N\in\N\ \forall j>N\qquad
+		B(x_j,y_j)\in B(x_\infty,y_\infty) + U .
+	\end{equation}
+	
+	As a general fact in topological vector spaces, there is $\tilde U\subset U$ neighborhood of $0$ in $Z$ such that $\tilde U-\tilde U\subset U$.
+	Since $\Gamma$ is equicontinuous, there is $V\subset X$ neighborhood of $0$ in $X$ such that $\Gamma(V)\subset \tilde U$.
+	Since $x_n\to x_\infty$, then there is $N\in\N$ such that $x_n-x_\infty \in V$ for all $n>N$.
+	Up to taking $N$ larger, we have also $B(x_\infty,y_\infty-y_j)\in \tilde U$ for all $n>N$, 
+	because $y\mapsto B(x_\infty,y)$ is continuous and thus $\lim_{j\to\infty} B(x_\infty,y_\infty-y_j) = 0$.
+	So, for $j>N$ we have
+	\begin{align*}
+		B(x_j,y_j) - B(x_\infty,y_\infty)
+		&= B(x_j-x_\infty,y_j) - B(x_\infty,y_\infty-y_j)\\
+		&= b_j(x_j-x_\infty) - B(x_\infty,y_\infty-y_j) 
+		\in \tilde U - \tilde U \subset U .
+	\end{align*}
+	We have thus obtained~\eqref{eq67e96dba}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Product of distributions}\label{sub67df2561}
+A derivative is usually defined using the Leibniz rule: $\de(fg) = f\de g + g\de f$.
+The product of two distributions is not well defined... We will see special situations in which we can multiply two distributions, but there is not a general product of two distributions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Product of a smooth function and a distribution}\label{subs67df2598}
+If $A\in\scr D(\Omega)$ and $f\in C^\infty(\Omega)$, then we define $fA$ by
+\begin{equation}
+	(fA)[\phi] = A[f\phi] .
+\end{equation}
+Again, we justify this formula with Proposition~\ref{prop67df0940}:
+indeed, the map $\Phi_f:\phi\mapsto f\phi$ is a continuous linear operator $\scr D(\Omega)\to\scr D(\Omega)$.
+So, $\Phi_f^*A = A\circ\Phi_f$ defines a continuous linear operator $\scr D'(\Omega)\to\scr D'(\Omega)$.
+
+\begin{proposition}\label{prop67e267de}
+	If $f_k\to f_\infty$ in $C^\infty(\Omega)$ and $A_k\to A_\infty$ in $\scr D'(\Omega)$,
+	then $f_kA_k\to f_\infty A_\infty$ in $\scr D'(\Omega)$.
+\end{proposition}
+\begin{proof}
+	Consider the bilinear map $B:C^\infty(\Omega)\times \scr D'(\Omega)\to \scr D'(\Omega)$,
+	$B(f,A) = fA$.
+	We have seen that $B$ is continuous in each entry separately.
+	Since $C^\infty(\Omega)$ is a Fréchet space, we conclude thanks to Corollary~\ref{cor67e96e59} of the Banach--Steinhaus Theorem.
+\end{proof}
+%\begin{proof}
+%	This statement is fundamentally a consequence of \href{https://en.wikipedia.org/wiki/Uniform_boundedness_principle}{\underline{Banach--Steinhaus Theorem}}.
+%	See \cite[Theorem 6.18]{MR1157815}.
+%\end{proof}
+
+\begin{corollary}\label{cor67e265dd}
+	If $\phi_j\to\phi_\infty$ in $\scr D(\Omega)$ and $A_j\to A$ in $\scr D'(\Omega)$,
+	then $\lim_{j\to\infty} A_j[\phi_j] = A[\phi_\infty]$.
+\end{corollary}
+%\begin{proof}
+%	\TODO
+%\end{proof}
+
+\begin{exercise}
+	Prove Corollary~\ref{cor67e265dd} using Proposition~\eqref{prop67e267de}.
+\end{exercise}
+
+\begin{exercise}[Generalized Leibniz Rule]
+	 Show that, if $u\in\scr D'(\Omega)$ and $f\in C^\infty(\Omega)$, then, for every $\alpha\in\N^n$,
+	 \begin{equation}
+	 	\Diff^\alpha(fu) = \sum_{\beta\le \alpha} \binom{\alpha}{\beta} \Diff^\beta f \cdot \Diff^{\alpha-\beta} u .
+	 \end{equation}
+	 {\it Hint:} First of all, understand this formula when $u$ is a smooth function.
+	 Then consider the case $|\alpha|=1$ (just one derivative).
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Locality}\label{subs67e26aff}
+We say that two distributions $A_1,A_2\in\scr D'(\Omega)$ are equal on an open set $\omega\subset\Omega$, that is, $A_1=A_2$ in $\omega$, if $A_1\phi=A_2\phi$ for all $\phi\in\scr D(\omega)$.
+
+\begin{proposition}\label{prop67eaabf1}
+	Let $\scr U$ be an open cover of an open set $\Omega\subset\R^n$ and let $\{A_\omega\}_{\omega\in\scr U}$ be a collection of distributions with:
+	\begin{enumerate}
+	\item $A_\omega\in\scr D'(\omega)$ for all $\omega\in\scr U$, and,
+	\item $A_{\omega_1} = A_{\omega_2}$ in $\omega_1\cap\omega_2$ for all $\omega_1,\omega_2\in \scr U$.
+	\end{enumerate}
+	Then there exists a unique $A\in\scr D'(\Omega)$ with $A = A_\omega$ in $\omega$ for all $\omega\in\scr U$.
+\end{proposition}
+\begin{proof}
+	Let $\{\psi_j\}_{j\in\N}$ be a partition of unity subordinated to $\scr U$.
+	More precisely:
+	\begin{enumerate}
+	\item $\psi_j\in C^\infty_c(\Omega)$ for all $j$;
+	\item for every $x\in\Omega$ the set $\{j:\psi_j(x)\neq0\}$ is finite; 
+	\item $\sum_j\psi_j(x) = 1$ for all $x\in \Omega$;
+	\item for every $j\in\N$ there is $\omega_j\in\scr U$ such that $\spt(\psi_j)\subset\omega_j$.
+	\end{enumerate}
+	We fix the subcover $\{\omega_j\}_{j\in\N}\subset\scr U$.
+	
+	Define $A:\scr D(\Omega)\to\C$ as follows: if $\phi\in\scr D(\Omega)$, then
+	$A[\phi] = \sum_{j\in\N} A_{\omega_j}[\psi_j\phi]$.
+	Notice that, since $\spt(\phi)$ is compact and the local finiteness of the cover $\{\omega_j\}_j$, the sum is a finite sum.
+	
+	Clearly $A$ is linear.
+	If $\phi_k\to0$ in $\scr D(\Omega)$, then there is $K\Subset\Omega$ with $\spt(\phi_k)\subset K$ for all $k$.
+	So, there is $N\in\N$ with $K\subset\bigcup_{j=1}^N\omega_j$ and 
+	$A[\phi_k] = \sum_{j=1}^N A_{\omega_j}[\psi_j\phi_k]$ for all $k$.
+	We conclude that $\lim_{k\to\infty}A[\phi_k] = \sum_{j=1}^N \lim_{k\to\infty}A_{\omega_j}[\psi_j\lim_{k\to\infty}\phi_k] = 0$.
+	
+	By Proposition~\ref{prop67e26a2f}, we obtain that $A\in\scr D'(\Omega)$.
+	
+	If $\omega\in\scr U$, then, for every $\phi\in\scr D(\omega)$, we have
+	$A[\phi]= \sum_{j\in\N} A_{\omega_j}[\psi_j\phi]
+	= \sum_{j\in\N} A_{\omega}[\psi_j\phi]
+	=  A_{\omega}[\sum_{j\in\N}\psi_j\phi]
+	= A_\omega [\phi]$,
+	where we used the fact that $\spt(\psi_j\phi)\subset\spt(\psi_j)\cap\spt(\phi)\subset\omega_j\cap\omega$,
+	that $A_{\omega_j}=A_\omega$ on $\omega_j\cap\omega$,
+	that there is a finite set $J\subset\N$ such that $\spt(\psi_j)\cap\spt(\phi)\neq\emptyset$, 
+	and that, for every $x\in\spt(\phi)$, $\sum_{j\in\N}\psi_j(x) = \sum_{j\in J}\psi_j(x) = 1$.
+	
+	Finally, we need to show uniqueness.
+	Suppose there is $\bar A\in\scr D'(\Omega)$ such that $\bar A=A_\omega$ on $\omega$ for every $\omega\in\scr U$.
+	Then, for every $\phi\in \scr D(\Omega)$,
+	$\bar A[\phi] = \bar A[\sum_j \psi_j\phi]
+	= \sum_j \bar A[\psi_j\phi]
+	= \sum_j A_{\omega_j}[\psi_j\phi]
+	= A[\phi]$.
+	Hence, $\bar A=A$.
+\end{proof}
+
+\begin{exercise}
+	Show that a partition of unity exists for every open cover of an open subset of $\R^n$.
+	In other words, if $\Omega\subset\R^n$ is open and $\scr U$ is a collection of open subsets of $\Omega$ such that $\bigcup\scr U = \Omega$, 
+	then there is a countable family of functions $\{\psi_j\}_{j\in\N}\subset C^\infty_c(\Omega)$ 
+	such that
+	\begin{enumerate}
+%	\item $\psi_j\in C^\infty_c(\Omega)$ for all $j$;
+	\item $0\le \psi_j(x)\le 1$ for all $j$ and all $x\in\Omega$
+	\item for every $x\in\Omega$ the set $\{j:\psi_j(x)\neq0\}$ is finite; 
+	\item $\sum_j\psi_j(x) = 1$ for all $x\in \Omega$;
+	\item for every $j\in\N$ there is $\omega_j\in\scr U$ such that $\spt(\psi_j)\subset\omega_j$.
+	\end{enumerate}
+	
+	Moreover, show that, if $K\subset \Omega$ is compact, then there is a finite set $J\subset\N$ such that $\sum_{j\in J}\psi_j(x) = 1$ for all $x\in K$.
+	
+	{\it Hint:} Rudin has a proof.
+\end{exercise}
+
+\begin{exercise}
+	Let $A\in\scr D'(\Omega)$ and $\scr U$ an open cover of $\Omega$.
+	Show that, if $\bar A\in\scr D'(\Omega)$ is such that $\bar A = A$ on $\omega$, for every $\omega\in\scr U$, then $\bar A=A$.
+
+	The meaning of this exercise is as follows:
+	If we start from some $A\in\scr D'(\Omega)$, then we can localize $A$ to each open subset of some given cover of $\Omega$, and then we can recover $A$ from Proposition~\ref{prop67eaabf1}.
+\end{exercise}
+
+\begin{corollary}\label{cor67ea99a6}
+	If $A\in \scr D'(\Omega)$ is such that for every $x\in\Omega$ there is $\omega\subset\Omega$ open with $x\in\omega$ and $A=0$ on $\omega$, then $A=0$ on $\Omega$.
+\end{corollary}
+\begin{proof}
+	•
+\end{proof}
+
+\begin{remark}
+	Corollary~\ref{cor67ea99a6} might look confusionally trivial.
+	To understand it better, it is useful to think of a situation (outside the world of distributions, of course) where locality fails.
+	Here is one example.
+	
+	\TODO
+%	For $\Omega\subset\R^2$, consider the space 
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Support of a distribution}\label{subs67e1bd60}
+The support of $A\in\scr D'(\Omega)$ is defined as the complement of the set
+\begin{equation}
+	\Omega\setminus\spt(A) = \bigcup\{U\subset\Omega\text{ open, such that }A\phi=0\ \forall\phi\in\scr D(\Omega) \}.
+\end{equation}
+
+\begin{proposition}
+	Let $A\in\scr D'(\Omega)$ and $\phi\in\scr D(\Omega)$.
+	If $\spt\phi\subset\Omega\setminus\spt A$, then $A\phi=0$.
+\end{proposition}
+\begin{proof}
+	Let $\scr U=\{\omega\subset\Omega:A=0\text{ in }\omega\}$.
+	Then $\scr U$ is a cover of $\Omega\setminus\spt A$, by definition of support of a distribution.
+	Let $\{\psi_j\}_{j\in\N}$ be a partition of unity subordinated to $\scr U$.
+	Since $\spt\phi$ is a compact subset of $\Omega\setminus\spt A$,
+	there is $N$ such that $\phi = \sum_{j=1}^N \psi_j \phi$.
+	So,
+	$A\phi = \sum_{j=1}^N A[\psi_j \phi] = 0$.
+	
+	We can give another proof using Proposition~\ref{prop67eaabf1}:
+	Let $V = \Omega\setminus\spt A$.
+	Then $V$ is open and $\scr U$ is an open cover of $V$.
+	By the very definition of $\scr U$, each restriction $A_\omega$ of $A$ to $\omega\in\scr U$ is zero.
+	By Proposition~\ref{prop67eaabf1}, these $A_\omega\in\scr D'(\omega)$ (which are zero) are the restrictions of a unique distribution on $V$.
+	Since $0$ is a distribution on $V$ so that $0=A_\omega$ on $\omega$ for each $\omega\in\scr U$, then $A=0$ on $V$ by uniqueness.	
+\end{proof}
+
+A few examples of support:
+\begin{itemize}
+\item
+If $A_f\in\scr D'(\Omega)$ is the distribution associated to $f\in C(\Omega)$, then $\spt(A_f) = \spt(f)$.
+\item
+$\spt(\delta_p) = \{p\}$.
+\end{itemize}
+
+\begin{exercise}
+	Show the following statement:
+	if $A\in\scr D'(\Omega)$ and $f\in C^\infty(\Omega)$ are such that $\spt A\subset\{f=1\}$,
+	then $fA = A$.
+\end{exercise}
+
+\begin{exercise}
+	Show the following statement:
+	if $A\in\scr D'(\Omega)$ and $f\in C^\infty(\Omega)$, then $\spt(fA) \subset \spt(f) \cap\spt(A)$.
+	Is equality true?
+	
+	{\it Hint for question:} Try with $A=\delta_0$. % with $0\in\de\spt(f)$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Derivatives of the Dirac delta}\label{subs67e27313}
+
+I don't think we will ever use the following statement, but it is important to know it.
+
+\begin{proposition}
+	Suppose $A\in\scr D'(\Omega)$, $p\in\Omega$ and $\spt(A) = \{p\}$.
+	Then there is $N\in\N$ and constants $c_\alpha\in\C$ such that
+	\begin{equation}\label{eq67e273a7}
+		A = \sum_{|\alpha|\le N} c_\alpha \Diff^\alpha \delta_p ,
+	\end{equation}
+	where $\delta_p\phi=\phi(p)$ is the Dirac delta, see~\ref{subs67def74c}.
+	
+	Conversely, if $A$ is as in~\eqref{eq67e273a7}, then $\spt(A)=\{p\}$, unless $c_\alpha=0$ for all $\alpha$.
+\end{proposition}
+\begin{proof}
+	See \cite[Thm.6.21]{MR1157815}.
+\end{proof}
+%\begin{proof}
+%	Recall what is the Taylor expansion of a smooth function:
+%	There are constants $\{T_\alpha \} _{\alpha\in\N}$ (depending only on $\alpha$ and $n$)
+%	such that, if $\phi\in C^\infty(\Omega)$ and $N\in\N$, then
+%	\begin{equation}\label{eq67ea37e5}
+%		\phi(x) = \sum_{|\alpha|\le N} T_\alpha \Diff^\alpha\phi(p) (x-p)^\alpha + \phi_N(x) ,
+%	\end{equation}
+%	where $\phi_N\in C^\infty(\Omega)$ is a function such that $\Diff^\alpha \phi_N(p) = 0$ for $|\alpha|\le N$.
+%	The identity~\eqref{eq67ea37e5} is called \emph{Taylor expansion of degree $N$} of $\phi$ at $p$.
+%	The constants $T_\alpha$ can be computed, but we do not need their explicit value.
+%	Recall also that $(\Diff^\alpha (x-p)^\beta)|_{x=p}$ is  $\alpha!$ if $\alpha=\beta$, zero otherwise.
+%
+%	Let $r,R>0$ be such that $B(p,r) \subset \bar B(p,R)\subset\Omega$.
+%	Let $f\in C^\infty(\Omega)$ be such that $B(p,r)\subset\{f=1\}$ and $\spt(f) \subset B(p,R)$.
+%	Since $\bar B(p,R)$ is compact and contained in $\Omega$, there are $N\in\N$ and $C>0$ such that
+%	\begin{equation}
+%		A[\phi] \le C \|\phi\|_{C^N}
+%	\end{equation}
+%	for all $\phi\in\scr D(B(p,R))$.
+%	For $\alpha\in\N^n$ with $|\alpha|\le N$, define $c_\alpha = \frac{A[x^\alpha\cdot f]}{\alpha!}$.
+%	We claim that the equality~\eqref{eq67e273a7} holds with these constants.
+%	
+%	For this, define $A_N = \sum_{|\alpha|\le N} c_\alpha \Diff^\alpha \delta_p$.
+%	
+%	Let $\phi\in\scr D(\Omega)$.
+%	Let $\phi_N(x)$ be the polynomial of degree $N$ coming from the Taylor expansion of $\phi$ at $p$.
+%	In other words,
+%	\begin{equation}
+%		\phi_N(x) = \sum_{|\alpha|\le N} T_\alpha \Diff^\alpha\phi(p) x^\alpha .
+%	\end{equation}
+%	Notice that $A_N[\phi] = A_N[f\cdot\phi_N]$.
+%	\begin{align*}
+%		A_N[\phi]  
+%		&= \sum_{|\alpha|\le N} c_\alpha \Diff^\alpha \delta_p[\phi] \\
+%		&= \sum_{|\alpha|\le N} c_\alpha (-1)^{|\alpha|}  \delta_p[\Diff^\alpha\phi] \\
+%		&\overset{\eqref{eq67ea37e5}}= \sum_{|\alpha|\le N} c_\alpha (-1)^{|\alpha|}  T_\alpha \Diff^\alpha\phi(p) \alpha! \\
+%		&= \sum_{|\alpha|\le N}  (-1)^{|\alpha|}  T_\alpha \Diff^\alpha\phi(p) A[x^\alpha\cdot f] \\
+%		&= A\left[ \sum_{|\alpha|\le N}  (-1)^{|\alpha|}  T_\alpha \Diff^\alpha\phi(p) x^\alpha\cdot f \right] \\
+%		&= A[f\cdot\phi_N] .
+%	\end{align*}
+%	Therefore, $A[\phi] - A_N[\phi] = A[\phi] - A[f_r\cdot\phi_N] = A[\phi - f_r\cdot\phi_N]$.
+%	\begin{align}
+%		A[\phi] - A_N[\phi]
+%	\end{align}
+%\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distributions as derivatives of functions}\label{subs67e2746f}
+
+I don't think we will ever use the following statement, but it is important to know it.
+
+\begin{theorem}\label{thm67eaad41}
+	For ever $A\in\scr D'(\Omega)$ there are continuous functions $g_\alpha:\Omega\to\C$ for $\alpha\in\N^n$ such that the infinite sum $\sum_\alpha g_\alpha$ is locally finite and
+	\begin{equation}
+		A = \sum_{\alpha\in\N^n} \Diff^\alpha g_\alpha .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	See \cite[Thm.6.28]{MR1157815}.
+\end{proof}
+
+\begin{exercise}\label{ex67eaae04}
+	Use Theorem~\ref{thm67eaad41} to show the following:
+	if $A\in\scr D'(\R)$, then there exists $g\in C(\R)$ and $N\in\N$ such that $A = g^{(N)}$ ($N$-th distributional derivative of $g$).
+\end{exercise}
+
+\begin{remark}
+	Here is an example of the situation described by Theorem~\ref{thm67eaad41}.
+	On $\R$, consider the Dirac delta at zero $\delta_0$.
+	The theorem claims that there is a continuous function $g:\R\to\C$ and $N$ such that $g^{(N)}=\delta_0$, see also Exercise~\ref{ex67eaae04}.
+	In fact, if $g(x) = \int_{-\infty}^x \one_{[0,+\infty)}(y) \did y$,
+	then (Exercise!) $g^{(2)}=\delta_0$.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convolution of functions}\label{subs67ea3f7c}
+If $f,g:\R^n\to\C$ are measurable functions, we define
+\begin{equation}\label{eq67e2849f}
+	f*g (x) = \int_{\R^n} f(y) g(x-y) \did y ,
+\end{equation}
+whenever the integral is well defined, i.e., whenever $y\mapsto f(y) g(x-y)$ is integrable.
+Notice that, as soon as $y\mapsto f(y) g(x-y)$ is integrable, then not only $f*g(x)$ is well defined, but also
+\begin{equation}
+	f*g(x) = \int_{\R^n} f(y) g(x-y) \did y = \int_{\R^n} f(x-y) g(y) \did y
+	= g*f(x) .
+\end{equation}
+
+\begin{exercise}
+	Show that, if $f\in L^1(\R^n)$ and $g\in L^\infty(\R^n)$, then $f*g(x)$ is well defined for all $x\in\R^n$ and in fact $f*g\in C^0_b(\R^n)$.
+\end{exercise}
+\begin{exercise}[Young's inequality]
+	Show that, if $f\in L^1(\R^n)$ and $g\in L^{p}(\R^n)$,
+	then $f*g\in L^p(\R^n)$ and $\|f*g\|_{L^p} \le \|f\|_{L^1} \|g\|_{L^p}$.
+	
+	{\it Hint.}
+	By Hölder inequality, with $\frac1p+\frac1{p'}=1$,
+	$\int |f(y)g(y-x)| \did y = \int |f(y)|^{1/p'}\cdot |f(y)|^{1/p} |g(y-x)| \did y
+	\le (\int |f(y)| \did y)^{1/p'} \cdot (\int |f(y)| |g(y-x)|^{p} \did y)^{1/p}$.
+	Therefore, $\int (f*g(x))^p \did x
+	\le (\int |f(y)| \did y)^{p/p'} \cdot \int \int |f(y)| |g(y-x)|^{p} \did y \did x
+	\le (\int |f(y)| \did y)^{p/p'} \cdot \int |g(y)|^p \did y \cdot \int |f(y)| \did y$.
+\end{exercise}
+
+\begin{exercise}\label{ex67ea4f16}
+	Show that, if $f,g\in C^0(\R^n)$, then
+	\begin{equation}
+		\spt(f*g) \subset \spt(f) + \spt(g) .
+	\end{equation}
+	Can you find a case where equality holds? And where equality does not hold?
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Translations and inversion of a distribution}\label{sub67df26c0}
+We will extend the definition of convolution to distributions.
+To do so, we need two linear operators on distributions: here they are.
+
+For $x\in\R^n$, define $\tau_x:\R^n\to\R^n$ by $\tau_x(y) = y-x$.
+For $x\in\R^n$, define the continuous linear operator $\tau_x:\scr D\to\scr D$ by
+\begin{equation}
+	\tau_x\phi = \phi\circ\tau_x ,
+\end{equation}
+for all $\phi\in\scr D$.
+In other words, $\tau_x\phi = \tau_x^*\phi$ is the pull-back via $\tau_x$.
+By Proposition~\ref{prop67df0940}, we have a continuous linear operator $\tau_x:\scr D'\to \scr D'$ 
+\begin{equation}
+	\tau_xA[\phi] = A[\phi\circ\tau_x] .
+\end{equation}
+In other words, $\tau_x = (\tau_x^*)_*$ is the push forward induced by the pull back induced by $\tau_x$.
+\[
+\xymatrix{
+\R^n \ar[rr]^{\tau_x}_{y\mapsto y-x} && \R^n \\
+\scr  D && \scr D \ar[ll]_{\tau_x^*}^{\phi\mapsto \phi\circ\tau_x} \\
+\scr D' \ar[rr]^{(\tau_x^*)_*}_{A\mapsto (\phi\mapsto A[\phi\circ\tau_x])} && \scr D'
+}
+\]
+I think at this point the amount of confusion surpass the amount of information.
+
+Next, define the continuous linear operator $\scr D\to\scr D$, $\phi\mapsto \check\phi$, by
+\begin{equation}
+	\check \phi : x\mapsto \phi(-x) .
+\end{equation}
+The notation $\check\phi$ will clash with the inverse of the Fourier transform: I do not know how to avoid this clash at the moment. 
+For now, we follow Rudin's notation.
+
+\begin{exercise}
+	Show the relations
+	\begin{align}
+	\tau_y \tau_z &= \tau_{y+z} ;\\
+	(\tau_x\phi)^{\vee} &= \tau_{-x}\check\phi ;\\
+	\label{eq67e2886e}
+	\tau_x (\Diff^\alpha \phi)^\vee &= (-1)^{|\alpha|} \Diff^\alpha(\tau_x\check\phi) .
+	\end{align}
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convolution of a distribution}\label{subs67df2648}
+Let $\phi\in C^\infty_c(\R^n) = \scr D$ and $u\in\scr D'$.
+Define $\phi*u : \R^n\to\C$ by
+\begin{equation}\label{eq67e28487}
+	(u*\phi)(x) = u[\tau_x\check\phi] .
+\end{equation}
+Note that $\tau_x\check\phi(y) = \check\phi(y-x) = \phi(x-y)$.
+Notice that, if $u$ is a function, then
+\begin{equation}
+	(u*\phi)(x)
+	\overset{\eqref{eq67e28487}}= u[\tau_x\check\phi]
+	= \int u(y) (\tau_x\check\phi)(y) \did y
+	= \int u(y) \phi(-(y-x)) \did y
+	\overset{\eqref{eq67e2849f}}= u*\phi(x) .
+\end{equation}
+
+\begin{exercise}
+	Show that, if $u\in\scr D'$ and $\phi\in\scr D$, then
+	\begin{equation}\label{eq67e28b61}
+		u[\phi] = (u*\phi)(0) .
+	\end{equation}
+\end{exercise}
+
+\begin{exercise}
+	Show that, if $u\in\scr D'$ and $\phi\in\scr D$, then 
+	\begin{equation}
+		\spt(u*\phi) \subset \spt(u) + \spt(\phi)
+		= \{x+y: x\in\spt(u),\ y\in\spt(\phi) \} .
+	\end{equation}
+\end{exercise}
+
+\begin{exercise}
+	Show that, if $u\in\scr D'$, $\phi\in\scr D$ and $v\in\R^n$, then
+	\begin{equation}\label{eq67ebace9}
+		u*(\tau_v\phi) = \tau_v(u*\phi) .
+	\end{equation}
+\end{exercise}
+
+\begin{exercise}
+	Show that $\phi\mapsto u*\phi$ is linear.
+\end{exercise}
+
+\begin{exercise}
+	Show that $\delta_0*\phi = \phi$ for every $\phi\in\scr D$.
+	What is $\delta_v*\phi$?
+\end{exercise}
+
+\begin{proposition}\label{prop67ea5631}
+	If $u\in\scr D'$ and $\phi\in\scr D$, then
+	$u*\phi\in C^\infty(\R^n)$ and, for every $\alpha\in\N^n$,
+	\begin{equation}\label{eq67e28779}
+		\Diff^\alpha(u*\phi) = u*(\Diff^\alpha \phi) = (\Diff^\alpha u)*\phi .
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	If $v\in\R^n$ and $v\in\R^n$, then
+	\begin{align*}
+	\Diff_v(u*\phi)(x)
+	&= \lim_{h\to0} \frac{u*\phi(x+hv) - u*\phi(x)}{h} \\
+	&= \lim_{h\to0} \frac{u[\tau_{x+hv}\check\phi] - u[\tau_x\check\phi]}{h} \\
+	&= \lim_{h\to0} u_y\left[ \frac{ \phi(x+hv-y) - \phi(x-y) }{ h } \right] .
+	\end{align*}
+	Since $\phi(x+hv-y) - \phi(x-y)\to \Diff_v\phi(x-y)$ in $\scr D_y$ as $h\to0$, then 
+	\begin{align*}
+	\lim_{h\to0} u_y\left[ \frac{ \phi(x+hv-y) - \phi(x-y) }{ h } \right]
+	= u_y[\Diff_v\phi(x-y)] 
+	= u*\Diff_v\phi(x) .
+	\end{align*}
+	This shows that, for every $x\in\R^n$,
+	\begin{equation}
+		\Diff^j(u*\phi)(x) = (u*\Diff^j\phi)(x) .
+	\end{equation}
+	Iterating, we get the first part of~\eqref{eq67e28779}.
+	
+	Next, 
+	\begin{align*}
+	 	u*(\Diff^\alpha \phi)(x)
+		&= u[\tau_x (\Diff^\alpha \phi)^\vee ]\\
+		&\overset{\eqref{eq67e2886e}}= (-1)^{|\alpha|} u[\Diff^\alpha(\tau_x\check\phi)]\\
+		&= \Diff^\alpha u[\tau_x\check\phi] \\
+		&= ((\Diff^\alpha u)*\phi)(x) .
+	\end{align*}
+	We thus have completed the proof of~\eqref{eq67e28779}.
+\end{proof}
+
+
+
+\begin{proposition}\label{prop67ea5631}
+	If $u\in\scr D'$ and $\phi,\psi\in\scr D$, then
+	\begin{equation}\label{eq67e288dc}
+		u*(\phi*\psi) = (u*\phi)*\psi .
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	We use Lemma~\ref{lem67ea55c8} and Proposition~\ref{prop67ea5631}:
+	\begin{align*}
+	 	u*(\phi*\psi)(x)
+		&= u[\tau_x(\phi*\psi)^\vee] \\
+		&= u_y[(\phi*\psi)^\vee(y-x)] \\
+		&= u_y[(\phi*\psi)(x-y)] \\
+		&= u_y\left[ \int_{\R^n} \phi(x-y-z) \psi(z) \did z \right] \\
+		&= u_y\left[ \lim_{h\to0} \sum_{z\in\Z^n} h^n \phi(x-y-hz) \psi(hz)  \right] \\
+		[\text{by Lemma~\ref{lem67ea55c8}}]
+		&=\lim_{h\to0} u_y\left[ \sum_{z\in\Z^n} h^n \phi(x-y-hz) \psi(hz)  \right] \\
+		[\text{since the sum is finite}]
+		&= \lim_{h\to0} \sum_{z\in\Z^n} h^n u_y[\phi(x-y-hz)] \psi(hz) \\
+		[\phi(x-y-hz) = \tau_{x-hz}\check\phi(y)]
+		&= \lim_{h\to0} \sum_{z\in\Z^n} h^n (u*\phi)(x-hz)] \psi(hz) \\
+		[\text{by Lemma~\ref{lem67ea55c8} and Proposition~\ref{prop67ea5631}.1}]
+		&= \int_{\R^n} (u*\phi)(x-z) \psi(z) \did z \\
+		&= (u*\phi)*\psi(x) .
+	\end{align*}
+\end{proof}
+
+\begin{lemma}\label{lem67ea55c8}
+	Let $\phi,\psi\in \scr D$.
+	For $h>0$, define
+	\begin{equation}
+		\rho_h(x) = \sum_{z\in\Z^n} h^n \phi(x-hz) \psi(hz) .
+	\end{equation}
+	Then $\rho_h\in\scr D$ for all $h>0$ and
+	$\lim_{h\to0} \rho_h = \phi*\psi$ in $\scr D$.
+\end{lemma}
+\begin{proof}
+	Clearly $\rho_h$ is smooth.
+	The support of $\rho_h$ is contained in $\spt(\phi) + \spt(\psi)$ (cfr.~Exercise~\ref{ex67ea4f16}).
+	Since the function $(x,y)\mapsto \phi(x-y)\psi(y)$ is uniformly continuous,
+	then $\rho_h\to \phi*\psi$ uniformly (see Exercise~\ref{ex67ea5356}).
+	The derivatives of $\rho_h$ have the same form, i.e.
+	\begin{equation}
+		\Diff^\alpha\rho_h(x) = \sum_{z\in\Z^n} h^n \Diff^\alpha_x\phi(x-hz) \psi(hz) .
+	\end{equation}
+	So, $\Diff^\alpha\rho_h\to (\Diff^\alpha\phi)*\psi = \Diff^\alpha(\phi*\psi)$ uniformly.
+	By~\eqref{eq67e16d22}, we obtain $\rho_h\to \phi*\psi$ in $\scr D$.
+\end{proof}
+
+\begin{exercise}\label{ex67ea516c}
+	In this exercise, you show that Riemann sums converge to the integral.
+	
+	Let $f:\R^n\to\C$ be a continuous and integrable function.
+	(Integrable: $\int_{\R^n}|f(z)|\did z < \infty$).
+	For $h>0$, define
+	\begin{equation}
+		F_h = \sum_{z\in\Z^n} h^n f(hz) .
+	\end{equation}
+	Show that $\lim_{h\to0}F_h = \int_{\R^n}f(z)\did z$.
+\end{exercise}
+
+\begin{exercise}\label{ex67ea5356}
+	[To do while listening to Paganini's Caprice No. 24].
+	Variation over Exercise~\ref{ex67ea516c}: 
+	Let $f:\R^n\times\R^n\to\C$ be a uniformly continuous and integrable function.
+	Define $F:\R^n\to\C$ by 
+	\begin{equation}
+		F(x) = \int_{\R^n} f(x,z) \did z .
+	\end{equation}
+	For $h>0$ and $x\in\R^n$, define
+	\begin{equation}
+		F_h(x) = \sum_{z\in\Z^n} h^n f(x,hz) .
+	\end{equation}
+	Show that $F_h\to F$ uniformly in $x$ as $h\to0$.
+\end{exercise}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Smooth approximation of a distribution}\label{subs67df2a23}
+
+Let $\rho\in C^\infty_c(\R^n)$ be such that $\spt(\rho)=B(0,1)$, $0\le \rho\le 1$, and $\int\rho\did x = 1$.
+Define $\rho_\epsilon(x) = \rho(x/\epsilon)/\epsilon^n$.
+We call the family $\{\rho_\epsilon\}_{\epsilon>0}$ an \emph{approximation of the identity on $\R^n$}, or \emph{a family of mollifiers}.
+%The \emph{standard family of mollifiers} the one given by
+For example, one can take
+\begin{equation}
+	\rho(x) = \begin{cases}
+	k \exp\left(\frac{1}{|x|^2-1}\right) & \text{ if }|x|<1 \\
+	0 & \text{ otherwise} ,
+	\end{cases}
+\end{equation}
+where $k$ normalizes the integral.
+
+\begin{exercise}
+	Show that the function 
+	\begin{equation}
+		\rho(x) = \begin{cases}
+		\exp\left(\frac{1}{|x|^2-1}\right) & \text{ if }|x|<1 \\
+		0 & \text{ otherwise} ,
+		\end{cases}
+	\end{equation}
+	is $C^\infty$-smooth on $\R^n$ and compute $\int_\R^n \rho(x)\did x$.
+	Show also that $\rho$ is not analytic.
+	Does it exist a family of analytic mollifiers?
+	
+	Finally, why have I put the square in the definition of $\rho$? Do you think we could do without?
+	
+	{\it Hint:} I have put the square to help you. The square is itself a hint.
+\end{exercise}
+
+\begin{proposition}\label{prop67e28cab}
+	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be an approximation of the identity on $\R^n$,
+	$\phi\in\scr D$ and $u\in\scr D'$.
+	Then
+	\begin{align}
+	\label{eq67e28a4f}
+		\lim_{\epsilon\to0} \phi*\rho_\epsilon &= \phi \text{ in }\scr D , \\
+	\label{eq67e28a56}
+		\lim_{\epsilon\to0} u*\rho_\epsilon &= u \text{ in }\scr D' .\\
+	\end{align}
+\end{proposition}
+\begin{proof}
+	The first identity was an exercise, but here is my solution.
+	Notice that $\spt(\rho_\epsilon) = B(0,\epsilon)$.
+	Since $\phi\in C^1_c$, then there is $L$ such that $|\phi(x)-\phi(y)|\le L|x-y|$ for all $x,y$ (see Exercise~\ref{ex67ea5cf7}).
+	Then, for every $x\in\R^n$,
+	\begin{align*}
+	 	|\phi*\rho_\epsilon(x) - \phi(x) | 
+		&= \left|\int \phi(y) \rho_\epsilon(x-y) \did y - \phi(x) \int \rho_\epsilon(x-y) \did y \right| \\
+		&\le \int |\phi(y) - \phi(x)| \rho_\epsilon(x-y) \did y \\
+		&\le L\epsilon \int \rho_\epsilon(x-y) \did y 
+		= L\epsilon.
+	\end{align*}
+	This shows that $\phi*\rho_\epsilon\to \phi$ uniformly.
+	Since this holds for every $\phi\in\scr D$,
+	we also have that $\Diff^\alpha(\phi*\rho_\epsilon) = \phi*\Diff^\alpha\rho_\epsilon \to \Diff^\alpha\phi$ uniformly, for every $\alpha\in\N^n$.
+	Therefore, $\phi*\rho_\epsilon\to \phi$ in $\scr D$.
+	
+	For the second identity, 
+	\begin{align}
+	\lim_{\epsilon\to0} u*\rho_\epsilon[\phi]
+	&\overset{\eqref{eq67e28b61}}= \lim_{\epsilon\to0} ((u*\rho_\epsilon)*\phi)(0) \\
+	&\overset{\eqref{eq67e288dc}}= \lim_{\epsilon\to0} (u*(\rho_\epsilon*\phi))(0) \\
+	&\overset{\eqref{eq67e28b61}}= \lim_{\epsilon\to0} u[\rho_\epsilon*\phi] \\
+	&\overset{\eqref{eq67e28a4f}}= u[\phi] .
+	\end{align}
+\end{proof}
+
+\begin{exercise}\label{ex67ea5cf7}
+	Let $\Omega\subset\R^n$ convex and $\phi\in C^1(\Omega)$ such that $L = \|\grad\phi\|_{L^\infty}<\infty$
+	Show that, for every $x,y\in \Omega$, $|\phi(x)-\phi(y)|\le L|x-y|$.
+	
+	Question: what happens if we drop the hypothesis of $\Omega$ being convex?
+\end{exercise}
+
+\begin{corollary}
+	The space $C^\infty(\R^n)$ is dense in $\scr D'$ (with respect to the topology of $\scr D'$).
+\end{corollary}
+
+%\begin{corollary}
+%	If $\Omega\subset\R^n$ is open, then 
+%	the space $C^\infty(\Omega)$ is dense in $\scr D'(\Omega)$ (with respect to the topology of $\scr D'(\Omega)$).
+%\end{corollary}
+%\begin{proof}
+%	\TODO
+%\end{proof}
+
+\begin{exercise}
+	Show that, if $\Omega\subset\R^n$ is open, then 
+	the space $C^\infty(\Omega)$ is dense in $\scr D'(\Omega)$ (with respect to the topology of $\scr D'(\Omega)$).
+\end{exercise}
+
+\begin{exercise}
+	Is $\scr D(\Omega)$ dense in $\scr D'(\Omega)$? (Try at least for $\Omega=\R^n$).
+	
+	{\it Hint:}
+	Take $A[\phi] = \int \phi\did x$ and try to approximate $A$ with functions in $C^\infty_c(\Omega)$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Constancy theorem}\label{subs67df2829}
+
+\begin{proposition}
+	If $u\in\scr D'(\Omega)$ is such that $\de_ju = 0$ for all $j\in\{1,\dots,n\}$,
+	then $u$ is a constant function, that is, there is $c\in\C$ such that $u[\phi] = c\int_\Omega\phi(x)\did x$ for all $\phi\in\scr D(\Omega)$.
+\end{proposition}
+\begin{proof}
+	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be an approximation of the identity on $\R^n$.
+	Then $\de_j(u*\rho_\epsilon) = (\de_ju)*\rho_\epsilon = 0$, therefore $u*\rho_\epsilon = c_\epsilon \in\C$.
+	Moreover, by Proposition~\ref{prop67e28cab},
+	$u[\phi] = \lim_{\epsilon\to0} u*\rho_\epsilon[\phi]
+	=  \lim_{\epsilon\to0} c_\epsilon \int \phi(y)\did y$.
+	Therefore, the is $c\in\C$ with $c=\lim_{\epsilon\to0} c_\epsilon$ and $u[\phi] = c\int \phi(y)\did y$, that is, $u$ is a constant. 
+\end{proof}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%\section{Distributions with compact support}\label{sec67e28d62}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The space of all smooth functions as a Fréchet space}\label{subs67eb97bc}
+We define $\scr E(\Omega)$ as the vector space $C^\infty(\Omega)$ of smooth functions $\Omega\to\C$, endowed with the family of quasinorms
+$p_{N,K}:\scr E(\Omega)\to [0,+\infty)$, for $K\Subset\Omega$ and $N\in\N$, where
+\begin{equation}
+	p_{N,K} (f) = \sup\{|\Diff^\alpha f(x)|:x\in K,\ |\alpha|\le N\} = \|f\|_{C^N(K)} .
+\end{equation}
+The quasinorms determine a topology on $\scr E(\Omega)$, where $f_j\to f_\infty$ in 
+\begin{equation}
+	f_j\to f_\infty \text{ in }\scr E(\Omega)
+	\quad\IFF\quad
+	\begin{array}{c}
+	\forall K\Subset \Omega,\ \forall N\in\N\\
+	\lim_{j\to\infty} p_{N,K} (f_j-f_\infty) = 0 .
+	\end{array}
+\end{equation}
+The topological vector space $\scr E(\Omega)$ is a so-called \emph{Fréchet space}.
+
+\begin{exercise}
+	Check whether the topology on $\scr E(\Omega)$ is the the initial topology induced by the maps $C^\infty(\Omega)\into C^m(\Omega)$.
+	
+	{\it Hint:} I actually don't know if this is true. So, please send me an email with the result, if you don't mind.
+\end{exercise}
+
+Notice that $\scr D(\Omega)\subset\scr E(\Omega)$ as sets, but also $\scr D(\Omega)\into\scr E(\Omega)$ continuously.
+Indeed, if $\phi_j\to0$ in $\scr D(\Omega)$, then $\phi_j\to0$ in $\scr E(\Omega)$, 
+and thus the immersion is continuous by Proposition~\ref{prop67e26a2f}.
+
+However, $\scr D(\Omega)$ is dense in $\scr E(\Omega)$ with the topology of $\scr E(\Omega)$.
+
+\begin{exercise}
+	Show that $\scr D(\Omega)$ is dense in $\scr E(\Omega)$.
+\end{exercise}
+
+\begin{exercise}
+	Find a sequence $\phi_j\in\scr D(\Omega)$ that converges to some $f$ in $\scr E(\Omega)$ but it does not converge in $\scr D(\Omega)$.
+	
+	{\it Just as a note:} there is a notion of ``Cauchy sequence'' for topological vector spaces (see Rudin's book).
+	With such a notions available, one could check that $\scr D(\Omega)$ is complete in its own topology, but that its completion in the topology of $\scr E(\Omega)$ is $\scr E(\Omega)$. 
+	This should clarify the situation.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The dual space of $\scr E(\Omega)$...}\label{subs67e2723b}
+Let $\scr E'(\Omega)$ be the topological dual of $\scr E(\Omega)$, that is, the space of continuous linear functionals $\scr E(\Omega)\to\C$.
+A linear functional $A:\scr E(\Omega)\to\C$ is continuous if and only if, whenever $f_j\to f_\infty$ in $\scr E(\Omega)$, then $A[f_j] \to A[f_\infty]$ in $\C$.
+%\TODO: Why?
+
+The topology on $\scr E'(\Omega)$ is the usual weak* topology,
+that is, point-wise convergence:
+\begin{equation}
+	E_j\to E_\infty \text{ in }\scr E'(\Omega)
+	\quad\IFF\quad
+	\forall f\in\scr E(\Omega)\ \lim_{j\to\infty} E_j[f] = E_\infty[f] .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{...is made of distributions...}\label{subs67eb9b4b}
+
+Since $\scr D(\Omega)\subset\scr E(\Omega)$, then each $E\in\scr E(\Omega)$ is also a linear functional $E:\scr D(\Omega)\to\C$.
+Since $\scr D(\Omega)\into \scr E(\Omega)$ is continuous, or, otherwise said, since $\phi_j\to\phi_\infty$ in $\scr D(\Omega)$ implies $\phi_j\to\phi_\infty$ in $\scr E(\Omega)$, then also the restriction of $E$ to $\scr D(\Omega)$ is continuous.
+In other words, $E\in\scr D(\Omega)$.
+
+Moreover, if $E_j\to E_\infty$ in $\scr E'(\Omega)$, then clearly $E_j\to E_\infty$ in $\scr D'(\Omega)$.
+So, we can say $\scr E'(\Omega)\subset\scr D'(\Omega)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{...with compact support.}\label{subs67eb9b5f}
+It remains to characterize the distributions $A\in\scr D'(\Omega)$ that belong to $\scr E'(\Omega)$:
+
+\begin{proposition}\label{prop67eb9ee1}
+	\begin{equation}
+		\scr E'(\Omega) = \{A\in\scr D'(\Omega)\text{ with compact support}\} .
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	\ci
+	We have shown this inclusion in~\ref{subs67eb9b4b}.
+	
+	\ic
+	This inclusion does not make sense when taken literally:
+	if $A\in\scr D'(\Omega)$, then $A$ is a linear map $\scr D(\Omega)\to\C$, while $\scr E(\Omega)$ is a larger space than $\scr D(\Omega)$.
+	So, $A$ is NOT a function $\scr E(\Omega)\to\C$, taken as it is.
+	However, we need to consider that $\scr D(\Omega)$ is dense in $\scr E(\Omega)$:
+	so, if there is a continuous linear functional $E:\scr E(\Omega)\to\C$ whose restriction to $\scr D(\Omega)$ is $A$, then $E$ is uniquely determined by $A$.
+	
+	This is to say that the correct interpretation of the inclusion $\ic$ is:
+	every $A\in\scr D'(\Omega)$ with compact support extends uniquely to a continuous linear functional $\bar A:\scr E(\Omega)\to\C$.
+	
+	So, let $A\in\scr D'(\Omega)$ be with compact support.
+	Fix some $\psi\in C^\infty_c(\Omega)$ such that $\spt A \subset{\rm interior}\{\psi=1\}$, which exists because $\spt(A)$ is compact.
+	Define $A_\psi:\scr E(\Omega)\to\C$ by $A_\psi f = A[\psi f]$.
+	Notice that, firstly, $A_\psi\in\scr E'(\Omega)$.
+	
+	Moreover, if $\phi\in\scr D(\Omega)$, then $\spt((1-\psi)\phi) \cap\spt(A)=\emptyset$ and thus
+	$A[\phi] = A[\psi\phi + (1-\psi)\phi] = A[\psi\phi] = A_\psi[\phi]$.
+	We conclude that the restriction of $A_\psi$ to $\scr E(\Omega)$ is $A$.
+%	
+%	 and, secondly, $A_\psi$ does not depend on the choice of $\psi$.
+%	Indeed, if $\psi_1,\psi_2$ are such that $\spt A \subset\{\psi=1\}$,
+%	then $\spt(\psi_1-\psi_2)\cap \spt A=\emptyset$ and thus
+%	$A_{\psi_1} f - A_{\psi_2}f = A[(\psi_1-\psi_2)f] = 0$.
+%	This shows that $A$ extends to $A\in\scr E'(\Omega)$. 
+%	??
+%	
+\end{proof}
+
+\begin{exercise}
+	In the proof of Proposition~\ref{prop67eb9ee1}, we have defined the extension of $A\in\scr D'(\Omega)$ to $\scr E(\Omega)$ as $A_\psi[f] = A[\psi f]$,
+	where $\psi\in C^\infty_c(\Omega)$ such that $\spt A \subset{\rm interior}\{\psi=1\}$.
+	It looks like this extension depends on the choice of $\psi$.
+	Does it?
+%	Show that the $A_\psi$ does not depend on the choice of $\psi$, directly.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Convolution of distributions with compact support}
+We have started with the convolution $u*v$ of functions $u$ and $v$.
+We have extended this operation to convolution $u*v$ where $u\in\scr D'$ is a distribution and $v\in\scr D$ is a function.
+As it happens with the product, convolution is not defined for arbitrary distributions.
+The most general definition is of a convolution $u*v$ with $u,v\in\scr D'$ and {\it at least one of the distributions has compact support}.
+
+This is done in three steps.
+
+\boxed{\textsc{Step 1:}}
+If $u\in\scr E'$ and $f\in\scr E$, then we define
+\begin{equation}
+	u * f (x) = u[\tau_x\check f] ,
+\end{equation}
+exactly as we did for distributions in $\scr D'$.
+So, if $u\in\scr D'$ has compact support (i.e., $u\in\scr E'$), then $u*\phi$ is defined not only for $\phi\in\scr D = C^\infty_c(\R^n)$, but also for $\phi\in\scr E = C^\infty(\R^n)$.
+
+\begin{proposition}
+	If $u\in\scr E'$ and $f\in\scr E$, then $u*f\in\scr E$ and 
+	$\spt(u*f) \subset \spt(u) + \spt(f)$.
+	In particular, if $f\in\scr D$, then $u*f\in\scr D$.
+\end{proposition}
+\begin{proof}
+	\TODO
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\boxed{\textsc{Step 2:}}
+We characterize continuous linear operators $\scr D\to\scr E$ that commute with translations.
+First of all, notice that, if $u\in\scr D'$, then $L:\phi\mapsto u*\phi$ is a linear function $\scr D\to\scr E$.
+Moreover, by~\eqref{eq67ebace9}, $L$ commute with translation, i.e., $L\circ\tau_v = \tau_v\circ L$ for all $v\in\R^n$.
+The next Lemma~\ref{lem67ebad94} shows that $L$ is in fact continuous.
+Theorem~\ref{thm67ebada4} will finally prove that all continuous linear operators $\scr D\to\scr E$ that commute with translations are of this form.
+
+\begin{lemma}\label{lem67ebad94}
+	If $\phi_j\to\phi_\infty$ in $\scr D$ and $u\in\scr D'$, 
+	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
+	
+	Similarly, if $\phi_j\to\phi_\infty$ in $\scr E$ and $u\in\scr E'$, 
+	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
+\end{lemma}
+\begin{proof}
+	The proof of the second part is very similar to the proof of the first part,
+	so we will leave it as an exercise.
+	
+	Let $\phi_j\to\phi_\infty$ in $\scr D$.
+%	We can assume $\phi_\infty=0$: 
+	We need to show that $u*\phi_j\to u*\phi_\infty$ in $\scr E$,
+	that is, $\Diff^\alpha(u*\phi_j)\to \Diff^\alpha(u*\phi_\infty)$ uniformly on compact sets, for every $\alpha\in\N^n$.
+	Since $\Diff^\alpha(u*\phi_j) = u*(\Diff^\alpha\phi_j)$ and since $\phi_j$ is an arbitrary sequence, we only need to show that convergence for $\alpha=0$.
+	
+	Fix a compact set $K\subset\R^n$.
+	Let $\tilde K\subset\R^n$ be a compact such that $\spt(\phi_j)\subset \tilde K$ for all $j$.
+	Notice that, if $x\in K$, then $x-y\in\tilde K$ if and only if $y\in K-\tilde K = \{a-b: a\in K,\ b\in\tilde K\}$.
+	So, for every $x\in K$ and $\phi\in\scr D$ with $\spt(\phi)\subset\tilde K$, 
+	then $\tau_x\check\phi$ is supported in $K-\tilde K$, which is compact.
+	
+	By Proposition~\ref{prop67defc54}, there are $C\in\R$ and $N\in\N$ such that $|u[\phi]| \le C\|\phi\|_{C^N}$ for all $\phi\in\scr D$ with $\spt(\phi)\subset K-\tilde K$.
+	Notice that, if $\phi$ is supported in $\tilde K$ and $x\in K$, then 
+	$\tau_x\check\phi(y) =  \phi(x-y) = 0$ if $x-y\notin \tilde K$, that is, $y\notin \tilde K - x$.
+	
+	Then, for every $x\in K$,
+	\begin{align*}
+	|u*\phi_j(x) - u*\phi_\infty(x)|
+	&= |u[\tau_x(\check \phi_j)] - u[\tau_x(\check \phi_\infty)]| \\
+	&\le C \|\tau_x(\check \phi_j) - \tau_x(\check \phi_\infty)\|_{C^N} \\
+	= C\| \phi_j - \phi_\infty\|_{C^n} .
+	\end{align*}
+	Therefore, $u*\phi_j\to u*\phi_\infty$ uniformly on $K$.
+%	$|u*\phi_j\to u(x)| = |u[\tau_x(\check \phi_j)]| \le C \|\tau_x(\check \phi_j)\|_{C^N} = C\|\phi_j\|_{C^n}$.
+%	Therefore, 
+\end{proof}
+
+\begin{exercise}
+	Show that, if $\phi_j\to\phi_\infty$ in $\scr E$ and $u\in\scr E'$, 
+	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
+\end{exercise}
+
+\begin{theorem}[{\cite[Thm.4.2.1]{MR717035}}]\label{thm67ebada4}
+	Let $L$ be a linear map from $\scr D = C^\infty_c(\R^n)$ to $C^0(\R^n)$.
+	The following statements are equivalent:
+	\begin{enumerate}
+	\item $L$ is (sequentially) continuous, i.e., if $\phi_j\to\phi_\infty$ in $\scr D$ then $L\phi_j\to L\phi_\infty$ in $C^0(\R^n)$,
+		and commutes with translations, i.e., $L[\tau_x \phi] = \tau_x L\phi$ for all $x\in\R^n$;
+	\item
+	there is $u\in \scr D'$ such that $L\phi = u*\phi$.
+	\end{enumerate}
+	Moreover, if the above conditions are met, then 
+	the distribution $u$ is unique,
+	and $L$ is in fact a continuous linear operator $\scr D\to\scr E$.
+\end{theorem}
+\begin{proof}
+	$(1)\THEN(2)$:
+	\TODO
+	
+	$(2)\THEN(1)$:
+	We already know.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\boxed{\textsc{Step 3:}}
+If $u_1,u_2\in\scr D'$ are distributions, one of which has compact support, then,
+ for every $\phi\in\scr D$,
+\begin{equation}\label{eq67ebaf4c}
+	L[\phi] = 
+	u_1 * (u_2*\phi) 
+\end{equation}
+is a well defined element of $\scr E$.
+Indeed, we have two cases:
+\begin{enumerate}
+\item if $u_1\in\scr E'$, then we know that $u_2*\phi\in \scr E$ and thus~\eqref{eq67ebaf4c} is well defined;
+\item if $u_2\in\scr E'$, then $u_2*\phi\in\scr D$ and thus~\eqref{eq67ebaf4c} is well defined.
+\end{enumerate}
+Moreover, thanks to Lemma~\ref{lem67ebad94}, $\phi\mapsto L\phi$ is continuous.
+By Theorem~\ref{thm67ebada4}, there is a unique $u\in\scr D'$ such that $L\phi = u*\phi$ for all $\phi\in\scr D$.
+We set
+\begin{equation}
+	u = u_1 * u_2
+	\quad\IFF\quad
+	\forall\phi\in\scr D,\ 
+	u*\phi = u_1 * (u_2*\phi) .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Properties of convolutions}\label{subs67ebb2f1}
+We summarize the properties of convolutions.
+\begin{proposition}
+	\begin{enumerate}
+	\item
+	If $u_1,u_2\in\scr D'$, one of which has compact support, 
+	then $u_1 * u_2 \in\scr D'$ is well defined.
+	\item
+	If $u_1,u_2\in\scr D'$, one of which has compact support,
+	then $u_1*u_2 = u_2*u_1$.
+	\item
+	If $u_1,u_2\in\scr D'$, one of which has compact support,
+	then $\spt(u_1*u_2) \subset \spt(u_1) + \spt(u_2)$.
+	\item
+	If  If $u_1,u_2,u_3\in\scr D'$, two of which have compact support,
+	then $(u_1*u_2)*u_3 = u_1*(u_2*u_3)$.
+	\item
+	If $u_1,u_2\in\scr D'$, one of which has compact support,
+	and $\alpha\in\N^n$,
+	then $\Diff^\alpha(u*v) = (\Diff^\alpha u)*v = u*(\Diff^\alpha v)$.
+	\item
+	If $u_1,u_2\in\scr D'$, one of which has compact support, and one of which is smooth,
+	then $u_1 * u_2 \in\scr E$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{exercise}
+	Show that $\delta_0*u = u$ for every $u\in\scr D'$.
+	What is $\delta_v*u$?
+\end{exercise}
 
 
 
