@@ -241,6 +241,8 @@ Other references are:
 \begin{itemize}
 \item \fullcite{MR2597943}
 \item \fullcite{MR1357411}
+\item \fullcite{MR717035}
+\item \fullcite{MR1157815}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -5058,12 +5060,12 @@ So, $\Phi_f^*A = A\circ\Phi_f$ defines a continuous linear operator $\scr D'(\Om
 %\end{proof}
 
 \begin{exercise}
-	Prove Corollary~\ref{cor67e265dd} using Proposition~\eqref{prop67e267de}.
+	Prove Corollary~\ref{cor67e265dd} using Proposition~\ref{prop67e267de}.
 \end{exercise}
 
 \begin{exercise}[Generalized Leibniz Rule]
 	 Show that, if $u\in\scr D'(\Omega)$ and $f\in C^\infty(\Omega)$, then, for every $\alpha\in\N^n$,
-	 \begin{equation}
+	 \begin{equation}\label{eq67f2c2e1}
 	 	\Diff^\alpha(fu) = \sum_{\beta\le \alpha} \binom{\alpha}{\beta} \Diff^\beta f \cdot \Diff^{\alpha-\beta} u .
 	 \end{equation}
 	 {\it Hint:} First of all, understand this formula when $u$ is a smooth function.
@@ -5383,6 +5385,7 @@ For now, we follow Rudin's notation.
 	Show the relations
 	\begin{align}
 	\tau_y \tau_z &= \tau_{y+z} ;\\
+	\label{eq67f29d18}
 	(\tau_x\phi)^{\vee} &= \tau_{-x}\check\phi ;\\
 	\label{eq67e2886e}
 	\tau_x (\Diff^\alpha \phi)^\vee &= (-1)^{|\alpha|} \Diff^\alpha(\tau_x\check\phi) .
@@ -5410,16 +5413,26 @@ Notice that, if $u$ is a function, then
 \begin{exercise}
 	Show that, if $u\in\scr D'$ and $\phi\in\scr D$, then
 	\begin{equation}\label{eq67e28b61}
-		u[\phi] = (u*\phi)(0) .
+		u[\phi] = (u*\check\phi)(0) .
 	\end{equation}
 \end{exercise}
 
 \begin{exercise}
 	Show that, if $u\in\scr D'$ and $\phi\in\scr D$, then 
-	\begin{equation}
+	\begin{equation}\label{eq67f2b0f5}
 		\spt(u*\phi) \subset \spt(u) + \spt(\phi)
 		= \{x+y: x\in\spt(u),\ y\in\spt(\phi) \} .
 	\end{equation}
+	{\it Solution.}
+	Notice that, if $x\in\R^n$ and $\phi:\R^n\to\C$, then $\tau_x\check\phi(y) = \phi(x-y) \neq 0$ if and only if $x-y\in\spt(\phi)$, if and only if $y\in x-\spt(\phi)$.
+	Therefore, $\spt(\tau_x\check\phi) = x-\spt(\phi)$.
+	
+	Let $x\in\R^n\setminus ( \spt(u) + \spt(\phi))$.
+	Notice that, if $y \in \spt(\tau_x\check\phi)\cap \spt(u)$,
+	then there is $z\in\spt(\phi)$ with $y=x-z\in\spt(u)$,
+	thus $x = y+z \in \spt(u) + \spt(\phi)$.
+	Since $x\notin \spt(u) + \spt(\phi)$, then $\spt(\tau_x\check\phi)\cap \spt(u)=\emptyset$.
+	We conclude that $u*\phi(x) = u[\tau_x\check\phi] = 0$.
 \end{exercise}
 
 \begin{exercise}
@@ -5478,7 +5491,7 @@ Notice that, if $u$ is a function, then
 
 
 
-\begin{proposition}\label{prop67ea5631}
+\begin{proposition}\label{prop67f2992e}
 	If $u\in\scr D'$ and $\phi,\psi\in\scr D$, then
 	\begin{equation}\label{eq67e288dc}
 		u*(\phi*\psi) = (u*\phi)*\psi .
@@ -5499,32 +5512,38 @@ Notice that, if $u$ is a function, then
 		&= \lim_{h\to0} \sum_{z\in\Z^n} h^n u_y[\phi(x-y-hz)] \psi(hz) \\
 		[\phi(x-y-hz) = \tau_{x-hz}\check\phi(y)]
 		&= \lim_{h\to0} \sum_{z\in\Z^n} h^n (u*\phi)(x-hz)] \psi(hz) \\
-		[\text{by Lemma~\ref{lem67ea55c8} and Proposition~\ref{prop67ea5631}.1}]
+		[\text{by Lemma~\ref{lem67ea55c8} and Proposition~\ref{prop67ea5631}}]
 		&= \int_{\R^n} (u*\phi)(x-z) \psi(z) \did z \\
 		&= (u*\phi)*\psi(x) .
 	\end{align*}
 \end{proof}
 
 \begin{lemma}\label{lem67ea55c8}
-	Let $\phi,\psi\in \scr D$.
+	Let $\phi\in \scr D$ and $\psi\in\scr E$.
 	For $h>0$, define
 	\begin{equation}
 		\rho_h(x) = \sum_{z\in\Z^n} h^n \phi(x-hz) \psi(hz) .
 	\end{equation}
-	Then $\rho_h\in\scr D$ for all $h>0$ and
-	$\lim_{h\to0} \rho_h = \phi*\psi$ in $\scr D$.
+	Then $\rho_h\in\scr E$ for all $h>0$ and
+	$\lim_{h\to0} \rho_h = \phi*\psi$ in $\scr E$.
+	
+	Moreover, if $\psi\in\scr D$, then $\lim_{h\to0} \rho_h = \phi*\psi$ in $\scr D$.
 \end{lemma}
 \begin{proof}
 	Clearly $\rho_h$ is smooth.
 	The support of $\rho_h$ is contained in $\spt(\phi) + \spt(\psi)$ (cfr.~Exercise~\ref{ex67ea4f16}).
-	Since the function $(x,y)\mapsto \phi(x-y)\psi(y)$ is uniformly continuous,
-	then $\rho_h\to \phi*\psi$ uniformly (see Exercise~\ref{ex67ea5356}).
+	Since the function $(x,y)\mapsto \phi(x-y)\psi(y)$ is continuous,
+	then $\rho_h\to \phi*\psi$ uniformly on compact sets (see Exercise~\ref{ex67f3a281}).
 	The derivatives of $\rho_h$ have the same form, i.e.
 	\begin{equation}
 		\Diff^\alpha\rho_h(x) = \sum_{z\in\Z^n} h^n \Diff^\alpha_x\phi(x-hz) \psi(hz) .
 	\end{equation}
 	So, $\Diff^\alpha\rho_h\to (\Diff^\alpha\phi)*\psi = \Diff^\alpha(\phi*\psi)$ uniformly.
-	By~\eqref{eq67e16d22}, we obtain $\rho_h\to \phi*\psi$ in $\scr D$.
+%	By~\eqref{eq67e16d22}, 
+	We obtain $\rho_h\to \phi*\psi$ in $\scr E$.
+	
+	If $\psi\in\scr D$, then $(x,y)\mapsto \phi(x-y)\psi(y)$ is uniformly continuous with compact support.
+	Reasoning as above, we obtain $\rho_h\to \phi*\psi$ in $\scr D$.
 \end{proof}
 
 \begin{exercise}\label{ex67ea516c}
@@ -5554,12 +5573,27 @@ Notice that, if $u$ is a function, then
 	Show that $F_h\to F$ uniformly in $x$ as $h\to0$.
 \end{exercise}
 
+\begin{exercise}\label{ex67f3a281}
+%	[To do while listening to Paganini's Caprice No. 24].
+	Variation over Exercise~\ref{ex67ea5356}: 
+	Let $f:\R^n\times\R^n\to\C$ be a \sout{uniformly} continuous and integrable function.
+	Define $F:\R^n\to\C$ by 
+	\begin{equation}
+		F(x) = \int_{\R^n} f(x,z) \did z .
+	\end{equation}
+	For $h>0$ and $x\in\R^n$, define
+	\begin{equation}
+		F_h(x) = \sum_{z\in\Z^n} h^n f(x,hz) .
+	\end{equation}
+	Show that $F_h\to F$ uniformly \underline{on compact sets} in $x$ as $h\to0$.
+\end{exercise}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Smooth approximation of a distribution}\label{subs67df2a23}
 
-Let $\rho\in C^\infty_c(\R^n)$ be such that $\spt(\rho)=B(0,1)$, $0\le \rho\le 1$, and $\int\rho\did x = 1$.
+Let $\rho\in C^\infty_c(\R^n)$ be such that $\spt(\rho)=B(0,1)$, $0\le \rho\le 1$, $\check\rho=\rho$, and $\int\rho\did x = 1$.
 Define $\rho_\epsilon(x) = \rho(x/\epsilon)/\epsilon^n$.
 We call the family $\{\rho_\epsilon\}_{\epsilon>0}$ an \emph{approximation of the identity on $\R^n$}, or \emph{a family of mollifiers}.
 %The \emph{standard family of mollifiers} the one given by
@@ -5620,8 +5654,12 @@ where $k$ normalizes the integral.
 	For the second identity, 
 	\begin{align}
 	\lim_{\epsilon\to0} u*\rho_\epsilon[\phi]
-	&\overset{\eqref{eq67e28b61}}= \lim_{\epsilon\to0} ((u*\rho_\epsilon)*\phi)(0) \\
-	&\overset{\eqref{eq67e288dc}}= \lim_{\epsilon\to0} (u*(\rho_\epsilon*\phi))(0) \\
+	&\overset{\eqref{eq67e28b61}}= \lim_{\epsilon\to0} ((u*\rho_\epsilon)*\check\phi)(0) \\
+	&\overset{\eqref{eq67e288dc}}= \lim_{\epsilon\to0} (u*(\rho_\epsilon*\check\phi))(0) \\
+	[\text{because $\check\rho=\rho$}]
+	&= \lim_{\epsilon\to0} (u*(\check\rho_\epsilon*\check\phi))(0) \\
+	[\text{because $\check f*\check g = (f*g)^\vee$}]
+	&= \lim_{\epsilon\to0} (u*(\rho_\epsilon*\phi)^\vee)(0) \\
 	&\overset{\eqref{eq67e28b61}}= \lim_{\epsilon\to0} u[\rho_\epsilon*\phi] \\
 	&\overset{\eqref{eq67e28a4f}}= u[\phi] .
 	\end{align}
@@ -5769,12 +5807,13 @@ It remains to characterize the distributions $A\in\scr D'(\Omega)$ that belong t
 	so, if there is a continuous linear functional $E:\scr E(\Omega)\to\C$ whose restriction to $\scr D(\Omega)$ is $A$, then $E$ is uniquely determined by $A$.
 	
 	This is to say that the correct interpretation of the inclusion $\ic$ is:
-	every $A\in\scr D'(\Omega)$ with compact support extends uniquely to a continuous linear functional $\bar A:\scr E(\Omega)\to\C$.
+	{\it every $A\in\scr D'(\Omega)$ with compact support extends uniquely to a continuous linear functional $\bar A:\scr E(\Omega)\to\C$.}
 	
-	So, let $A\in\scr D'(\Omega)$ be with compact support.
+	Let $A\in\scr D'(\Omega)$ be with compact support.
 	Fix some $\psi\in C^\infty_c(\Omega)$ such that $\spt A \subset{\rm interior}\{\psi=1\}$, which exists because $\spt(A)$ is compact.
 	Define $A_\psi:\scr E(\Omega)\to\C$ by $A_\psi f = A[\psi f]$.
-	Notice that, firstly, $A_\psi\in\scr E'(\Omega)$.
+	Notice that, firstly, $A_\psi\in\scr E'(\Omega)$:
+	indeed, if $f_j\to f_\infty$ in $\scr E(\Omega)$, then $\psi f_j\to \psi f_\infty$ in $\scr D(\Omega)$, and thus $A_\psi[f_j] \to A_\psi[f_\infty]$ in $\C$.
 	
 	Moreover, if $\phi\in\scr D(\Omega)$, then $\spt((1-\psi)\phi) \cap\spt(A)=\emptyset$ and thus
 	$A[\phi] = A[\psi\phi + (1-\psi)\phi] = A[\psi\phi] = A_\psi[\phi]$.
@@ -5794,60 +5833,81 @@ It remains to characterize the distributions $A\in\scr D'(\Omega)$ that belong t
 	where $\psi\in C^\infty_c(\Omega)$ such that $\spt A \subset{\rm interior}\{\psi=1\}$.
 	It looks like this extension depends on the choice of $\psi$.
 	Does it?
+%	Is $A_\psi$ the extension of $A$ by continuation?
+%	Moreover, if $\{\phi_j\}_{j\in\N}\subset\scr D(\Omega)$ is a sequence converging in $\scr E(\Omega)$ to some $f\in\scr E(\Omega)$, is it true that $A[\phi_j]
 %	Show that the $A_\psi$ does not depend on the choice of $\psi$, directly.
+\end{exercise}
+
+\begin{exercise}\label{ex67f29a5b}
+	Show that all distributions in $\scr E'(\Omega)$ have finite order.
+	More precisely, if $u\in\scr E'(\Omega)$, then there are $N\in\N$ and $C\in\R$ such that, for every $f\in\scr E(\Omega)$,
+	\begin{equation}
+		|u[f]| \le C \|f\|_{C^N(\spt(u))} .
+	\end{equation}
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Convolution of distributions with compact support}
 We have started with the convolution $u*v$ of functions $u$ and $v$.
-We have extended this operation to convolution $u*v$ where $u\in\scr D'$ is a distribution and $v\in\scr D$ is a function.
-As it happens with the product, convolution is not defined for arbitrary distributions.
-The most general definition is of a convolution $u*v$ with $u,v\in\scr D'$ and {\it at least one of the distributions has compact support}.
-
+We have extended this operation to convolution $u*v$ where $u\in\scr D'$ is a distribution and $v\in\scr D$ is a smooth function with compact support.
+As it happens with the product, convolution is not defined for arbitrary pairs of distributions.
+However, we can still push our definition of convolution $u*v$ to the case when $u,v\in\scr D'$ and {\it at least one of the distributions has compact support}.
 This is done in three steps.
 
 \boxed{\textsc{Step 1:}}
 If $u\in\scr E'$ and $f\in\scr E$, then we define
-\begin{equation}
+\begin{equation}\label{eq67f21bf6}
 	u * f (x) = u[\tau_x\check f] ,
 \end{equation}
 exactly as we did for distributions in $\scr D'$.
 So, if $u\in\scr D'$ has compact support (i.e., $u\in\scr E'$), then $u*\phi$ is defined not only for $\phi\in\scr D = C^\infty_c(\R^n)$, but also for $\phi\in\scr E = C^\infty(\R^n)$.
 
-\begin{proposition}
-	If $u\in\scr E'$ and $f\in\scr E$, then $u*f\in\scr E$ and 
-	$\spt(u*f) \subset \spt(u) + \spt(f)$.
+\begin{proposition}\label{prop67f21c33}
+	If $u\in\scr E'$ and $f\in\scr E$, then $u*f\in\scr E$.
+	Moreover
+	\begin{align}
+		\label{eq67f298b5}
+		\spt(u*f) &\subset \spt(u) + \spt(f), \text{ and } \\
+		\label{eq67f29911}
+		\Diff^\alpha(u*f) &= u*(\Diff^\alpha f) = (\Diff^\alpha u)*f,
+		\qquad \forall\alpha\in\N^n .
+	\end{align} 
 	In particular, if $f\in\scr D$, then $u*f\in\scr D$.
 \end{proposition}
 \begin{proof}
-	\TODO
+	The proof is the same as for Proposition~\ref{prop67ea5631}.
+	In fact, I wonder if there is a way to merge the two proofs into one.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \boxed{\textsc{Step 2:}}
 We characterize continuous linear operators $\scr D\to\scr E$ that commute with translations.
 First of all, notice that, if $u\in\scr D'$, then $L:\phi\mapsto u*\phi$ is a linear function $\scr D\to\scr E$.
-Moreover, by~\eqref{eq67ebace9}, $L$ commute with translation, i.e., $L\circ\tau_v = \tau_v\circ L$ for all $v\in\R^n$.
+Moreover, by~\eqref{eq67ebace9}, $L$ commutes with translation, i.e., $L\circ\tau_v = \tau_v\circ L$ for all $v\in\R^n$.
 The next Lemma~\ref{lem67ebad94} shows that $L$ is in fact continuous.
 Theorem~\ref{thm67ebada4} will finally prove that all continuous linear operators $\scr D\to\scr E$ that commute with translations are of this form.
 
 \begin{lemma}\label{lem67ebad94}
 	If $\phi_j\to\phi_\infty$ in $\scr D$ and $u\in\scr D'$, 
 	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
-	
-	Similarly, if $\phi_j\to\phi_\infty$ in $\scr E$ and $u\in\scr E'$, 
-	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
+%	
+%	Similarly, if $\phi_j\to\phi_\infty$ in $\scr E$ and $u\in\scr E'$, 
+%	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
 \end{lemma}
 \begin{proof}
-	The proof of the second part is very similar to the proof of the first part,
-	so we will leave it as an exercise.
-	
+%	The proof of the second part is very similar to the proof of the first part,
+%	so we will leave it as an exercise.
+%	
 	Let $\phi_j\to\phi_\infty$ in $\scr D$.
 %	We can assume $\phi_\infty=0$: 
-	We need to show that $u*\phi_j\to u*\phi_\infty$ in $\scr E$,
+	We need to show that, if $\phi_j\to\phi_\infty$ in $\scr D$, then $u*\phi_j\to u*\phi_\infty$ in $\scr E$,
 	that is, $\Diff^\alpha(u*\phi_j)\to \Diff^\alpha(u*\phi_\infty)$ uniformly on compact sets, for every $\alpha\in\N^n$.
-	Since $\Diff^\alpha(u*\phi_j) = u*(\Diff^\alpha\phi_j)$ and since $\phi_j$ is an arbitrary sequence, we only need to show that convergence for $\alpha=0$.
+	In fact, since $\Diff^\alpha(u*\phi_j) = u*(\Diff^\alpha\phi_j)$ by~\eqref{eq67e28779}, 
+	we only need to show that, if $\phi_j\to\phi_\infty$ in $\scr D$, then $u*\phi_j\to u*\phi_\infty$ uniformly on compact sets.
+%	Since $\Diff^\alpha(u*\phi_j) = u*(\Diff^\alpha\phi_j)$ and since $\{\phi_j\}_{j\in\N}$ is an arbitrary sequence, we then conclude that,
+%	Since $\Diff^\alpha(u*\phi_j) = u*(\Diff^\alpha\phi_j)$ and since $\{\phi_j\}_{j\in\N}$ is an arbitrary sequence, we only need to show that convergence for $\alpha=0$.
 	
+	Let $\phi_j\to\phi_\infty$ in $\scr D$.
 	Fix a compact set $K\subset\R^n$.
 	Let $\tilde K\subset\R^n$ be a compact such that $\spt(\phi_j)\subset \tilde K$ for all $j$.
 	Notice that, if $x\in K$, then $x-y\in\tilde K$ if and only if $y\in K-\tilde K = \{a-b: a\in K,\ b\in\tilde K\}$.
@@ -5855,25 +5915,45 @@ Theorem~\ref{thm67ebada4} will finally prove that all continuous linear operator
 	then $\tau_x\check\phi$ is supported in $K-\tilde K$, which is compact.
 	
 	By Proposition~\ref{prop67defc54}, there are $C\in\R$ and $N\in\N$ such that $|u[\phi]| \le C\|\phi\|_{C^N}$ for all $\phi\in\scr D$ with $\spt(\phi)\subset K-\tilde K$.
-	Notice that, if $\phi$ is supported in $\tilde K$ and $x\in K$, then 
-	$\tau_x\check\phi(y) =  \phi(x-y) = 0$ if $x-y\notin \tilde K$, that is, $y\notin \tilde K - x$.
-	
+%	Notice that, if $\phi$ is supported in $\tilde K$ and $x\in K$, then 
+%	$\tau_x\check\phi(y) =  \phi(x-y) = 0$ if $x-y\notin \tilde K$, that is, $y\notin \tilde K - x$.
+%	
 	Then, for every $x\in K$,
 	\begin{align*}
 	|u*\phi_j(x) - u*\phi_\infty(x)|
 	&= |u[\tau_x(\check \phi_j)] - u[\tau_x(\check \phi_\infty)]| \\
-	&\le C \|\tau_x(\check \phi_j) - \tau_x(\check \phi_\infty)\|_{C^N} \\
+	&\le C \|\tau_x(\check \phi_j) - \tau_x(\check \phi_\infty)\|_{C^N} 
 	= C\| \phi_j - \phi_\infty\|_{C^n} .
 	\end{align*}
 	Therefore, $u*\phi_j\to u*\phi_\infty$ uniformly on $K$.
 %	$|u*\phi_j\to u(x)| = |u[\tau_x(\check \phi_j)]| \le C \|\tau_x(\check \phi_j)\|_{C^N} = C\|\phi_j\|_{C^n}$.
 %	Therefore, 
 \end{proof}
+\begin{lemma}\label{lem67f21e2a}
+	If $\phi_j\to\phi_\infty$ in $\scr E$ and $u\in\scr E'$, 
+	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
+\end{lemma}
+\begin{proof}
+	The proof is very similar to the proof of Lemma~\ref{lem67ebad94},
+	so we will leave it as an exercise, see Exercise~\ref{ex67f21e52}.
+\end{proof}
 
-\begin{exercise}
+\begin{exercise}\label{ex67f21e52}
 	Show that, if $\phi_j\to\phi_\infty$ in $\scr E$ and $u\in\scr E'$, 
 	then $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
 \end{exercise}
+
+\begin{lemma}\label{lem67f2202d}
+	If $\phi_j\to\phi_\infty$ in $\scr D$ and $u\in\scr E'$,
+	then $u*\phi_j\to u*\phi_\infty$ in $\scr D$.
+\end{lemma}
+\begin{proof}
+	If $\phi_j\to\phi_\infty$ in $\scr D$, then there is a compact $K\subset\R^n$ such that $\spt(\phi_j)\subset K$ for all $j$ and $\Diff^\alpha\phi_j\to\Diff^\alpha\phi_\infty$ uniformly on $K$ for all $\alpha\in\N^n$.
+	Then $\spt(u*\phi_j)\subset \spt(u)+K = \tilde K$ by Proposition~\ref{prop67f21c33}, for all $j$.
+	By Lemma~\ref{lem67f21e2a}, $u*\phi_j\to u*\phi_\infty$ in $\scr E$.
+	In particular, $\Diff^\alpha(u*\phi_j)\to \Diff^\alpha(u*\phi_\infty)$ uniformly on $\tilde K$ for all $\alpha\in\N^n$.
+	This shows that $u*\phi_j\to u*\phi_\infty$ in $\scr D$.
+\end{proof}
 
 \begin{theorem}[{\cite[Thm.4.2.1]{MR717035}}]\label{thm67ebada4}
 	Let $L$ be a linear map from $\scr D = C^\infty_c(\R^n)$ to $C^0(\R^n)$.
@@ -5882,7 +5962,7 @@ Theorem~\ref{thm67ebada4} will finally prove that all continuous linear operator
 	\item $L$ is (sequentially) continuous, i.e., if $\phi_j\to\phi_\infty$ in $\scr D$ then $L\phi_j\to L\phi_\infty$ in $C^0(\R^n)$,
 		and commutes with translations, i.e., $L[\tau_x \phi] = \tau_x L\phi$ for all $x\in\R^n$;
 	\item
-	there is $u\in \scr D'$ such that $L\phi = u*\phi$.
+	there is $u\in \scr D'$ such that $L\phi = u*\phi$ for all $\phi\in\scr D$.
 	\end{enumerate}
 	Moreover, if the above conditions are met, then 
 	the distribution $u$ is unique,
@@ -5890,10 +5970,27 @@ Theorem~\ref{thm67ebada4} will finally prove that all continuous linear operator
 \end{theorem}
 \begin{proof}
 	$(1)\THEN(2)$:
-	\TODO
+	Define $u:\scr D\to\R$ by $u[\phi] = L[\check\phi](0)$.
+	Since $u$ is the composition of the continuous linear functions $\phi\mapsto\check\phi$, $\psi\mapsto L[\psi]$, $f\mapsto f(0)$, 
+	then $u$ is linear and continuous, that is, $u\in\scr D'$.
+	Moreover,
+	\begin{align*}
+		u*\phi(x) 
+		&= u[\tau_x\check\phi] \\
+		&\overset{\eqref{eq67f29d18}}= u[(\tau_{-x}\phi)^\vee] \\
+		&= L[((\tau_{-x}\phi)^\vee)^\vee](0) \\
+		&= L[\tau_{-x}\phi](0) \\
+		&= \tau_{-x}L[\phi](0) \\
+		&= L[\phi](x) .
+	\end{align*}
+	For the uniqueness, notice that, if $u_1,u_2\in\scr D'$ are such that $L\phi=u_1*\phi=u_2*\phi$ for all $\phi\in\scr D$,
+	then, for all $\phi\in\scr D$, $u_1[\phi] = u_1*\phi(0) = u_2*\phi(0) = u_2[\phi]$,
+	that is, $u_1=u_2$.
 	
 	$(2)\THEN(1)$:
-	We already know.
+	By Proposition~\ref{prop67ea5631}, we know that $\phi\mapsto u*\phi$ is a linear map $\scr D\to\scr E$.
+	Next, by Lemma~\ref{lem67ebad94}, we know that this map is continuous.
+	Finally, the fact that this map commutes with translations has been proven in~\eqref{eq67ebace9} (which was an exercise).
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -5904,17 +6001,24 @@ If $u_1,u_2\in\scr D'$ are distributions, one of which has compact support, then
 	L[\phi] = 
 	u_1 * (u_2*\phi) 
 \end{equation}
-is a well defined element of $\scr E$.
+is a well defined element of $\scr E$ and the map $\phi\mapsto L\phi$ is continuous.
 Indeed, we have two cases:
 \begin{enumerate}
-\item if $u_1\in\scr E'$, then we know that $u_2*\phi\in \scr E$ and thus~\eqref{eq67ebaf4c} is well defined;
-\item if $u_2\in\scr E'$, then $u_2*\phi\in\scr D$ and thus~\eqref{eq67ebaf4c} is well defined.
+\item 
+	If $u_1\in\scr E'$, then $u_2\in\scr D'$; so, $u_2*\phi$ is defined by~\eqref{eq67e28487}, $u_2*\phi\in\scr E$ by Proposition~\ref{prop67ea5631}, and thus~\eqref{eq67ebaf4c} is defined by~\eqref{eq67f21bf6}.
+	Moreover, if $\phi_j\to\phi_\infty$ in $\scr D(\Omega)$, then $u_2*\phi_j\to u_2*\phi_\infty$ in $\scr E$ by Lemma~\ref{lem67ebad94},
+	and thus $u_1 * (u_2*\phi_j) \to u_1 * (u_2*\phi_\infty)$ in $\scr E$ by Lemma~\ref{lem67f21e2a}.
+\item 
+	If $u_2\in\scr E'$, then $u_1\in\scr D'$; so, $u_2*\phi$ is defined by~\eqref{eq67f21bf6} and $u_2*\phi\in\scr D$ by Proposition~\ref{prop67f21c33}, and thus~\eqref{eq67ebaf4c} is defined by~\eqref{eq67e28487}.
+	Moreover, if $\phi_j\to\phi_\infty$ in $\scr D(\Omega)$, then $u_2*\phi_j\to u_2*\phi_\infty$ in $\scr D$ by Lemma~\ref{lem67f2202d},
+	and thus $u_1 * (u_2*\phi_j) \to u_1 * (u_2*\phi_\infty)$ in $\scr E$ by Lemma~\ref{lem67ebad94}.
 \end{enumerate}
-Moreover, thanks to Lemma~\ref{lem67ebad94}, $\phi\mapsto L\phi$ is continuous.
-By Theorem~\ref{thm67ebada4}, there is a unique $u\in\scr D'$ such that $L\phi = u*\phi$ for all $\phi\in\scr D$.
-We set
+%Moreover, thanks to Lemma~\ref{lem67ebad94}, $\phi\mapsto L\phi$ is continuous.
+We conclude that, by Theorem~\ref{thm67ebada4}, there is a unique $u\in\scr D'$ such that $L\phi = u*\phi$ for all $\phi\in\scr D$.
+So, we have the definition:
+If $u_1,u_2\in\scr D'$ one of which has compact support, then
 \begin{equation}
-	u = u_1 * u_2
+	u = u_1 * u_2 \in\scr D'
 	\quad\IFF\quad
 	\forall\phi\in\scr D,\ 
 	u*\phi = u_1 * (u_2*\phi) .
@@ -5923,7 +6027,7 @@ We set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Properties of convolutions}\label{subs67ebb2f1}
 We summarize the properties of convolutions.
-\begin{proposition}
+\begin{proposition}\label{prop67f2a0bd}
 	\begin{enumerate}
 	\item
 	If $u_1,u_2\in\scr D'$, one of which has compact support, 
@@ -5946,11 +6050,213 @@ We summarize the properties of convolutions.
 	then $u_1 * u_2 \in\scr E$.
 	\end{enumerate}
 \end{proposition}
+\begin{proof}
+	The proof is left as an exercise.
+	I only write the proof of $\spt(u_1*u_2) \subset \spt(u_1) + \spt(u_2)$.
+	
+	Since convolution is commutative, we can assume $u_2\in\scr E'$.
+	Take $\phi\in\scr D$ such that $\spt(\phi) \cap (\spt(u_1) + \spt(u_2)) = \emptyset$.
+	Then $(u_1*u_2)[\phi] 
+	\overset{\eqref{eq67e28b61}}= (u_1*u_2)*\check\phi(0)
+	= u_1*(u_2*\check\phi)(0)$
+	where $\spt(u_2*\check\phi) \overset{\eqref{eq67f2b0f5}}\subset \spt(u_2) + \spt(\check\phi)  = \spt(u_2) -\spt(\phi)$.
+%	Therefore, $\spt(u_2*\check\phi)\cap \spt(u_1) \subset \spt(u_2) -\spt(\phi)\cap \spt(u_1) = \emptyset$.
+	It follows that $\spt(u_1*(u_2*\check\phi)) \overset{\eqref{eq67f2b0f5}}\subset \spt(u_1) + \spt(u_2*\check\phi) \subset \spt(u_1) + \spt(u_2) - \spt(\phi)$.
+	Since $\spt(\phi) \cap (\spt(u_1) + \spt(u_2)) = \emptyset$, then $0\notin \spt(u_1*(u_2*\check\phi))$, that is $u_1*(u_2*\check\phi)(0)=0$.
+\end{proof}
+
+\begin{exercise}
+	Prove Proposition~\ref{prop67f2a0bd}.
+	Some parts have already been proven, others instead have been proven only partially.
+	Put all the pieces together.
+\end{exercise}
 
 \begin{exercise}
 	Show that $\delta_0*u = u$ for every $u\in\scr D'$.
 	What is $\delta_v*u$?
 \end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Singular support}
+\newcommand{\singspt}{\operatorname{singSpt}}
+\newcommand{\interior}{\operatorname{int}}
+The singular support of a distribution $u\in\scr D'(\Omega)$, denote by $\singspt(u)$,
+is the set defined by:
+\begin{equation}
+	\Omega\setminus \singspt(u) 
+	= \bigcup \{U\subset\Omega\text{ open, such that }u|_V\in C^\infty(V)\} .
+\end{equation}
+
+\begin{lemma}
+	Let $u\in\scr D'(\Omega)$.
+	The restriction of $u$ to $\Omega\setminus\singspt(u)$ is a smooth function.
+\end{lemma}
+
+\begin{exercise}
+	Show that $\singspt(u) \subset \spt(u)$.
+\end{exercise}
+
+Saying that a distribution $u$ is smooth is equivalent to say that $\singspt(u)=\emptyset$.
+The smoothness statements for convolutions in Proposition~\ref{prop67ea5631} and Proposition~\ref{prop67f21c33}, generalize in the following statement:
+
+\begin{proposition}\label{prop67f2a337}
+	If $u,v\in\scr D'$, one of which has compact support, then
+	\begin{equation}\label{eq67f2b99a}
+		\singspt(u*v) \subset \singspt(u) + \singspt(v) .
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	Let $A,B\subset\R^n$ open such that $\singspt(u)\subset A$ and $\singspt(v)\subset B$.
+	Then there are smooth functions $a,b\in C^\infty(\R^n)$ such that 
+	\begin{align*}
+	 	&\singspt(u) \subset\interior\{a=1\} \subset\spt(a) \subset A ,\\
+		&\singspt(v) \subset\interior\{b=1\} \subset\spt(b) \subset B .
+	\end{align*}
+	Then 
+	\begin{equation}
+		u*v
+		= ((au)*(bv)) + ((1-au)*(bv)) + ((au)*(1-bv)) + ((1-au)*(1-bv)) .
+	\end{equation}
+	Notice that all these convolutions are well defined.
+	Moreover, in all but the first one, one of the factors of the convolutions is a smooth function.
+	Hence,
+	\begin{equation}
+		\singspt(u*v) 
+		\subset \singspt((au)*(bv))
+		\subset \spt((au)*(bv))
+		\subset \spt(au) + \spt(bv) 
+		\subset A + B .
+	\end{equation}
+	Since $A$ and $B$ are arbitrary, we obtain~\eqref{eq67f2b99a}.
+\end{proof}
+
+\begin{exercise}
+	Show that, if $E\in\scr D'$ is such that $\singspt(E)\subset\{0\}$, then $\singspt(E*u) \subset \singspt(u)$ for all $u$ that can be convoluted with $E$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Linear differential operators with constant coefficients}
+A \emph{linear differential operator with constant coefficients of order $m\in\N$}
+is a differential operator of the form
+\begin{equation}
+	P = \sum_{|\alpha|\le m} c_\alpha \Diff^\alpha ,
+\end{equation} 
+with some $\{c_\alpha\}_{\alpha}\subset\C$.
+Our four PDE are of this type:
+\begin{equation}
+	\de_t - b \cdot \grad,\qquad
+	-\laplacian, \qquad
+	\de_t-\laplacian, \qquad
+	\de_t^2-\laplacian.
+\end{equation}
+
+Such a differential operator defines a linear operator $P:\scr D'\to\scr D'$.
+Suddenly, we can try to solve in $u\in\scr D'$ the equation
+\begin{equation}
+	Pu = f
+\end{equation}
+for some $f\in\scr D'$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fundamental solution}
+A \emph{fundamental solution} of a linear differential operator with constant coefficients $P$ is a distribution $E\in\scr D'$ such that
+\begin{equation}
+	PE = \delta_0 ,
+\end{equation}
+where $\delta_0$ is the Dirac delta centered at $0$.
+
+\begin{exercise}
+	Show that the function $\Phi:\R^n\setminus\{0\}\to\R$,
+	\begin{equation}%\label{eq67b9d6b9}
+		\Phi(x) = 
+		\begin{cases}
+		-\frac{1}{2\pi} \log(|x|) & \text{ if }n=2 , \\
+		\frac1{n(n-2)\omega_n } \frac1{|x|^{n-2}} & \text{ if }n\ge 3 ,
+		\end{cases}
+	\end{equation}
+	where $\omega_n $ is the volume of the unit ball in $\R^n$,
+	is a fundamental solution of $P=-\laplacian$.
+\end{exercise}
+
+\begin{exercise}
+	Show that the function 
+	$\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
+	\begin{equation}\label{eq67c3022e}
+		\Phi(x,t) = \begin{cases}
+		\frac{1}{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right)
+			& \text{ for $x\in\R^n$ and $t>0$,} \\
+		0 & \text{otherwise, i.e., }(x,t)\in(\R^n\times(-\infty,0])\setminus\{(0,0)\} ,
+		\end{cases}
+	\end{equation}
+	is a fundamental solution of $P=\de_t-\laplacian$.
+\end{exercise}
+
+\begin{exercise}
+	Find a fundamental solution for the wave operator $P = \waveop = \de_t^2-\laplacian$
+	in dimension 1, 2 and 3.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Use of fundamental solutions}
+A fundamental solution is useful for the following very simple reason.
+If $P$ is a differential operator and $E\in\scr D'$ is such that $PE=\delta_0$, then, 
+for every $f\in\scr E'$,
+\begin{equation}
+	f = f*\delta_0 = f*PE = P(f*E) .
+\end{equation}
+So, $f*E$ is a solution to $Pu=f$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Hypoellipticity}
+A linear operator $P$ is \emph{hypoelliptic} if, for every $\Omega\subset \R^n$ open and  $u\in\scr D'(\Omega)$, 
+$Pu\in C^\infty(\Omega)$ implies $u\in C^\infty(\Omega)$.
+
+\begin{theorem}
+	Let $P$ be a linear differential operator with constant coefficients.
+	Then the following are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+	\item Some fundamental solution $E$ of $P$ has $\singspt(E)\subset\{0\}$.
+	\item Every fundamental solution $E$ of $P$ has $\singspt(E)\subset\{0\}$.
+	\item $P$ is hypoelliptic.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	The implications $(iii)\THEN(ii)\THEN(i)$ are clear.
+	We need to show $(i)\THEN(iii)$.
+	Let $\Omega\subset\R^n$ open and $u\in\scr D'(\Omega)$ with $Pu\in C^\infty(\Omega)$.
+	Fix $x\in\Omega$ and let $\psi\in C^\infty_c(\Omega)$ such that $x\in\interior\{\psi=1\}$.
+	Then $\psi u\in\scr E'$.
+	Moreover, by the Generalized Leibniz Rule~\eqref{eq67f2c2e1}, 
+	$P(\psi u) = \psi Pu + R$ where $\spt(R) \subset\spt(\Diff \psi)$.
+	So
+	\begin{equation}
+		\psi u = \delta_0 *(\psi u) = (PE) * (\psi u) = E*(P(\psi u))
+		= E*(\psi Pu) + E*R .
+	\end{equation}
+	and
+	\begin{align*}
+		\singspt(\psi u) 
+		&\subset \singspt(E*(\psi Pu)) \cup \singspt(E*R) \\
+		&\subset \emptyset \cup (\singspt(E) + \singspt(R)) \\
+		&\subset \spt(R) 
+		\subset \spt(\Diff \psi) .
+	\end{align*}
+	Since $x\notin\spt(\Diff \psi)$, we obtain that $x\notin \singspt(\psi u)$.
+	In other words, $\psi u$ is smooth in a neighborhood of $x$.
+	Since $\psi$ is 1 in a neighborhood of $x$, we get that $u$ is smooth in a neighborhood of $x$.
+	We conclude that $u$ is smooth in $x$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
