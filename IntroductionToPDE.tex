@@ -158,6 +158,8 @@ urlcolor=Black}
 \newcommand{\laplacian}{\triangle}
 \newcommand{\grad}{\nabla}
 \newcommand{\trace}{\mathrm{trace}}
+\newcommand{\singspt}{\operatorname{singSpt}}
+\newcommand{\interior}{\operatorname{int}}
 
 \newcommand{\TODO}{{\bf\color{Red}TODO}}
 \newcommand{\angryface}{}
@@ -241,8 +243,6 @@ Other references are:
 \begin{itemize}
 \item \fullcite{MR2597943}
 \item \fullcite{MR1357411}
-\item \fullcite{MR717035}
-\item \fullcite{MR1157815}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2065,7 +2065,7 @@ C^2_b(\R^n) = \{u\in C^2(\R^n): \|u\|_{L^\infty}<\infty \} .
 		\qquad
 		u(x) \le C u(y) .
 	\end{equation}
-\end{theorem}
+\end{theorem}%]
 \begin{proof}
 	Let $r=\frac14\dist(V,\de U)$.
 	If $x,y\in V$ are such that $|x-y|<r$, then, by the Mean-Value Theorem~\ref{teo67bac805},
@@ -2538,13 +2538,13 @@ Then $\tilde u\in C^2(O^{-1}(U-b)\times (I-\tau))$ and
 
 The \emph{fundamental solution for the heat equation} is the function 
 $\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
-\begin{equation}\label{eq67c3022e}
+\begin{equation}\label{eq67c3022e} %[
 	\Phi(x,t) = \begin{cases}
 	\frac{1}{(4\pi t)^{n/2}} \exp\left( -\frac{|x|^2}{4t} \right)
 		& \text{ for $x\in\R^n$ and $t>0$,} \\
 	0 & \text{otherwise, i.e., }(x,t)\in(\R^n\times(-\infty,0])\setminus\{(0,0)\} .
 	\end{cases}
-\end{equation}
+\end{equation}%)
 
 \begin{exercise}
 	Find the formula for the fundamental solution for the heat equation by yourself in the following way:
@@ -2697,7 +2697,8 @@ $\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
 			\lim_{\substack{(x,t)\to(\hat x,0) \\ x\in\R^n,t>0}} u(x,t) = g(x) .
 		\end{equation}
 	\end{enumerate}
-	In particular, $u$ has a continuous extension $u\in C^0(\R^n\times [0,+\infty))\cap C^\infty(\R^n\times (0,+\infty))$ and
+	%(
+	In particular, $u$ has a continuous extension $u\in C^0(\R^n\times [0,+\infty))\cap C^\infty(\R^n\times (0,+\infty))$ and ]
 	\begin{equation}\label{eq67c30ca6}
 	\begin{cases}
 		\de_t u - \laplacian u = 0 & \text{ in }\R^n\times (0,+\infty) , \\
@@ -5224,7 +5225,7 @@ $\spt(\delta_p) = \{p\}$.
 
 I don't think we will ever use the following statement, but it is important to know it.
 
-\begin{proposition}
+\begin{proposition}\label{prop67fe6632}
 	Suppose $A\in\scr D'(\Omega)$, $p\in\Omega$ and $\spt(A) = \{p\}$.
 	Then there is $N\in\N$ and constants $c_\alpha\in\C$ such that
 	\begin{equation}\label{eq67e273a7}
@@ -5327,8 +5328,8 @@ Notice that, as soon as $y\mapsto f(y) g(x-y)$ is integrable, then not only $f*g
 \begin{exercise}
 	Show that, if $f\in L^1(\R^n)$ and $g\in L^\infty(\R^n)$, then $f*g(x)$ is well defined for all $x\in\R^n$ and in fact $f*g\in C^0_b(\R^n)$.
 \end{exercise}
-\begin{exercise}[Young's inequality]
-	Show that, if $f\in L^1(\R^n)$ and $g\in L^{p}(\R^n)$,
+\begin{exercise}[Young's inequality]\label{ex67fbf157}
+	Show that, if $f\in L^1(\R^n)$ and $g\in L^{p}(\R^n)$ with $p\in[1,\infty]$,
 	then $f*g\in L^p(\R^n)$ and $\|f*g\|_{L^p} \le \|f\|_{L^1} \|g\|_{L^p}$.
 	
 	{\it Hint.}
@@ -5797,7 +5798,20 @@ It remains to characterize the distributions $A\in\scr D'(\Omega)$ that belong t
 \end{proposition}
 \begin{proof}
 	\ci
-	We have shown this inclusion in~\ref{subs67eb9b4b}.
+	From~\ref{subs67eb9b4b}, we know that $\scr E'(\Omega)\subset\scr D'(\Omega)$.
+	We need to show that, if $A\in\scr E'(\Omega)$, then $\spt(A)$ is compact.
+	Arguing by contradiction, suppose this is not true, that is, that there is $A\in\scr E'(\Omega)$ with $\spt(A)$ not compact.
+	Let $\{K_j\}_{j\in\N}$ be a countable increasing sequence of compact sets $K_j\subset\Omega$ 
+	such that $\Omega = \bigcup_{j\in\N} K_j$.
+	Since $\spt(A)$ is not compact, then, for every $j\in\N$ there is $\phi_j\in\scr D(\Omega)$ with $\spt(\phi_j)\cap K_j=\emptyset$ and $A[\phi_j]=1$.
+
+	Notice that $\phi_j\to0$ in $\scr E(\Omega)$:
+	indeed, if $K\subset\Omega$ is compact, then there is $k\in\N$ such that $K\subset K_k$ and thus $\phi_j|_K=0$ for all $j>k$;
+	hence, for every $K\subset\Omega$ compact and every $N\in\N$, 
+	$\lim_{j\to\infty} p_{N,K}(\phi_j)= 0$.
+	
+	But we have assumed that $A\in\scr E'(\Omega)$, and therefore we should have $\lim_{j\to\infty} A[\phi_j] = 0$, in contradiction with $A[\phi_j]=1$ for all $j$.
+	We conclude that $A$ must have compact support.
 	
 	\ic
 	This inclusion does not make sense when taken literally:
@@ -6078,8 +6092,6 @@ We summarize the properties of convolutions.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Singular support}
-\newcommand{\singspt}{\operatorname{singSpt}}
-\newcommand{\interior}{\operatorname{int}}
 The singular support of a distribution $u\in\scr D'(\Omega)$, denote by $\singspt(u)$,
 is the set defined by:
 \begin{equation}
@@ -6178,7 +6190,7 @@ where $\delta_0$ is the Dirac delta centered at $0$.
 	is a fundamental solution of $P=-\laplacian$.
 \end{exercise}
 
-\begin{exercise}
+\begin{exercise} %(
 	Show that the function 
 	$\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
 	\begin{equation}\label{eq67c3022e}
@@ -6189,7 +6201,7 @@ where $\delta_0$ is the Dirac delta centered at $0$.
 		\end{cases}
 	\end{equation}
 	is a fundamental solution of $P=\de_t-\laplacian$.
-\end{exercise}
+\end{exercise}%)
 
 \begin{exercise}
 	Find a fundamental solution for the wave operator $P = \waveop = \de_t^2-\laplacian$
@@ -6247,14 +6259,615 @@ $Pu\in C^\infty(\Omega)$ implies $u\in C^\infty(\Omega)$.
 	We conclude that $u$ is smooth in $x$.
 \end{proof}
 
+•
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\TODO}
+
+\begin{itemize}
+%\item	Definition of $u*v$ when one of them has compact support.
+%\item	Singular support
+%\item	singular support of $u*v$
+%\item	fundamental solution
+%\item	regularity of solutinos with fundamental solution.
+%\item	ippoellitticità
+%\item	Examples: laplace, heat, wave operators.
+\item	extra: kernel theorem, convolution operators, existence of fundamental solution
+\end{itemize}
 
 
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Schwartz distributions and Fourier transform}\label{sec67e28d5a}
+
+\subsection{Schwartz test functions}
+The \emph{Schwartz space} $\scr S$ of \emph{Schwartz functions} is the space of functions $f:\R^n\to\C$ that are smooth and such that, for every $\alpha\in\N^n$ and every $N\in\N$ there exists $C_{\alpha,N}$ with
+\begin{equation}\label{eq67f2c68b}
+	|\Diff^\alpha f(x)| \le C_{\alpha,N} (1+|x|)^{-N} ,
+	\qquad\forall x\in\R^n .
+\end{equation}
+In other words, a smooth function $f$ belongs to $\scr S$ if $f$ and all its derivatives decrease at infinity faster than any (inverse of) polynomial.
+An example is $f(x) = \exp(-|x|^2)$.
+
+The condition~\eqref{eq67f2c68b} can be expressed in different ways.
+For instance, one can require the upper bound 
+$|\Diff^\alpha f(x)| \le C_{\alpha,N} (1+|x|^2)^{-N/2}$,
+or $|\Diff^\alpha f(x)| \le C_{\alpha,N} (1+|x|^2)^{-N}$.
+
+Another way to express the condition~\eqref{eq67f2c68b} is as follows:
+a function $f\in C^\infty(\R^n)$ belongs to $\scr S$ if and only if, for every $\alpha,\beta\in\N^n$, the seminorms
+\begin{equation}
+	p_{\alpha,\beta}(f) = \sup_{x\in\R^n} |x^\alpha\Diff^\beta f(x)| 
+\end{equation}
+are finite.
+An equivalent family of seminorms is
+\begin{equation}
+	p_{\alpha,N}(f) = \sup_{x\in\R^n} (1+|x|)^N |\Diff^\alpha f(x)| .
+\end{equation}
+
+We endow $\scr S$ with the family of seminorms $\{p_{\alpha,\beta}\}_{\alpha,\beta\in\N^n}$, so that $\scr S$ becomes a Fréchet space.
+This means in particular that convergence in $\scr S$ is defined as follows:
+\begin{equation}\label{eq67fbfa93}
+	f_j\to f_\infty \text{ in }\scr S
+	\quad\IFF\quad
+	\forall\alpha,\beta\in\N^n\ 
+		\lim_{j\to\infty}p_{\alpha,\beta}(f_j-f_\infty) =0 .
+\end{equation}
+
+Notice that, set-wise,
+\begin{equation}
+	\scr D \subset \scr S \subset \scr E .
+\end{equation}
+As usual, one can check that these embeddings are continuous.
+
+\begin{exercise}
+	Show that $\scr S\subset L^1$.
+	
+	{\it Hint:}
+	Use~\eqref{eq67f2c68b} for $N$ large enough.
+\end{exercise}
+
+\begin{exercise}
+	Show that, if $f_j\to f_\infty$ in $\scr S$, then, for every $\alpha\in\N^n$, $\Diff^\alpha f_j\to\Diff^\alpha f_\infty$ in $L^1(\R^n)$.
+	
+	{\it Hint:}
+	Take first $\alpha=0$. 
+	Up to substituting $f_j$ with $f_j-f_\infty$, we can also assume $f_\infty=0$.
+	So we need to show that, if $f_j\to0$ in $\scr S$, then $f_j\to 0$ in $L^1(\R^n)$.
+	The convergence $f_j\to0$ in $\scr S$ implies that, for every $N>0$ and every $\epsilon>0$, there is $J\in\N$ such that $|f_j(x)| (1+|x|)^N < \epsilon$ for all $x\in\R^n$ and all $j>J$.
+\end{exercise}
+
+\begin{exercise}\label{ex67fc0379}%( 
+	Define $g_\epsilon:\R^n\to[0,+\infty)$ by
+	\begin{equation}
+		g_\epsilon(z) = \frac1{\epsilon^n} e^{-\pi|z|^2/\epsilon^2} = \frac1{\epsilon^n}  \exp(-\pi|z|^2/\epsilon^2) .
+	\end{equation}
+	Show that, if $f\in\scr S$, then $f*g_\epsilon\to f$ in $\scr S$ as $\epsilon\to0$.
+	
+	{\it Hint:} Go back to the proof of the first statement in Proposition~\ref{prop67e28cab}.
+	The now $g_\epsilon$ does not have compact support, but $\int_{\R^n\setminus B(0,1)} g_\epsilon(x)\did x$ is arbitrarily small as $\epsilon\to0$.
+\end{exercise}%]]
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fourier transform}
+For $u\in L^1(\R^n)$ and $x\in\R^n$, define the \emph{Fourier transform}
+\begin{equation}\label{eq67fbe754}
+	\hat u (\xi) = \scr F(u)(\xi) 
+	= %\frac1{(2\pi i)^n} 
+	\int_{\R^n} e^{-2\pi i x\cdot \xi} u(x) \did x .
+\end{equation}
+Since $|e^{-2\pi i x\cdot \xi} u(x)|\le |u(x)|$, we readily have that $\hat u(x)$ is well defined for every $x\in\R^n$ and that
+\begin{equation}\label{eq67fbf439}
+	\|\hat u\|_{L^{\infty}} \le \| u \|_{L^1} .
+\end{equation}
+In particular, we have that, if $u_j\to u_\infty$ in $L^1$, then $\hat u_j\to \hat u_\infty$ uniformly on $\R^n$.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Literature on the Fourier transform}
+There are a lot of resources on the Fourier transforms.
+We follow in particular these three:
+\begin{enumerate}
+\item the short account in Section 0.D, page 14, in \fullcite{MR1357411}; % Folland
+\item Chapter VII in \fullcite{MR717035}; % Hörmander
+\item Chapter 7 in \fullcite{MR1157815}.% Rudin 
+\end{enumerate}
+
+Be aware that the Fourier transform has slightly different definitions in the literature.
+Beside our formula~\eqref{eq67fbe754}, there are also
+\begin{gather*}
+% 	\int_{\R^n} e^{2\pi i x\cdot \xi} u(x) \did x , \\
+	\int_{\R^n} e^{-i x\cdot \xi} u(x) \did x , \\
+	\frac1{(2\pi)^{n/2}}\int_{\R^n} e^{-2\pi i x\cdot \xi} u(x) \did x .
+\end{gather*}
+These differences will lead to differences in the formulas, usually in the multiplicative constants.
+It is good to do the proofs with one formula, 
+but also to try the others.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{First properties of the Fourier transform}
+
+\begin{exercise}
+	Prove the following properties:
+	\begin{enumerate}
+	\item
+	If $u\in L^1(\R^n)$, $a\in\R^n$, and $u_a(x) = u(x+a)$
+	then $\scr F(u_a)(\xi) = e^{2\pi i a\cdot \xi} \scr F(u)(\xi)$.
+	\item
+	If $u\in L^1(\R^n)$, $T:\R^n\to\R^n$ is linear and invertible, 
+	then 
+	\begin{equation}\label{eq67fccb0f}
+		\scr F(u\circ T)(\xi) = |\det T|^{-1} \scr F(u)((T^{-1})^*\xi) .
+	\end{equation}
+	\item
+	If $T$ is a rotation of $\R^n$, then $\scr F(u\circ T) = \scr F(u)\circ T$.
+	\end{enumerate}
+	{\it Hint:} See \cite[Proposition (0.21)]{MR1357411}
+\end{exercise}
+
+\begin{exercise}
+	Compute $\scr F(\bar u)$ in terms of $\scr F(u)$.
+	(Here $\bar\cdot$ denotes the complex conjugate, that is, for $x,y\in\R$, $ \overline{x+iy} = x-iy$.)
+\end{exercise}
+
+\begin{exercise}
+	Compute $\scr F(u(-x))$ in terms of $\scr F(u)$.
+\end{exercise}
+
+\begin{exercise}\label{ex67fc118a}
+	Fix $f\in\scr S$ and define $g(x) = \overline{f(-x)}$.
+	Show that $\hat g (\xi) = \overline{\hat f(\xi)}$.
+\end{exercise}
+
+\begin{exercise}
+	Compute the Fourier transform of the function 
+	\begin{equation}
+		u(x) = A e^{-a|x|^2} ,
+	\end{equation}
+	for every $A\in\C$ and $a>0$.
+	
+	{\it Solution:}
+	Let's start with $n=1$, $A=1$ and $a=\pi$, that is, $u(x) = e^{-\pi x^2}$.
+	Then, for $\xi\in\R$,
+	\begin{align}
+		\hat u(\xi)
+		&= \int_\R e^{-2\pi i\xi x} e^{-\pi x^2} \did x
+		= \int_\R e^{-2\pi i\xi x - \pi x^2} \did x .
+	\end{align}
+	Since $(x+i\xi)^2 = x^2-\xi^2 + 2ix\xi$, then 
+	$-2\pi i\xi x - \pi x^2 
+	= -\pi (x^2 + 2ix\xi) 
+	= -\pi((x+i\xi)^2 + \xi^2)$ and thus
+	\begin{align}
+		\hat u(\xi)
+		= \int_\R e^{-\pi((x+i\xi)^2 + \xi^2)} \did x
+		= e^{-\pi\xi^2} \int_\R e^{-\pi(x+i\xi)^2} \did x .
+	\end{align}
+	Now we see that we are integrating the holomorphic function $f(z) = e^{-\pi z^2}$ along the curve $\gamma(t) = t+i\xi$.
+	Applying Cauchy's theorem, we can integrate along the other curve $\eta(t) = t$, and thus 
+	\begin{align}
+		\hat u(\xi) 
+		= e^{-\pi\xi^2} \int_\R e^{-\pi x^2} \did x
+		= e^{-\pi\xi^2} ,
+	\end{align}
+	because $\int_\R e^{-\pi x^2} \did x = 1$.
+	So, $\hat u = u$, or $\scr F(u)=u$.
+	
+	We extend this result to $\R^n$ for $n\ge1$: 
+	\begin{align}
+		\scr F(e^{-\pi|x|^2})(\xi) 
+		&= \int_{\R^n} e^{-2\pi i\xi\cdot x} e^{-\pi|x|^2} \did x \\
+		&= \int_{\R^n} e^{-2\pi i \sum_j\xi_jx_j - \pi \sum_j x_j^2} \did x \\
+		&= \prod_{j=1}^n \int_\R e^{-2\pi i \xi_jx_j - \pi  x_j^2} \did x_j \\
+		&= \prod_{j=1}^n e^{-\pi\xi_j^2}
+		= e^{-\pi|\xi|^2} .
+	\end{align}
+	Again, we have,
+	\begin{equation}
+		\scr F(e^{-\pi|x|^2} ) = e^{-\pi|\xi|^2} ,
+	\end{equation}
+	that is, the function $u(x) = e^{-\pi|x|^2}$ is a fixed point of $\scr F:\scr S(\R^n)\to\scr S(\R^n)$.
+	
+	We now go back to the general $u:\R^n\to\R$, $u(x) = Ae^{-a|x|^2}$.
+	By linearity of $\scr F$, we have $\scr F(Ae^{-a|x|^2}) = A \scr F(e^{-a|x|^2})$.
+	We apply~\eqref{eq67fccb0f} with $Tx = \sqrt{a/\pi}x$, so that 
+	\begin{align}
+		\scr F(e^{-a|x|^2})(\xi) 
+		&= \scr F( e^{-\pi|x|^2}\circ T )(\xi) \\
+		&= (a/\pi)^{-n/2} \scr F(e^{-\pi|x|^2})(\xi/\sqrt{a/\pi}) \\
+		&= \left(\frac{\pi}{a}\right)^{n/2} e^{-\frac{\pi^2}{a} |x|^2 }.
+	\end{align}
+	We now wrap up the solution to get
+	\begin{equation}\label{eq67fe64f8}
+		\scr F(Ae^{-a|x|^2}) = A \left(\frac{\pi}{a}\right)^{n/2} e^{-\frac{\pi^2}{a} |x|^2 } .
+	\end{equation}
+\end{exercise}
+
+Recall from Exercise~\ref{ex67fbf157}, that the convolution of two functions $f,g\in L^1(\R^n)$ is a well defined function $f*g\in L^1(\R^n)$.
+
+\begin{exercise}
+	Show that, for every $f,g\in L^1(\R^n)$,
+	\begin{equation}\label{eq67fc11d5}
+		\scr F(f*g) = \scr F(f) \cdot \scr F(g) .
+	\end{equation}
+	Or, otherwise stated, $(f*g)^{\wedge} = \hat f \hat g$.
+\end{exercise}
+
+\begin{exercise}
+	Show that, for every $f,g\in L^1(\R^n)$,
+	\begin{equation}
+		\int_{\R^n} f(x) \hat g(x) \did x 
+		= \int_{\R^n} \hat f(\xi) g(\xi) \did \xi .
+	\end{equation}
+	
+	{\it Hint:}
+	Notice that, by~\eqref{eq67fbf439}, $f\hat g\in L^1(\R^n)$ and $\hat f,g\in L^1(\R^n)$.
+	So, unpack the definition of $\hat g$ and use Fubini.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Fourier transform preserves the Schwartz class}
+\begin{proposition}
+	If $f \in\scr S$, then $\hat f\in\scr S$ and, for every $\alpha\in\N^n$,
+	\begin{gather}
+	\label{eq67fbf9a6}
+		\scr F(\Diff^\alpha f) = (2\pi i\xi)^\alpha \scr F(f) ,\\
+	\label{eq67fbf9ac}
+		\scr F( (-2\pi ix)^\alpha f) = \Diff^\alpha\scr F(f) .
+	\end{gather}
+\end{proposition}
+\begin{proof}
+	\TODO
+\end{proof}
+
+\begin{corollary}[Riemann--Lebesgue Lemma]
+	If $f\in L^1(\R^n)$, then $\hat f\in C^0_0(\R^n)$, that is, $\hat f$ is continuous and tends to zero at infinity.
+\end{corollary}
+\begin{proof}
+	We know that $\scr S$ is dense in $L^1(\R^n)$, see Exercise~\ref{ex67fbf2c0}.
+	Let $f\in L^1(\R^n)$ and $f_j\in\scr S$ a sequence with $f_j\to f$ in $L^1(\R^n)$.
+	By~\eqref{eq67fbf439}, $\hat f_j\to\hat f$ in $L^\infty(\R^n)$, that is $\hat f_j\to \hat f$ uniformly.
+	It follows that $\hat f$ is continuous.
+	
+	We need to show that $\hat f$ tends to zero at infinity.
+	For every $\epsilon>0$ there is $j\in\N$ with $\|f_j-f\|_{L^\infty}<\epsilon$.  
+	Then, there is $R>0$ such that $|f_j(\xi)|<\epsilon$ for every $\xi$ with $|\xi|>R$.
+	Therefore, if $|\xi|>R$, then $|f(\xi)| \le |f(\xi)-f_j(\xi)| + |f_j(\xi)| < 2\epsilon$.
+	This shows that $\lim_{\xi\to\infty} \hat f(\xi) = 0$.
+\end{proof}
+
+\begin{exercise}\label{ex67fbf2c0}
+	Show that $\scr S$ is dense in $L^1(\R^n)$.
+	
+	{\it Hint:} 
+	Given $f\in L^1(\R^n)$, consider $f_j(x) = \psi(x/j) f*\rho_{1/j}(x)$,
+	where $\{\rho_\epsilon\}_{\epsilon>0}$ is a family of mollifiers, and $\psi\in C^\infty_c(\R^n)$ is a function valued in $[0,1]$ with $B(0,1) \subset\{\psi =1\}$.
+	You then need to show that $f_j\in\scr S$ and that $f_j\to f$ in $L^1(\R^n)$.
+	Use the fact that, for every $\epsilon>0$ there exists $R>0$ such that $\int_{\R^n\setminus B(0,R)} |f(x)| \did x < \epsilon$ (this is a direct consequence of integrability).
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fourier inversion theorem}
+
+\begin{theorem}\label{thm67fcdb1f}
+	The Fourier transform $\scr F:\scr S\to\scr S$ is a linear automorphism of $\scr S$.
+	In particular, if $f\in\scr S$, then 
+	\begin{equation}\label{eq67fbff5a}
+		\scr F^{-1}(f)(x) = \int_{\R^n} e^{2\pi i x\cdot\xi} f(\xi) \did \xi .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	We know that $\scr F$ is linear.
+	We need to show that it is onto and into, and that both $\scr F$ and $\scr F^{-1}$ are continuous.
+	
+	First we show that $\scr F$ is continuous.
+	If $\alpha,\beta\in\N^n$, then 
+	\begin{align}
+		\xi^\alpha \Diff^\beta \hat f(\xi)
+		&\overset{\eqref{eq67fbf9ac}}= \xi^\alpha \scr F((-2\pi i x)^\beta f) \\
+		&\overset{\eqref{eq67fbf9a6}}= \frac{1}{(2\pi i)^\alpha} \scr F(\Diff^\alpha (-2\pi i x)^\beta f ) \\
+		&= \frac{(-2\pi i)^\beta}{(2\pi i)^\alpha} \scr F(\Diff^\alpha  (x^\beta f) ) .
+	\end{align}
+	This shows... \TODO
+	
+	Denote by $\scr G(f)(x)$ the quantity on the right-hand side of~\eqref{eq67fbff5a}.
+	Notice that $\scr G(f)(x)= \scr F(f)(-x)$: so, we know that $\scr G$ is a continuous linear operator $\scr S\to\scr S$.
+	We will show that $\scr G(\scr F(f)) = f$, for all $f\in\scr S$.
+	
+	For $x\in\R^n$ and $\epsilon>0$, define
+	\begin{equation}
+		\phi_{x,\epsilon}(\xi) = e^{2\pi i x\cdot\xi - \pi \epsilon^2|\xi|^2}
+		= \exp( 2\pi i x\cdot\xi - \pi \epsilon^2|\xi|^2 ).
+	\end{equation}
+	If we set $g_\epsilon(z) = e^{-\pi|z|^2/\epsilon^2} = \exp(-\pi|z|^2/\epsilon^2)$, 
+	then one can compute
+	\begin{equation}
+		\hat\phi_{x,\epsilon}(y) = g_\epsilon(x-y) .
+	\end{equation}
+	Then we have
+	\begin{align}
+		\scr G(e^{ - \pi \epsilon^2|\xi|^2} \hat f )(x) 
+		&= \int_{\R^n} e^{ - \pi \epsilon^2|\xi|^2} e^{2\pi i x\cdot\xi}  \hat f(\xi)\did \xi \\
+		&= \int_{\R^n} \phi_{x,\epsilon}(\xi) \hat f(\xi) \did \xi \\
+		&= \int_{\R^n} \hat \phi_{x,\epsilon}(y) f(y) \did y \\
+		&= \int_{\R^n} g_\epsilon(x-y)  f(y) \did y \\
+		&= g_\epsilon * f(x) .
+	\end{align}
+	On the one hand, $g_\epsilon * f\to f$ in $\scr S$ as $\epsilon\to0$ by Exercise~\ref{ex67fc0379}, hence point-wise.
+	On the other hand, $e^{ - \pi \epsilon^2|\xi|^2} \hat f\to \hat f$ in $L^1(\R^n)$ as $\epsilon\to0$.
+	Therefore, using also the continuity of $\scr G$, we conclude that $\scr G(\hat f) = f$.	
+	
+	We complete the proof with a bit of algebra.
+	Define $\cal I:\scr S\to\scr S$, $\scr I(f)(x) = f(-x)$.
+	We have just proven
+	\begin{equation}
+		\scr F\circ\cal I \circ \scr F = \Id_{\scr S} .
+	\end{equation}
+	This shows that $\scr F$ is also surjective, with inverse $\scr G=\cal I\circ\scr F$.
+\end{proof}
+
+\begin{remark}
+	Notice that, if you write down the formula for $\scr G(\scr F(f))$, you cannot conclude using Fubini!
+	In fact, we have somehow proved that
+	\begin{equation}
+		\int_{\R^n} \int_{\R^n} e^{2\pi i (x-y)\cdot\xi} f(y) \did y\did \xi = f(x) .
+	\end{equation}
+	This identity does not have a meaning as integrals, because the integrand function is not in $L^1(\R^n\times\R^n)$.
+	However, it does look a lot the convolution of $f$ with $\delta_0$, in which case we would have proven
+	\begin{equation}\label{eq67fc0575}
+		\int_{\R^n} e^{2\pi i z\cdot\xi} \did \xi = \delta_0(z) .
+	\end{equation}
+	In the latter identity, the integral is not an integral:
+	we will make sense of~\eqref{eq67fc0575} distributionally.
+\end{remark}
+
+\begin{remark}
+	The inverse of the Fourier transform applied to $f$ is also denoted as $\check f=\scr F^{-1}(f)$.
+	This is a problem in my notes, because I have already used this notation for the function $\check f(x) = f(-x)$.
+	This clash of notation does not have a solution yet.
+	I am just renouncing to use the second meaning in this section, so that, in the context of Fourier transform, $\check f$ is only the inverse transform of $f$.
+\end{remark}
+
+\begin{exercise}
+	Define $\cal I:\scr S\to\scr S$, $\cal I(f)(x) = f(-x)$.
+	Show that
+	\begin{equation}
+		\scr F^2 = \cal I
+		\quad\text{ and }\quad
+		\scr F^4 = \Id_{\scr S} .
+	\end{equation}
+	
+	{\it Hint:}
+	Forget about the Fourier transform, but only use $\scr F\cal I\scr F=1$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Plancherel Theorem}
+
+The space $L^2(\R^n)$ is the space of complex valued measurable functions $f:\R^n\to\C$ 
+such that $\int_{\R^n} |f(x)|^2 \did x <\infty$.
+The vector space $L^2(\R^n)$ is a Hilbert space when endowed with the sesquilinear form
+\begin{equation}
+	\langle f,g \rangle = \int_{\R^n} f(x) \bar{g(x)} \did x ,
+	\quad\forall f,g\in L^2(\R^n) .
+\end{equation}
+
+\begin{theorem}
+	The Fourier transform extends uniquely to a unitary automorphism of $L^2(\R^n)$.
+	More precisely, the Fourier transform has a continuous extension $\scr F:L^2(\R^n)\to L^2(\R^n)$ with 
+	\begin{gather}
+		\|\scr F(f)\|_{L^2} = \|f\|_{L^2} \quad\forall f\in L^2(\R^n) , \\
+		\langle \scr F(f),\scr F(g) \rangle = \langle f,g \rangle \quad\forall f,g\in L^2(\R^n) .
+	\end{gather}
+\end{theorem}
+\begin{proof}
+	By Exercise~\ref{ex67fc0c47} and Theorem~\ref{thm67fcdb1f}, we know that $\scr F:\scr S\to\scr S$ is continuous with respect to the topology of $L^2(\R^n)$.
+	Since $\scr S$ is dense in $L^2(\R^n)$, then $\scr F$ admits a unique continuous extension $L^2(\R^n)\to L^2(\R^n)$.
+	The inverse of $\scr F$ has the same properties, and thus the extension of $\scr F$ is a continuous invertible linear operator.
+	
+	We only need to show $\|\scr F(f)\|_{L^2} = \|f\|_{L^2}$ for every $f\in\scr S$.
+	Fix $f\in\scr S$ and define $g(x) = \overline{f(-x)}$.
+	Notice that $\hat g (\xi) = \overline{\hat f(\xi)}$; 
+	see also Exercise~\ref{ex67fc118a}.
+	Then:
+	\begin{align}
+		\|\scr F(f)\|_{L^2} 
+		&= \int_{\R^n} \hat f(\xi) \overline{\hat f(\xi)} \did \xi \\
+		[\text{by Exercise~\ref{ex67fc118a}}]
+		&= \int_{\R^n} \hat f(\xi) \hat g (\xi) \did \xi \\
+		&\overset{\eqref{eq67fc11d5}}= \int_{\R^n} (f*g)^{\wedge}(\xi) \did \xi \\
+		&= \int_{\R^n} e^{2\pi i 0\cdot \xi}(f*g)^{\wedge}(\xi) \did \xi \\
+		&\overset{\eqref{eq67fbff5a}}= f*g(0) \\
+		&= \int_{\R^n} f(x) \overline{f(-x)} \did x \\
+		&= \|f\|_{L^2} .
+	\end{align}
+\end{proof}
+
+\begin{exercise}\label{ex67fc0c47}%(((
+	(Maybe this already appeared before).
+	Show that $\scr D$ is dense in $L^p(\R^n)$ for all $p\in[1,\infty)$.
+	Deduce that $\scr S$ is dense in $L^p(\R^n)$ for all $p\in[1,\infty)$.
+	
+	But then, show also that, if $f_j\to f_\infty$ in $\scr D$ or $\scr S$, then $f_j\to f_\infty$ in $L^p(\R^n)$ for all $p\in[1,\infty)$.
+\end{exercise}%]]]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Schwartz distributions}
+The topological dual $\scr S'$ is the space of \emph{Schwartz distributions}, or \emph{tempered distributions}.
+The convergence of sequences in $\scr S'$ is pointwise, that is, 
+$A_n\to A_\infty$ in $\scr S'$ if and only if $A_n[\phi] \to A_\infty[\phi]$ for every $\phi\in\scr S$.
+
+\begin{exercise}
+	Show that
+	\begin{equation}
+		\scr D' \supset \scr S' \supset \scr E' .
+	\end{equation}
+\end{exercise}
+
+\begin{exercise}
+	Show the following properties of tempered distributions:
+	\begin{enumerate}
+	\item
+	If $u\in\scr S'$ and $\alpha\in\N^n$, then $\Diff^\alpha u\in\scr S'$.
+	\item
+	If $u\in\scr S'$ and $f\in C^\infty(\R^n)$ is such that, 
+	for all $\alpha\in\N^n$, $\Diff^\alpha f$ grows at most polynomially at infinity,
+	then $fu\in\scr S'$.
+	\item
+	If $u\in\scr S'$ and $f\in\scr S$, then $u*f\in\scr S$.
+%	\item
+%	(Hard, but you have all the elements to do it:)
+%	If $u,v\in\scr S'$, then $u*v$ is a well defined tempered distribution,
+%	and this convolution has the usual properties listed in Proposition~\ref{prop67f2a0bd}.
+	\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+	Show that, if $h:\R^n\to\C$ is a measurable function that grows at most polynomially, then $f\mapsto \int_{\R^n} h(x)f(x)\did x$ defines a tempered distribution.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Fourier transform of tempered distributions}
+We define the Fourier transform of a tempered distribution $u\in\scr S'$
+as $\hat u=\scr F(u)$, where
+\begin{equation}
+	\hat u[f] = u[\hat f] ,
+	\qquad\forall f\in\scr S.
+\end{equation}
+
+\begin{exercise}
+	Show the following properties of the Fourier transform of tempered distributions:
+	\begin{enumerate}
+	\item
+	If $u\in\scr S'$, then $\hat u\in\scr S'$.
+	\item
+	If $u\in\scr S'$ is actually in $\scr S$, i.e., $u[f] = \int_{\R^n} u(x) f(x) \did x$ for all $f\in\scr S$, then $\hat u$ as distribution is equal to $\hat u$ as function.
+	\item
+	$\scr F:\scr S'\to\scr S'$ is a continuous, invertible linear operator, with inverse
+	$\scr F^{-1}u[f] = u[\scr F^{-1}(f)]$.
+	\item
+	If $u\in\scr S'$ and $f\in\scr S$, then $\scr F(u*f) = \hat u \hat f$.
+	\end{enumerate}
+\end{exercise}
+
+\begin{proposition}
+	If $f \in\scr S'$, then $\hat f\in\scr S'$ and, for every $\alpha\in\N^n$,
+	\begin{gather}
+	\label{eq67fe65d6}
+		\scr F(\Diff^\alpha f) = (2\pi i\xi)^\alpha \scr F(f) ,\\
+	\label{eq67fe65da}
+		\scr F( (-2\pi ix)^\alpha f) = \Diff^\alpha\scr F(f) .
+	\end{gather}
+\end{proposition}
+\begin{proof}
+	\TODO
+\end{proof}
+
+\begin{exercise}\label{ex67fcc1d2}
+	Compute $\scr F(\delta_0)$.
+\end{exercise}
+
+\begin{exercise}
+	Compute $\scr F(1)$.
+\end{exercise}
+
+{\color{Red} \TODO
+If you have done Exercise~\ref{ex67fcc1d2}, you know what is $\scr F(1)$.
+However, let's try to compute it directly.
+There are two ways.
+
+First method: we can apply directly the definition:
+\begin{align}
+	\scr F(1)[f] = 1[\hat f] = \int_{\R^n}\hat f(\xi)\did \xi = \scr F^{-1}(\hat f)(0) = f(0) .
+\end{align}
+So, $\scr F(1) = \delta_0$.
+
+Second method: set $\phi_\epsilon(x) = \exp(-\epsilon|x|^2)$ and notice that $\phi_\epsilon \cdot 1 \to 1$ in $\scr S'$.
+Since $\phi_\epsilon\in\scr S$, then
+\begin{align}
+	\scr F(1) 
+	= \lim_{\epsilon\to0} \scr F(\phi_\epsilon)
+	= \lim_{\epsilon\to0} 
+\end{align}
+}
+
+\begin{exercise}
+	Compute $\scr F(p(x))$, where $p(x) = \sum_{|\alpha|\le N} c_\alpha x^\alpha$ is a polynomial of degree $N$.
+\end{exercise}
+
+\begin{remark}
+	It is a fact that, if $\hat u$ has compact support, then $u$ is analytic, see \cite[Thm 7.1.14]{MR717035}
+	It is a recurrent theme that regularity of $u$ is proportional to integrability of $\hat u$ (and viceversa, of course).
+	There are two sorts of ``equilibrium points'' of this behaviour: $\scr S$ and $L^2(\R^n)$.
+\end{remark}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Applications to PDE: Harmonic polynomials}
+If $u\in\scr S'$ is such that 
+\begin{equation}
+	-\laplacian u = 0 ,
+\end{equation}
+then 
+\begin{equation}
+	0 = \scr F(-\laplacian u)
+	\overset{\eqref{eq67fe65d6}}= - \sum_{j=1}^n(2\pi i\xi_j)^2 \hat u
+	= 4\pi^2 |\xi|^2 \hat u .
+\end{equation}
+Therefore, $\spt(\hat u) \subset\{0\}$, that is, by Proposition~\ref{prop67fe6632},
+$\hat u = \sum_{|\alpha|\le N} c_\alpha \Diff^\alpha \delta_0$ for some constants $c_\alpha\in\C$.
+It follows that $u$ is a polynomial:
+
+\begin{proposition}
+	Harmonic tempered distributions are harmonic polynomials.
+\end{proposition}
+
+\begin{exercise}
+	The condition $|\xi|^2 v=0$ implies $\spt(v) \subset\{0\}$.
+	Can you characterize the distributions $v\in\scr S'$ that satisfy $|\xi|^2 v=0$?
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Applications to PDE: Heat equation}
+Let's consider the heat equation
+\begin{equation}
+\begin{cases}
+	\de_t u - \laplacian u = 0 & \text{ in }\R^n\times(0,+\infty) ,\\
+	u = g & \text{ on } \R^n\times\{0\} .
+\end{cases}
+\end{equation}
+
+\TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Applications to PDE: Wave equation}
+
+\TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Applications to PDE: Bessel potentials}
+(See \cite[\S4.3,p.191]{MR2597943})
+
+We investigate the PDE in $\R^n$:
+\begin{equation}
+	-\laplacian u + u = f .
+\end{equation}
+
+\TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Applications to PDE: Eigenfunctions of the laplacian}
+We investigate the PDE
+\begin{equation}
+	-\laplacian u = \lambda u ,
+\end{equation}
+for $\lambda\in\C$.
+
+\TODO
 
 
 
