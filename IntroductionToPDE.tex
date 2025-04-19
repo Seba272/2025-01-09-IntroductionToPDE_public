@@ -2698,7 +2698,7 @@ $\Phi:\R^n\times\R\setminus\{(0,0)\} \to [0,+\infty)$ defined by
 		\end{equation}
 	\end{enumerate}
 	%(
-	In particular, $u$ has a continuous extension $u\in C^0(\R^n\times [0,+\infty))\cap C^\infty(\R^n\times (0,+\infty))$ and ]
+	In particular, $u$ has a continuous extension $u\in C^0(\R^n\times [0,+\infty))\cap C^\infty(\R^n\times (0,+\infty))$ and %]
 	\begin{equation}\label{eq67c30ca6}
 	\begin{cases}
 		\de_t u - \laplacian u = 0 & \text{ in }\R^n\times (0,+\infty) , \\
@@ -6259,24 +6259,6 @@ $Pu\in C^\infty(\Omega)$ implies $u\in C^\infty(\Omega)$.
 	We conclude that $u$ is smooth in $x$.
 \end{proof}
 
-•
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\TODO}
-
-\begin{itemize}
-%\item	Definition of $u*v$ when one of them has compact support.
-%\item	Singular support
-%\item	singular support of $u*v$
-%\item	fundamental solution
-%\item	regularity of solutinos with fundamental solution.
-%\item	ippoellitticità
-%\item	Examples: laplace, heat, wave operators.
-\item	extra: kernel theorem, convolution operators, existence of fundamental solution
-\end{itemize}
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -6331,6 +6313,10 @@ As usual, one can check that these embeddings are continuous.
 	Use~\eqref{eq67f2c68b} for $N$ large enough.
 \end{exercise}
 
+\begin{exercise}\label{ex68035dc9}
+	Show that $f_j\to f_\infty$ in $\scr S$ if and only if $x^\alpha \Diff^\beta f_j \to x^\alpha \Diff^\beta f_\infty$ in $L^\infty$, for every $\alpha,\beta\in\N^n$.
+\end{exercise}
+
 \begin{exercise}
 	Show that, if $f_j\to f_\infty$ in $\scr S$, then, for every $\alpha\in\N^n$, $\Diff^\alpha f_j\to\Diff^\alpha f_\infty$ in $L^1(\R^n)$.
 	
@@ -6355,7 +6341,7 @@ As usual, one can check that these embeddings are continuous.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Fourier transform}
-For $u\in L^1(\R^n)$ and $x\in\R^n$, define the \emph{Fourier transform}
+For $u\in L^1(\R^n)$ and $\xi\in\R^n$, define the \emph{Fourier transform}
 \begin{equation}\label{eq67fbe754}
 	\hat u (\xi) = \scr F(u)(\xi) 
 	= %\frac1{(2\pi i)^n} 
@@ -6521,7 +6507,39 @@ Recall from Exercise~\ref{ex67fbf157}, that the convolution of two functions $f,
 	\end{gather}
 \end{proposition}
 \begin{proof}
-	\TODO
+	For $f \in\scr S$ and $j\in\{1,\dots,n\}$, we have $\de_jf\in\scr S$ and thus
+	\begin{align*}
+	 	\scr F(\de_jf)(\xi)
+		&= \int_{\R^n} \exp(-2\pi i\xi\cdot x) \frac{\de}{\de x_j} f(x) \did x \\
+		&= \int_{\R^n} \frac{\de}{\de x_j} [\exp(-2\pi i\xi\cdot x) f(x)] \did x 
+			- \int_{\R^n} (-2\pi i\xi_j) \exp(-2\pi i\xi\cdot x) f(x)) \did x \\
+		&= (2\pi i\xi_j) \hat f(\xi) .
+	\end{align*}
+	Iterating, we obtain~\eqref{eq67fbf9a6}.
+	
+	Since $\scr F(\Diff^\alpha f)\in L^\infty(\R^n)$ for every $\alpha\in\N^n$,
+	we conclude that $\hat f$, which a priori only belongs to $L^\infty(\R^n)$, in fact satisfies
+	\begin{equation}\label{eq68035c23}
+		p_{0,N}(\hat f) = \sup_{\xi\in\R^n} (1+|\xi|)^N |\hat f(\xi)| < \infty ,
+	\end{equation}
+	for every $N\in\N$.
+	
+	We don't know yet that $\hat f$ is differentiable.
+	For this, we use \ref{thm679f29de_3} in Theorem~\ref{thm679f29de} to compute, for $f\in\scr S$ and $j\in\{1,\dots,n\}$,
+	\begin{align}
+		\de_j\scr F(f)(\xi)
+		&= \frac{\de}{\de \xi_j} \int_{\R^n} e^{-2\pi i \xi\cdot x} f(x) \did x \\
+		&= \int_{\R^n} \frac{\de}{\de \xi_j} [ e^{-2\pi i \xi\cdot x} f(x) ] \did x \\
+		&= \int_{\R^n} (-2\pi ix_j) e^{-2\pi i \xi\cdot x} f(x) \did x \\
+		&= \scr F((-2\pi ix_j) f)(\xi) .
+	\end{align}
+	Iterating, we obtain~\eqref{eq67fbf9ac}.
+	We conclude that $\hat f$ is smooth and that, for every $\alpha\in\N^n$, since $\Diff^\alpha\hat f$ is the Fourier transform of a function in $\scr S$, then, by~\eqref{eq68035c23},
+	\begin{equation}
+		p_{\alpha,N}(\hat f) 
+		= p_{0,N}(\Diff^\alpha\hat f) < \infty .
+	\end{equation}
+	We conclude that $\hat f\in\scr S$.
 \end{proof}
 
 \begin{corollary}[Riemann--Lebesgue Lemma]
@@ -6572,7 +6590,11 @@ Recall from Exercise~\ref{ex67fbf157}, that the convolution of two functions $f,
 		&\overset{\eqref{eq67fbf9a6}}= \frac{1}{(2\pi i)^\alpha} \scr F(\Diff^\alpha (-2\pi i x)^\beta f ) \\
 		&= \frac{(-2\pi i)^\beta}{(2\pi i)^\alpha} \scr F(\Diff^\alpha  (x^\beta f) ) .
 	\end{align}
-	This shows... \TODO
+	If $f_j\to0$ in $\scr S$, then $\Diff^\alpha  (x^\beta f_j)\to 0$ in $\scr S$, for every $\alpha,\beta\in\N^n$.
+	It follows that $\Diff^\alpha  (x^\beta f_j)\to 0$ in $L^1(\R^n)$, and thus 
+	$\xi^\alpha \Diff^\beta \hat f_j\to 0$ in $L^\infty(\R^n)$, for every $\alpha,\beta\in\N^n$.
+	This means that $\hat f_j\to 0$ in $\scr S$ (see Exercise~\ref{ex68035dc9}).
+	So, $\scr F:\scr S\to\scr S$ is continuous.
 	
 	Denote by $\scr G(f)(x)$ the quantity on the right-hand side of~\eqref{eq67fbff5a}.
 	Notice that $\scr G(f)(x)= \scr F(f)(-x)$: so, we know that $\scr G$ is a continuous linear operator $\scr S\to\scr S$.
@@ -6750,11 +6772,11 @@ as $\hat u=\scr F(u)$, where
 	$\scr F:\scr S'\to\scr S'$ is a continuous, invertible linear operator, with inverse
 	$\scr F^{-1}u[f] = u[\scr F^{-1}(f)]$.
 	\item
-	If $u\in\scr S'$ and $f\in\scr S$, then $\scr F(u*f) = \hat u \hat f$.
-	\end{enumerate}
-\end{exercise}
-
-\begin{proposition}
+	If $u\in\scr S'$ and $f\in\scr S$, then 
+	\begin{equation}\label{eq680350a7}
+		\scr F(u*f) = \hat u \hat f .
+	\end{equation}
+	\item
 	If $f \in\scr S'$, then $\hat f\in\scr S'$ and, for every $\alpha\in\N^n$,
 	\begin{gather}
 	\label{eq67fe65d6}
@@ -6762,10 +6784,21 @@ as $\hat u=\scr F(u)$, where
 	\label{eq67fe65da}
 		\scr F( (-2\pi ix)^\alpha f) = \Diff^\alpha\scr F(f) .
 	\end{gather}
-\end{proposition}
-\begin{proof}
-	\TODO
-\end{proof}
+	\end{enumerate}
+\end{exercise}
+
+%\begin{proposition}
+%	If $f \in\scr S'$, then $\hat f\in\scr S'$ and, for every $\alpha\in\N^n$,
+%	\begin{gather}
+%	\label{eq67fe65d6}
+%		\scr F(\Diff^\alpha f) = (2\pi i\xi)^\alpha \scr F(f) ,\\
+%	\label{eq67fe65da}
+%		\scr F( (-2\pi ix)^\alpha f) = \Diff^\alpha\scr F(f) .
+%	\end{gather}
+%\end{proposition}
+%\begin{proof}
+%	\TODO
+%\end{proof}
 
 \begin{exercise}\label{ex67fcc1d2}
 	Compute $\scr F(\delta_0)$.
@@ -6775,25 +6808,25 @@ as $\hat u=\scr F(u)$, where
 	Compute $\scr F(1)$.
 \end{exercise}
 
-{\color{Red} \TODO
-If you have done Exercise~\ref{ex67fcc1d2}, you know what is $\scr F(1)$.
-However, let's try to compute it directly.
-There are two ways.
-
-First method: we can apply directly the definition:
-\begin{align}
-	\scr F(1)[f] = 1[\hat f] = \int_{\R^n}\hat f(\xi)\did \xi = \scr F^{-1}(\hat f)(0) = f(0) .
-\end{align}
-So, $\scr F(1) = \delta_0$.
-
-Second method: set $\phi_\epsilon(x) = \exp(-\epsilon|x|^2)$ and notice that $\phi_\epsilon \cdot 1 \to 1$ in $\scr S'$.
-Since $\phi_\epsilon\in\scr S$, then
-\begin{align}
-	\scr F(1) 
-	= \lim_{\epsilon\to0} \scr F(\phi_\epsilon)
-	= \lim_{\epsilon\to0} 
-\end{align}
-}
+%{\color{Red} \TODO
+%If you have done Exercise~\ref{ex67fcc1d2}, you know what is $\scr F(1)$.
+%However, let's try to compute it directly.
+%There are two ways.
+%
+%First method: we can apply directly the definition:
+%\begin{align}
+%	\scr F(1)[f] = 1[\hat f] = \int_{\R^n}\hat f(\xi)\did \xi = \scr F^{-1}(\hat f)(0) = f(0) .
+%\end{align}
+%So, $\scr F(1) = \delta_0$.
+%
+%Second method: set $\phi_\epsilon(x) = \exp(-\epsilon|x|^2)$ and notice that $\phi_\epsilon \cdot 1 \to 1$ in $\scr S'$.
+%Since $\phi_\epsilon\in\scr S$, then
+%\begin{align}
+%	\scr F(1) 
+%	= \lim_{\epsilon\to0} \scr F(\phi_\epsilon)
+%	= \lim_{\epsilon\to0} 
+%\end{align}
+%}
 
 \begin{exercise}
 	Compute $\scr F(p(x))$, where $p(x) = \sum_{|\alpha|\le N} c_\alpha x^\alpha$ is a polynomial of degree $N$.
@@ -6802,7 +6835,7 @@ Since $\phi_\epsilon\in\scr S$, then
 \begin{remark}
 	It is a fact that, if $\hat u$ has compact support, then $u$ is analytic, see \cite[Thm 7.1.14]{MR717035}
 	It is a recurrent theme that regularity of $u$ is proportional to integrability of $\hat u$ (and viceversa, of course).
-	There are two sorts of ``equilibrium points'' of this behaviour: $\scr S$ and $L^2(\R^n)$.
+	There are two sorts of ``equilibrium points'' of this behavior: $\scr S$ and $L^2(\R^n)$.
 \end{remark}
 
 
@@ -6832,21 +6865,90 @@ It follows that $u$ is a polynomial:
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Applications to PDE: Heat equation}
+\subsection{Applications to PDE: Heat equation}%(
+See also \cite[\S4.A,p.143]{MR1357411} and \cite[p.192]{MR2597943}.
+
 Let's consider the heat equation
-\begin{equation}
+\begin{equation}\label{eq680346f3}
 \begin{cases}
 	\de_t u - \laplacian u = 0 & \text{ in }\R^n\times(0,+\infty) ,\\
 	u = g & \text{ on } \R^n\times\{0\} .
 \end{cases}
 \end{equation}
+where we can see $u$ as a function $[0,+\infty)\to \scr S'$, and $g\in\scr S'$.
 
-\TODO
+We apply the Fourier transform in the spatial variable, so that~\eqref{eq680346f3} becomes
+\begin{equation}\label{eq6803470c}
+\begin{cases}
+	\de_t \hat u - (2\pi i)^2 |\xi|^2 \hat u = 0 & \text{ in }\R^n\times(0,+\infty) ,\\
+	\hat u = \hat g & \text{ on } \R^n\times\{0\} .
+\end{cases}
+\end{equation}
+A solution to the ODE $\de_t\hat u = -4\pi^2 |\xi|^2 \hat u$ with $\hat u(0)=\hat g$ is
+\begin{equation}
+	\hat u(t) =  \exp(-4\pi^2|\xi|^2 t) \hat g .
+\end{equation}
+Notice that, for each $t>0$, $\xi\mapsto \exp(-4\pi^2|\xi|^2 t)$ is an element of $\scr S$,
+so the $\hat u(t)\in\scr S'$.
+It follows that, for $t>0$, 
+\begin{align}
+	u(t) 
+	&= \scr F^{-1}_\xi (\exp(-4\pi^2|\xi|^2 t) \hat g) \\
+	&\overset{\eqref{eq680350a7}}= \scr F^{-1}_\xi (\exp(-4\pi^2|\xi|^2 t) ) * \scr F^{-1}_\xi(\hat g) \\
+	&\overset{\eqref{eq67fe64f8}}= \left( \frac1{(4\pi t)^{n/2}} e^{-\frac{|x|^2}{4t}} \right) * g .
+\end{align}
+
+We have obtained again a representation formula for the solution of the heat equation, as we did in Theorem~\ref{thm67c30be5}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Applications to PDE: Wave equation}
+\subsection{Applications to PDE: Wave equation}%(
+See also \cite[\S5.D,p.177]{MR1357411} and \cite[p.194]{MR2597943}.
 
-\TODO
+Let's consider the wave equation
+\begin{equation}\label{eq6803521d}
+\begin{cases}
+	\de_t^2 u - \laplacian u = 0 & \text{ in }\R^n\times(0,+\infty) ,\\
+	u = g,\ \de_tu = h & \text{ on } \R^n\times\{0\} .
+\end{cases}
+\end{equation}
+where we can see $u$ as a function $[0,+\infty)\to \scr S'$, and $g,h\in\scr S'$.
+
+We apply the Fourier transform in the spatial variable, so that~\eqref{eq6803521d} becomes
+\begin{equation}\label{eq68035243}
+\begin{cases}
+	\de_t^2 \hat u - (2\pi i)^2 |\xi|^2 \hat u = 0 & \text{ in }\R^n\times(0,+\infty) ,\\
+	\hat u(0) = \hat g\ \de_t\hat u(0) = \hat h & \text{ on } \R^n\times\{0\} .
+\end{cases}
+\end{equation}
+A solution to the ODE $\de_t^2\hat u = -4\pi^2 |\xi|^2 \hat u$  is
+\begin{equation}
+	\hat u(t) =  \exp(2\pi i|\xi| t) A + \exp(-2\pi i|\xi| t) B .
+\end{equation}
+The initial data $\hat u(0)= \hat g$ and $\de_t\hat u(0) = \hat h$, give
+\begin{align}
+	\hat u(t) 
+	&= \frac{ \exp(2\pi i|\xi| t) }{ 2 } \left(\hat g + \frac{\hat h}{2\pi i|\xi|} \right) 
+		+ \frac{ \exp(-2\pi i|\xi| t) }{ 2 } \left(\hat g - \frac{\hat h}{2\pi i|\xi|} \right) \\
+	&= \cos(2\pi i|\xi| t) \hat g + \frac{\sin(2\pi i|\xi| t)}{2\pi i|\xi|} \hat h .
+\end{align}
+These formulas give another representation for the solutions of the wave equation.
+Since we know what they must be for $n=1,2,3$, then we know that $u(t)$ must be as in 
+\ref{subs67cd4319}, \ref{subs67ce94b2} and \ref{subs67ce94a5}, respectively.
+
+\begin{remark}
+	Notice that the function $\xi\mapsto\frac1{|\xi|}$ belongs to $L^1_\loc(\R^n)$ for $n\ge2$.
+	Since it also decays at infinity, this function is a tempered distribution.
+	So, it has a well defined Fourier transform.
+	You can try to compute it: I don't know what it should be, or even if there is a closed formula for it.
+\end{remark}
+
+\begin{exercise}
+	Assuming $g,h\in\scr S$, write $u(t)$ from the formula 
+	\begin{equation}
+		\hat u(t)
+		= \cos(2\pi i|\xi| t) \hat g + \frac{\sin(2\pi i|\xi| t)}{2\pi i|\xi|} \hat h .
+	\end{equation}
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Applications to PDE: Bessel potentials}
@@ -6859,8 +6961,17 @@ We investigate the PDE in $\R^n$:
 
 \TODO
 
+\begin{exercise}[Bessel Potentials]
+	Using the Fourier transform, give a representation to the solutions of 
+	\begin{equation}
+		-\laplacian u + u = f .
+	\end{equation}
+	{\it Hint:}
+	See \cite[\S4.3,p.191]{MR2597943}.
+\end{exercise}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Applications to PDE: Eigenfunctions of the laplacian}
+\subsection{Applications to PDE: Eigenfunctions of the Laplacian}
 We investigate the PDE
 \begin{equation}
 	-\laplacian u = \lambda u ,
@@ -6869,9 +6980,14 @@ for $\lambda\in\C$.
 
 \TODO
 
-
-
-
+\begin{exercise}[Eigenfunctions of the Laplacian]
+	Using the Fourier transform, give a representation to the solutions of
+	\begin{equation}
+		-\laplacian u = \lambda u ,
+	\end{equation}
+	for $\lambda\in\C$.
+	For which $\lambda$ there exists a solution?
+\end{exercise}
 
 
 
