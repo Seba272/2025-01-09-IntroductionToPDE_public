@@ -98,8 +98,9 @@ urlcolor=Black}
 %
 \newcommand{\N}{\mathbb{N}}	% Numeri naturali
 \newcommand{\Z}{\mathbb{Z}}	% Numeri interi
-\newcommand{\C}{\mathbb{C}}	% Numeri complessi
+\newcommand{\Q}{\mathbb{Q}}	% Numeri razionali
 \newcommand{\R}{\mathbb{R}}	% Numeri reali
+\newcommand{\C}{\mathbb{C}}	% Numeri complessi
 \newcommand{\K}{\mathbb{K}}	% Campo di numeri
 \newcommand{\Id}{\mathrm{Id}}	% Mappa identità
 %\newcommand{\Span}{\mathrm{span}}	% Span
@@ -4731,7 +4732,7 @@ Recall the following result (see \cite[Thm 7.17, page 223]{MR767633})
 \end{theorem}
 
 
-\begin{proposition}
+\begin{proposition}\label{prop6810ed13}
 	A distribution $A\in\scr D'(\Omega)$ has order zero if and only if it is a Radon measure.
 \end{proposition}
 \begin{proof}
@@ -6259,6 +6260,24 @@ $Pu\in C^\infty(\Omega)$ implies $u\in C^\infty(\Omega)$.
 	We conclude that $u$ is smooth in $x$.
 \end{proof}
 
+•
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\TODO}
+
+\begin{itemize}
+%\item	Definition of $u*v$ when one of them has compact support.
+%\item	Singular support
+%\item	singular support of $u*v$
+%\item	fundamental solution
+%\item	regularity of solutinos with fundamental solution.
+%\item	ippoellitticità
+%\item	Examples: laplace, heat, wave operators.
+\item	extra: kernel theorem, convolution operators, existence of fundamental solution
+\end{itemize}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -6988,6 +7007,694 @@ for $\lambda\in\C$.
 	for $\lambda\in\C$.
 	For which $\lambda$ there exists a solution?
 \end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\part{Sobolev Spaces}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{$L^p$-spaces}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Hölder inequality}
+Let $(X,\scr M,\mu)$ be a measure space, that is, $X$ is a set endowed with a $\sigma$-algebra $\scr M\subset 2^X$ and $\mu:\scr M\to[0,+\infty]$ is a measure.
+In fat, we will always have $X=\Omega\subset\R^n$ open subset of $\R^n$,
+$\scr M$ the Borel $\sigma$-algebra and $\mu$ the Lebesgue measure.
+Anyway, the following inequalities have really nothing to do with $\R^n$.
+
+{\bf Hölder inequality:}
+If $u,v:X\to\C$ are measurable functions and $p,q\in[1,\infty)$ are such that $\frac1p+\frac1q=1$, then
+\begin{equation}
+	\int_X u(x)v(x) \did\mu(x) 
+	\le \left( \int_X u(x)^p \did\mu(X) \right)^{1/p}
+		\left( \int_X v(x)^q \did\mu(X) \right)^{1/q} .
+\end{equation}
+
+\begin{equation}\label{Hölder}
+\begin{array}{c}
+	\forall p,p'\in[1,+\infty),
+	\text{ with }\frac{1}{p} + \frac{1}{p'} = 1, \\
+	\quad\THEN\quad
+	\int_X u(x)v(x) \did\mu(x) \le \|u\|_{L^p(X)} \|v\|_{L^{p'}(X)} .
+\end{array}
+	\tag{Hölder}
+\end{equation}
+
+\begin{equation}\label{General Hölder}
+\begin{array}{c}
+	\forall \{p_j\}_{j=1}^k\subset[1,+\infty),
+	\text{ with }\sum_{j=1}^k \frac1{p_j} = 1, \\
+	\quad\THEN\quad
+	\int_X \prod_{j=1}^k u_j(x) \did\mu(x) \le \prod_{j=1}^k \|u_j\|_{L^{p_j}(X)} .
+\end{array}
+	\tag{General Hölder}
+\end{equation}
+
+\begin{equation}\label{Minkowski}
+	\forall p\in[1,\infty]\qquad
+	\|u+v\|_{L^p} \le \|u\|_{L^p} + \|v\|_{L^p} .
+	\tag{Minkowski}
+\end{equation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{$L^p$ spaces}
+Let $\Omega\subset\R^n$ open and $u:\Omega\to\C$.
+For $p\in[1,+\infty)$, define
+\begin{equation}
+	\|u\|_{L^p} = \|u\|_{L^p(\Omega)}
+	= \left( \int_\Omega |u(x)|^p \did x \right)^{1/p} .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Approximation with continuous functions}
+\begin{theorem}\label{thm680f2023}
+	Let $\Omega\subset\R^n$ open and $p\in[1,\infty)$.
+	The space $C_c(\Omega)$ of continuous functions with compact support in $\Omega$ is dense in $L^p(\Omega)$.
+\end{theorem}
+\begin{proof}
+	\cite[Proposition (7.9)]{MR767633}
+\end{proof}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Sobolev spaces}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Definition of sobolev space}
+Let $\Omega\subset\R^n$ open.
+We have seen in~\ref{sub67def4a2} that functions $u\in L^1_\loc(\Omega)$ are distributions, and as such they have all derivatives $\Diff^\alpha u$.
+We are interested in those functions whose distributional derivatives are in fact integrable functions.
+
+For $m\in\N$ and $p\in[1,+\infty]$, define
+\begin{equation}\label{eq680b26ee}
+	W^{m,p}(\Omega) = \left\{u\in L^1_\loc(\Omega): \Diff^\alpha u\in L^p(\Omega)\ \forall\alpha\in\N^n\text{ with }|\alpha|\le m \right\} .
+\end{equation}
+Of these spaces, we also have a ``loc'' version:
+\begin{equation}\label{eq680b26f4}
+	W^{m,p}_\loc(\Omega) = \left\{u\in L^1_\loc(\Omega): \Diff^\alpha u\in L^p_\loc(\Omega)\ \forall\alpha\in\N^n\text{ with }|\alpha|\le m \right\} .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sobolev spaces are Banach spaces}
+We endow $W^{m,p}(\Omega)$ with the norm
+\begin{equation}\label{eq680b27c5}
+	\|u\|_{W^{m,p}(\Omega)}
+	= \|u\|_{W^{m,p}}
+	= \sum_{|\alpha|\le m} \|\Diff^\alpha u\|_{L^p(\Omega)} .
+\end{equation} 
+In fact, we may well take in place of $\|u\|_{W^{m,p}(\Omega)}$ other norms, such as
+\begin{equation}\label{eq680b27ca}
+	(\sum_{|\alpha|\le m} \|\Diff^\alpha u\|_{L^p(\Omega)}^q)^{1/q},
+	\text{ for $q\in[1,+\infty)$, or }
+	\max_{|\alpha|\le m} \|\Diff^\alpha u\|_{L^p(\Omega)} .
+\end{equation}
+See Exercise~\ref{eq680b28e2}.
+
+\begin{exercise}\label{eq680b28e2}
+	For $x\in\R^N$ and $q\in[1,+\infty)$, define
+	\begin{equation}
+		\|x\|_q = (\sum_{j=1}^N |x_j|^q )^{1/q} ,
+		\text{ and }\|x\|_\infty = \max_{j\le N} |x_j| .
+	\end{equation}
+	Show that for every $q_1,q_2\in[1,+\infty]$ there is $L$ such that
+	\begin{equation}
+		\frac1L \|x\|_{q_2} \le \|x\|_{q_1} \le L \|x\|_{q_2} .
+	\end{equation}
+	Deduce that all norms on $W^{m,p}(\Omega)$
+	\begin{equation}\label{eq680b27ca}
+		(\sum_{|\alpha|\le m} \|\Diff^\alpha u\|_{L^p(\Omega)}^q)^{1/q},
+		\text{ for $q\in[1,+\infty)$, or }
+		\max_{|\alpha|\le m} \|\Diff^\alpha u\|_{L^p(\Omega)} .
+	\end{equation}
+	are biLipschitz equivalent to $\|u\|_{W^{m,p}(\Omega)}$.
+\end{exercise}
+
+\begin{lemma}\label{lem680b2dfd}
+	Let $\Omega\subset\R^n$ be an open set and $p\in[1,\infty]$.
+	Let $\{u_j\}_{j\in\N}\subset L^p(\Omega)$ be a sequence of functions, and $v,w\in L^p(\Omega)$.
+	Fix $\ell\in\{1,\dots,n\}$.
+	Suppose that $u_j\to v$ in $L^p(\Omega)$ and that $\de_\ell u_j\to w$ in $L^p(\Omega)$.
+	Then $\de_\ell v = w$. 
+\end{lemma}
+\begin{proof}
+	First of all, we claim that $u_j\to v$ in $\scr D'(\Omega)$.
+	Indeed, if $\phi\in\scr D(\Omega)$, then
+	\begin{align*}
+	 	\left| \int_\Omega u_j(x) \phi(x) \did x - \int_\Omega v(x)\phi(x) \did x \right|
+		&\le \int_\Omega |u_j(x)-v(x)| |\phi(x)| \did x \\
+		&\overset{\eqref{Hölder}}\le \|u_j-v\|_{L^p(\Omega)} \|\phi\|_{L^{p'}(\Omega)}
+		\rightarrow 0 .
+	\end{align*}
+	Therefore, as distributions, $u_j\to v$.
+	It follows that $\de_\ell u_j\to \de_\ell v$ in $\scr D'(\Omega)$, see Exercise~\ref{ex67df0a00}.
+	
+	Since $\de_\ell u_j\to w$ in $L^p(\Omega)$, we also have $\de_\ell u_j\to w$ in $\scr D'(\Omega)$.
+	Therefore, $\de_\ell v = w$, for the uniqueness of the limit in $\scr D'(\Omega)$.
+\end{proof}
+
+\begin{proposition}
+	The normed vector space $( W^{m,p}(\Omega) , \|\cdot\|_{W^{m,p}(\Omega)} )$ is a Banach space.
+\end{proposition}
+\begin{proof}
+	The proof that $\|\cdot\|_{W^{m,p}(\Omega)}$ is in fact a norm is left as an exercise, see Exercise~\ref{ex680b2d5c}.
+	To show that $W^{m,p}(\Omega)$ is complete, let $\{u_j\}_{j\in\N}\subset W^{m,p}(\Omega)$ be a Cauchy sequence.
+	It follows that, for ever $\alpha\in\N^n$ with $|\alpha|\le m$, the sequence $\{\Diff^\alpha u_j\}_{j\in\N}\subset L^p(\Omega)$ is a Cauchy sequence.
+	Since $L^p(\Omega)$ are Banach spaces, it follows that there are $u_\alpha\in L^p(\Omega)$ such that $\Diff^\alpha u_j\to u_\alpha$ in $L^p(\Omega)$.
+	Iterating Lemma~\ref{lem680b2dfd}, we obtaind that $\Diff^\alpha u_0 = u_\alpha$,
+	and thus $u_0$, the limit of $u_j$ in $L^p(\Omega)$, is the limit of $u_j$ in $W^{m,p}(\Omega)$.
+\end{proof}
+
+\begin{exercise}\label{ex680b2d5c}
+	Show that $\|\cdot\|_{W^{m,p}(\Omega)}$ is a norm on $W^{m,p}(\Omega)$.
+\end{exercise}
+
+\begin{exercise}
+	Show that $W^{m,p}(\Omega)$ is isometric to a closed subspace of $L^p(\Omega)^N$, where $N=\#\{\alpha\in\N^n:|\alpha|\le m\}$.
+\end{exercise}
+
+\begin{exercise}\label{ex680b37f5}
+	Inspired by Lemma~\ref{lem680b2dfd}, we can say with no doubt that, if $u_j\to u$ in $W^{m,p}(\Omega)$, then $u_j\to u$ in $\scr D'(\Omega)$.
+	We may wonder if the converse is also true, that is:
+	is it true that, if $u_j\to u$ in $\scr D'(\Omega)$ and $u\in W^{m,p}(\Omega)$,
+	then $u_j\to u$ in $W^{m,p}(\Omega)$?
+	If this was a video, you would pause it to think about the question yourself.
+	However, this is not a video: can you stop reading?
+	
+	The answer is not hard. The point is to find a sequence of functions $v_j$ on $\R$ that converge distributionally to $0$, but have $L^p$ norm equal to 1.
+	For instance, take $v_j(x) = \sum_{m=0}^{2^j} \one_{[m2^{-j},(m+1)2^{-j})}(x)$.
+	Then $|v_j| = \one_{[0,1)}$, and $\int_\R v_j\phi\did x\to0$ for every $\phi\in\scr D(\R)$ (check it!).
+	We have thus a sequence $v_j\to 0$ in $\scr D'(\R)$ with $\|v_j\|_{L^p}=1$ for all $j$.
+	Take $u_j(x) = \int_{-\infty}^x v_j(t)\did t$: check that $u_j(2)=0$.
+	So, $u_j$ is an absolutely continuous function $\R\to\R$ with compact support.
+	Moreover, $u_j\to 0$ distributionally (check it!) but $u_j$ does not converge to $0$ in $W^{1,1}(\R)$.
+	So, the answer is no.
+\end{exercise}
+
+\begin{exercise}
+	An example of weird Sobolev functions.
+	For $\beta\in\R$, define $u_\beta:\R^n\to\R$,
+	\begin{equation}
+		u_\beta(x) = |x|^\beta .
+	\end{equation}
+	\begin{enumerate}[leftmargin=*]
+	\item
+	Show that $u_\beta\in L^p_\loc(\R^n)$ whenever $\beta>-n$.
+	\item
+	Show that $u_\beta\in W^{1,p}_\loc(\R^n)$ for all $\beta>1-n$.
+	\item
+	Take an enumeration $\{q_k\}_{k\in\N} = \Q^n\cap B(0,1)$ of points with rational coordinates inside the unit ball.
+	Define
+	\begin{equation}
+		w_\beta(x) = \sum_{k=1}^\infty \frac{u_\beta(x-q_k)}{2^k} .
+	\end{equation}
+	Notice that, since $u_\beta\ge0$, then $w_\beta(x) \in[0,+\infty]$ is well defined for every $x\in\R^n$.
+	Show that, if $\beta>1-n$, then $w_\beta\in W^{1,p}_\loc(\R^n)$.
+	\end{enumerate}
+	I want to remark that, if $n\ge2$, then $1-n<0$ and thus we can take $\beta<0$:
+	in these cases, $w_\beta$ has a ``pole'' at every point in $\Q^n\cap B(0,1)$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Smooth approximation of Sobolev functions: characterization of Sobolev spaces}
+We are going to prove the following theorem:
+\begin{theorem}
+	Let $\Omega\subset\R^n$, $p\in[1,+\infty)$ and $m\in\N$.
+	A distribution $u\in\scr D'(\Omega)$ belongs to $W^{m,p}(\Omega)$ if and only if there is a sequence $\{u_j\}_{j\in\N}\subset C^\infty(\Omega)\cap W^{m,p}(\Omega)$ such that $\lim_{j\to\infty} \|u_j-u\|_{W^{m,p}(\Omega)} = 0$.
+	
+	In other words, $W^{m,p}(\Omega)$ is the closure of $C^\infty(\Omega)\cap W^{m,p}(\Omega)$ in the norm $\|\cdot\|_{W^{m,p}(\Omega)}$.
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Smooth approximation of Sobolev functions: local approximation by convolution}
+
+Recall that we say that $w\in C^\infty(\bar\Omega)$ if there is an open set $V\subset\R^n$ with $\bar\Omega\subset V$, and there is a function $\tilde w\in C^\infty(V)$ such that $\tilde w|_{\Omega}=w$.
+Notice that, if $\Omega$ is bounded, then $\bar \Omega$ is compact and thus, if  $w\in C^\infty(\bar\Omega)$ then $w\in W^{p,m}(\Omega)$ for all $p\in[1,+\infty]$ and $m\in\N$.
+We will show three approximation results 
+
+\begin{theorem}\label{thm680b49bf}
+	Let $\Omega\subset\R^n$ open.
+	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be a standard family of mollifiers.
+	For $\epsilon>0$, define
+	\begin{equation}
+	\begin{aligned}
+		\Omega_\epsilon &= \{x\in\Omega:\dist(x,\de\Omega)>\epsilon\} \\
+		&= \{x\in\Omega: \bar B(x,\epsilon)\subset\Omega\}
+	\end{aligned}
+	\end{equation}
+	For $u\in L^1_\loc(\Omega)$, define $u_\epsilon:\Omega_\epsilon\to\C$,
+	$u_\epsilon = u*\rho_\epsilon$;
+	more precisely,
+	\begin{equation}\label{eq680b3795}
+		u_\epsilon = ((u\one_\Omega) * \rho_\epsilon)|_{\Omega_\epsilon} .
+	\end{equation}
+	
+	If $u\in W^{m,p}_\loc(\Omega)$ and $V\Subset\Omega$ is open, then $u_\epsilon \to u$ in $W^{m,p}(V)$.
+%	For every $u\in W^{m,p}(\Omega)$ there is a sequence $u_j\in C^\infty(\bar\Omega)$
+%	with $u_j\to u$ in $W^{m,p}(\Omega)$.
+\end{theorem}
+\begin{proof}
+	Recall that $V\Subset\Omega$ means that the closure of $V$ is compact and contained in $\Omega$.
+	Notice also that there is $\delta>0$ such that $V\subset\Omega_\epsilon$ for all $\epsilon\in(0,\delta)$.
+	So, the convergence ``$u_\epsilon \to u$ in $W^{m,p}(V)$'' makes sense eventually for $\epsilon\to0$.
+	
+	From Proposition~\ref{prop67e28cab}, we already know that the functions $u_\epsilon$ defined in~\eqref{eq680b3795} converge to $u\one_\Omega$ in $\scr D'(\R^n)$ as $\epsilon\to0$.
+	But be careful, this does not imply convergence in $W^{m,p}(V)$, see Exercise~\ref{ex680b37f5}.
+	We need some more work, and use some specific property of $\rho_\epsilon$.
+	
+	Since, for every $\alpha\in\N^n$, we have $\Diff^\alpha u_\epsilon = (\Diff^\alpha u)*\rho_\epsilon$, we only need to show that, if $u\in L^p_\loc(\Omega)$, then $u_\epsilon\to u$ in $L^p(V)$ for every $V\Subset \Omega$.
+	This is the content of Lemma~\ref{lem680f1ffe}.
+\end{proof}
+
+\begin{lemma}\label{lem680f1ffe}
+	Let $\Omega\subset\R^n$ be an open set and $u\in L^p_\loc(\Omega)$.
+	If $V\Subset\Omega$, then $\lim_{\epsilon\to0}\|u_\epsilon-u\|_{L^p(V)} = 0$, 
+	where $u_\epsilon$ is defined as in~\eqref{eq680b3795}.
+\end{lemma}
+\begin{proof}
+	Let $\bar\epsilon>0$ be such that $B(V,\bar\epsilon) = \bigcup_{x\in V} B(x,\bar\epsilon) \Subset \Omega$.
+	If $x\in V$ and $\epsilon\in(0,\bar\epsilon)$, then
+	\begin{align*}
+	 	u_\epsilon(x)
+		&= \int_{B(0,\epsilon)} u(x-y) \rho_\epsilon(y) \did y \\
+		&= \int_{B(0,\epsilon)} u(x-y) \rho_\epsilon(y)^p \cdot \rho_\epsilon(y)^{1-1/p} \did y \\
+		&\overset{\eqref{Hölder}}\le \left(\int_{B(0,\epsilon)} |u(x-y)|^p \rho_\epsilon(y) \did y \right)^{1/p}
+		\left( \int_{B(0,\epsilon)}\rho_\epsilon(y)\did y\right)^{1/p'} \\
+		&= \left(\int_{B(0,\epsilon)} |u(x-y)|^p \rho_\epsilon(y) \did y \right)^{1/p} .
+	\end{align*}
+	Therefore, 
+	\begin{align}
+	 	\int_V|u_\epsilon(x)|^p \did x
+		&\le \int_V \int_{B(0,\epsilon)} |u(x-y)|^p \rho_\epsilon(y) \did y\did x \\
+		&= \int_{B(0,\epsilon)} \int_V |u(x-y)|^p \rho_\epsilon(y) \did x \did y \\
+		&\le \int_{B(V,\epsilon)} |u(x)|^p \did x . \label{eq680f1f43}
+	\end{align}
+	Next, fix $\eta>0$.
+	By Theorem~\ref{thm680f2023}, there exists $g\in C(\Omega)$ such that $\|g-u\|_{L^p(B(V,\bar\epsilon))} < \eta$.
+	For $\epsilon\in(0,\bar\epsilon)$, we have
+	\begin{align*}
+		\|u-u_\epsilon\|_{L^p(V)}
+		&\le \|u-g\|_{L^p(V)} + \|g-g_\epsilon\|_{L^p(V)} + \|g_\epsilon-u_\epsilon\|_{L^p(V)} \\
+		&\overset{\eqref{eq680f1f43}}\le \|g-u\|_{L^p(B(V,\bar\epsilon))} + \|g-g_\epsilon\|_{L^\infty(V)} \scr L^n(V) + \|g-u\|_{L^p(B(V,\bar\epsilon))} \\
+		&\le 2\eta + \|g-g_\epsilon\|_{L^\infty(V)} \scr L^n(V) ,
+	\end{align*}
+	Since $g$ is continuous and $V$ is compact, we know that $\|g-g_\epsilon\|_{L^\infty(V)}\to0$ as $\epsilon\to0$.
+	Therefore, there is $\bar{\bar\epsilon}$ such that, if $\epsilon\in(0,\bar{\bar\epsilon})$, then $\|u-u_\epsilon\|_{L^p(V)}<3\eta$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Smooth approximation of Sobolev functions: interior approximation}
+
+\begin{lemma}\label{lem680f3acc}
+	Let $\Omega\subset\R^n$ be an open set.
+	Then there are a countable set $\scr N\subset\Omega$ and $r:\scr N\to(0,\infty)$ such that
+%	, for every $x\in\Omega$,
+%	\begin{equation}\label{eq680f216e}
+%		0<\# \{\ell\in\N: x\in B(x_\ell,r_\ell) \} 
+%		\le \# \{\ell\in\N: x\in B(x_\ell,2r_\ell) \} \le 2^{5n} < \infty .
+%	\end{equation}
+	\begin{enumerate}[label=(\ref{lem680f3acc}.\alph*)]
+	\item\label{lem680f3acc_1}
+	for every $x\in\scr N$, $B(x,2r_x)\subset \Omega$,
+	\item\label{lem680f3acc_2}
+	$\Omega\subset\bigcup_{x\in\scr N} B(x,r_x)$,
+	\item\label{lem680f3acc_3} 
+	for every $y\in\Omega$, $\# \{x\in\scr N: y\in B(x,2r_x) \} \le 2^{5n} < \infty$.
+	\end{enumerate}
+	
+	Moreover, are also functions $\{\phi_x\}_{x\in\scr N}$ such that, for each $x\in\scr N$, $\phi_x\in C^\infty_c(B(x,r_x))$, $0\le \phi_x\le 1$,
+	and such that $\sum_{x\in\scr N}\phi_x(y) = 1$ for every $y\in \Omega$.
+\end{lemma}
+\begin{proof}
+	If $\Omega=\R^n$, the proof is left as an exercise.
+	Suppose that $\Omega\neq\R^n$, that is, $\de\Omega\neq\emptyset$.
+	Define $\delta:\Omega\to(0,+\infty)$, $\delta(x) = {\rm dist}(x,\de\Omega)$,
+	and, for $k\in\Z$,
+	\[
+	\Omega_k = \{x\in\Omega: 2^k \le \delta(x) < 2^{k+1}\} .
+	\]
+	For each $k\in\Z$, let $\scr N_k\subset\Omega_k$ be a maximal $2^{k-3}$-separated set,
+	that is, a subset of $\Omega_k$ such that, if $x,y\in\scr N_k$, then $B(x,2^{k-3})\cap B(y,2^{k-3})=\emptyset$, and for every $z\in\Omega_k$ there is $x\in\scr N_k$ with $|z-x|< 2\cdot 2^{k-3} = 2^{k-2}$.
+	The sets $\scr N_k$ are countable, thus $\scr N=\bigcup_{k\in\Z}\scr N_k$ is also countable.
+	We claim that the set of points $\scr N$ with the radii $r_x = 2^{k-2}$ for $x\in\scr N_k$ is the wanted set.
+	
+	The requirement~\ref{lem680f3acc_1} is clear.
+	It is also clear that
+	\begin{equation}
+		\Omega 
+		\subset\bigcup_{x\in\scr N} B(x,r_x)
+		= \bigcup_{k\in\Z} \bigcup_{x\in\scr N_k} B(x,2^{k-2}) ,
+	\end{equation}
+	and thus~\ref{lem680f3acc_2}.
+	
+	We need to show the upper bound in~\ref{lem680f3acc_3}.
+	Let $y\in\Omega$ and set
+	$A(y) = \{x\in\scr N: y\in B(x,2r_x)\}$.
+	Keep in mind that, if $x\in\scr N_k$, then $r_x=2^{k-2}$ and $2r_x = 2^{k-1}$.
+	Let $j\in\Z$ such that $y\in\Omega_j$.
+	
+	Notice that
+	\begin{equation}\label{eq680f38fd}
+		x\in\scr N_k 
+		\quad\THEN\quad
+		B(x,2^{k-1}) \subset \Omega_{k-1} \cup \Omega_k \cup \Omega_{k+1} .
+	\end{equation}
+	Indeed, if $z\in B(x,2^{k-1})$, then
+	\begin{align*}
+	 	\delta(z) &\le \delta(x) + 2^{k-1} < 2^{k+1} + 2^{k-1} \le 2^{k+2} , \\
+		\delta(z) &\ge \delta(x) - 2^{k-1} \ge 2^k - 2^{k-1} = 2^{k-1} .
+	\end{align*}
+	
+	From~\eqref{eq680f38fd} we get that, if $x\in\scr N_k$ and $y\in B(x,2^{k-1})$, then $k\in\{j-1,j,j+1\}$.
+	It follows that $A(y) \subset \scr N_{j-1}\cup\scr N_j \cup\scr N_{j+1}$.
+	
+	We thus have that $A(y)\subset B(y,2^{(j+1)-1}) = B(y,2^j)$, 
+	and that balls of radius $2^{j-4}$ centered at points of $A(y)$ are pairwise disjoint.
+	By Exercise~\ref{ex680f2822}, we conclude that $\#A(y) \le 2^{5n}$.
+	
+	The construction of the functions $\phi_x$ is left as an exercise.
+\end{proof}
+
+\begin{exercise}\label{ex680f2822}
+	Let $j\in\Z$.
+	Show that, if $A\subset B(0,2^j)$ is such that, for every $a_1,a_2\in A$ distinct, $B(a_1,2^{j-4})\cap B(a_2,2^{j-4}) = \emptyset$, then $\#A \le 2^{5n}$.
+	
+	{\it Hint:}
+	The union of the pairwise disjoint balls $\{B(a,2^{j-4})\}_{a\in A}$ is a subset of $B(0,2^j)$, so its volume...
+\end{exercise}
+
+\begin{exercise}
+	Construct the functions $\phi_x$ in Lemma~\ref{lem680f3acc}.
+\end{exercise}
+
+\begin{theorem}\label{thm6810811d}
+	Let $\Omega\subset\R^n$ open.
+	If $u\in W^{k,p}(\Omega)$, then there is a sequence $\{u_j\}_{j\in\N}\subset W^{k,p}(\Omega)\cap C^\infty(\Omega)$ such that $u_j\to u$ in $W^{k,p}(\Omega)$.
+\end{theorem} 
+\begin{proof}
+	We use the following notation: if $B$ is the ball $B(x,r)$, then $2B$ is the ball $B(x,2r)$.
+	
+	From Lemma~\ref{lem680f3acc}, we get a partition of unity $\{\phi_\ell\}_{\ell\in\N}$
+	and a countable family of balls $\{B_\ell\}_{\ell\in\N}$ 
+	such that $\Omega = \bigcup_{\ell\in\N} B_\ell$, 
+	$\spt(\phi_\ell)\subset B_\ell$,
+	and $\#\{\ell:y\in 2B_\ell\}<\infty$ for all $y\in\Omega$.
+	
+	By Theorem~\ref{thm680b49bf},
+	for every $\ell\in\N$ and $k\in\N$, there is $\epsilon_k>0$ such that the function
+	\begin{equation}
+		u_{k,\ell} = (\phi_\ell u)*\rho_{\epsilon_k} 
+	\end{equation}
+	is supported in $2B_\ell$ and $\|u_{k,\ell} - \phi_\ell u\|_{W^{m,p}(2B_\ell)} < \frac{1/k}{2^\ell}$.
+	Define
+	\begin{equation}
+		u_k = \sum_{\ell\in\N} u_{k,\ell} .
+	\end{equation}
+	Notice that $u_k\in C^\infty(\Omega)$, because each $u_{k,\ell}$ is smooth and the sum is locally finite.
+	Moreover,
+	\begin{align*}
+	 	\|u_k-u\|_{W^{m,p}(\Omega)}
+		&\le \sum_{\ell\in\N} \| u_{k,\ell} - \phi_\ell u\|_{W^{m,p}(\Omega)} \\
+		[\text{because }\spt(u_{k,\ell} - \phi_\ell u)\subset 2B_\ell]
+		&= \sum_{\ell\in\N} \| u_{k,\ell} - \phi_\ell u\|_{W^{m,p}(2B_\ell)} \\
+		&\le \sum_{\ell\in\N} \frac{1/k}{2^\ell} 
+		= \frac{2}{k} .
+	\end{align*}
+	Therefore, $u_k\to u$ in $W^{m,p}(\Omega)$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The closure of smooth functions with compact support}
+%We may wonder what is the closure of $C^\infty_c(\Omega)$ in $W^{m,p}(\Omega)$.
+Using Theorem~\ref{thm680f2023} and some smoothing, one can show that $C^\infty_c(\Omega)$ is dense in $L^p(\Omega)$, see Exercise~\ref{ex680f4988}
+However, it is NOT true in general that $C^\infty_c(\Omega)$ is dense in $W^{m,p}(\Omega)$.
+ 
+\begin{exercise}
+	Show that, for every $p\in[1,\infty)$, the constant function $u\equiv1$ belongs to $W^{1,p}((0,1))$, but it is not the limit in $W^{1,p}$ of functions $C^\infty_c((0,1))$.
+\end{exercise}
+
+So, for $\Omega\subset\R^n$ open, $m\in\N$ and $p\in[1,+\infty]$, we define
+\begin{equation}
+	W^{m,p}_0(\Omega) = \{u\in W^{m,p}(\Omega): \exists\{u_j\}_{j\in\N}\subset C^\infty_c(\Omega)\text{ such that }u_j\to u\text{ in }W^{m,p}(\Omega)\} .
+\end{equation}
+
+\begin{exercise}\label{ex680f4988}
+	Show that $C^\infty_c(\Omega)$ is dense in $L^p(\Omega)$.
+\end{exercise}
+
+\begin{theorem}\label{thm6810ea3d}
+	For every $m\in\N$ and $p\in[1,\infty)$,
+	$W^{m,p}_0(\R^n) = W^{m,p}(\R^n)$.
+\end{theorem}
+\begin{proof}
+	Given $u\in W^{m,p}(\R^n)$, we need to find a sequence $\{u_j\}_{j\in\N}\subset C^\infty_c(\R^n)$ that converges to $u$ in $W^{m,p}(\R^n)$.
+	By Theorem~\ref{thm6810811d} and a diagonal argument, we can assume $u\in C^\infty(\R^n)$.
+	
+	Let $\zeta:\R^n\to[0,1]$ be a smooth function such that 
+	\begin{equation}
+		B(0,1) \subset \{\zeta = 1\} \subset \spt(\zeta) \subset \bar B(0,2) .
+	\end{equation}
+	For $R>0$ and $x\in\R^n$, define $\zeta_R(x) = \zeta(x/R)$.
+	Notice that, for every $R>0$, $\beta\in\N^n$ and $x\in\R^n$,
+	\begin{equation}
+		|\Diff^\beta\zeta_R(x)| = |R^{-|\beta|} \Diff^\beta\zeta(x/R)| 
+		\le \frac1{R^{|\alpha|}} \|\Diff^\beta\zeta\|_{L^\infty(\R^n)} .
+	\end{equation}
+	We shall approximate $u$ with $\zeta_Ru$ as $R\to\infty$.
+	Notice that, for $R>0$ and $\alpha\in\N^n$, we have
+	\begin{align}
+		\|\Diff^\alpha u - \Diff^\alpha(\zeta_Ru)\|_{L^p(\R^n)}
+		&\le \| \Diff^\alpha u - \zeta_R\Diff^\alpha u\|_{L^p(\R^n)}
+			+ \sum_{\beta\le\alpha}\binom{\alpha}{\beta} \| \Diff^\beta\zeta_R \cdot \Diff^{\alpha-\beta}u\|_{L^p(\R^n)} \\
+		&\hspace{-3cm}\le \left( \int_{\R^n\setminus B(0,R)} |\Diff^\alpha u(x)|^p \did x \right)^{1/p}
+			+ \sum_{\beta\le\alpha}\binom{\alpha}{\beta} \frac1{R^{|\beta|}} \|\Diff^\alpha\zeta\|_{L^\infty(\R^n)} \|\Diff^{\alpha-\beta}u\|_{L^p(\R^n)} .
+	\end{align}
+	Since 
+	\begin{equation}
+		\lim_{R\to\infty} \int_{\R^n\setminus B(0,R)} |\Diff^\alpha u(x)|^p \did x = 0,
+	\end{equation}
+	we conclude that 
+	$\lim_{R\to\infty} \|u-\zeta_Ru\|_{W^{m,p}(\R^n)} = 0$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sobolev inequalities: $1\le p < n$}
+
+\begin{theorem}\label{thm681085c3}
+	Let $n\ge2$.
+	If $u\in C^1_c(\R^n)$, 
+	\begin{equation}\label{eq681085c8}
+		\left( \int_{\R^n} |u(x)|^{\frac{n}{n-1}} \did x \right)^{\frac{n-1}{n}}
+		\le \int_{\R^n} |\grad u(x)| \did x .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Let $u\in C^1_c(\R^n)$.
+	For $j\in\{1,\dots,n\}$, $x\in\R^n$ and $y\in\R$ we denote by $u(x|y)$ the evaluation
+	$u(x|_jy) = u(x_1,\dots,x_{j-1},y,x_{j+1},\dots,x_n)$.
+	Notice that, for every $x\in\R^n$ and $j\in\{1,\dots,n\}$,
+	\begin{equation}
+		u(x) = \int_{-\infty}^{x_j} \de_ju(x|_jy_j) \did y_j .
+	\end{equation}
+	Therefore, for every $x\in\R^n$,
+	\begin{equation}\label{eq6810e5a6}
+		|u(x)|^{\frac{n}{n-1}} 
+		\le \prod_{j=1}^n \left( \int_{-\infty}^{\infty} |\de_ju(x|_jy_j)| \did y_j \right)^{\frac1{n-1}} 
+		\le \prod_{j=1}^n \left( \int_{\R} |\grad u(x|_jy_j)| \did y_j \right)^{\frac1{n-1}} .
+	\end{equation}
+	We claim that, for each $\ell\in\{1,\dots,n\}$, we have
+	\begin{equation}\label{eq6810e541}
+		\int_{\R^\ell} |u(x)|^{\frac{n}{n-1}}  \did x_{\le \ell}
+		\le \left( \int_{\R^\ell} |\grad u(x)| \did x_{\le \ell} \right)^{\frac{\ell}{n-1}} 
+		 \prod_{j=\ell+1}^n \left( \int_{\R^\ell} \int_\R |\grad u(x|_jy_j)| \did y_j \did x_{\le \ell}\right)^{\frac{1}{n-1}} .
+	\end{equation}
+	where $\did x_{\le \ell} = \did x_1\cdots\did x_\ell$.
+	To prove~\eqref{eq6810e541} for $\ell=1$, we integrate~\eqref{eq6810e5a6} in $x_1$:
+	\begin{align}
+		&\int_\R |u(x)|^{\frac{n}{n-1}} \did x_1 \\
+		&\overset{\eqref{eq6810e5a6}}\le \int_\R \prod_{j=1}^n \left( \int_{\R} |\grad u(x|_jy_j)| \did y_j \right)^{\frac1{n-1}} \did x_1 \\
+		&= \left( \int_{\R} |\grad u(x|_1y_1)| \did y_1 \right)^{\frac1{n-1}}
+			\int_\R \prod_{j=2}^n \left( \int_{\R} |\grad u(x|_jy_j)| \did y_j \right)^{\frac1{n-1}} \did x_1 \\
+		&\overset{\eqref{General Hölder}}\le \left( \int_{\R} |\grad u(x)| \did x_1 \right)^{\frac1{n-1}}
+			\prod_{j=2}^n \left( \int_\R  \int_{\R} |\grad u(x|_jy_j)| \did y_j  \did x_1 \right)^{\frac1{n-1}} .
+	\end{align}
+	Next, given~\eqref{eq6810e541} for $\ell = k\in\{1,\dots,n-1\}$, we prove the same for $\ell = k+1$ integrating in $x_{k+1}$:
+	\begin{align*}
+	 	&\int_\R \int_{\R^k} |u(x)|^{\frac{n}{n-1}}  \did x_{\le k} \did x_{k+1} \\
+		&\overset{\eqref{eq6810e541}}\le \int_\R \left( \int_{\R^k} |\grad u(x)| \did x_{\le k} \right)^{\frac{k}{n-1}} 
+		 \prod_{j=k+1}^n \left( \int_{\R^k} \int_\R |\grad u(x|_jy_j)| \did y_j \did x_{\le k}\right)^{\frac{1}{n-1}} \did x_{k+1} \\
+		&= \left( \int_{\R^k} \int_\R |\grad u(x|_{k+1}y_{k+1})| \did y_{k+1} \did x_{\le k}\right)^{\frac{1}{n-1}} \times\\
+		&\quad\times \int_\R \left( \int_{\R^k} |\grad u(x)| \did x_{\le k} \right)^{\frac{k}{n-1}} 
+		 \prod_{j=k+2}^n \left( \int_{\R^k} \int_\R |\grad u(x|_jy_j)| \did y_j \did x_{\le k}\right)^{\frac{1}{n-1}} \did x_{k+1} \\
+		 &\overset{\eqref{General Hölder}}\le\left( \int_{\R^k} \int_\R |\grad u(x|_{k+1}y_{k+1})| \did y_{k+1} \did x_{\le k}\right)^{\frac{1}{n-1}} \times\\
+		&\quad\times \left( \int_\R\int_{\R^k} |\grad u(x)| \did x_{\le k} \did x_{k+1}\right)^{\frac{k}{n-1}} 
+		 \prod_{j=k+2}^n \left( \int_\R\int_{\R^k} \int_\R |\grad u(x|_jy_j)| \did y_j \did x_{\le k} \did x_{k+1}\right)^{\frac{1}{n-1}}  ,
+	\end{align*}
+	which gives~\eqref{eq6810e541} for $\ell = k+1$. 
+	
+	Finally, notice that~\eqref{eq6810e541} for $\ell=n$ is~\eqref{eq681085c8}.
+\end{proof}
+
+\begin{corollary}\label{cor6810ee47}
+	Let $n\ge 2$.
+	Then~\eqref{eq681085c8} holds for all $u\in W^{1,1}(\R^n)$.
+\end{corollary}
+\begin{proof}
+	Let $u\in W^{1,1}(\R^n)$.
+	By Theorem~\ref{thm6810ea3d}, there is a sequence $\{u_j\}_{j\in\N}\subset C^1_c(\R^n)$ such that $u_j\to u$ in $W^{1,1}(\R^n)$.
+	Notice that, 
+	\begin{equation}
+		\|u_j-u_k\|_{L^{\frac{n}{n-1}}} 
+		\overset{\eqref{eq681085c8}}\le \|\grad(u_j-u_k)\|_{L^1}
+		\le \|u_j-u_k\|_{W^{1,1}} .
+	\end{equation}
+	Therefore, $\{u_j\}_j$ is a Cauchy sequence in $L^{\frac{n}{n-1}}(\R^n)$.
+	Since $u_j\to u$ in $L^1$ already, then $u_j$ must converge to $u$ in $L^{\frac{n}{n-1}}(\R^n)$ too.
+	We conclude that
+	\begin{equation}
+		\|u\|_{L^{\frac{n}{n-1}}} 
+		= \lim_{j\to\infty} \|u_j\|_{L^{\frac{n}{n-1}}}
+		\overset{\eqref{eq681085c8}}\le \lim_{j\to\infty} \|\grad u_j\|_{L^1}
+		= \|\grad u\|_{L^1} .
+	\end{equation}
+\end{proof}
+
+\begin{exercise}
+	In Theorem~\ref{thm681085c3} we required $n\ge 2$. What happens when $n=1$?
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A remark on the isoperimetric inequality}
+
+The inequality~\eqref{eq681085c8} has a geometric meaning: it is indeed equivalent to the \emph{isoperimetric inequality}.
+More precisely, the characteristic function $\one_E$ of a measurable $E\subset\R^n$ belongs to $L^1_\loc(\R^n)$ and thus it defines a distribution: $\one_E\in\scr D'(\R^n)$.
+Define the \emph{perimeter} of $E$ as the \emph{total variation} of $\Diff E$, that is,
+\begin{equation}
+	\operatorname{Per}(E) 
+	= \sup\{\sum_{j=1}^n\de_j\one_E[\phi_j] : \phi_j\in\scr D,\ \|\phi_j\|_{L^\infty} \le 1 \} .
+\end{equation}
+In order to put this formula into perspective, we define for $u\in\scr D'$
+\begin{equation}
+	|\Diff u|(\R^n)
+	= \sup\{\sum_{j=1}^n\de_ju[\phi_j] : \phi_j\in\scr D,\ \|\phi_j\|_{L^\infty} \le 1 \} \in [0,+\infty] .
+\end{equation}
+It is clear that $|\Diff u|(\R^n)<\infty$ if and only if $|\Diff u|$ is a Radon measure, as seen in Proposition~\ref{prop6810ed13}.
+In this case, we say that $u$ has \emph{bounded variation}.
+The space of \emph{functions with bounded variation}, \emph{BV functions} for short,
+is 
+\begin{equation}
+	\operatorname{BV}(\R^n)
+	= \{u\in L^1(\R^n) : |\Diff u|(\R^n)<\infty \} .
+\end{equation}
+If $u\in C^\infty_c(\R^n)$, then $|\Diff u|(\R^n) = \int_{\R^n} |\grad u| \did x$.
+One can show that~\eqref{eq681085c8} extends to BV functions: if $u\in \operatorname{BV}(\R^n)$, then
+\begin{equation}\label{eq6810ee38}
+	\|u\|_{L^{\frac{n}{n-1}}} \le |\Diff u|(\R^n) .
+\end{equation}
+The proof is by smooth approximation, similarly to the proof of Corollary~\ref{cor6810ee47}.
+If we apply~\eqref{eq6810ee38} to $\one_E$, we get
+\begin{equation}\label{eq6810eea6}
+	|E|^{\frac{n-1}{n}} \le \operatorname{Per}(E) ,
+\end{equation}
+where $|E|$ is the volume of $E$.
+This is the isoperimetric inequality in $\R^n$. 
+Equality in~\eqref{eq6810eea6} is attained only when $E$ is an Euclidean ball.
+
+In fact, one can show that from~\eqref{eq6810eea6}, using the coarea inequality one can get~\eqref{eq681085c8} for $u\in C^1_c(\R^n)$.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Gagliardo–Nirenberg–Sobolev inequality}
+
+The \emph{Sobolev conjugate} of $p\in[1,n)$ is the number $p^*$ such that
+\begin{equation}
+	\frac{1}{p} - \frac{1}{p^*} = \frac{1}{n} ,
+	\text{ or, equivalently, }
+	 \frac{1}{p^*} = \frac{1}{p} - \frac{1}{n} .
+\end{equation}
+In other words,
+\begin{equation}
+	p^* = \frac{np}{n-p} .
+\end{equation}
+Notice that, \eqref{eq681085c8} is \eqref{eq6810881c} for $p=1$.
+
+\begin{theorem}[Gagliardo–Nirenberg–Sobolev inequality]\label{thm68108820}
+	Let $n\ge2$ and $p\in[1,n)$ with Sobolev conjugate $p^* = \frac{np}{n-p}$.
+	There exists $C\in\R$ such that, for all $u\in C^1_c(\R^n)$,
+	\begin{equation}\label{eq6810881c}
+		\|u\|_{L^{p^*}(\R^n)} \le C \|\grad u\|_{L^p(\R^n)} .
+	\end{equation}
+	In fact, we can take $C=\frac{p(n-1)}{n-p} = \frac{p^*}{1^*}$.
+\end{theorem}
+\begin{proof}
+	If $p=1$, then~\eqref{eq6810881c} is~\eqref{eq681085c8}.
+	Therefore, we assume $p>1$.
+	
+	Fix $u\in C^1_c(\R^n)$.
+	Let $\gamma>1$ and set $v=|u|^\gamma$.
+	By Exercise~\ref{ex68123356}, $v\in C^1_c(\R^n)$.
+	Therefore, by Corollary~\ref{cor6810ee47}, we have
+	\begin{align}
+		\left( \int_{\R^n} |u|^{\gamma\frac{n}{n-1}} \did x \right)^{\frac{n-1}{n}}
+		&= \left( \int_{\R^n} v^{\frac{n}{n-1}} \did x \right)^{\frac{n-1}{n}} \\
+		&\overset{\eqref{eq681085c8}}\le \int_{\R^n} |\grad v(x)|\did x \\
+		&= \gamma \int_{\R^n} |u|^{\gamma-1} |\grad u(x)|\did x \\
+		&\overset{\eqref{Hölder}}\le \gamma \left( \int_{\R^n} |u|^{\frac{p}{p-1}(\gamma-1)}\did x \right)^{\frac{p-1}{p}}
+			\left( \int_{\R^n} |\grad u(x)|^p \did x \right)^{1/p} .
+	\end{align}
+	We want $\gamma\frac{n}{n-1} = \frac{p}{p-1}(\gamma-1)$, that is $\gamma = \frac{p(n-1)}{n-p}$.
+	Notice that, if $p\in(1,n)$, then $\gamma>1$.
+	If $u\equiv0$, then~\eqref{eq6810881c} trivially holds.
+	So, we can assume $u\neq0$, and thus the above estimates, with this $\gamma$, gives
+	\begin{equation}
+		\left( \int_{\R^n} |u|^{\gamma\frac{n}{n-1}} \did x \right)^{\frac{n-1}{n}-\frac{p-1}{p}} 
+		\le \gamma \left( \int_{\R^n} |\grad u(x)|^p \did x \right)^{1/p} .
+	\end{equation}
+	A direct computations gives $\gamma\frac{n}{n-1} = p^*$ and $\frac{n-1}{n}-\frac{p-1}{p} = \frac1{p^*}$.
+	So, we have~\eqref{eq6810881c}.
+\end{proof}
+
+\begin{exercise}\label{ex68123356}
+	Show that, if $u\in C^1_c(\R^n)$ and $\gamma>1$, then $|u|^\gamma\in C^1_c(\R^n)$ and $\grad(|u|^\gamma) = \gamma |u|^{\gamma-1} \grad u$.
+	
+	{\it Hint:}
+	on the set $\{u\neq 0\}$, there the statement is trivial.
+	What remains to show is that, if $u(x)=0$, then $|u|^\gamma$ is differentiable at $x$ with derivative equal to $0$.
+\end{exercise}
+
+\begin{corollary}
+	Let $n\ge 2$ and $p\in[1,n)$ with Sobolev conjugate $p^* = \frac{np}{n-p}$.
+	Then~\eqref{eq6810881c} holds for all $u\in W^{1,p}(\R^n)$.
+\end{corollary}
+\begin{proof}
+	Let $u\in W^{1,p}(\R^n)$.
+	By Theorem~\ref{thm6810ea3d}, there is a sequence $\{u_j\}_{j\in\N}\subset C^1_c(\R^n)$ such that $u_j\to u$ in $W^{1,p}(\R^n)$.
+	Notice that, 
+	\begin{equation}
+		\|u_j-u_k\|_{L^{p^*}} 
+		\overset{\eqref{eq6810881c}}\le \|\grad(u_j-u_k)\|_{L^p}
+		\le \|u_j-u_k\|_{W^{1,p}} .
+	\end{equation}
+	Therefore, $\{u_j\}_j$ is a Cauchy sequence in $L^{p^*}(\R^n)$.
+	Since $u_j\to u$ in $L^1$ already, then $u_j$ must converge to $u$ in $L^{p^*}(\R^n)$ too.
+	We conclude that
+	\begin{equation}
+		\|u\|_{L^{p^*}} 
+		= \lim_{j\to\infty} \|u_j\|_{L^{p^*}}
+		\overset{\eqref{eq6810881c}}\le \lim_{j\to\infty} \|\grad u_j\|_{L^p}
+		= \|\grad u\|_{L^p} .
+	\end{equation}
+\end{proof}
+
+
+
+
 
 
 
