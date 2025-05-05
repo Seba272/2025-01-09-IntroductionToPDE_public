@@ -5331,7 +5331,10 @@ Notice that, as soon as $y\mapsto f(y) g(x-y)$ is integrable, then not only $f*g
 \end{exercise}
 \begin{exercise}[Young's inequality]\label{ex67fbf157}
 	Show that, if $f\in L^1(\R^n)$ and $g\in L^{p}(\R^n)$ with $p\in[1,\infty]$,
-	then $f*g\in L^p(\R^n)$ and $\|f*g\|_{L^p} \le \|f\|_{L^1} \|g\|_{L^p}$.
+	then $f*g\in L^p(\R^n)$ and 
+	\begin{equation}\label{eq6817203b}
+		\|f*g\|_{L^p} \le \|f\|_{L^1} \|g\|_{L^p}
+	\end{equation}
 	
 	{\it Hint.}
 	By Hölder inequality, with $\frac1p+\frac1{p'}=1$,
@@ -7196,7 +7199,7 @@ See Exercise~\ref{eq680b28e2}.
 	So, the answer is no.
 \end{exercise}
 
-\begin{exercise}
+\begin{exercise}\label{ex681772db}
 	An example of weird Sobolev functions.
 	For $\beta\in\R$, define $u_\beta:\R^n\to\R$,
 	\begin{equation}
@@ -7426,6 +7429,41 @@ We will show three approximation results
 		= \frac{2}{k} .
 	\end{align*}
 	Therefore, $u_k\to u$ in $W^{m,p}(\Omega)$.
+\end{proof}
+%\begin{proof}
+%	For every $x\in\Omega$, let $r_x\in(0,1]$ be such that $\bar B(x,2r_x)\subset \Omega$.
+%	Then, $\{B(x,r_x)\}_{x\in\Omega}$ covers $\Omega$.
+%	
+%	We need to extract a cover $\scr B = \{B(x_\ell,r_\ell)\}_{\ell\in\N} \subset \{B(x,r_x)\}_{x\in\Omega}$ such that, for every $x\in\Omega$,
+%	\begin{equation}
+%		0< \# \{\ell\in\N: x\in B(x_\ell,2r_\ell) \} < \infty .
+%	\end{equation}
+%	
+%	Let $\{\phi_\ell\}_{\ell\in\N}$ be a partition of unity subordinated to this cover.
+%	So, for each $\ell\in\N$ there is $V_\ell = B(x_\ell,r_{x_{\ell}})$ such that $\spt(\phi_\ell)\subset V_\ell\Subset \Omega$.
+%	
+%	Fix $j\in \N$.
+%	By Theorem~\ref{thm680b49bf},
+%	for each $\ell\in\N$, there is $\epsilon\in (0,r_{x_\ell})$ such that 
+%	\begin{equation}
+%	\| \phi_\ell u - (\phi_\ell u)*\rho_\epsilon \|_{W^{k,p}(\Omega)} 
+%	= \| \phi_\ell u - (\phi_\ell u)*\rho_\epsilon \|_{W^{k,p}(B(x,2r_x))} 
+%	\le \frac{1/j}{2^\ell} .
+%	\end{equation}
+%	Define $u_{\ell,j}=(\phi_\ell u)*\rho_\epsilon\in C^\infty_c(\Omega)$ for such $\epsilon$.
+%	Then, 
+%	\TODO
+%\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Smooth approximation of Sobolev functions: global approximation}
+
+\begin{theorem}
+	Let $\Omega\subset\R^n$ open.
+	If $u\in W^{k,p}(\Omega)$, then there is a sequence $\{u_j\}_{j\in\N}\subset W^{k,p}(\Omega)\cap C^\infty(\bar\Omega)$ such that $u_j\to u$ in $W^{k,p}(\Omega)$.
+\end{theorem}
+\begin{proof}
+	\TODO
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -7691,6 +7729,742 @@ Notice that, \eqref{eq681085c8} is \eqref{eq6810881c} for $p=1$.
 		= \|\grad u\|_{L^p} .
 	\end{equation}
 \end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sobolev inequalities: $n < p < \infty$. Morrey's inequality}
+
+\begin{theorem}[Morrey's inequality]\label{thm681726ad}
+	Let $n\ge2$ and $p\in(n,\infty)$.
+	There is $C\in\R$ such that, for every $o\in\R$, $R>0$ and $u\in W^{1,p}(B(o,4R))$,
+	and for every Lebesgue point $x,y\in B(o,R)$ of $u$ (thus, for a.e.~$x,y\in B(o,R)$),
+	\begin{equation}\label{eq68177bc8}
+%	\text{for a.e.~} x,y\in B(o,R), \qquad
+		|u(x)-u(y)| \le C |x-y|^{1-n/p} \|\grad u\|_{L^p(B(o,4R))} .
+	\end{equation}
+	In particular, every $u\in W^{1,p}(\R^n)$ has a $(1-n/p)$-Hölder continuous representative.
+	
+	The constant $C$, which depends on $p$ and $n$, can be taken to be $C=\frac{ 2^n (n\omega_n)^{\frac{p-1}{p}} }{ \omega_{n-1} } \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}}$.
+\end{theorem}
+
+We shall prove Theorem~\ref{thm681726ad} after a few intermediate statements.
+
+\begin{proposition}\label{prop6816457e}
+	For every $n\ge 2$ there is $C\in\R$ such that, for every $u\in C^1(\R^n)$, every $x\in\R^n$ and every $r>0$, 
+	\begin{equation}\label{eq681641a0}
+		\fint_{B(x,r)} |u(y)-u(x)| \did y 
+		\le C \int_{B(x,r)} \frac{ |\grad u(y)| }{ |y-x|^{n-1} } \did y .
+	\end{equation}
+	The constant $C$ can be taken equal to $C=\frac{1}{\omega_n n}$.
+\end{proposition}
+\begin{proof}
+	\begin{align*}
+	\int_{B(x,r)} |u(y)-u(x)|\did y
+	&= \int_0^r \int_{\de B(x,s)} |u(y)-u(x)| \did S(y) \did s \\
+	&= \int_0^r \int_{\de B(0,1)} |u(x+sz)-u(x)| s^{n-1}\did S(z) \did s \\
+	&= \int_0^r \int_{\de B(0,1)} \left| \int_0^s \grad u(x+sz)\cdot z \did t \right| s^{n-1}\did S(z) \did s \\
+	&\le \int_0^r \int_{\de B(0,1)}  \int_0^s |\grad u|(x+sz) \did t s^{n-1}\did S(z) \did s \\
+	&= \int_0^r  \int_0^s \int_{\de B(0,1)} \frac{|\grad u|(x+sz)}{t^{n-1}} t^{n-1} \did S(z) \did t s^{n-1} \did s \\
+	&= \int_0^r  \int_{B(x,s)} \frac{|\grad u|(y)}{|y-x|^{n-1}} \did y s^{n-1} \did s \\
+	&\le \int_0^r  \int_{B(x,r)} \frac{|\grad u|(y)}{|y-x|^{n-1}} \did y s^{n-1} \did s \\
+	&= \frac{r^n}{n} \int_{B(x,r)} \frac{|\grad u|(y)}{|y-x|^{n-1}} \did y s^{n-1} .
+	\end{align*}
+	Since the volume of $B(x,r)$ is $\omega_nr^n$, then we obtain~\eqref{eq681641a0} with $C=\frac{1}{\omega_n n}$. 
+\end{proof}
+
+\begin{remark}
+	Proposition~\ref{prop6816457e} is important because the integral kernel in the right-hand side of~\eqref{eq681641a0} is the famous \emph{Riesz potential}.
+\end{remark}
+
+\begin{lemma}
+	For every $n\ge2$ and $\in(n,+\infty)$, is $C(p,n)\in\R$ such that, for every $u\in C^1(\R^n)$, every $x\in\R^n$ and every $r>0$, 
+	\begin{equation}\label{eq6816524f}
+		\left| \fint_{B(x,r)} u(y) \did y -u(x) \right|
+		\le \fint_{B(x,r)} |u(y)-u(x)| \did y 
+		\le C(p,n) r^{1-\frac{n}{p}} \|\grad u\|_{L^p(B(x,r))} .
+	\end{equation}
+	The constant $C(p,n)$ can be taken equal to $C(p,n)=(n\omega_n)^{-\frac1p} \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}}$.
+\end{lemma}
+\begin{proof}
+	The first inequality in~\eqref{eq6816524f} is trivial, because $\fint_{B(x,r)}\did y =1$ and thus
+	\begin{equation}
+		\left| \fint_{B(x,r)} u(y) \did y -u(x) \right|
+		= \left| \fint_{B(x,r)} (u(y)  -u(x)) \did y \right|
+		\le \fint_{B(x,r)} |u(y)-u(x)| \did y .
+	\end{equation}
+	We simply apply the Hölder inequality to~\eqref{eq681641a0}:
+	\begin{multline}
+		\fint_{B(x,r)} |u(y)-u(x)| \did y 
+		\overset{\eqref{eq681641a0}}\le \frac{1}{\omega_n n} \int_{B(x,r)} \frac{ |\grad u(y)| }{ |y-x|^{n-1} } \did y \\
+		\overset{\eqref{Hölder}}\le \frac{1}{\omega_n n} 
+			\left( \int_{B(x,r)} |\grad u(y)|^p \did y \right)^{\frac1p}
+			\left( \int_{B(x,r)} \frac{1}{ |y-x|^{(n-1)\frac{p}{p-1}} } \did y  \right)^{\frac{p-1}{p}} .
+	\end{multline}
+	Notice that, using polar coordinates,
+	\begin{align}
+		\int_{B(x,r)} \frac{1}{ |y-x|^{(n-1)\frac{p}{p-1}} } \did y
+		&= \int_0^r n\omega_n s^{n-1} \frac{1}{s^{(n-1)\frac{p}{p-1}} } \did s \\
+		&= n\omega_n  \int_0^r s^{-\frac{n-1}{p-1}} \did s \\
+		&= n\omega_n \frac{p-1}{p-n} r^{\frac{p-n}{p-1}} ,
+	\end{align}
+	where $p>n$ ensures that $-\frac{n-1}{p-1}>-1$ and thus that the above integral is finite.
+	Therefore,
+	\begin{equation}
+		\left( \int_{B(x,r)} \frac{1}{ |y-x|^{(n-1)\frac{p}{p-1}} } \did y  \right)^{\frac{p-1}{p}}
+		= \left(n\omega_n\frac{p-1}{p-n}\right)^{\frac{p-1}{p}} r^{\frac{p-n}{p}} ,
+	\end{equation}
+	from which we conclude~\eqref{eq681641a0} with $C(p,n) = (n\omega_n)^{\frac{p-1}{p}-1} \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}} = (n\omega_n)^{-\frac1p} \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}}$.
+	Finally, since We have obtained
+\end{proof}
+
+\begin{remark}\label{rem68165c8c}
+	For $W\subset\R^n$ bounded and with positive volume, and $u\in L^1_\loc(\R^n)$, define
+	\begin{equation}
+		u_W = \fint_W u(y)\did y = \frac1{|W|} \int_W u(y) \did y ,
+	\end{equation}
+	where $|W|=\scr L^n(W)$ is the volume of $W$.
+%	If $B= B(x,r)$, then~\eqref{eq6816524f} can be rewritten as
+%	\begin{equation}
+%		|u(x) - u_{B(x,r)}| \le  C(p,n) r^{1-\frac{n}{p}} \|\grad u\|_{L^p(B(x,r))} .
+%	\end{equation}
+	In the proof of Theorem~\ref{thm68165fd2}, we will use an idea that is worth to keep in mind and understand correctly. 
+	Suppose we have two points $x,z\in\R^n$ with $r=|x-z|$, and set $W=B(x,r)\cap B(z,r)$.
+	Clearly we have $|u(x)-u(z)|\le |u(x) - u_W| + |u_W - u(z)|\le \fint_W |u(y)-u(x)| \did y + \fint_W |u(y)-u(z)| \did y$.
+	We now do the following:
+	\begin{align}
+		\fint_W |u(y)-u(x)| \did y
+		&= \frac{|B(x,r)|}{|W|} \frac{1}{|B(x,r)|} \int_W |u(y)-u(x)| \did y \\
+		&\le \frac{|B(x,r)|}{|W|} \frac{1}{|B(x,r)|} \int_{B(x,r)} |u(y)-u(x)| \did y \\
+		&= \frac{|B(x,r)|}{|W|} \fint_{B(x,r)} |u(y)-u(x)| \did y .
+	\end{align}
+	Now we have that $\frac{|B(x,r)|}{|W|} = \frac{|B(x,r)|}{|B(x,r)\cap B(z,r)|}$ is a constant that depends only on $n$.
+	Apart of computing it explicitely, see Exercise~\ref{ex681659a2}, we can convince ourselves that it is a constant because, clearly, for every $v\in\R^n$, $\lambda>0$ and $O\in\Orth(n)$,
+	\begin{equation}
+%		\frac{|B(x,r)|}{|B(x,r)\cap B(z,r)|}
+		 \frac{|B(x+v,r)|}{|B(x+v,r)\cap B(z+v,r)|}
+		= \frac{|B(x,\lambda r)|}{|B(x,\lambda r)\cap B(z,\lambda r)|}
+		= \frac{|B(Ox,r)|}{|B(Ox,r)\cap B(Oz,r)|} .
+	\end{equation}
+	So, $\frac{|B(x,r)|}{|B(x,r)\cap B(z,r)|} = \frac{|B(0,1)|}{|B(0,1)\cap B(e_1,1)|}$.
+\end{remark}
+\begin{exercise}\label{ex681659a2}
+	Compute $\frac{|B(x,r)|}{|B(x,r)\cap B(z,r)|}$.
+
+	{\it Solution.}
+	First check that 
+	$B(0,1)\cap B(e_1,1) = \{(y_1,y')\in\R^n : y_1\in(0,1),\ y'\in\R^{n-1},\ |y'|^2\le y_1^2,\ |y'|^2 \le 1-y_1^2\}$.
+	Then check $|B(0,1)\cap B(e_1,1)| = 2\int_0^{1/2} \omega_{n-1} y_1^{n-1} \did y_1 = \frac{\omega_{n-1}}{n2^{n-1}}$.
+	Finally, $\frac{|B(x,r)|}{|B(x,r)\cap B(z,r)|} = \frac{|B(0,1)|}{|B(0,1)\cap B(e_1,1)|} = \frac{n\omega_n2^{n-1}}{\omega_{n-1}}$.
+\end{exercise}
+
+\begin{theorem}[Morrey's inequality for smooth functions]\label{thm68165fd2}
+	For every $n\ge2$ and $p>n$,
+	there is $C\in\R$ such that, 
+	for every $o\in\R$, $R>0$ and $u\in C^1(B(o,3R))$
+	for every $u\in C^1(\R^n)$,
+	\begin{equation}\label{eq68166038}
+	\forall x,y\in B(o,R)\qquad
+		|u(x)-u(y)| \le C |x-y|^{1-n/p} \|\grad u\|_{L^p(B(o,3R))} .
+	\end{equation}
+	The constant $C$, which depends on $p$ and $n$, can be taken to be $C=\frac{ 2^n (n\omega_n)^{\frac{p-1}{p}} }{ \omega_{n-1} } \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}}$.
+\end{theorem}
+\begin{proof}
+	Let $x,y\in B(o,R)$, and set $r=|x-y|\le 2R$ and $W=B(x,r)\cap B(y,r)$.
+	Using the argument described in Remark~\ref{rem68165c8c}, with constant $C=\frac{|B(0,1)|}{|B(0,1)\cap B(e_1,1)|} = \frac{n\omega_n2^{n-1}}{\omega_{n-1}}$ 
+	(see Exercise~\ref{ex681659a2} for the explicit value of $C$),
+	\begin{align}
+		|u(x)-u(y)|
+		&\le |u(x) - u_W| + |u_W - u(y)| \\
+		&\le \fint_W |u(z)-u(x)| \did z + \fint_W |u(z)-u(y)| \did z \\
+		&\le C \fint_{B(x,r)} |u(z)-u(x)| \did z + C \fint_{B(y,r)} |u(z)-u(y)| \did z \\
+		&\overset{\eqref{eq6816524f}}\le C C(p,n) r^{1-\frac{n}{p}} \|\grad u\|_{L^p(B(x,r))} + C C(p,n) r^{1-\frac{n}{p}} \|\grad u\|_{L^p(B(y,r))} \\
+		&\overset{(*)}\le 2 C C(p,n) |x-y|^{1-\frac{n}{p}} \|\grad u\|_{L^p(B(o,3R))} .
+%		&= 2 C C(p,n) |x-z|^{1-\frac{n}{p}} \|\grad u\|_{L^p(B(o,3R))}
+	\end{align}
+	In $(*)$ we have used that $B(x,r) \subset B(x,2R)\subset B(o,3R)$.
+	Since $C(p,n)=(n\omega_n)^{-\frac1p} \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}}$,
+	\begin{equation}\label{eq68165dde}
+		2 C C(p,n) = \frac{ 2^n (n\omega_n)^{\frac{p-1}{p}} }{ \omega_{n-1} } \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}} .
+	\end{equation}
+\end{proof}
+
+\begin{remark}
+	The constant we have found is not necessarily optimal.
+	Finding optimal constants in Sobolev inequalities may be quite tricky.
+	See Remark~\ref{rem6816609d} for another constant.
+\end{remark}
+
+\begin{remark}\label{rem6816609d}
+	The proof presented here has been taken from Evans \cite[\S5.6.2]{MR2597943}.
+	Parviainen in \cite{Parviainen} proves Theorem~\ref{thm68165fd2} with a slightly different approach. 
+	First, they don't go through the Riesz potential as in Proposition~\ref{prop6816457e}.
+	Second, they use cubes instead of balls.
+	Third, the constant they get in~\eqref{eq68166038} is $C=\frac{2np}{p-n}$.
+\end{remark}
+
+\begin{exercise}
+	For $n\ge2$ and $p>n$, which of these constants is better in Morrey's inequality?
+	\begin{equation}
+		A = \frac{ 2^n (n\omega_n)^{\frac{p-1}{p}} }{ \omega_{n-1} } \left(\frac{p-1}{p-n}\right)^{\frac{p-1}{p}},
+		\qquad
+		B = \frac{2np}{p-n} .
+	\end{equation}
+\end{exercise}
+
+\begin{exercise}\label{ex68172771}
+	Recall that a point $x\in\R^n$ is a \emph{Lebesgue point} of $u\in L^1_\loc(\R^n)$ if
+	\begin{equation}
+		\lim_{r\to0} \fint_{B(x,r)} |u(y)-u(x)| \did y = 0 .
+	\end{equation}
+	Recall also that, if $u\in L^1_\loc(\R^n)$, then almost every $x\in\R^n$ is a Lebesgue point of $u$; see \cite[Theorem (3.20),p.93]{MR767633}.
+	
+	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be a family of standard mollifiers on $\R^n$.
+	For $u\in L^1_\loc(\R^n)$, set $u_\epsilon = u*\rho_\epsilon \in C^\infty(\R^n)$.
+	Show that %, if $x\in\R^n$ is a Lebesgue point of $u$, then
+	\begin{equation}\label{eq681727df}
+		\forall x\in\R^n\text{ Lebesgue point of $u$,}\qquad
+		\lim_{\epsilon\to0} u_\epsilon(x) = u(x) .
+	\end{equation}
+	Note that here we do not consider $u$ ``up to a set of measure zero'', but really a fixed function $u:\R^n\to\C$.
+	
+	{\it Solution.}
+	Notice that, for every $y\in\R^n$,  $|\rho_\epsilon(y)| = \left|\frac{\rho(y/\epsilon)}{\epsilon^n}\right| \le \frac{\|\rho\|_{L^\infty}}{\epsilon^n}$.
+	Recall also that $\spt(\rho_\epsilon)\subset \bar B(0,\epsilon)$.
+	Therefore,
+	\begin{align}
+		|u_\epsilon(x) - u(x)|
+		&= \left| \int_{B(x,\epsilon)} u(x-y) \rho_\epsilon(y) \did y - u(x) \int_{B(x,\epsilon)}\rho_\epsilon(y) \did y \right| \\
+		&\le \int_{B(x,\epsilon)} |u(x-y) - u(x) |  \rho_\epsilon(y) \did y \\
+		&\le \frac{\|\rho\|_{L^\infty}}{\epsilon^n} \int_{B(x,\epsilon)} |u(x-y) - u(x) | \did y \\
+		&= \|\rho\|_{L^\infty}\omega_n \fint_{B(x,\epsilon)} |u(x-y) - u(x) | \did y .
+	\end{align}
+	Therefore, if $x$ is a Lebesgeue point of $u$, then 
+	$\lim_\epsilon u_\epsilon(x) = u(x)$.
+	
+	See \cite[Theorem 8.15]{MR767633} for a more general statement (for mollifications that do not have compact support).
+\end{exercise}
+
+\begin{proof}[Proof of Morrey's inequality for Sobolev functions: Theorem~\ref{thm681726ad}]
+	Let $u\in W^{1,p}(B(o,4R))$ and $x,y\in B(o,R)$ be two Lebesgue points of $u$.
+
+	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be a family of standard mollifiers on $\R^n$
+	and denote by $u_\epsilon = u*\rho_\epsilon \in C^\infty(\R^n)$.
+	By Exercise~\ref{ex68172771}, by the Morrey's inequality for smooth functions~\ref{thm68165fd2}, 
+	and by standard properties of mollifiers, 
+	we have
+	\begin{align}
+		|u(x)-u(y)|
+		&\overset{\eqref{eq681727df}}= \lim_{\epsilon\to0} |u_\epsilon(x) - u_\epsilon(y)| \\
+		&\overset{\eqref{eq68166038}}\le \limsup_{\epsilon\to0}  C |x-y|^{1-n/p} \|\grad u_\epsilon\|_{L^p(B(o,3R))} \\
+		&= C |x-y|^{1-n/p} \limsup_{\epsilon\to0}\|(\grad u)_\epsilon\|_{L^p(B(o,3R))} \\
+		&\overset{\eqref{eq6817203b}}\le C |x-y|^{1-n/p} \|\grad u\|_{L^p(B(o,4R))} .
+	\end{align}
+	In the last step we use Young's inequality~\eqref{eq6817203b} as follows:
+	if $\epsilon<R$, then there is a cut-off function $\zeta\in C^\infty_c(B(o,4R)$ such that $\bar B(o,3R+\epsilon) \subset \{\zeta=1\}$ and $0\le \zeta\le 1$.
+	Then $(\zeta\grad u)_\epsilon = (\grad u)_\epsilon$ in $B(o,3R)$.
+	So,
+	\begin{align}
+		\|(\grad u)_\epsilon\|_{L^p(B(o,3R))} 
+		&= \|(\zeta\grad u)_\epsilon\|_{L^p(B(o,3R))}
+		\le \|(\zeta\grad u)_\epsilon\|_{L^p(\R^n)} \\
+		&= \|\rho_\epsilon*(\zeta\grad u)\|_{L^p(\R^n)} 
+		\le \|\rho_\epsilon*|\zeta\grad u|\|_{L^p(\R^n)} \\
+		&\overset{\eqref{eq6817203b}}\le \|\rho_\epsilon\|_{L^1(\R^n)} \|\zeta\grad u\|_{L^p(\R^n)} 
+		\le \|\grad u\|_{L^p(B(o,4R))} .
+	\end{align}
+\end{proof}
+
+\begin{exercise}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	Show that, if $u\in W^{m,p}_\loc(\Omega)$ for some $m\ge1$ and $p>n$, then $u\in C^{m-1}(\Omega)$.
+	In particular, show that, for every $p>n$,
+	\begin{equation}
+		\bigcap_{m\ge1} W^{m,p}_\loc(\Omega) = C^\infty(\Omega) .
+	\end{equation}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Difference quotients}
+Let $\Omega\subset\R^n$ open.
+For $\epsilon>0$, define
+\begin{equation}
+	\Omega_{\epsilon} = \{x\in\Omega: \dist(x,\de\Omega)>\epsilon\}
+	= \{x\in\Omega: \bar B(x,\epsilon) \subset\Omega\}. 
+\end{equation}
+
+For $u:\Omega\to\C$, $j\in\{1,\dots,n\}$ and $h\neq0$, define $\Delta_j^hu:\Omega_{|h|}\to\C$ as
+\begin{equation}
+	\Delta_j^hu(x) = \frac{u(x+he_j) - u(x)}{h} ,
+\end{equation}
+where $e_j$ is the $j$-th element of the standard basis of $\R^n$.
+
+\begin{exercise}
+	Let $\Omega\subset\R^n$ open and $h\neq0$.
+	Show that, if $u,v:\Omega\to\C$, then, for every $j\in\{1,\dots,n\}$ and $x\in\Omega_{|h|}$,
+	\begin{equation}\label{eq681734d8}
+		\Delta_j^h(uv)(x) = \Delta_j^hu(x) v(x+he_j) + u(x)\Delta_j^hv(x) . 
+	\end{equation}
+\end{exercise}
+\begin{exercise}
+	Let $\Omega\subset\R^n$ open and $h\neq0$.
+	Show that, if $u,v:\Omega\to\C$ and $\spt(v)\subset\Omega_{|h|}$, then,
+	for every $j\in\{1,\dots,n\}$,
+	\begin{equation}\label{eq681734d2}
+		\int_\Omega \Delta_j^h u(x)  v(x) \did x 
+		= - \int_\Omega u(x)\Delta_j^{-h}v(x) \did x .
+	\end{equation}
+	Notice that, since $\spt(v)\subset\Omega_{|h|}$, 
+	we have: first, if $x\in\spt(v)$, then $x+he_j\in\Omega$;
+	second, if $x\in\spt(\Delta_j^{-h}v)$, then $x\in\spt(v)$ or $x-he_j\in\spt(v)$, which implies $x\in\Omega$.
+\end{exercise}
+
+\begin{exercise}
+	Let $\Omega\subset\R^n$ open and $j\in\{1,\dots,n\}$.
+	Show that, if $\phi\in C^1_c(\Omega)$, then
+	\begin{equation}\label{eq6817354b}
+		\lim_{h\to0} \|\Delta_j^h\phi - \de_j\phi\|_{L^\infty(\Omega)} = 0 .
+	\end{equation}
+\end{exercise}
+
+\begin{exercise}
+	Let $\Omega\subset\R^n$ open.
+	Show that, if $u\in L^1_\loc(\Omega)$, then, for every $j\in\{1,\dots,n\}$ and every $\phi\in C^\infty_c(\Omega)$,
+	\begin{equation}\label{eq6817480f}
+		\lim_{j\to 0} \int_{\Omega} \Delta_j^h u(x) \phi(x) \did x 
+		= \de_ju[\phi] ,
+	\end{equation}
+	where we see $u\in\scr D'(\Omega)$ as a distribution with distributional derivative $\de_ju\in\scr D'(\Omega)$.
+	In other words, $\Delta_j^h u\to\de_ju$ in $\scr D'(\Omega)$.
+	
+	{\it Solution.}
+%	First of all, we see the following easy result.
+	Fix $u$, $j$ and $\phi$.
+	Since $\spt(\phi)$ is compact, there is $\epsilon>0$ so that $\phi\in C^\infty_c(\Omega_\epsilon)$.
+	Since $\spt(\phi)\Subset\Omega_\epsilon$, then there is $\delta>0$ such that $B(\spt(\phi),\delta) = \bigcup_{x\in \spt(\phi)} B(x,\delta) \Subset\Omega_\epsilon$.
+	Therefore, 
+	\begin{equation}
+	\begin{aligned}
+		&\hspace{-1cm}
+		\limsup_{h\to 0} \left| \int_{\Omega} \Delta_j^h u(x) \phi(x) \did x - \de_ju[\phi] \right| \\
+		&\overset{\eqref{eq681734d2}}= \limsup_{h\to 0} \left| - \int_{\Omega}  u(x) \Delta_j^{-h}\phi(x) \did x + \int_{\Omega}  u(x) \de_j\phi(x) \did x \right| \\
+		&\le \limsup_{h\to 0}  \int_{\Omega}  |u(x)|\cdot |-\Delta_j^{-h}\phi(x)+ \de_j\phi(x)| \did x  \\
+		&\overset{\eqref{Hölder}}\le \limsup_{h\to 0} 
+			\|u\|_{L^1(B(\spt(\phi),\delta))} \cdot
+			\|-\Delta_j^{-h}\phi(x)+ \de_j\phi(x)\|_{L^{\infty}(\Omega)} \\
+%		&\le \limsup_{h\to 0} \|u\|_{L^p(\Omega)}  \|-\Delta_j^{-h}\phi(x)+ \de_j\phi(x)\|_{L^\infty(\Omega)} \|1\|_{L^{p'}(B(\spt(\phi),\epsilon))} \\
+		&\overset{\eqref{eq6817354b}}=0 .
+	\end{aligned}
+	\end{equation}
+%	We have proven that $\Delta_j^h u\to\de_ju$ in $\scr D'(\Omega)$.
+\end{exercise}
+
+
+\begin{proposition}\label{prop68176bc1}
+	Let $\Omega\subset\R^n$ be an open set and $p\in(1,+\infty]$.
+	For every $u\in L^p(\Omega)$ and $j\in\{1,\dots,n\}$,
+	the following are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+	\item\label{prop68176bc1_1}
+	$\de_ju\in L^p(\Omega)$; % and $\|\de_ju\|_{L^p(\Omega)} \le C$;
+	\item\label{prop68176bc1_2}
+	there exists $C\in\R$ such that, for every $\epsilon>0$, 
+	$\limsup_{h\to0} \|\Delta_j^h u \|_{L^p(\Omega_\epsilon)} \le C$.
+	\end{enumerate}
+	Moreover, for every $\epsilon>0$ and $h$ with $|h|<\epsilon$,
+	\begin{equation}\label{eq68176675}
+		\|\Delta_j^h u \|_{L^p(\Omega_\epsilon)} \le \|\de_ju\|_{L^p(\Omega)} .
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	\framebox{$\ref{prop68176bc1_1}\THEN\ref{prop68176bc1_2}$.}
+	Let $u\in C^1(\Omega_{\epsilon/2})$ and $\epsilon>0$.
+	For $|h|<\epsilon$ and $p\in[1,+\infty]$, we have
+	\begin{equation}\label{eq68176488}
+	\begin{aligned}
+		\int_{\Omega_\epsilon} |\Delta_j^hu(x)|^p \did x
+		&= \int_{\Omega_\epsilon} \left| \frac{u(x+he_j)-u(x)}{h} \right|^p \did x \\
+		&\overset{\eqref{eq68175caa}}= \int_{\Omega_\epsilon} \left| \int_0^1 \de_ju(x+th e_j) \did t \right|^p \did x \\
+		&\overset{\eqref{Hölder}}\le \int_{\Omega_\epsilon}  \int_0^1 |\de_ju(x+th e_j)|^p \did t \did x \\
+		&= \int_0^1 \int_{\Omega_\epsilon}   |\de_ju(x+th e_j)|^p  \did x \did t \\
+		&\le \int_0^1 \int_{\Omega_{\epsilon-|h|}}   |\de_ju(x)|^p  \did x \did t 
+		= \int_{\Omega_{\epsilon-|h|}}   |\de_ju(x)|^p  \did x .
+	\end{aligned}
+	\end{equation}
+	
+	We have shown~\eqref{eq68176675} for smooth functions.
+	Next, let $u\in L^p(\Omega)$.
+	Let $\{\rho_\eta\}_{\eta>0}$ be a standard family of mollifiers and define $u_k = u*\rho_{1/k}:\Omega_{1/k}\to\C$.
+	For $1/k<\epsilon-|h|$, we have $\Omega_\epsilon\subset \Omega_{\epsilon-|h|}\subset \Omega_{1/k}$ and thus, from~\eqref{eq68176488},
+	\begin{equation}\label{eq68176a0c}
+		\int_{\Omega_\epsilon} |\Delta_j^hu_k(x)|^p \did x 
+		\le \int_{\Omega_{\epsilon-|h|}}   |\de_ju_k(x)|^p  \did x .
+	\end{equation}
+	Moreover, we know that $u_k\to u$ and $\de_ju_k\to \de_ju$ in $L^p(\Omega_{\epsilon-|h|})$.
+	We thus have, for $|h|<\epsilon$,
+	\begin{align}
+		&\|\Delta^h_ju_k - \Delta^h_ju\|_{L^p(\Omega_\epsilon)} \\
+		&= \left( \int_{\Omega_\epsilon} \left| \frac{u_k(x+he_j) - u_k(x)}{h} - \frac{u(x+he_j)-u(x)}{h} \right|^p \did x \right)^{1/p} \\
+		&\overset{\eqref{Minkowski}}\le \left( \int_{\Omega_\epsilon} \left| \frac{u_k(x+he_j) - u(x+he_j)}{h} \right|^p \did x \right)^{1/p} 
+		+ \left( \int_{\Omega_\epsilon} \left| \frac{u(x) - u_k(x)}{h} \right|^p \did x \right)^{1/p} \\
+		&\le \frac2h \|u_k-u\|_{L^p(\Omega_{\epsilon-|h|})} . 
+	\end{align}
+	Therefore, for each $h\neq0$ with $|h|<\epsilon$ fixed, 
+	$\Delta^h_ju_k\to \Delta^h_ju$ in $L^p(\Omega_{\epsilon-|h|})$ as $k\to\infty$.
+	This convergence allows us to extend the estimate~\eqref{eq68176a0c} to the limit.
+	We obtain~\eqref{eq68176675} and thus~\ref{prop68176bc1_2}.
+	
+	\framebox{$\ref{prop68176bc1_2}\THEN\ref{prop68176bc1_1}$.}
+	Fix $\epsilon>0$.
+	Since $p\in(1,+\infty]$, then $L^p(\Omega_\epsilon)$ is the dual of $L^{p'}(\Omega_\epsilon)$, where $p'=\frac{p}{p-1}$ if $p\neq\infty$, and $p'=1$ if $p=\infty$.
+	
+	Since $\limsup_{h\to0} \|\Delta_j^h u \|_{L^p(\Omega_\epsilon)} \le C<\infty$,
+	we can apply the Banach–Alaoglu Theorem~\ref{thm68173edd}.
+	Therefore, there is a 
+	unique $v_\epsilon\in L^p(\Omega_\epsilon)$ such that
+	\begin{equation}\label{eq681743bc}
+		\|v_\epsilon\|_{L^p(\Omega_\epsilon)} \le C 
+	\end{equation}
+	and, for every $\phi\in L^{p'}(\Omega)$, 
+	\begin{equation}\label{eq681742e1}
+		\lim_{h\to0} \int_{\Omega_\epsilon} \Delta_j^h u(x) \phi(x) \did x 
+		= \int_{\Omega_\epsilon} v_\epsilon(x) \phi(x) \did x .
+	\end{equation}
+	
+	In particular, $C^\infty_c(\Omega_\epsilon)\subset L^{p'}(\Omega_\epsilon)$.
+	Combining~\eqref{eq6817480f} with~\eqref{eq681742e1}, we get
+	$v_\epsilon=\de_ju$, that is, the distributional derivative $\de_ju$ of $u$ on $\Omega_\epsilon$ is in fact a function in $L^p(\Omega_\epsilon)$.
+	
+	By the locality of distirbutions, we obtain that $\de_ju$ is a function on $\Omega$
+	that satisfies, by~\eqref{eq681743bc}, $\|\de_ju\|_{L^p(\Omega_\epsilon)} \le C$ for all $\epsilon>0$.
+	Therefore, $\|\de_ju\|_{L^p(\Omega)} \le C$.
+\end{proof}
+
+Recall that the dual of $L^1$ is $L^\infty$, although the dual of $L^\infty$ is not $L^1$
+
+\begin{exercise}
+	Suppose $u\in C^1(\Omega)$, $x\in\Omega$, $v\in\R^n$ such that $x+tv\in\Omega$ for all $t\in[0,1]$.
+	Then
+	\begin{equation}\label{eq68175caa}
+		u(x+v)-u(x) = \int_0^1 \grad u(x+tv)\cdot v \did t .
+	\end{equation}
+\end{exercise}
+
+
+\newcommand{\weakstarto}{\overset{*}{\rightharpoonup}}
+\begin{theorem}[Banach–Alaoglu Theorem]\label{thm68173edd}
+	Let $(V,\|\cdot\|)$ be a normed space, and let $(V',\|\cdot\|_*)$ be the dual space endowed with the operator norm
+	\begin{equation}
+		\|\alpha\|_* = \sup\{\alpha[x]:x\in V,\ \|x\|\le 1\} ,
+		\qquad\forall\alpha\in V' .
+	\end{equation}
+	If $\{\alpha_k\}_{k\in\N}\subset V'$ is a bounded sequence, 
+	that is, $\sup_{k\in\N} \|\alpha_k\|_* < \infty$, 
+	then there exists a unique $\alpha_\infty\in V'$ which is the weak* limit of $\alpha_k$, that is $\alpha_k\weakstarto\alpha_\infty$.
+	More explicitly, for every $x\in V$,
+	\begin{equation}
+		\lim_{k\to\infty} \alpha_k[x] = \alpha_\infty[x] .
+	\end{equation}
+	Moreover, 
+	\begin{equation}\label{eq6817438c}
+		\|\alpha_\infty\|_* \le \liminf_{k\to\infty} \|\alpha_k\|_* .
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	See \url{https://en.wikipedia.org/wiki/Banach–Alaoglu_theorem} .
+\end{proof}
+
+\begin{theorem}[Characterization of Sobolev spaces with differential quotients]\label{thm681736aa}
+	Let $\Omega\subset\R^n$ be an open set and $u\in L^1_\loc(\Omega)$.
+	For every $p\in(1,+\infty]$ and $C\in\R$, 
+	the following are equivalent
+	\begin{enumerate}[label=(\roman*)]
+	\item\label{thm681736aa_1}
+	$u\in W^{1,p}(\Omega)$;
+	\item\label{thm681736aa_2}
+	$u\in L^p(\Omega)$ and there exists $C>0$ such that, for every $j\in\{1,\dots,n\}$ and every $\epsilon>0$, 
+	$\limsup_{h\to0} \|\Delta_j^h u \|_{L^p(\Omega_\epsilon)} \le C$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	This is a direct consequence of Proposition~\ref{prop68176bc1}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Differentiability a.e. for $n<p\le\infty$}
+
+For $\Omega\subset\R^n$ open, a function $u:\Omega\to\C$ is \emph{differentiable} at $x\in \Omega$ if there exists a linear function $\alpha:\R^n\to\C$ such that
+\begin{equation}\label{eq681770fb}
+	\lim_{y\to x} \frac{ |u(y)-u(x) - \alpha[y-x]| }{ |y-x| } = 0 .
+\end{equation}
+If $u$ is differentiable at $x$, the linear function $\alpha$ in~\eqref{eq681770fb} is unique and is of the form $\alpha[y-x] = \grad_{cl} u(x)\cdot(y-x)$ for a vector $\grad_{cl} u(x)\in \C^n$.
+We call this vector $\grad_{cl} u(x)$ the \emph{classical gradient} of $u$ at $x$.
+If $u$ is $C^1$, then it is clear that $\grad_{cl} u(x)=\grad u(x)$ for every $x$, where $\grad u(x)$ is the gradient we have used so far.
+When $u\in L^1_\loc(\Omega)$, then we have a distributional gradient $\grad u \in \scr D'(\Omega)^n$, which may be an element of $L^p(\Omega)$ in the case of Sobolev functions,
+but we don't know a priori that $\grad u(x) = \grad_{cl} u(x)$.
+
+In fact, it can be that $u\in W^{1,p}(\Omega)$ is not differentiable anywhere.
+Indeed, recall from your course in Analysis, or simply prove it from~\eqref{eq681770fb}, 
+that if $u$ is differentiable at $x$, then $u$ is continuous at $x$.
+It follows that the function constructed in Exercise~\ref{ex681772db}, which is nowhere continuous, is nowhere differentiable although it has a weak gradient in $L^p$.
+
+\begin{theorem}
+	Let $n\ge2$ and $p\in(n,+\infty]$.
+	If $\Omega\subset\R^n$ is open and $u\in W^{1,p}_\loc(\Omega)$, 
+	then, for almost every $x\in\R^n$, $u$ is differentiable at $x$ and $\grad u(x) = \grad_{cl} u(x)$.
+\end{theorem}
+\begin{proof}
+	First, assume $p\in(n,+\infty)$.
+	By Theorem~\ref{thm681726ad}, we can assume $u$ continuous.
+	By Exercise~\ref{ex68177e18}, for almost every $x\in\Omega$, we have
+	\begin{equation}\label{eq68177e4d}
+		\lim_{r\to0} \fint_{B(x,r)} |\grad u(y) - \grad u(x)|^p \did x = 0 .
+	\end{equation}
+	Let $x\in\Omega$ be a point with~\eqref{eq68177e4d}.
+	Let $R>0$ be such that $B(x,4R)\Subset\Omega$.
+	Define $v:B(x,4R)\to\C$ by
+	\begin{equation}
+		v(y) = u(y) - u(x) - \grad u(x) \cdot(y-x) ,
+		\qquad\forall y\in B(x,4R) .
+	\end{equation}
+	Clearly, we have $v\in W^{1,p}(B(x,4R))\cap C^0(B(x,4R))$ and 
+	$\grad v(y) = \grad u(y) - \grad u(x)$.
+	Therefore, applying Theorem~\ref{thm681726ad} to $v$,
+	we obtain for every $y\in B(x,R)$,
+	\begin{align}
+		\frac{ |u(y) - u(x) - \grad u(x) \cdot(y-x) | }{ |x-y| }
+		&= \frac{ |v(y)-v(x)| }{ |x-y| } \\
+		&\overset{\eqref{eq68177bc8}}\le C |x-y|^{-\frac{n}{p}} \|\grad u(y) - \grad u(x)\|_{L^p(B(o,4R))} \\
+		&= C \left( \frac{ \omega_n^{1/n} 4R }{ |x-y| } \right)^{n/p}
+			\left( \fint_{B(x,4R)} |\grad u(y) - \grad u(x)|^p \did x \right)^{\frac1p} .
+	\end{align}
+	If we take $R=|x-y|$, this estimate combined with~\eqref{eq68177e4d}, gives
+	\begin{equation}
+		\lim_{y\to x} \frac{ |u(y) - u(x) - \grad u(x) \cdot(y-x) | }{ |x-y| } = 0 ,
+	\end{equation}
+	that is, $\grad u(x) = \grad_{cl}u(x)$.
+	
+	Finally, if $p=\infty$, then we clearly have $W^{1,\infty}_\loc (\Omega)\subset W^{1,p}_\loc(\Omega)$ for all $p\in(n,\infty)$.
+	So, we apply the result we have just proven.
+\end{proof}
+
+\begin{exercise}[A variant of Lebesgue differentiation theorem]\label{ex68177e18}
+	Let $\Omega\subset\R^n$ open.
+	Show that, if $f\in L^p(\Omega)$, then for almost every $x\in\Omega$ we have
+	\begin{equation}%\label{eq68177e4d}
+		\lim_{r\to0} \fint_{B(x,r)} |f(y)-f(x)|^p \did y = 0 .
+	\end{equation}
+	
+	{\it Solution.}
+	Look at \cite[\S1.5.7\&\S1.1.8]{MR0290095}.
+	It can be proven for $f\in L^p(\mu)$ with $(X,d,\mu)$ a doubling metric measure space.
+\end{exercise}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{$p=\infty$: Lipschitz functions}
+Let $\Omega\subset\R^n$ open.
+A function $u:\Omega\to\C$ is $L$-Lipschitz for some $L\in\R$ if
+\begin{equation}
+	\forall x,y\in\Omega,\qquad
+	|u(x)-u(y)| \le L |x-y| .
+\end{equation}
+Lipschitz functions are clearly continuous
+
+\begin{theorem}\label{thm68178f84}
+	Let $\Omega\subset\R^n$ open and convex.
+	For every $u\in L^\infty(\Omega)$ and $L\in\R$,
+	the following are equivalent
+	\begin{enumerate}[label=(\roman*)]
+	\item\label{thm68178f84_1}
+	$u$ has a $L$-Lipschitz representative, in the sense that, for almost every $x,y\in\Omega$, $|u(x)-u(y)| \le L |x-y|$;
+	\item\label{thm68178f84_2}
+	$u\in W^{1,\infty}(\Omega)$ and $\|\grad u\|_{L^\infty(\Omega)}\le L$.
+	\end{enumerate}
+	As as consequence, if $u\in W^{1,\infty}(\Omega)$, then $u$ is $\|\grad u\|_{L^\infty(\Omega)}$-Lipschitz.
+\end{theorem}
+\begin{proof}
+	\framebox{$\ref{thm68178f84_1}\THEN\ref{thm68178f84_2}$.}
+	If $u:\Omega\to\C$ is $L$-Lipschitz, then, for every $x\in\Omega$, $j\in\{1,\dots,n\}$ and $h\neq0$ with $|h|<\dist(x,\de\Omega)$,
+	\begin{equation}
+		|\Delta_j^hu(x)|
+		= \left| \frac{u(x+he_j)-u(x)}{h} \right| 
+		\le L .
+	\end{equation}
+	Therefore, by Theorem~\ref{thm681736aa}, we obtain $u\in W^{1,\infty}(\Omega)$.
+	Moreover, using also Proposition~\ref{prop68176bc1}, we have, for almost every $x\in\Omega$,
+	\begin{equation}
+		|\grad u(x)|
+		\le \max\{|\de_ju(x)|:j\in\{1,\dots,n\}\}
+		\le L .
+	\end{equation}
+	So, $\|\grad u\|_{L^\infty(\Omega)}\le L$.
+	
+	\framebox{$\ref{thm68178f84_2}\THEN\ref{thm68178f84_1}$.}
+	We can use Morrey's inequality, Theorem~\ref{thm681726ad}, to show that if $u\in W^{1,\infty}(\Omega)$ then $u$ is Lipschitz.
+	We just need to notice that $u\in W^{1,p}(B)$ for every $B\Subset\Omega$ and $p\in(n,\infty)$.
+	Then, we take the limit $p\to\infty$ in~\eqref{eq68177bc8}, where the constant $C=C(p,n)$ remains bounded.
+	However, in this way it is not evident that $u$ is $\|\grad u\|_{L^\infty(\Omega)}$-Lipschitz.
+	
+	So, we can apply another argument, just by usual mollification.
+	One easily sees that $u_\epsilon = u*\rho_\epsilon\in C^\infty(\Omega_\epsilon)$
+	is a smooth function with $|\grad u_\epsilon(x)|\le \|\grad u\|_{L^\infty(\Omega)}$
+	for every $x\in \Omega_\epsilon$.
+	Since $u_\epsilon$ is smooth, we can estimate for every $x,y\in\Omega$, using convexity,
+	\begin{equation}
+		|u_\epsilon(x)-u_\epsilon(y)|
+		= \left| \int_0^1 \grad u_\epsilon(x+t(y-x))\cdot (y-x) \did t\right|
+		\le \|\grad u\|_{L^\infty(\Omega)} |x-y| .
+	\end{equation}
+	Since $u_\epsilon\to u$ uniformly on compact sets, then $\lim_{\epsilon\to0}|u_\epsilon(x)-u_\epsilon(y)| = |u(x)-u(y)|$.
+\end{proof}
+
+\begin{exercise}
+	In Theorem~\ref{thm68178f84} we used convexity of the set $\Omega$.
+	Give an example of open set $\Omega$ that is connected but not convex where Theorem~\ref{thm68178f84} fails.
+	What can we say in any case?
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Extension domains}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Compactness theorems}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Elliptic PDEs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Setting}\label{subs6817a5f7}
+Let $n\ge 2$ and $\Omega\subset\R^n$ open.
+We are interested in functions $u:\Omega\to\C$ such that
+\begin{equation}\label{eq68179d48}
+	Lu(x) = \div(A(x)\grad u(x)) + b(x)\cdot \grad u(x) + c(x) u(x) 
+	\overset{!}{=} f(x) ,
+\end{equation}
+where $A(x)\in \C^{n\times n}$ is a $n\times n$-complex matrix, $b(x)\in \C^n$ and $c(x),f(x)\in\C$, for each $x\in\Omega$.
+
+How do we interpret the formula~\eqref{eq68179d48}?
+We may use distributional calculus: in such a case, we need to make sense of the products
+$A\grad u = \sum_{jk} A_{jk}\de_j u$,
+$b\cdot\grad u =  \sum_j b_j\de_j u$,
+and $cu$.
+If the coefficients $A$, $b$ and $c$ are smooth, then we can consider $Lu=f$ for $u,f\in\scr D'(\Omega)$;
+see~\ref{subs67df2598}.
+Another possibility is that we consider $u\in W^{1,1}_\loc(\Omega)$:
+in such a case, all derivatives of $u$ are $L^1_\loc$ functions and thus, if the coefficients $A$, $b$ and $c$ are bounded in $L^\infty$, then the products are still of class $L^1_\loc$ and thus $\div(A\grad u) = \sum_{jk} \de_j(A_{jk} \de_ku) \in\scr D'$.
+
+
+\begin{definition}\label{def6817a806}
+	The \emph{standard conditions on $L$} are:
+	\begin{enumerate}
+	\item 
+	$A\in L^\infty(\Omega;\C^{n\times n})$, such that $A(x)$ is symmetric for every $x\in\Omega$ and 
+	there are $0<\lambda\le \Lambda<\infty$ with 
+		\begin{equation}\label{eq68179d12}
+			\forall x\in\Omega,\ \forall\xi\in\R^n
+			\qquad
+			\lambda |\xi|^2 \le 
+			\langle \xi,A(x)\xi \rangle = \sum_{i,j=1}^n A_{ij}(x) \xi_i\xi_j
+			\le \Lambda |\xi|^2 .
+		\end{equation}
+	\item
+	$b\in L^\infty(\Omega;\C^n)$, $c\in L^\infty(\Omega;\C)$.
+	\end{enumerate}
+\end{definition}
+
+Condition~\eqref{eq68179d12} is called~\emph{ellipticity}.
+So, $L$ as in~\eqref{eq68179d48} is \emph{elliptic} if $A$ satisfy~\eqref{eq68179d12}.
+
+Notice that, under these conditions, the formula for $Lu(x)$ written in~\eqref{eq68179d48} is not well founded.
+Indeed, even taking distributional derivatives, if $A$ is only in $L^\infty$, then the product $A(x)\cdot\grad u(x)$ is not a well defined distribution.
+However, we have written $L$ in \emph{divergence form} so that we can say the following:
+If $u\in W^{1,1}_\loc(\Omega)$, then we define
+\begin{equation}\label{eq6817a091}
+\begin{gathered}
+	Lu = f \text{ in }\Omega , \\
+	\IFF\quad \\ 
+	\forall\phi\in C^\infty_c(\Omega) 
+	\quad\int_\Omega \bigg(\langle A\grad u,\grad\phi \rangle + b\cdot\grad u \phi + cu \phi \bigg) \did x = \int_\Omega f \phi \did x , \\
+	\IFF\quad \\ 
+	\forall\phi\in C^\infty_c(\Omega) 
+	\quad\int_\Omega \bigg(\sum_{jk} A_{jk}\,\de_j u\,\de_k\phi + (\sum_j b_j\,\de_j u  + c\,u) \,\phi \bigg) \did x = \int_\Omega f \phi \did x .
+\end{gathered}
+\end{equation}
+
+\begin{exercise}
+	Let $p\in [1,\infty)$ and set $p' = \frac{p}{p-1}$ the Hölder conjugate of $p$.
+	Show that, if $u\in W^{1,p}(\Omega)$ satisfies $Lu=f$ as in~\eqref{eq6817a091} 
+	with $f\in L^p(\Omega)$, then 
+	\begin{equation}
+		\forall\phi\in W^{1,p'}_\loc(\Omega) 
+		\quad\int_\Omega \bigg(\langle A\grad u,\grad\phi \rangle + b\cdot\grad u \phi + cu \phi \bigg) \did x = \int_\Omega f \phi \did x .
+	\end{equation}
+\end{exercise}
+
+\begin{exercise}[??]
+	If $u\in W^{1,1}_\loc(\Omega)$ and $A,b,c$ are bounded and $A$ elliptic, and $Lu=f\in L^1_\loc(\Omega)$, then $\div(A\grad u) \in L^1_\loc(\Omega)$.
+	Show that $u\in W^{2,1}_\loc(\Omega)$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Sobolev space $H^m$}\label{subs6817a613}
+Let $n\in\N$ and $\Omega\subset\R^n$ open.
+If $m\in\N$, the Sobolev space $H^m(\Omega)$ is nothing else than the Sobolev space with integral exponent 2, that is,
+\begin{equation}
+	H^m(\Omega) = W^{m,2}(\Omega),
+	\quad
+	H^m_\loc(\Omega) = W^{m,2}_\loc(\Omega),
+	\quad
+	H^m_0(\Omega) = W^{m,2}_0(\Omega).
+\end{equation}
+
+\begin{proposition}
+	For $u,v\in H^m(\Omega)$, define
+	\begin{equation}
+		\langle u|v \rangle
+		= \int_\Omega \left( \langle \grad u ,\grad\bar v \rangle + u\cdot\bar v\right) \did x .
+	\end{equation}
+	Then $\langle \cdot|\cdot \rangle$ makes $H^m(\Omega)$ into a Hilbert space,
+	with norm
+	\begin{equation}
+		\|u\|_{H^m(\Omega)} = \sqrt{\langle u|u \rangle} ,
+		\qquad\forall u\in H^m(\Omega) ,
+	\end{equation}
+	which is biLipschitz equivalent to the Sobolev norm $\|\cdot\|_{W^{1,2}(\Omega)}$.
+\end{proposition}
+\begin{proof}
+	Everything is standard. 
+	For the equivalence of the norms, see Exercise~\ref{eq680b28e2}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Existence and uniqueness}
+\newcommand{\llangle}{\langle\!\langle}
+\newcommand{\rrangle}{\rangle\!\rangle}
+
+\begin{theorem}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	Let $L$ be a second order elliptic differential operator in divergence form satisfying the standard conditions, as in Definition~\ref{def6817a806}.
+	For every $f\in L^2(\Omega)$ there exists a unique $u\in H^1(\Omega)$ such that
+	$Lu=f$ in $\Omega$.
+\end{theorem}
+\begin{proof}
+	For $u,v\in H^m(\Omega)$, define 
+	\begin{equation}
+		\llangle u,v \rrangle
+		= 
+	\end{equation}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Regularity}
+
+
+•
+
 
 
 
