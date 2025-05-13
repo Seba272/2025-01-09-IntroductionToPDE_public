@@ -124,8 +124,11 @@ urlcolor=Black}
 \newcommand{\ic}{\framebox[\width]{$\supset$} }
 \newcommand{\lebox}{\framebox[\width]{$\le$} }
 \newcommand{\gebox}{\framebox[\width]{$\ge$} }
+\newcommand{\real}{\frk{Re}}
+\newcommand{\imag}{\frk{Im}}
 %\renewcommand{\Re}{\operatorname{Re}}
 %\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\im}{\operatorname{im}}
 % \hel is the left-lower corner for restriction of measures.
 \newcommand{\hel}
 {
@@ -161,6 +164,8 @@ urlcolor=Black}
 \newcommand{\trace}{\mathrm{trace}}
 \newcommand{\singspt}{\operatorname{singSpt}}
 \newcommand{\interior}{\operatorname{int}}
+\newcommand{\llangle}{\langle\!\langle}
+\newcommand{\rrangle}{\rangle\!\rangle}
 
 \newcommand{\TODO}{{\bf\color{Red}TODO}}
 \newcommand{\angryface}{}
@@ -250,6 +255,94 @@ Other references are:
 \newpage
 \setcounter{part}{-1}
 \part{Preliminaries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pairings, dot and scalar products, etc...}
+
+\subsection{Why???}
+There is a flourishing art of making products of stuff in mathematics and physics.
+But notation lacks.
+So, here are my choices.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dot Product}
+If $a,b\in\C^n$, then
+\begin{equation}
+	a\cdot b = \sum_{j=1}^n a_jb_j .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Scalar or inner product}
+If $a,b\in\C^n$, then
+\begin{equation}
+	\langle a,b \rangle = \sum_{j=1}^n a_j\bar b_j = a\cdot \bar b .
+\end{equation}
+More generally, if $\mu$ is a measure and $a,b\in L^2(\mu;\C^n)$ are complex-valued functions
+\begin{equation}
+	\langle a,b \rangle = \langle a,b \rangle_\mu = \int a(x)\cdot \bar b(x) \did\mu(x) .
+\end{equation}
+
+These are inner products, with the properties ($\lambda\in\C$)
+\begin{align}
+	\langle a,b \rangle = \overline{ \langle b,a \rangle } ,\\
+	\langle a,\lambda b \rangle = \bar \lambda \langle a,b \rangle, \\
+	\langle \lambda a,b \rangle = \lambda \langle a,b \rangle ,
+	\langle a,a \rangle \in[0,+\infty) .
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Pairing}
+If $V$ is a vector space with algebraic dual $V^*$, then,
+for all $a\in V^*$ and $b\in V$,
+\begin{equation}
+	\langle a|b \rangle = a[b] .
+\end{equation}
+Sometimes we can make it more precise
+\begin{equation}
+	{}_{V^*}\langle a|b \rangle_V = a[b] .
+\end{equation}
+In general, if $b\in V$ and $a\in\operatorname{Lin}(V;W)$ for some linear space $W$,
+\begin{equation}
+	\langle a,v \rangle = a[b] \in W .
+\end{equation}
+With this in mind, it is clear that
+\begin{equation}
+	\langle a|b \rangle = \langle b|a \rangle .
+\end{equation}
+For instance,
+${}_{V^*}\langle a|b \rangle_V = {}_{V}\langle b|a \rangle_{V^*}$.
+
+Pairings have the following properties ($\lambda\in\C$):
+\begin{align}
+	\langle a|b \rangle = \langle b|a \rangle , \\
+	\langle \lambda a|b \rangle = \lambda \langle a|b \rangle , \\
+	\langle a|\lambda b \rangle = \lambda \langle a|b \rangle .
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example in $L^2(\mu)$}
+To put everything together, we see that, if $a,b\in L^2(\mu)$, define $B,\bar B\in L^2(\mu)'$ as 
+\begin{align}
+	B[\phi] &= \int b\cdot\phi\did \mu,
+	\qquad\forall \phi\in L^2(\mu)  ,\\
+	\bar B[\phi] &= \langle \phi,b \rangle,
+	\qquad\forall \phi\in L^2(\mu) .
+\end{align}
+Then
+\begin{equation}
+	\langle a,b \rangle 
+	= \int a\cdot \bar b \did\mu 
+	= \langle \bar B|a \rangle
+	= \overline{\langle B|\bar a \rangle}
+\end{equation}
+and
+\begin{equation}
+	\langle B|a \rangle
+	= \langle a|\bar b \rangle 
+	= \langle b|\bar a \rangle .
+\end{equation}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Coarea formulas}
@@ -5159,7 +5252,7 @@ We say that two distributions $A_1,A_2\in\scr D'(\Omega)$ are equal on an open s
 	If $A\in \scr D'(\Omega)$ is such that for every $x\in\Omega$ there is $\omega\subset\Omega$ open with $x\in\omega$ and $A=0$ on $\omega$, then $A=0$ on $\Omega$.
 \end{corollary}
 \begin{proof}
-	•
+	\TODO
 \end{proof}
 
 \begin{remark}
@@ -6263,7 +6356,6 @@ $Pu\in C^\infty(\Omega)$ implies $u\in C^\infty(\Omega)$.
 	We conclude that $u$ is smooth in $x$.
 \end{proof}
 
-•
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\TODO}
@@ -7706,7 +7798,7 @@ Notice that, \eqref{eq681085c8} is \eqref{eq6810881c} for $p=1$.
 	What remains to show is that, if $u(x)=0$, then $|u|^\gamma$ is differentiable at $x$ with derivative equal to $0$.
 \end{exercise}
 
-\begin{corollary}
+\begin{corollary}\label{cor681fa13d}
 	Let $n\ge 2$ and $p\in[1,n)$ with Sobolev conjugate $p^* = \frac{np}{n-p}$.
 	Then~\eqref{eq6810881c} holds for all $u\in W^{1,p}(\R^n)$.
 \end{corollary}
@@ -8326,14 +8418,429 @@ Lipschitz functions are clearly continuous
 	What can we say in any case?
 \end{exercise}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Compactness theorems: Ascoli--Arzelà}
+One of our main tools to prove compactness is the following standard result
+\begin{theorem}[Ascoli--Arzelà]\label{thm681f9a96}
+	Let $K$ be a compact metric space and $\scr F = \{f_k\}_{k\in\N}\subset C(K)$ be a sequence of continuous functions $K\to\C$.
+	Suppose that
+	\begin{enumerate}
+	\item
+	$\scr F$ is (equi)bounded, that is, there is $C$ such that $|f(x)| \le C$ for all $f\in\scr F$ and all $x\in K$.
+	\item
+	$\scr F$ is equicontinuos, that is, for every $\epsilon>0$ there exists $\delta>0$ such that, if $x,y\in K$ and $d(x,y)<\delta$, then $|f(x)-f(y)|<\epsilon$ for all $f\in\scr F$.
+	\end{enumerate}
+	Then there exists a subsequence $\{f_{k_j}\}_{j\in\N}\subset\scr F$ that converges uniformly on $K$.
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Compactness theorems: Rellich--Kondrachov for $W^{1,p}_0(\R^n)$}
+
+Recall that a linear operator $L:A\to B$ between Banach spaces is \emph{compact} if it maps bounded subsets of $A$ to pre-compact subsets of $B$.
+In other words, $L$ is a compact operator if, for every bounded sequence $\{a_k\}_{k\in\N}\subset A$, there is a subsequence $\{La_{k_j}\}_{j\in\N}$ converging in $B$.
+We shall prove that for certain $p$ and $q$, the ``identity map'' $W^{1,p}_0(\Omega) \to L^q(\Omega)$ is a compact linear operator.
+
+\begin{remark}
+	The proof is taken from \cite[\S5.5.7]{MR2597943}.
+	For a similar proof, see \cite[Theorem 4.26]{MR2759829}.
+	For more general statements, see \cite[Theorem 6.3]{zbMATH02208228}.
+\end{remark}
+
+\begin{lemma}\label{lem681f714e}
+	Let $n\ge1$ and $\{\rho_\epsilon\}_{\epsilon>0}$ be a standard family of mollifiers.
+	Let $u\in W^{1,1}_\loc(\R^n)$ and define $u_\epsilon = u*\rho_\epsilon$.
+	For every $\Omega\subset\R^n$, we have
+	\begin{equation}\label{eq681f7158}
+		\int_\Omega |u_\epsilon(x)-u(x)| \did x
+		\le \epsilon \int_{B(\Omega,\epsilon)} |\grad u|(x) \did x ,
+	\end{equation}
+	where, we recall, $B(\Omega,\epsilon) = \bigcup_{x\in\Omega} B(x,\epsilon)$.
+\end{lemma}
+\begin{proof}
+	First, assume $u\in C^1(\R^n)$.
+	Notice that, for every $x\in\R^n$, 
+	\begin{align}
+		|u_\epsilon (x) - u(x)|
+		&= \left| \int_{\R^n} \rho_\epsilon(y) (u(x-y)-u(x)) \did y \right| \\
+		&= \left| \int_{\R^n} \rho_\epsilon(y) \int_0^1 \grad u(x-ty)\cdot (-y) \did t \did y \right| \\
+		&\le \int_{\R^n}\int_0^1 \rho_\epsilon(y) |\grad u|(x-ty) |y| \did t \did y \\
+	[\spt(\rho_\epsilon) \subset B(0,\epsilon)]
+		&\le \epsilon \int_{\R^n}\int_0^1 \rho_\epsilon(y) |\grad u|(x-ty) \did t \did y .
+	\end{align}
+	Therefore,
+	\begin{align}
+		\int_\Omega |u_\epsilon (x) - u(x)|\did x 
+		&\le \epsilon \int_\Omega \int_{\R^n}\int_0^1 \rho_\epsilon(y) |\grad u|(x-ty) \did t \did y \did x \\
+		&\le  \epsilon \int_{\R^n}\int_0^1 \rho_\epsilon(y) \left(\int_\Omega|\grad u|(x-ty)\did x\right) \did t \did y \\
+		&\le \epsilon \int_{\R^n}\int_0^1 \rho_\epsilon(y) \did t \did y \left(\int_{B(\Omega,\epsilon)}|\grad u|(x-ty)\did x\right)\\
+		&= \epsilon \int_{B(\Omega,\epsilon)}|\grad u|(x-ty)\did x .
+	\end{align}
+	
+	Second, consider $u\in W^{1,1}_\loc(\R^n)$ arbitrary.
+	For every $\eta\in(0,1)$, we have~\eqref{eq681f7158} for the smooth function $u_\eta$.
+	On the one hand, since $(u_\eta)_\epsilon = (u*\rho_\eta)*\rho_\epsilon = (u*\rho_\epsilon)*\rho_\eta$, we have
+	\begin{equation}
+		\lim_{\eta\to0} \| (u_\eta)_\epsilon(x) - u_\eta \|_{L^1(\Omega)}
+		= \lim_{\eta\to0} \| ( u_\epsilon(x) - u)_\eta \|_{L^1(\Omega)}
+		\overset{\eqref{??}}= \| u_\epsilon(x) - u \|_{L^1(\Omega)} .
+	\end{equation}
+	On the other hand, 
+	\begin{equation}
+		\lim_{\eta\to0} \| \grad u_\eta \|_{L^1(B(\Omega,\epsilon))}
+		\overset{\eqref{??}}= \| \grad u \|_{L^1(B(\Omega,\epsilon))} .
+	\end{equation}
+	Therefore, we obtain~\eqref{eq681f7158} for $u$ too.
+\end{proof}
+
+\begin{exercise}
+	Extend \eqref{eq681f7158} of Lemma~\ref{lem681f714e} to all $u\in W^{1,1}(\R^n)$.
+	What can we say for $u\in W^{1,1}_0(\Omega)$, when $\Omega\subset\R^n$ is open.
+\end{exercise}
+
+\begin{lemma}[Interpolation inequality for $L^p$ norms]\label{lem681f73e4}
+	Let $1\le p\le q\le r\le \infty$ and $\theta\in[0,1]$ such that
+	\begin{equation}\label{eq681f7532}
+		\frac1q = \frac\theta p + \frac{1-\theta}r .
+	\end{equation}
+	Then, whenever $\mu$ is a measure and $u$ is $\mu$-measurable function,
+	\begin{equation}\label{eq681f76d1}
+		\|u\|_{L^q(\mu)} \le \|u\|_{L^p(\mu)}^{\theta} \cdot \|u\|_{L^r(\mu)}^{1-\theta} .
+	\end{equation}
+	In particular, if $u\in L^p(\mu)\cap L^r(\mu)$, then $u\in L^q(\mu)$ for all $q\in[p,r]$.
+\end{lemma}
+\begin{proof}
+	The identity~\eqref{eq681f7532} is equivalent to
+	\begin{equation}
+		1 = \frac{q\theta}{p} + \frac{q(1-\theta)}{r}
+		= \frac{1}{p/(q\theta)} + \frac{1}{r/(q(1-\theta))} ,
+	\end{equation}
+	that is, $\frac{p}{q\theta}$ and $\frac{r}{q(1-\theta)}$ are Hölder conjugate exponents.
+	Since they are both belong to $[1,+\infty]$, we can apply the Hölder inequality:
+	\begin{align}
+		\int |u|^q \did \mu
+		&= \int |u|^{\theta q} |u|^{(1-\theta)q} \did \mu  \\
+		&\overset{\eqref{Hölder}}\le \left( \int |u|^{\theta q \frac{p}{q\theta}} \did \mu \right)^{\frac{q\theta}{p}}
+			\left( \int |u|^{(1-\theta)q\frac{r}{q(1-\theta)}} \did \mu \right)^{\frac{q(1-\theta)}{r}} \\
+		&= \left( \|u\|_{L^p(\mu)}^{\theta} \cdot \|u\|_{L^r(\mu)}^{1-\theta} \right)^{q} .
+	\end{align}
+	So, we get~\eqref{eq681f76d1} by exponentiating by $\frac1q$.
+\end{proof}
+
+\begin{lemma}\label{lem681f796a}
+	Let $n\ge1$ and $\{\rho_\epsilon\}_{\epsilon>0}$ be a standard family of mollifiers.
+	Let $u\in W^{1,1}_\loc(\R^n)$ and define $u_\epsilon = u*\rho_\epsilon$.
+	Then, for every $p\in [1,n)$ and $q\in[1,p^*)$, there exists $C\in\R$ such that
+	\begin{equation}\label{eq681f7bc5}
+		\| u_\epsilon - u\|_{L^q(\R^n)}
+		\le C \epsilon^\theta \|\grad u\|_{L^1(\R^n)}^\theta \cdot \|\grad u\|_{L^{p}(\R^n)}^{1-\theta} ,
+	\end{equation}
+	where $\theta\in [0,1]$ is such that $\frac1q = \theta + \frac{1-\theta}{p^*}$.
+\end{lemma}
+\begin{proof}
+	First, we apply the Interpolation inequality for $L^p$ norms, Lemma~\ref{lem681f73e4}, to get
+	\begin{equation}
+		\| u_\epsilon - u\|_{L^q(\R^n)} 
+		\le \| u_\epsilon - u\|_{L^1(\R^n)}^\theta \cdot \| u_\epsilon - u\|_{L^{p^*}(\R^n)}^{1-\theta} .
+	\end{equation}
+	Second, we apply the bound~\eqref{eq681f7158} from Lemma~\ref{lem681f714e} to the first term $\| u_\epsilon - u\|_{L^1(\R^n)}$,
+	and the Gagliardo–Nirenberg–Sobolev Inequality~\eqref{eq6810881c} from Theorem~\ref{thm68108820} or Corollary~\ref{cor681fa13d} to the second term $\| u_\epsilon - u\|_{L^{p^*}(\R^n)}$.
+	We thus get
+	\begin{equation}
+	\| u_\epsilon - u\|_{L^1(\R^n)}^\theta \cdot \| u_\epsilon - u\|_{L^{p^*}(\R^n)}^{1-\theta}
+	\le \left( \epsilon \|\grad u\|_{L^1(\R^n)} \right)^\theta
+		\cdot \left( C_{GNS} \|\grad u\|_{L^p(\R^n)} \right)^{1-\theta} .
+	\end{equation}
+	We have thus obtained~\eqref{eq681f7bc5}.
+\end{proof}
+
+%\begin{exercise}
+%	Extend~\eqref{eq681f7bc5} from Lemma~\ref{lem681f796a} to all $u\in W^{1,p}(\R^n)$.
+%\end{exercise}
+
+\begin{remark}
+	In the inequalities~\eqref{eq681f7158} and~\eqref{eq681f7bc5}, it might happen that the right-hand side is $+\infty$.
+	The inequalities are still true, although they don't provide any extra information.
+\end{remark}
+
+\begin{proposition}\label{prop681f7c91}
+	Let $n\ge2$, $p\in[1,n)$ and $q\in [1,p^*)$.
+	Suppose that $\{u_k\}_{k\in\N}\subset W^{1,p}(\R^n)$ is a sequence 
+	such that there is $R>0$ with $\spt(u_k)\subset B(0,R)$ for all $k\in\N$.
+	Suppose also that there exists $M\in\R$ such that $\|u_k\|_{W^{1,p}(\R^n)}\le M$ for all $k\in\N$.
+	Then, there exists a subsequence $\{u_{k_j}\}_{j\in\N}$ that is converging in $L^q(\R^n)$.
+\end{proposition}
+\begin{proof}
+%	Since $C^1_c(\R^n)$ is dense in $W^{1,p}(\R^n)$ by~\ref{},
+%	we can assume that $\{u_k\}_{k\in\N}\subset C^1_c(\R^n)$.
+%	Indeed, if $\{u_k\}_{k\in\N}\subset W^{1,p}(\R^n)$, 
+%	we can take a sequence $\{v_k\}_{k\in\N}\subset C^1_c(\R^n)$
+%	with $\|u_k-v_k\|_{W^{1,p}(\R^n)}<1/k$ and $\spt(v_k)\subset B(0,R+1)$.
+%	So, if $\{v_{k_j}\}_{j\in\N}$ is a subsequence converging to some $v$ in $L^q(\R^n)$,
+%	then 
+	
+	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be a standard family of mollifiers.
+	and define $u_k^\epsilon = u_k*\rho_\epsilon$.
+
+	We claim that there are $C\in\R$ and $\theta\in[0,1]$ such that, for every $\epsilon>0$ and $k\in\N$,
+	\begin{equation}\label{eq681f91c4}
+		\|u_k^\epsilon - u_k\|_{L^q(\R^n)} \le C\epsilon^\theta.
+	\end{equation}
+	Indeed, if we apply~\eqref{eq681f7bc5} from Lemma~\ref{lem681f796a}, we get
+	\begin{align}
+		\|u_k^\epsilon - u_k\|_{L^q(\R^n)}
+		&\overset{\eqref{eq681f7bc5}}\le C_{\eqref{eq681f7bc5}} \epsilon^\theta 
+			\|\grad u\|_{L^1(\R^n)}^\theta \cdot \|\grad u\|_{L^{p}(\R^n)}^{1-\theta} \\
+		&\overset{\eqref{Hölder}}\le C_{\eqref{eq681f7bc5}} \epsilon^\theta 
+			\|\grad u\|_{L^p(\R^n)}^\theta\cdot \scr L^n(B(0,R))^{\theta/p'} \cdot \|\grad u\|_{L^{p}(\R^n)}^{1-\theta} \\
+		&= C_{\eqref{eq681f7bc5}} \epsilon^\theta \scr (\omega_nR^n)^{\theta/p'} \cdot \|\grad u\|_{L^{p}(\R^n)} \\
+		&\le C_{\eqref{eq681f7bc5}}(\omega_nR^n)^{\theta/p'} M \epsilon^\theta .
+	\end{align}
+	So, we have proven~\eqref{eq681f91c4}.
+
+
+	Notice that, for every $\epsilon>0$, $k\in\N$, and $x\in\R^n$,
+	\begin{equation}
+	\begin{aligned}
+		|u_k^\epsilon(x)| 
+		&\le \int_{\R^n} \rho_\epsilon(y) |u(x-y)| \did y \\
+		&\overset{\eqref{Hölder}}\le \|\rho_\epsilon\|_{L^{p'}(\R^n)} \|u\|_{L^p(\R^n)} \\
+		&= \frac{ \|\rho_1\|_{L^p(\R^n)} }{ \epsilon^{n/p} } \|u\|_{L^p(\R^n)} \\
+		&\le \frac{ \|\rho_1\|_{L^p(\R^n)} }{ \epsilon^{n/p} } M ,
+	\end{aligned}
+	\end{equation}
+	and, similarly,
+	\begin{equation}\label{eq681f848e}
+	\begin{aligned}
+		|\grad u_k^\epsilon(x)|
+		&\le \int_{\R^n} \rho_\epsilon(y) |\grad u(x-y)| \did y \\
+		&\overset{\eqref{Hölder}}\le \|\rho_\epsilon\|_{L^{p'}(\R^n)} \|\grad u\|_{L^p(\R^n)} \\
+		&\overset{\eqref{eq681f83e0}}= \frac1{\epsilon^{n\frac{p'-1}{p'}}} \|\rho_1\|_{L^p(\R^n)} \|\grad u\|_{L^p(\R^n)} \\
+		&= \frac{ \|\rho_1\|_{L^p(\R^n)} }{ \epsilon^{n/p} } \|\grad u\|_{L^p(\R^n)} \\
+		&\le \frac{ \|\rho_1\|_{L^p(\R^n)} }{ \epsilon^{n/p} } M .
+	\end{aligned}
+	\end{equation}
+	It follows that, for each $\epsilon\in(0,1)$ fixed, the family $\{u_k^\epsilon\}_{k\in\N} \subset C^0_c(B(0,R+1))$ is bounded and equicontinuous.
+	By Ascoli--Arzelà Theorem~\ref{thm681f9a96}, 
+	$\{u_k^\epsilon\}_{k\in\N}$ is pre-compact in $C^0_c(B(0,R+1))$.
+	
+	We apply a diagonal argument.
+	First, let $\{u_{k^1_j}^{1}\}_{j\in\N}$ be a subsequence of $\{u_k^1\}_{k\in\N}$ that is converging uniformly on $\bar B(0,R+1)$ to a function $v_1\in C^0_c(\bar B(0,R+1))$.
+	Next, for every $m\in\N_{\ge2}$, there is a subsequence $\{u_{k^m_j}^{1/m}\}_{j\in\N}$ of $\{u_{k^{m-1}_j}^{1/m}\}_{j\in\N}$ that is converging uniformly on $\bar B(0,R+1)$.
+	to some $v_m\in C^0_c(\bar B(0,R+1))$.
+	Notice that, for every $m\in\N_{\ge1}$,
+	\begin{equation}
+		\limsup_{j\to\infty} \|u_{k^{m-1}_j}^{1/m} - v_m\|_{L^p(\R^n)}
+		\le \limsup_{j\to\infty} \|u_{k^{m-1}_j}^{1/m} - v_m\|_{L^\infty(\bar B(0,R+1))} \scr L^n(\Omega)^{1/p}
+		= 0 .
+	\end{equation}
+	Therefore, $\{u_{k^m_j}^{1/m}\}_{j\in\N}$ is converging to $v_m$ also in $L^q(\R^n)$.
+	
+	We claim that $\{u_{k^m_m}\}_{m\in\N}$ is a Cauchy sequence in $L^q(\R^n)$.
+	Indeed, let $\delta>0$.
+	Then there is $L\in\N$ such that 
+	\begin{equation}\label{eq681f97da}
+		C(1/L)^\theta < \delta .
+	\end{equation}
+	Next, since $\{u_{k^L_j}^{1/L}\}_{j\in\N}$ is a Cauchy sequence in $L^q(\R^n)$,
+	then there is $N\in\N$ such that, for every naturals $a,b>N$,
+	\begin{equation}\label{eq681f9606}
+		\forall a,b>N,\qquad
+		\|u_{k^L_a}^{1/L} - u_{k^L_b}^{1/L}\|_{L^q(\R^n)} < \delta.
+	\end{equation}
+	We also assume $N>L$.
+	Since we have taken always subsequences, if $m>L$ then 
+	$\{k_a^m\}_{a>N} \subset \{k_a^L\}_{a>N}$.
+	Therefore,~\eqref{eq681f9606} implies
+	\begin{equation}\label{eq681f96fc}
+		\forall a,b>N,\qquad
+		\|u_{k^a_a}^{1/L} - u_{k^b_b}^{1/L}\|_{L^q(\R^n)} < \delta.
+	\end{equation}
+%	$k_a^m > k_a^L$ for all $a$.
+	It follows that, for every $a,b>N$,
+	\begin{align}
+		\|u_{k^a_a} - u_{k^b_b}\|_{L^q(\R^n)}
+		&\le \|u_{k^a_a} - u_{k^a_a}^{1/L} \|_{L^q(\R^n)}
+			+ \| u_{k^a_a}^{1/L} - u_{k^b_b}^{1/L} \|_{L^q(\R^n)}
+			+ \| u_{k^b_b}^{1/L} - u_{k^b_b} \|_{L^q(\R^n)} \\
+		&\overset{\eqref{eq681f91c4}\&\eqref{eq681f96fc}}\le 2C(1/L)^\theta + \delta \\
+		&\overset{\eqref{eq681f97da}}\le 3\delta .
+	\end{align}
+	We have proven our claim, that $\{u_{k^m_m}\}_{m\in\N}$ is a Cauchy sequence in $L^q(\R^n)$.
+\end{proof}
+
+\begin{exercise}
+	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be a standard family of mollifiers on $\R^n$.
+	Show that, for every $p\in[1,+\infty]$,
+	\begin{equation}\label{eq681f83e0}
+		\|\rho_\epsilon\|_{L^p(\R^n)} = \frac1{\epsilon^{n\frac{p-1}{p}}} \|\rho_1\|_{L^p(\R^n)} .
+	\end{equation}
+	
+	{\it Solution.}
+	\begin{align}
+		\int_{\R^n} \rho_\epsilon(y)^p \did y
+		&= \int_{\R^n} \left( \frac{\rho_1(y/\epsilon)}{\epsilon^n} \right)^p \did y \\
+		[z=y/\epsilon,\ \did z = \did y/\epsilon^n]
+		&= \frac{1}{\epsilon^{n(p-1)}} \int_{\R^n} \rho_1(z)^p \did z .
+	\end{align}
+\end{exercise}
+
+\begin{exercise}
+	In Proposition~\ref{prop681f7c91}, can we take the subsequence $\{u_{k_j}\}_{j\in\N}$ independent of $q$?
+\end{exercise}
+
+\begin{exercise}
+	Proposition~\ref{prop681f7c91} uses a general fact in metric spaces.
+	Let $(X,d)$ be a complete metric space and $\{x^m_k\}_{k\in\N,m\in\N\cup\{\infty\}}\subset X$.
+	Suppose that:
+	\begin{enumerate}
+	\item
+	for every $k\in\N$, $\{x^m_k\}_{m\in\N}$ converges to $x^\infty_k$, uniformly in $k$;
+	explicitly, for every $\epsilon>0$ there exists $N\in\N$ such that, for every $m>N$ and for every $k\in\N$, $d(x^m_k,x^\infty_k) < \epsilon$;
+	\item
+	For every $m\in\N$ (but not for $m=\infty$), the set $\{x^m_k\}_{k\in\N}$ is pre-compact in $X$.
+	\end{enumerate}
+	Show that $\{x^\infty_k\}_{k\in\N}$ is pre-compact in $X$.
+\end{exercise}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Extension domains}
+An open set $\Omega\subset\R^n$ is called an~\emph{extension domain} if, for every $p\in[1,+\infty]$, there exists $T_p:W^{1,p}(\Omega) \to W^{1,p}(\R^n)$ such that
+\begin{enumerate}
+\item	$T_pu|_{\Omega} = u$, for all $u\in W^{1,p}(\Omega)$;
+\item	$T_p$ is bounded, that is, there is $C_p$ such that $\|T_pu\|_{W^{1,1}(\R^n)} \le C_p \|u\|_{W^{1,p}(\Omega)}$, for all $u\in W^{1,p}(\Omega)$.
+\end{enumerate}
+
+An example of a set that is NOT and extension domain, is the so called \emph{slit disk}:
+\begin{equation}
+	\Omega = \{(x,y)\in \R^2: x^2+y^2<1\} \setminus \{(x,0):x\ge0\} .
+\end{equation}
+
+However, there holds the following result
+\begin{theorem}\label{thm681fa38a}
+	If $\Omega\subset\R^n$ is an open set with $C^1$ boundary, then it is an extension domain.
+\end{theorem}
+In fact, Theorem~\ref{thm681fa38a} can be pushed to Lipschitz boundary.
+
+\begin{proposition}\label{prop681fa9b9}
+	Suppose $\Omega\subset\R^n$ is an extension domain and $\Omega'\subset\R^n$ is an open set such that $B(\Omega,r)\subset \Omega'$, for some $r>0$.
+	Then, for every $p\in[1,+\infty]$ there exists a continuous extension operator $T_p:W^{1,p}(\Omega)\to W^{1,p}_0(\Omega')$.
+\end{proposition}
+\begin{proof}
+	Let $\zeta\in C^\infty_c(\Omega')$ such that $0\le\zeta\le 1$ and 
+	\begin{equation}
+		\bar\Omega \subset\interior\{\zeta=1\} \subset\spt(\zeta)\subset\Omega' .
+	\end{equation}
+	Since $B(\Omega,r)\subset \Omega'$, we can take $\zeta$ with $\|\grad\zeta\|_{L^\infty(\R^n)} \le 2/r$.
+	Let $\tilde T_p::W^{1,p}(\Omega) \to W^{1,p}(\R^n)$ be a bounded extension operator given by $\Omega$ being and extension domain.
+	
+	We claim that $T_p:u\mapsto \zeta \tilde T_pu$ is the wanted operator.
+	To prove our claim, we need to show that $u\mapsto \zeta u$ defines a continuous operator $W^{1,p}(\R^n)\to W^{1,p}_0(\Omega')$.
+	Clearly we have
+	\begin{equation}
+		\|\zeta u\|_{L^p(\Omega')} \le \|u\|_{L^p(\R^n)} .
+	\end{equation}
+	Moreover,
+	\begin{align}
+		\|\grad(\zeta u)\|_{L^p(\Omega')}
+		&\le \|\zeta\grad u\|_{L^p(\R^n)} + \|u\grad\zeta\|_{L^p(\R^n)} \\
+		&\le \|\grad u\|_{L^p(\R^n)} + \frac2r \|u\|_{L^p(\R^n)} \\
+		&\le (1+2/r) \|u\|_{W^{1,p}(\R^n)} .
+	\end{align}
+	The claim is proven.
+\end{proof}
+
+\begin{proposition}\label{prop681fa951}
+	Let $\Omega\subset\Omega'\subset\R^n$ and $p\in[1,+\infty)$.
+	Define $T_p:W^{1,p}_0(\Omega)\to L^p(\R^n)$ as
+	$T_pu = \one_\Omega u$, i.e., $T_p$ extends functions to zero outside $\Omega$.
+	Then $T_p$ is a continuous operator $W^{1,p}_0(\Omega)\to W^{1,p}(\Omega')$.
+	In fact,
+	\begin{equation}\label{eq681fa8e1}
+		\forall u\in W^{1,p}(\Omega)\qquad
+		\|\one_\Omega u\|_{W^{1,p}(\Omega')} = \|u\|_{W^{1,p}(\Omega)}
+	\end{equation}
+\end{proposition}
+\begin{proof}
+	If $u\in C^1_c(\Omega)$, then $\|T_pu\|_{W^{1,p}(\Omega')} = \|u\|_{W^{1,p}(\Omega)}$.
+	Since $C^1_c(\Omega)$ is dense in $W^{1,p}_0(\Omega)$, then we have~\eqref{eq681fa8e1}.
+\end{proof}
+
+\begin{remark}
+	By Propositions~\ref{prop681fa9b9} and~\ref{prop681fa951}, if $\Omega$ is a bounded extension domain, we can assume that the extension operator takes values in the space of functions with compact support in some fixed neighborhood of $\Omega$.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Compactness theorems}
+\subsection{Extension of Sobolev inequalities to Extension domains}
+Many properties of $W^{1,p}(\R^n)$ extend to extension domains.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Poincaré inequality for $W^{1,p}_0(\Omega)$}\label{subs68208317}
+
+\begin{theorem}\label{thm68207b9a}
+	Let $n\ge2$ and $\Omega\subset\R^n$ a bounded open set.
+	For every $p\in[1,+\infty)$ there is $C\in\R$ such that, 
+	\begin{equation}\label{eq68207b94}
+		\forall u\in W^{1,p}_0(\Omega),\qquad
+		\|u\|_{L^p(\Omega)} \le C\|\grad u\|_{L^p(\Omega)} .
+	\end{equation}
+\end{theorem}
+\begin{remark}
+	The inequality in~\eqref{eq68207b94} can also be written as
+	\begin{equation}
+		\forall u\in W^{1,p}_0(\Omega),\qquad
+		\int_\Omega |u|^p \did x \le C^p \int_\Omega |\grad u|^p\did x .
+	\end{equation}
+\end{remark}
+
+\begin{lemma}\label{lem68207e48}
+	Let $1\le a<b<\infty$.
+	If $\Omega\subset\R^n$ is a measurable set, then
+	\begin{equation}\label{eq68207e42}
+		\forall u\in L^1_\loc(\Omega),\qquad
+		\|u\|_{L^a(\Omega)} \le |\Omega|^{\frac{b-a}{ba}} \|u\|_{L^b(\Omega)} ,
+	\end{equation}
+	where $|\Omega|=\scr L^n(\Omega)$ is the volume of $\Omega$.
+\end{lemma}
+\begin{proof}
+	Since $b/a>1$, we can apply the Hölder inequality:
+	\begin{align}
+		\int_\Omega |u|^a \did x
+		\overset{\eqref{Hölder}}\le \left( \int_\Omega |u|^{a\frac{b}{a}} \did x \right)^{\frac{a}{b}} 
+			\cdot \left( \int_\Omega 1^{\frac{\frac{b}{a}}{\frac{b}{a}-1}} \right)^{\frac{\frac{b}{a}-1}{\frac{b}{a}}}
+		= \left( \int_\Omega |u|^{b} \did x \right)^{\frac{a}{b}} 
+			\cdot |\Omega|^{\frac{b-a}{b}} .
+	\end{align}
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm68207b9a}]
+	Fix $p\in[1,+\infty)$.
+	Recall that, if $q\in[1,n)$, then $q^* = \frac{nq}{n-q}$.
+	Since $\lim_{q\to n^-} q^* = +\infty$, there is some $q\in[1,n)$ such that $q^*>p$.
+	Therefore, using Corollary~\ref{cor681fa13d} for $W^{1,p}_0(\Omega)$ (\TODO)
+	\begin{align}
+		\|u\|_{L^p(\Omega)}
+		&\overset{\eqref{eq68207e42}}\le |\Omega|^{\frac{q^*-p}{q^*p}} \|u\|_{L^{q^*}(\Omega)} \\
+		&\overset{\eqref{eq6810881c}}\le |\Omega|^{\frac{q^*-p}{q^*p}} \| \grad u\|_{L^q(\Omega)} .
+	\end{align}
+	If $p<n$, then we can take $q=p$ already (because $p^*>p$), and~\eqref{eq68207b94} is proven with $C=|\Omega|^{\frac{p^*-p}{p^*p}} = |\Omega|^{\frac1n}$.
+	If $p\ge n$, then, for each appropriate $q\in(1,n)$ we have $q<p$ and thus
+	\begin{equation}
+		\| \grad u\|_{L^q(\Omega)} 
+		\overset{\eqref{eq68207e42}}\le |\Omega|^{\frac{p-q}{pq}} \| \grad u\|_{L^q(\Omega)} .
+	\end{equation}
+	This implies \eqref{eq68207b94} with $C= |\Omega|^{\frac{q^*-p}{q^*p}+\frac{p-q}{pq}}$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Poincaré inequality for extension domains}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\part{Application of Sobolev spaces theory to PDE}
 \section{Elliptic PDEs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -8420,50 +8927,1076 @@ If $m\in\N$, the Sobolev space $H^m(\Omega)$ is nothing else than the Sobolev sp
 	\quad
 	H^m_0(\Omega) = W^{m,2}_0(\Omega).
 \end{equation}
+These spaces are in fact Hilbert spaces, when endowed with a correct norm.
+We will focus on $m=1$ (and $m=0$, which is $L^2$).
 
-\begin{proposition}
-	For $u,v\in H^m(\Omega)$, define
-	\begin{equation}
-		\langle u|v \rangle
-		= \int_\Omega \left( \langle \grad u ,\grad\bar v \rangle + u\cdot\bar v\right) \did x .
-	\end{equation}
-	Then $\langle \cdot|\cdot \rangle$ makes $H^m(\Omega)$ into a Hilbert space,
+For $u,v\in H^1(\Omega)$, we define
+\begin{equation}\label{eq682075bd}
+\begin{aligned}
+	\langle u,v \rangle_{H^1(\Omega)}
+		&:= \llangle u,v \rrangle \\
+		&:= \int_\Omega \left( \langle \grad u ,\grad\bar v \rangle + u\cdot\bar v\right) \did x  \\
+		&= \langle \grad u,\grad v \rangle_{L^2(\Omega)} + \langle u,v \rangle_{L^2(\Omega)} .
+\end{aligned}
+\end{equation}
+
+\begin{proposition}\label{prop6820787a}
+	Let $n\ge1$ and $\Omega\subset\R^n$ open.
+	Then the bilinear map $\llangle \cdot,\cdot \rrangle$ defined in~\eqref{eq682075bd}
+	makes $H^1(\Omega)$ into a Hilbert space,
 	with norm
 	\begin{equation}
-		\|u\|_{H^m(\Omega)} = \sqrt{\langle u|u \rangle} ,
-		\qquad\forall u\in H^m(\Omega) ,
+		\|u\|_{H^1(\Omega)} = \sqrt{ \langle u,u \rangle_{H^1(\Omega)} } ,
+		\qquad\forall u\in H^1(\Omega) ,
 	\end{equation}
 	which is biLipschitz equivalent to the Sobolev norm $\|\cdot\|_{W^{1,2}(\Omega)}$.
 \end{proposition}
 \begin{proof}
-	Everything is standard. 
-	For the equivalence of the norms, see Exercise~\ref{eq680b28e2}.
+	For every $x\in\Omega$, and every $u,v\in H^1(\Omega)$, we have 
+	$|\langle \grad u(x) ,\grad\bar v(x) \rangle| 
+	\le |\grad u(x)| \cdot |\grad\bar v(x)|$.
+	Notice that, if $u\in H^1(\Omega)$, then
+	\begin{align}
+		\|u\|_{H^1(\Omega)}^2 
+		&= \langle u,u \rangle_{H^1(\Omega)} \\
+		&= \langle \grad u,\grad u \rangle_{L^2(\Omega)} + \langle u,u \rangle_{L^2(\Omega)} \\
+		&= \|\grad u\|_{L^2(\Omega)}^2 + \|u\|_L^2(\Omega)^2 ,
+	\end{align}
+	that is,
+	\begin{equation}
+		\|u\|_{H^1(\Omega)} = \sqrt{\|\grad u\|_{L^2(\Omega)}^2 + \|u\|_L^2(\Omega)^2}
+	\end{equation}
+	Since there are constants $c,C\in(0,+\infty)$ such that, for every $a,b\in\R^2$,
+	$c \sqrt{a^2+b^2} \le |a| + |b| \le C \sqrt{a^2+b^2}$,
+	then 
+	\begin{equation}\label{eq682077d7}
+		c\|u\|_{H^1(\Omega)}
+		\le \|u\|_{W^{1,2}(\Omega)} = \|\grad u\|_{L^2(\Omega)} + \|u\|_{L^2(\Omega)} 
+		\le C \|u\|_{H^1(\Omega)} .
+	\end{equation}
+	See also Exercise~\ref{eq680b28e2}.
+\end{proof}
+
+\begin{remark}\label{rem6820847b}
+	Proposition~\ref{prop6820787a} has already a quite interesting consequence for PDE.
+	Let $f\in L^2(\Omega)$ and define $T_f:H^1(\Omega)\to\C$, $T_fu = \langle f,u \rangle_{L^2(\Omega)}$.
+	The operator $T_f$ is in fact a bounded operator $L^2(\Omega)\to\C$, therefore it is bounded also on $H^1(\Omega)$;
+	Explicitly, we have
+	$|T_fu| \le \|f\|_{L^2(\Omega)} \|u\|_{L^2(\Omega)} \le \|f\|_{L^2(\Omega)} \|u\|_{H^1(\Omega)}$.
+	Since $H^1(\Omega)$ is a Hilbert space, the Riesz Representation Theorem implies that there exists a unique $u\in H^1(\Omega)$ such that, for all $\phi\in H^1(\Omega)$, 
+	$T_f\phi = \langle u,\phi \rangle_{H^1(\Omega)}$.
+	In particular, 
+	\begin{equation}\label{eq68207a40}
+		\forall \phi\in C^\infty_c(\Omega),\qquad
+		\int_\Omega f \bar\phi \did x 
+		= \int_\Omega ( (\grad u\cdot \grad\bar\phi) + u\bar\phi ) \did x .
+	\end{equation}
+	The property~\eqref{eq68207a40} has a distributional interpretation: 
+	since $\int_\Omega (\grad u\cdot \grad\bar\phi) \did x = \sum_{j=1}^n \de_ju[\de_j\bar\phi] = - \laplacian u[\phi]$,
+	then~\eqref{eq68207a40} is equivalent in $\scr D'(\Omega)$ to
+	\begin{equation}\label{eq68207af5}
+		-\laplacian u + u = f .
+	\end{equation}
+	We have thus proven that, for every $f\in L^2(\Omega)$,
+	there exists a unique $u\in H^1(\Omega)$ that is a distributional solution to~\eqref{eq68207af5}.
+\end{remark}
+
+\begin{exercise}
+	Show that, if $\Omega\subset\R^n$ is an open and bounded set (or with finite volume),
+	then, for every $\lambda\in(-\infty,0]$, there exists a unique solution to
+	\begin{equation}
+	\begin{cases}
+		-\laplacian u = \lambda u ,\\
+		u\in H^1_0(\Omega) .
+	\end{cases}
+	\end{equation}
+	Since such solution must be $u=0$, you have shown that the half-line $(-\infty,0]$ is not in the spectrum of $-\laplacian$.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{An alternative scalar product on $H^1_0(\Omega)$}\label{subs6821ad68}
+If $\Omega$ is a bounded open subset of $\R^n$,\footnote{Connected? only finite measure? \TODO}
+the Poincaré inequality from Theorem~\ref{thm68207b9a}, implies that
+\begin{equation}\label{eq6821ad6f}
+	\llangle u,v \rrangle := \langle \grad u,\grad v \rangle_{L^2(\Omega)},
+	\qquad\forall u,v\in H^1_0(\Omega),
+\end{equation}
+is a Hilbert scalar product on $H^1_0(\Omega)$.
+Indeed, 
+\begin{equation}
+	\frac1{2C} \|u\|_{L^2(\Omega)} + \frac12 \|\grad u\|_{L^2(\Omega)}
+	\overset{\eqref{eq68207b94}}\le \|\grad u\|_{L^2(\Omega)}
+	= \sqrt{ \llangle u,u \rrangle } \le \|u\|_{H^1(\Omega)} ,
+\end{equation}
+which shows that the quasi-norm $u\mapsto \|\grad u\|_{L^2(\Omega)}$ is a norm bi-Lipschitz equivalent to $u\mapsto\|u\|_{H^1(\Omega)}$.
+
+As we did in Remark~\ref{rem6820847b}, we can deduce an existence and uniqueness result for a PDE.
+Indeed, if $f\in L^2(\Omega)$, then the operator $T_f\phi := \langle f,\phi \rangle_{L^2(\Omega)}$ is bounded on $H^1_0(\Omega)$.
+Therefore, by the Riesz Representation Theorem, there exists a unique $u\in H^1_0(\Omega)$ such that
+\begin{equation}
+	\forall \phi\in C^\infty_c(\Omega),\qquad
+	\llangle u,\phi \rrangle = T_f\phi .
+\end{equation}
+Distributionally, this reads as
+\begin{equation}
+	\laplacian u = f \text{ in }\Omega.
+\end{equation}
+
+We have proven the following theorem:
+\begin{theorem}
+	Let $\Omega\subset\R^n$ be a bounded open set.
+	For every $f\in L^2(\Omega)$, the boundary problem
+	\begin{equation}
+		\begin{cases}
+			\laplacian u = f \text{ in }\Omega, \\
+			u= 0\text{ on }\de\Omega\text{, i.e., }u\in H^1_0(\Omega),
+		\end{cases}
+	\end{equation}
+	has a unique solution $u\in H^1_0(\Omega)$.
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The dual of $H^1$}\label{subs68219d8e}
+The dual space of $H^m$ is, by definition, the space
+\begin{equation}\label{eq68219ddc}
+	H^{-m}(\Omega) := (H^m(\Omega))',
+	\qquad\text{ and }\qquad
+	H^{-m}_0(\Omega) := (H^m_0(\Omega))'.
+\end{equation}
+
+Let us focus on $m=1$.
+Being a Hilbert space, the dual of $H^m$ is canonically isomorphic to $H^m$ itself.
+However, it is useful to keep the two spaces distinct.
+The main reason, in my view, is that we want to see $L^2(\Omega)$ as a subspace of the dual of $H^1(\Omega)$.
+Indeed, if $f\in L^2(\Omega)$, then, as we have seen above, $u\mapsto \int_\Omega uf \did x$ is an element of $H^m(\Omega)'$ (or $H^m_0(\Omega)'$).
+However, it is clear that $L^2(\Omega)\not\subset H^1(\Omega)$: in fact, $H^1(\Omega)\into L^2(\Omega)$.
+
+For more discussions, see\\ \url{https://math.stackexchange.com/questions/314113/dual-space-of-h1}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Functional Analysis: Lax--Milgram Theorem}\label{subs68208c7c}
+See also \cite[Aufgabe V.6.18]{MR1787146}.
+
+If $X$ is a Banach space, we denote by $X'$ its topological dual Banach space,
+and, for $\xi\in X'$ and $x\in X$, we write the pairing $\xi[x]$ as ${}_{X'}\langle \xi | x \rangle_X$.
+
+The following theorem will replace the role of Riesz Theorem in the previous discussion.
+It is here written for Banach spaces:
+notice that there are Banach spaces that are isomorphic to their duals without being ``hilbertable'';
+see
+\url{https://math.stackexchange.com/questions/65609/isometric-to-dual-implies-hilbertable}.
+
+\begin{theorem}[Lax--Milgram Theorem]\label{thm68208c88}
+	Let $(X,\|\cdot\|_X)$ be a Banach space and $B:X\times X\to\C$ a bilinear map.
+	\begin{enumerate}
+	\item	
+	If $B$ is bounded (i.e., continuous), that is, there is $\beta\in\R$ such that, 
+	\begin{equation}\label{eq68208d6c}
+		\forall u,v\in X,\qquad
+		|B[u,v]| \le \beta \|u\|_X \cdot \|v\|_X ,
+	\end{equation}
+	then there is a bounded linear operator $T:X\to X'$ with $\|T\|\le\beta$ and such that 
+	\begin{equation}\label{eq68208e5c}
+		\forall u,v\in X,\qquad
+		B[u,v] = {}_{X'}{\langle} Tu|\bar v \rangle_X  .
+	\end{equation}
+	\item	
+	If $B$ is bounded and coercive, that is, there exists $\delta>0$ 
+	\begin{equation}\label{eq68208d7d}
+		\forall u\in H,\qquad
+		\real(B[u,u])\ge\delta\|u\|^2 ,
+	\end{equation}
+	then the linear operator $T:X\to X'$ is invertible and $\|T^{-1}\|\le \frac1\delta$.
+	\end{enumerate}
+%	In particular, for every $f\in H'$ there exists a unique $u\in H$ such that $f= B[u,\cdot]$.
+\end{theorem}
+\begin{proof}
+	Suppose $B$ is bounded.
+	If $u\in X$, then $v\mapsto B[u,v]$ is a continuous (thanks to~\eqref{eq68208d6c}) linear functional $X\to\C$ and thus there exists a unique $Tu:=w\in X'$ such that $B[u,v] = {}_{X'}{\langle} Tu|\bar v \rangle_X$ for all $v\in X$.
+	It is easy to see that the so defined function $T:X\to X'$ is linear.
+	We will next prove several properties of this operator $T$.
+	
+	We claim that $T$ is bounded, and
+	\begin{equation}\label{eq68219abb}
+		\|T\|_{X\to X'} \le \beta .
+	\end{equation}
+	Indeed, if $u\in X$, then
+	\begin{align}
+		\|Tu\|_{X'}
+		&= \sup\{ |{}_{X'}{\langle} Tu|v \rangle_X| : v\in X,\ \|v\|_X\le 1\} \\
+		&= \sup\{ |B[u,\bar v]| : v\in X,\ \|v\|_X\le 1\} \\
+		&\overset{\eqref{eq68208d6c}}\le \sup\{\beta \|u\|_X \cdot \|v\|_X : v\in X,\ \|v\|_X\le 1\} \\
+		&= \beta \|u\|_X .
+	\end{align}
+	Therefore, we have proven the claim.
+	
+	We claim that $T$ is coercive, i.e., 
+	\begin{equation}\label{eq682090e8}
+		\forall u\in X,\qquad
+		\|Tu\|_{X'} \ge \delta \|x\|_X .
+	\end{equation}
+	Indeed, if $u\in X$, then 
+	\begin{equation}
+		\delta \|x\|^2 
+		\overset{\eqref{eq68208d7d}}\le \real(B[x,\bar x])
+		\le |B[x,\bar x]|
+		= |{}_{X'}{\langle} Tu|v \rangle_X|
+		\le \|Tx\|_{X'} \|x\|_X .
+	\end{equation}
+	Hence,~\eqref{eq682090e8} follows.
+
+	
+	We claim that $\im(T)=T[X]$, the image of $T$, is closed in $X'$.
+	Indeed, if $\alpha\in X'$ and if $\{u_k\}_{k\in\N}\subset X$ is a sequence such that $\lim_{k\to\infty} Tu_k = \alpha\in X'$, then, using coercivity of $T$, we have
+	$\|u_j-u_k\|_X 
+	\overset{\eqref{eq682090e8}}\le \frac1\delta \|T[u_j-u_k]\|_{X'}$,
+	and thus $\{u_k\}_{k\in\N}$ is a Cauchy sequence in $X$
+	If $\lim_{k\to\infty} u_k=u$, then, by the boundedness of $T$, we have $\alpha=Tu\in \im(T)$.
+	
+	We claim that $\im(T)=X'$.
+	Since $\im(T)$ is closed, we only need to show that, if $v\in X$ annihilates to $\im(T)$, then $v=0$ 
+	(thanks to Hahn--Banach Theorem).
+	If $v\in H$ annihilates to $\im(T)$,
+	then $0 = {}_{X'}{\langle} Tu|v \rangle_X$ for every $u\in X$.
+	In particular, combining this with coercivity,
+	we obtain $0 = {}_{X'}{\langle} Tv|v \rangle_X \overset{\eqref{eq682090e8}}\ge \delta\|v\|_X^2$.
+	Therefore, $v=0$.
+	
+	Finally, since $T$ is a continuous, injective and surjective linear operator, its inverse is also continuous.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FOR HILBERT SPACES: THE ONE ABOVE IS BETTER.
+%\begin{theorem}[Lax--Milgram Theorem]\label{thm68208c88}
+%	Let $H$ be a Hilbert space with scalar product $\langle \cdot,\cdot \rangle$
+%	and norm $\|\cdot\| = \sqrt{\langle \cdot,\cdot \rangle}$.
+%	Suppose that $B:H\times H\to\C$ is a bilinear map with:
+%	\begin{enumerate}
+%	\item	$B$ is bounded (i.e., continuous), that is, there is $\beta\in\R$ such that, 
+%		\begin{equation}\label{eq68208d6c}
+%			\forall u,v\in H,\qquad
+%			|B[u,v]| \le \beta \|u\|\cdot \|v\| ;
+%		\end{equation}
+%	\item	$B$ is coercive, that is, there exists $\delta>0$ 
+%		\begin{equation}\label{eq68208d7d}
+%			\forall u\in H,\qquad
+%			\real(B[u,u])\ge\delta\|u\|^2 .
+%		\end{equation}
+%	\end{enumerate}
+%	Then there exists a linear operator $T:H\to H$ such that
+%	\begin{equation}\label{eq68208e5c}
+%		\forall u,v\in H,\qquad
+%		\langle Tu,v \rangle = B[u,v] ,
+%	\end{equation}
+%	and such operator is invertible.
+%	In particular, for every $f\in H'$ there exists a unique $u\in H$ such that $f= B[u,\cdot]$.
+%\end{theorem}
+%\begin{proof}
+%	The existence of a linear operator $T:H\to H$ satisfying~\eqref{eq68208e5c} is a consequence of Riesz Representation Theorem for Hilbert spaces.
+%	Indeed, if $u\in H$, then $v\mapsto B[u,v]$ is a continuous (thanks to~\eqref{eq68208d6c}) linear operator $H\to\C$ and thus there exists a unique $Tu:=w\in H$ such that $B[u,v] = \langle w,v \rangle$ for all $v\in H$.
+%	We will next prove several properties of this operator $T$.
+%	
+%	We claim that $T$ is bounded.
+%	Indeed, if $x\in H$, then
+%	\begin{equation}
+%		\|Tx\|^2 = \langle  Tx,Tx \rangle
+%		\overset{\eqref{eq68208e5c}}= B[x,Tx]
+%		\overset{\eqref{eq68208d6c}}\le \beta \|x\| \|Tx\| .
+%	\end{equation}
+%	Hence, $\|Tx\|\le \beta\|x\|$.
+%	
+%	We claim that $T$ is coercive, i.e., 
+%	\begin{equation}\label{eq682090e8}
+%		\forall x\in H,\qquad
+%		\|Tx\| \ge \delta \|x\| .
+%	\end{equation}
+%	Indeed, if $x\in H$, then 
+%	\begin{equation}
+%		\delta \|x\|^2 
+%		\overset{\eqref{eq68208d7d}}\le \real(B[x,x])
+%		\le |B[x,x]|
+%		= |\langle Tx,x \rangle|
+%		\le \|Tx\| \|x\| .
+%	\end{equation}
+%	Hence,~\eqref{eq682090e8} follows.
+%
+%	
+%	We claim that $T[H]$, the image of $T$, is closed in $H$.
+%	Indeed, if $y\in H$ and if $\{x_k\}_{k\in\N}\subset H$ is a sequence such that $\lim_{k\to\infty} Tx_k = y\in H$, then, using coercivity of $T$, we have
+%	$\|x_j-x_k\| 
+%	\overset{\eqref{eq682090e8}}\le \frac1\delta \|T[x_j-x_k]\|$,
+%	and thus $\{x_k\}_{k\in\N}$ is a Cauchy sequence.
+%	If $\lim_{k\to\infty} x_k=x$, then, by the boundedness of $T$, we have $y=Tx\in T[H]$.
+%	
+%	We claim that $T[H]=H$.
+%	Since $T[H]$ is closed, we only need to show that, if $v\in H$ is orthogonal to $T[H]$, then $v=0$.
+%	If $v\in H$ is orthogonal to $T[H]$,
+%	then $0 = \langle Tx,v \rangle$ for every $x\in H$.
+%	In particular, combining this with coercivity,
+%	we obtain $0 = \langle Tv,v \rangle \overset{\eqref{eq682090e8}}\ge \delta\|v\|^2$.
+%	Therefore, $v=0$.
+%	
+%	Finally, since $T$ is a continuous, injective and surjective linear operator, its inverse is also continuous.
+%\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{First Existence and Uniqueness result}\label{subs682095cb}
+
+We denote by $\R^{n\times n}$ the space of all $n\times n$ matrices.
+As such, if $A\in\R^{n\times n}$, then $|A|_\infty := \sup\{|Ax|:x\in\R^n,\ |x|\le 1\}$.
+So, if $A\in L^\infty(\Omega;\R^{n\times n})$, then 
+\begin{equation}
+	\|A\|_{L^\infty(\Omega)} = \sup\{|A(x)|_\infty: x\in\Omega\} .
+\end{equation}
+
+The scalar product $\langle \cdot,\cdot \rangle$ is in fact sequilinear and defined as
+\begin{equation}
+	\forall x,y\in \C^n,\qquad
+	\langle x,y \rangle = x\cdot\bar y = \sum_{j=1}^n x_j\bar y_j .
+\end{equation}
+
+\begin{theorem}\label{thm682098e8}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open and bounded.
+	Let $L$ be a second order linear differential operator in divergence form, that is,
+	\begin{equation}\label{eq6820a731}
+		Lu = -\div(A\grad u) + b\cdot \grad u + c u ,
+	\end{equation}
+	where 
+	\begin{equation}\label{eq6820a660}
+		\text{$A\in L^\infty(\Omega;\R^{n\times n})$,
+	$b\in L^\infty(\Omega;\C^n)$,
+	and $c\in L^\infty(\Omega;\C)$.}
+	\end{equation}
+	Then $L$ is a bounded linear operator $L:H^1_0(\Omega)\to H^{-1}_0(\Omega)$.
+	
+	Suppose that there are $0<\theta\le \Theta<\infty$ such that
+	\begin{equation}\label{eq6820970d}
+		\forall x\in\Omega,\ \forall\xi\in\C^n,\qquad
+		\theta |\xi|^2
+		\le \langle A(x)\xi,\xi \rangle 
+		\le \Theta |\xi|^2 .
+	\end{equation}
+	Then there is $\gamma\ge 0$ (in fact, the one for which holds~\eqref{eq6820a84f}) 
+	such that for all $\lambda\in\C$ with $\real(\lambda)\ge\gamma$,
+	the operator $L+\lambda :H^1_0(\Omega)\to H^{-1}_0(\Omega)$ is bounded and invertible.
+	In particular, for every $f\in H^{-1}_0(\Omega)$ there exists a unique weak solution to the boundary problem
+	\begin{equation}\label{eq6821b354}
+		\begin{cases}
+		Lu + \lambda u = f &\text{ in }\Omega, \\
+		u\in H^1_0(\Omega) .
+		\end{cases}
+	\end{equation}
+	
+	Moreover,
+	denoting by $\iota:H^1_0(\Omega)\into L^2(\Omega)$ the standard embedding,
+	the operator $K_\lambda = \iota \circ (L-\lambda)^{-1}|_{L^2(\Omega)} : L^2(\Omega) \to L^2(\Omega)$
+	is bounded, linear, and compact.
+%	
+%	that is (by definition of weak solution),
+%	\begin{equation}
+%		\forall\phi\in H^1_0(\Omega),\qquad
+%		\int_\Omega \left( \langle A\grad u,\grad\phi \rangle + b\cdot\grad u \phi + (c+\mu) u \phi \right) \did x
+%		= \int_\Omega f \phi \did x .
+%	\end{equation}
+\end{theorem}
+
+For proving Theorem~\ref{thm682098e8}, we will study the bilinear form $\scr E_L:H^1_0(\Omega)\times H^1_0(\Omega)\to\C$, 
+\begin{equation}\label{eq6820a77c}
+	\scr E_L[u,v] = \int_\Omega \left( \langle A\grad u,\grad v \rangle + ( \grad u\cdot b + c u) \bar v \right) \did x .
+\end{equation}
+This bilinear form $\scr E_L$ is called the \emph{Dirichlet form of $L$}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lemma}[Energy Estimates 1]\label{lem6821a526}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	Let $L$ be a second order linear differential operator in divergence form as in~\eqref{eq6820a731}.
+	Assume that $L$ has bounded coefficients, that is,~\eqref{eq6820a660}.
+%	and that $L$ is elliptic, that is,~\eqref{eq6820970d}.
+	Define $\scr E_L:H^1_0(\Omega)\times H^1_0(\Omega)\to\C$ as in~\eqref{eq6820a77c}.
+	
+	Then, there is $\alpha\ge0$ such that, for all $u,v\in H^1_0(\Omega)$,
+	\begin{equation}\label{eq6820a83b}
+		\forall u,v\in H^1_0(\Omega),\qquad
+		|\scr E_L[u,v]| \le \alpha \|u\|_{H^1(\Omega)} \|v\|_{H^1(\Omega)} .
+	\end{equation}
+	In particular, the linear operator $L:H^1_0(\Omega)\to\scr D'$ is a continuous linear operator $L:H^1_0(\Omega)\to H^{-1}_0(\Omega)$ with
+	\begin{equation}\label{eq6821fcc1}
+		\forall u,v\in H^1_0(\Omega),\qquad
+		\scr E_L[u,v] = {}_{H^{-1}_0(\Omega)} \langle Lu | \bar v \rangle_{H^1_0(\Omega)} .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	\begin{align}
+		|\scr E_L[u,v]|
+		&\le \int_\Omega \left| \langle A\grad u,\grad v \rangle + \langle \grad u,b \rangle \bar v + c u \bar v \right| \did x \\
+		&\le \int_\Omega  |A\grad u| |\grad v| 
+			+ |b| |\grad u| |v| + |c u \bar v| \did x \\
+		&\le \|A\|_{L^\infty(\Omega)} \|\grad u\|_{L^2(\Omega)} \|\grad v\|_{L^2(\Omega)} 
+			+ \|b\|_{L^\infty(\Omega)} \|\grad u\|_{L^2(\Omega)} \| v\|_{L^2(\Omega)} \\
+		&\qquad\qquad
+			+ \|c\|_{L^\infty(\Omega)} \|u\|_{L^2(\Omega)} \| v\|_{L^2(\Omega)} \\
+		&\le (\|A\|_{L^\infty(\Omega)} + \|b\|_{L^\infty(\Omega)} + \|c\|_{L^\infty(\Omega)} ) \|u\|_{H^1(\Omega)} \|v\|_{H^1(\Omega)} .
+	\end{align}
+	So, we have~\eqref{eq6820a83b} with $\alpha=(\|A\|_{L^\infty(\Omega)} + \|b\|_{L^\infty(\Omega)} + \|c\|_{L^\infty(\Omega)} )$.
+	
+	By the Lax--Milgram Theorem~\ref{thm68208c88}, there is a continuous linear operator $T:H^1_0(\Omega)\to H^{-1}_0(\Omega)$ that satisfies the role of $L$ in~\eqref{eq6821fcc1}.
+	We claim that $T=L$.
+	Indeed, if $\phi\in\scr D(\Omega)$, then, for every $u\in H^1_0(\Omega)$ we have
+	\begin{align}
+		Lu[\phi] &= {}_{\scr D'(\Omega)}\langle Lu|\phi \rangle_{\scr D(\Omega)} \\
+		&= (-\div(A\grad u) + b\cdot \grad u + c u )[\phi] \\
+		&= - \sum_{j=1}^n \de_j(A\grad u)_j[\phi] + \int_\Omega b\cdot\grad u \phi + c u\phi \did x \\
+		&= \sum_{j=1}^n (A\grad u)_j[\de_j\phi] + \int_\Omega b\cdot\grad u \phi + c u\phi \did x \\
+		&= \int_\Omega ( \sum_{j=1}^n (A\grad u)_j[\de_j\phi] +  b\cdot\grad u \phi + c u\phi ) \did x \\
+		&= \int_\Omega ( (A\grad u)\cdot\grad\phi +  b\cdot\grad u \phi + c u\phi ) \did x \\
+		&= \langle A\grad u , \grad\bar\phi \rangle_{L^2(\Omega)} 
+			+ \langle  (b\cdot\grad u + c u) , \bar \phi ) \rangle_{L^2(\Omega)} \\
+		&= \scr E_L[u,\bar \phi]\\
+		&= {}_{H^1_0(\Omega)'}\langle Tu,\phi \rangle_{H^1_0(\Omega)} .
+	\end{align}
+	Since $\scr D(\Omega)$ is dense in $H^1_0(\Omega)$, we obtain that $Lu = Tu$ not just on $\scr D(\Omega)$, but also on $H^1_0(\Omega)$.
+\end{proof}
+
+\begin{lemma}[Energy Estimates 2]\label{lem6821a53c}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	Let $L$ be a second order linear differential operator in divergence form as in~\eqref{eq6820a731}.
+	Assume that $L$ has bounded coefficients, that is,~\eqref{eq6820a660},
+	and that $L$ is elliptic, that is,~\eqref{eq6820970d}.
+	Define $\scr E_L:H^1_0(\Omega)\times H^1_0(\Omega)\to\C$ as in~\eqref{eq6820a77c}.
+	
+	Then, there are $\beta>0$ and $\gamma\ge 0$ such that, for all $u,v\in H^1_0(\Omega)$,
+	\begin{equation}\label{eq6820a84f}
+		\beta \|\grad u\|_{L^2(\Omega)}^2 \le \real(\scr E_L[u,u]) + \gamma \|u\|_{L^2(\Omega)}^2 .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	We have
+	\begin{align}
+		\theta \int_\Omega |\grad u|^2 \did x
+		&\overset{\eqref{eq6820970d}}\le \int_\Omega \langle A\grad u,\grad u \rangle \did x \\
+		&= \left| \scr E_L[u,u] - \int_\Omega \left( \langle \grad u,b \rangle \bar u + c |u|^2 \right) \did x \right| \\
+		&\le |\scr E_L[u,u]| 
+			+ \|b\|_{L^\infty(\Omega)} \|\grad u\|_{L^2(\Omega)} \|u\|_{L^2(\Omega)} 
+			+ \|c\|_{L^\infty(\Omega)} \|u\|_{L^2(\Omega)}^2 \\
+		&\overset{\eqref{Cauchy}}\le |\scr E_L[u,u]| 
+			+ \|b\|_{L^\infty(\Omega)} \left( \epsilon \frac{\|\grad u\|_{L^2(\Omega)}^2}{2} + \frac1\epsilon \frac{\|u\|_{L^2(\Omega)}^2}{2}  \right)
+			+ \|c\|_{L^\infty(\Omega)} \|u\|_{L^2(\Omega)}^2 \\
+	&[\text{with }\epsilon=\frac{\theta}{\|b\|_{L^\infty(\Omega)}}]\\
+		&= |\scr E_L[u,u]| 
+			+ \frac{\theta}{2} \|\grad u\|_{L^2(\Omega)}^2
+			+ \frac{\|b\|_{L^\infty(\Omega)}^2}{2\theta} \|u\|_{L^2(\Omega)}^2
+			+ \|c\|_{L^\infty(\Omega)} \|u\|_{L^2(\Omega)}^2 \\
+		&= |\scr E_L[u,u]| 
+			+ \frac{\theta}{2} \|\grad u\|_{L^2(\Omega)}^2
+			+ \left( \frac{\|b\|_{L^\infty(\Omega)}^2}{2\theta}
+			+ \|c\|_{L^\infty(\Omega)} \right)\|u\|_{L^2(\Omega)}^2 .
+	\end{align}
+	So, we have~\eqref{eq6820a84f} with $\beta = \frac{\theta}{2}$ and $\gamma = \frac{\|b\|_{L^\infty(\Omega)}^2}{2\theta} + \|c\|_{L^\infty(\Omega)}$.
+\end{proof}
+
+
+\begin{remark}
+	Notice that, if $c$ is real-valued and $c\ge c_0$ for some $c_0\in\R$, then one can take $\gamma= \frac{\|b\|_{L^\infty(\Omega)}^2}{2\theta} + c_0$ in~\eqref{eq6820a84f}. 
+\end{remark}
+
+\begin{lemma}[Cauchy inequality with $\epsilon$]
+	For every $a,b\in\R$, and for every $\epsilon>0$,
+	\begin{equation}\label{Cauchy}
+		ab \le \epsilon \frac{a^2}{2} + \frac1\epsilon \frac{b^2}{2} .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	\begin{align}
+		0
+		&\le \left( \sqrt{\epsilon} a - \frac1{\sqrt{\epsilon}} b\right)^2 \\
+		&= \epsilon a^2 + \frac1\epsilon b^2 - 2 ab .
+	\end{align}
+\end{proof}
+
+
+\begin{proof}[Proof of Theorem~\ref{thm682098e8}]
+	The conditions~\eqref{eq6820a660} on the coefficients of $L$ easily imply that $L$ is a continuous linear operator $H^1_0(\Omega)\to\scr D'(\Omega)$.
+	Define $\scr E_L:H^1_0(\Omega)\times H^1_0(\Omega)\to\C$ as in~\eqref{eq6820a77c}.
+	By Lemma~\ref{lem6821a526}, using again~\eqref{eq6820a660}, the bilinear map $\scr E_L$ is bounded.
+	By Theorem~\ref{thm68208c88}, there is a continuous operator $T:H^1_0(\Omega)\to H^{-1}_0(\Omega)$ such that~\eqref{eq68208e5c} holds.
+	However, see that~\eqref{eq68208e5c} is equivalent to say that $T=L$.
+	Indeed, if $u\in H^1_0(\Omega)$ and $\phi\in\scr D(\Omega)\subset H^1_0(\Omega)$,
+	\begin{equation}
+		Lu[\phi]
+		= \scr E_L[u,\phi]
+		= {}_{H^{-1}_0(\Omega)}\langle Tu | \phi \rangle_{H^1_0(\Omega)} ,
+	\end{equation}
+	hence $Lu=Tu$ as elements of $\scr D'(\Omega)$.
+	Therefore, $L$ is a bounded linear operator $L:H^1_0(\Omega)\to H^{-1}_0(\Omega)$.
+	
+	Next, we also assume the ellipticity condition~\eqref{eq6820970d}.
+	Let $\alpha,\beta$ and $\gamma$ as in Lemmata~\ref{lem6821a526} and~\ref{lem6821a53c}, and let $\lambda\in\C$ with
+	\begin{equation}\label{eq6820c2ce}
+		\real(\lambda) \ge \gamma .
+	\end{equation}
+	Define $B_\lambda:H^1_0(\Omega)\times H^1_0(\Omega)\to\C$ by
+	\begin{equation}
+		\forall u,v\in H^1_0(\Omega),\qquad
+		B_\lambda[u,v] = \scr E_L[u,v] + \lambda \langle u,v \rangle_{L^2(\Omega)} .
+	\end{equation}
+	On $H^1_0(\Omega)$, we consider the Hilbert scalar product $\llangle \cdot,\cdot \rrangle$
+	defined in~\eqref{eq6821ad6f}, with norm $\|\cdot\|_{H^1_0(\Omega)} = \sqrt{\llangle \cdot,\cdot \rrangle}$.
+	
+	From Lemmata~\ref{lem6821a526} and~\ref{lem6821a53c}, we obtain that $B_\lambda$ is a bounded and coercive bilinear map.
+	Indeed,
+	on the one hand, for every $u,v\in H^1_0(\Omega)$,
+	\begin{equation}
+		|B_\lambda[u,v]| \overset{\eqref{eq6820a83b}}\le \alpha \|u\|_{H^1(\Omega)} \|v\|_{H^1(\Omega)} 
+		\le \alpha C \|u\|_{H^1_0(\Omega)} \|v\|_{H^1_0(\Omega)} ,
+	\end{equation}
+	where $C$ is a constant of equivalence between the two norms on $H^1_0(\Omega)$.
+	On the other hand, for every $u\in H^1_0(\Omega)$,
+	\begin{align}
+		\real(B_\lambda[u,u])
+		&=  \real(\scr E_L[u,u]) + \real(\lambda) \|u\|_{L^2(\Omega)}^2 \\
+		&\overset{\eqref{eq6820a84f}}\ge \beta \|\grad u\|_{L^2(\Omega)}^2 + (\real(\lambda)- \gamma) \|u\|_{L^2(\Omega)}^2 \\
+		&\overset{\eqref{eq6820c2ce}}\ge \beta \|\grad u\|_{L^2(\Omega)}^2 
+		= \beta \|u\|_{H^1_0(\Omega)} .
+	\end{align}
+	We apply Lax--Milgram Theorem~\ref{thm68208c88}:
+	there exists a continuous, invertible linear operator $T_\lambda:H^1_0(\Omega)\to H^{-1}_0(\Omega)$ such that
+	\begin{equation}
+		\forall u,v\in H^1_0(\Omega)\qquad
+		B_\lambda[u,v] = {}_{H^{-1}_0(\Omega)}\langle T_\lambda u | v \rangle_{H^1_0(\Omega)} .
+	\end{equation}
+	We claim that $T_\lambda = T+\lambda$.
+	Here we mean that $T_\lambda u = Tu + \lambda \iota(u)$, where $\iota: H^1_0(\Omega)\into L^2(\Omega)$ is the standard embedding.
+	Indeed, for all $u,v\in H^1_0(\Omega)$,
+	\begin{align}
+		{}_{H^{-1}_0(\Omega)}\langle Tu + \lambda u | v \rangle_{H^1_0(\Omega)}
+		&= {}_{H^{-1}_0(\Omega)}\langle Tu  | v \rangle_{H^1_0(\Omega)}
+			+ \lambda {}_{H^{-1}_0(\Omega)}\langle \iota(u)| v \rangle_{H^1_0(\Omega)} \\
+		&= \scr E_L[u,v] + \lambda \langle u,v \rangle_{L^2(\Omega)} 
+		= B_\lambda[u,v] \\
+		&= {}_{H^{-1}_0(\Omega)}\langle T_\lambda u | v \rangle_{H^1_0(\Omega)} .
+	\end{align}
+	
+	It follows that, for every $f\in H^{-1}_0(\Omega)$, the preimage $u=T_\lambda^{-1}[f]$ is the unique solution to~\eqref{eq6821b354}.
+	
+	Finally, the operator $K$ is the composition of a continuous linear operator $(T-\lambda)^{-1}$ with a continuous linear compact operator $\iota:H^1_0(\Omega)\to L^2(\Omega)$.
+	The compactness of $\iota$ comes from Rellich–Kondrachov Theorem~\ref{Rellich–Kondrachov}.
+%	
+%	
+%	If $f\in L^2(\Omega)$, then the functional $F:H^1_0(\Omega)\to\C$, $Fu = \int_\Omega fu \did x$ is continuous;
+%	Hence, by Riesz Theorem, there is $u_f\in H^1_0(\Omega)$ such that $Fv = \langle u_f,v \rangle_{H^1_0(\Omega)}$ for all $v\in H^1_0(\Omega)$.
+%	Then, $\hat u = T_\lambda^{-1}u_f$ satisfies, for all $v\in H^1_0(\Omega)$,
+%	\begin{equation}
+%		B[\hat u,v] = \langle T_\lambda \hat u,v \rangle_{H^1_0(\Omega)}
+%		= \langle u_f,v \rangle_{H^1_0(\Omega)}
+%		= \int_\Omega fv \did x .
+%	\end{equation}
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Existence and uniqueness}
-\newcommand{\llangle}{\langle\!\langle}
-\newcommand{\rrangle}{\rangle\!\rangle}
+\subsection{If you want kaos}\label{subs6820b196}
+Here I write something that may confuse the reader quite a lot.
+Read it at your own risk.
 
-\begin{theorem}
-	Let $n\ge2$ and $\Omega\subset\R^n$ open.
-	Let $L$ be a second order elliptic differential operator in divergence form satisfying the standard conditions, as in Definition~\ref{def6817a806}.
-	For every $f\in L^2(\Omega)$ there exists a unique $u\in H^1(\Omega)$ such that
-	$Lu=f$ in $\Omega$.
+The pairing $\langle u,v \rangle_{L^2(\Omega)} = \int_\Omega u\bar v \did x$ 
+is continuous on $H^1(\Omega)$, but it is NOT the Hilbert scalar product of $H^1$.
+For instance, the closure of $H^1(\Omega)$ with respect to the norm $\|\cdot\|_{L^2(\Omega)} = \sqrt{\langle u,v \rangle_{L^2(\Omega)}}$, is $L^2(\Omega)$.
+Continuity means that, if $f\in L^2(\Omega)$, then $u\mapsto \langle u,f \rangle_{L^2(\Omega)}$ is an element of the dual of $H^1_0(\Omega)$.
+
+Riesz Theorem implies that there is some $v_f\in H^1(\Omega)$ such that
+\begin{equation}
+	\forall u\in H^1(\Omega),\qquad
+	\langle u,f \rangle_{L^2(\Omega)} 
+	\overset{!}= \langle \grad u, \grad v_f \rangle_{L^2(\Omega)} + \langle u, v_f \rangle_{L^2(\Omega)} 
+	\overset{\text{def}}= \langle u,v_f \rangle_{H^1(\Omega)} .
+\end{equation}
+We have seen that, if $\Omega$ is bounded, then $\langle u,v \rangle_{H^1_0(\Omega)} = \int_\Omega \langle \grad u,\grad v \rangle \did x$ is a Hilbert scalar product on $H^1_0(\Omega)$.
+Again, Riesz Theorem implies that there exists $w_f\in H^1_0(\Omega)$ such that
+\begin{equation}
+	\forall u\in H^1_0(\Omega),\qquad
+	\langle u,f \rangle_{L^2(\Omega)} 
+	\overset{!}= \langle \grad u, \grad w_f \rangle_{L^2(\Omega)} 
+	\overset{\text{def}}= \langle u,w_f \rangle_{H^1_0(\Omega)} .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Functional Analysis: Fredholm Alternative Theorem}\label{subs682092ad}
+
+Recall that, if $X$ and $Y$ are Banach spaces (e.g., Hilbert spaces),
+a linear operator $K:X\to Y$ is \emph{compact operator}
+if $K$ maps bounded sets to compact sets.
+
+See also \url{https://terrytao.wordpress.com/2011/04/10/a-proof-of-the-fredholm-alternative/}
+\begin{theorem}[Fredholm Alternative]\label{thm6821bc90}
+	Let $H$ be a Hilbert space with scalar product $\langle \cdot,\cdot \rangle$
+	and norm $\|\cdot\| = \sqrt{\langle \cdot,\cdot \rangle}$.
+	Let $K:H\to H$ be a compact linear operator.
+	For every $\lambda\in\C$,
+	\begin{enumerate}
+	\item	
+	$\ker(K-\lambda)$ is finite dimensional;
+	\item
+	$\im(K-\lambda)$ is closed;
+	\item
+	$\im(K-\lambda) = \ker(K^*-\bar \lambda)^\perp$;
+	\item
+	$\dim(\ker(K-\lambda)) = \dim(\ker(K^*-\bar \lambda))$;
+	\item
+	$\ker(K-\lambda)=\{0\}$ if and only if $\im(K-\lambda) = H$.
+	\end{enumerate}
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Second Existence and Uniqueness result}\label{subs6821b4db}
+
+\begin{theorem}\label{thm6822fa7f}
+	Let $n\ge 2$ and $\Omega\subset\R^n$ open and bounded.
+	Let $L$ be an operator as in Theorem~\ref{thm682098e8} and define $B:H^1_0(\Omega)\times H^1_0(\Omega)\to\C$ 
+	as in~\eqref{}.
+	Define $\cal N,\cal M\subset H^1_0(\Omega)$ as
+	\begin{equation}
+	\begin{aligned}
+		\cal N &= \{ u \in H^1_0(\Omega) : \scr E_L[u,v] = 0\ \forall v\in H^1_0(\Omega) \} , \\
+		\cal M &= \{ v \in H^1_0(\Omega) : \scr E_L[u,v] = 0\ \forall u\in H^1_0(\Omega) \} .
+	\end{aligned}
+	\end{equation}
+	
+	Then:
+	\begin{enumerate}
+	\item
+	Both $\cal N$ and $\cal M$ have finite dimension and $\dim(\cal N) = \dim(\cal M)$.
+	\item
+	$\cal N$ is the linear space of solutions to
+	\begin{equation}\label{eq6821ba8f}
+	\begin{cases}
+		L u = 0 , \\
+		u\in H^1_0(\Omega).
+	\end{cases}
+	\end{equation}
+	\item
+	for every $f\in L^2(\Omega)$, the boundary value PDE
+	\begin{equation}\label{eq6821ba97}
+	\begin{cases}
+		L u = f , \\
+		u\in H^1_0(\Omega) 
+	\end{cases}
+	\end{equation}
+	has a solution if and only if 
+	\begin{equation}\label{eq6821baaf}
+		\langle f,v \rangle_{L^2(\Omega)} = 0
+		\qquad\forall v\in \cal M .
+	\end{equation}
+	\item
+	The affine space of solutions to~\eqref{eq6821ba97}, if not empty, has the same dimension of $\cal N$.
+	In fact, given a solution $u_1$ to~\eqref{eq6821ba97}, then $u_1+\cal N$ is the space of solutions to~\eqref{eq6821ba97}.
+	\end{enumerate}
 \end{theorem}
 \begin{proof}
-	For $u,v\in H^m(\Omega)$, define 
-	\begin{equation}
-		\llangle u,v \rrangle
-		= 
+	Let $\gamma$ as in Theorem~\ref{thm682098e8}, i.e., as in Lemma~\ref{lem6821a53c}.
+	Define $K = T_\gamma^{-1} = (L+\gamma)^{-1}$, which is a compact bounded linear operator $L^2(\Omega)\to L^2(\Omega)$, as shown in Theorem~\ref{thm682098e8}.
+	
+	Notice that, for every $u\in H^1_0(\Omega)$ and $f\in L^2(\Omega)$
+	\begin{equation}\label{eq6821bd98}
+	\begin{aligned}
+		u\text{ solves~\eqref{eq6821ba97}}
+		&\IFF \scr E_L[u,v] = \langle f,v \rangle_{L^2(\Omega)}\qquad\forall v\in H^1_0(\Omega) \\
+		&\IFF B_\gamma[u,v] = \langle f+\gamma u ,v \rangle_{L^2(\Omega)}\qquad\forall v\in H^1_0(\Omega) \\
+		&\IFF T_\gamma u = f+ \gamma u \\
+		&\IFF u = T_\gamma^{-1}(f+\gamma u) = Kf + \gamma Ku \\
+		&\IFF u-\gamma K u = Kf .
+	\end{aligned}
 	\end{equation}
+	So, considering the case $f=0$, we obtain that $u$ solves~\eqref{eq6821ba8f}, if and only if 
+	$u\in\ker(\Id-\gamma K)$,
+	that is,
+	\begin{equation}
+		\cal N = \ker(\Id-\gamma K) .
+	\end{equation}
+	Since $\gamma K$ is a compact operator $L^2(\Omega)\to L^2(\Omega)$,
+	the Fredholm Alternative Theorem~\ref{thm6821bc90} implies that $\cal N = \ker(\Id-\gamma K)$ is finite dimensional.
+	
+%	Moreover, Theorem~\ref{thm6821bc90} tells us also that~\eqref{eq6821ba97} has a solution if and only if 
+%	$Kf\in \im(\Id-\gamma K)$
+%	
+	Moreover, for each $f\in L^2(\Omega)$,
+	\begin{align}
+		\text{~\eqref{eq6821ba97} has a solution}
+		&\overset{\eqref{eq6821bd98}}\IFF Kf \in \im(\Id-\gamma K) \\
+		&\overset{\text{Thm~\ref{thm6821bc90}}}\IFF Kf \perp \ker(\Id-\gamma K^*) \\
+		&\overset{(*)}\IFF f \perp \ker(\Id-\gamma K^*) ,
+	\end{align}
+	where the equivalence $(*)$ is justified as follows:
+	if $v\in \ker(\Id-\gamma K^*)$, i.e., $\gamma K^*v = v$, then 
+	$\gamma\langle Kf,v \rangle_{L^2(\Omega)} 
+	= \gamma\langle f,K^*v \rangle_{L^2(\Omega)}
+	=  \langle f,v \rangle_{L^2(\Omega)}$,
+	so, $(*)$ holds, even when $\gamma=0$.
+	
+	We claim that 
+	\begin{equation}\label{eq6822e211}
+		\cal M = \ker(\Id-\gamma K^*) .
+	\end{equation}
+	Notice that, similarly to what we have done in~\eqref{eq6821bd98},
+	\begin{equation}\label{eq6822ef43}
+	\begin{aligned}
+		v \in \cal M
+		&\IFF \scr E_L[u,v] = 0 \quad\forall u\in H^1_0(\Omega) \\
+		&\IFF B_\gamma[u,v] \overset{\text{def}}= B[u,v] + \gamma \langle u,\bar v \rangle_{L^2(\Omega)} = \langle  u , \gamma \bar v \rangle_{L^2(\Omega)}\qquad\forall u\in H^1_0(\Omega) \\
+		&\IFF {}_{H^{-1}_0(\Omega)}\langle T_\gamma u | \bar v \rangle_{H^1_0(\Omega)} = \langle  u , \gamma \bar v \rangle_{L^2(\Omega)}\qquad\forall u\in H^1_0(\Omega) \\
+		&\IFF {}_{H^{1}_0(\Omega)}\langle  u | T_\gamma^\top \bar v \rangle_{H^{-1}_0(\Omega)} = \langle  u , \gamma \bar v \rangle_{L^2(\Omega)}\qquad\forall u\in H^1_0(\Omega) \\
+		&\IFF T_\gamma^\top \bar v = \gamma \bar v \\
+		&\IFF \bar v - \gamma (T_\gamma^\top)^{-1} \bar v = 0 \\
+		&\IFF v - \gamma \overline{ (T_\gamma^\top)^{-1} \bar v} = 0 
+%		&\IFF \bar v\in \ker(\Id - \gamma (T_\gamma^\top)^{-1}) \\
+%		&\IFF v \in \ker(\Id - \gamma \overline{(T_\gamma^\top)^{-1}}) .
+	\end{aligned}
+	\end{equation}
+	Here we have used the notation $(\cdot)^\top$ to denote the dual map: if $T:X\to Y$ is an operator between Banach spaces, then $T^\top: Y'\to X'$ is the dual map defined by 
+	\begin{equation}\label{eq6822e47f}
+		{}_{Y'}\langle \zeta ,Tx \rangle_Y = {}_{X'}\langle T^\top\zeta | x \rangle_X ,
+		\qquad\forall x\in X,\ \zeta\in Y' .
+	\end{equation}
+	To complete the proof of our claim~\eqref{eq6822e211}, we need to show that
+	\begin{equation}\label{eq6822e442}
+		\forall w\in L^2(\Omega),\qquad
+		\overline{(T_\gamma^\top)^{-1} \bar w} = K^* w .
+%		\text{ i.e., }
+%		(T_\gamma^\top)^{-1}w = \overline{K^*w} .
+	\end{equation}
+	First, notice that $(T_\gamma^\top)^{-1} = (T_\gamma^{-1})^\top$, by an easy argument using directly~\eqref{eq6822e47f}:
+	\begin{equation}
+		\forall x\in X,\ \forall\xi\in X',\quad
+		\langle \xi|x \rangle 
+		= \langle \xi | T^{-1}Tx \rangle
+		= \langle T^\top (T^{-1})^\top\xi|x \rangle 
+		\quad\THEN\quad 
+		T^\top (T^{-1})^\top = \Id_{X'} .
+	\end{equation}
+	So,~\eqref{eq6822e442} reduces to showing $\overline{ K^\top \bar w } = K^*w$ for all $w\in L^2(\Omega)$.
+%	 the two conjugate are defined using different pairings, but they agree on $L^2$ functions.
+	More precisely, if $\tilde K=T_\gamma^{-1}:H^{-1}_0(\Omega)\to H^1_0(\Omega)$ (which is the operator from which $K$ descends),
+	then $\tilde K^\top:H^{-1}_0(\Omega)\to H^1_0(\Omega)$ and
+	\begin{equation}\label{eq6822e751}
+		\forall a,b\in H^{-1}_0(\Omega),\qquad
+		{}_{H^{1}_0(\Omega)}\langle \tilde Ka | b \rangle_{H^{-1}_0(\Omega)}
+		= {}_{H^{-1}_0(\Omega)}\langle a | \tilde K^\top b \rangle_{H^{1}_0(\Omega)}
+	\end{equation}
+	If $a,b\in L^2(\Omega)\subset H^{-1}_0(\Omega)$, then~\eqref{eq6822e751} says
+	\begin{align}
+		\langle a, K^* b \rangle_{L^2(\Omega)} 
+		&= \langle K a, b \rangle_{L^2(\Omega)} \\
+		&= \langle \tilde K a , b  \rangle_{L^2(\Omega)} \\
+		&= \int_\Omega \tilde K a(x) \bar b(x) \did x \\
+		&= {}_{H^{1}_0(\Omega)}\langle \tilde Ka | \bar b \rangle_{H^{-1}_0(\Omega)} \\
+		&= {}_{H^{-1}_0(\Omega)}\langle a | \tilde K^\top \bar b \rangle_{H^{1}_0(\Omega)} \\
+		&= \int_\Omega  a(x) \tilde K^\top\bar b(x) \did x \\
+		&= \langle  a , \overline{\tilde K^\top \bar b}  \rangle_{L^2(\Omega)} .
+	\end{align}
+	We can now complete the sequence of equivalences~\eqref{eq6822ef43} with
+	\begin{align}
+		v \in \cal M
+		&\overset{\eqref{eq6822ef43}}\IFF v - \gamma \overline{ (T_\gamma^\top)^{-1} \bar v} = 0 \\
+		&\IFF v- \gamma K^*v = 0 .
+	\end{align}
+	We have thus proven our claim~\eqref{eq6822e211}.
+	
+	With Theorem~\ref{thm6821bc90} and claim~\eqref{eq6822e211},
+	we have proven all the statements of Theorem~\ref{thm6822fa7f}.
 \end{proof}
+
+\begin{exercise}
+	If $u\in\scr N$ means $Lu=0$, what does $v\in\scr M$ mean?
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Regularity}
 
+We assume that $L$ has bounded coefficients, i.e.,~\eqref{eq6820970d},
+and that $L$ is elliptic, i.e.,~\eqref{eq6820a660}.
 
-•
+\begin{lemma}[Caccioppoli Inequality\footnote{\url{https://en.wikipedia.org/wiki/Renato_Caccioppoli}}]\label{lem6822fc0f}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	Then there exists $C\in\R$ such that the following holds.
+	
+	If $u\in H^1(\Omega)$ is such that $Lu=f$ in $\Omega$ for some $f\in L^2(\Omega)$,
+	i.e., 
+	\begin{equation}
+		\forall v\in H^1_0(\Omega),\qquad
+		\scr E_L(u,v) = \langle u,f \rangle_{L^2(\Omega)} ,
+	\end{equation}
+	then
+	\begin{equation}\label{eq6822fc08}
+		\|\grad u\|_{L^2(\Omega)}^2 \le C (\|u\|_{L^2(\Omega)}^2 + \|f\|_{L^2(\Omega)}^2 ) .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Let $\Omega'\Subset\Omega$ and $\zeta\in C^\infty(\Omega;[0,1])$ be such that
+	\begin{equation}
+		\Omega' \subset\interior\{\zeta=1\} \subset\spt(\zeta) \Subset \Omega .
+	\end{equation}
+	
+	\begin{align}
+		\theta \|\grad u\|_{L^2(\Omega')}^2
+		&= \theta \langle \grad u,\grad u \rangle_{L^2(\Omega')} \\
+		&\overset{\eqref{ell}}\le \langle A\grad u,\grad u \rangle_{L^2(\Omega')} \\
+		&\le \langle A\grad u,\grad (\zeta u) \rangle_{L^2(\Omega)} \\
+		&\le \scr E_L(u,\zeta u) - \langle b\cdot\grad u + cu , \zeta u \rangle_{L^2(\Omega)} \\
+		&= \langle f - b\cdot\grad u - cu,\zeta u \rangle_{L^2(\Omega)} \\
+		&\overset{\eqref{Hölder}}\le (\|f\|_{L^2(\Omega)} + \|b\|_{L^\infty(\Omega)} \|\grad u\|_{L^2(\Omega)} + \|c\|_{L^\infty(\Omega)} \|u\|_{L^2(\Omega)} ) \|\zeta u\|_{L^2(\Omega)} \\
+		&\overset{\eqref{Cauchy}}\le \frac{\|f\|_{L^2(\Omega)}^2}{2} + \frac{\|\zeta u\|_{L^2(\Omega)}^2}{2} \\
+		&\qquad	+ \frac{\theta}{2} \|\grad u\|_{L^2(\Omega)}^2 + \frac{\|b\|_{L^\infty(\Omega)}}{2\theta} \|\zeta u\|_{L^2(\Omega)}^2 \\
+		&\qquad + \|c\|_{L^\infty(\Omega)} \|u\|_{L^2(\Omega)}\|\zeta u\|_{L^2(\Omega)} \\
+	[\text{by }0\le\zeta\le1]
+		&\le \frac{\|f\|_{L^2(\Omega)}^2}{2} 
+			+ \left(\frac12 + \frac{\|b\|_{L^\infty(\Omega)}}{2\theta} + \|c\|_{L^\infty(\Omega)} \right) \| u\|_{L^2(\Omega)}^2 
+			+ \frac{\theta}{2} \|\grad u\|_{L^2(\Omega)}^2 .
+	\end{align}
+	Therefore
+	\begin{equation}\label{eq6823014e}
+		2 \|\grad u\|_{L^2(\Omega')}^2 - \|\grad u\|_{L^2(\Omega)}^2 
+		\le \frac2\theta \frac{\|f\|_{L^2(\Omega)}^2}{2}
+			+ \left( 1 + \|b\|_{L^\infty(\Omega)} + 2\theta \|c\|_{L^\infty(\Omega)} \right) \| u\|_{L^2(\Omega)}^2 . 
+	\end{equation}
+	Since the right-hand side of estimate~\eqref{eq6823014e} does not depend on $\Omega'$, 
+	if we take the supremum over all $\Omega'\Subset\Omega$, we obtain
+	\begin{equation}
+		\|\grad u\|_{L^2(\Omega)}^2 
+		\le \frac2\theta \frac{\|f\|_{L^2(\Omega)}^2}{2}
+			+ \left( 1 + \|b\|_{L^\infty(\Omega)} + 2\theta \|c\|_{L^\infty(\Omega)} \right) \| u\|_{L^2(\Omega)}^2 .
+	\end{equation}
+	We have thus obtained~\eqref{eq6822fc08}.
+\end{proof}
+
+\begin{lemma}\label{lem6823059f}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	Suppose that $u\in H^1(\Omega)$ is such that $Lu=f$ for some $f\in L^2(\Omega)$, where $L$ has $b=0$ and $c=0$.
+	Equivalently, $u\in H^1(\Omega)$ and $f\in L^2(\Omega)$ are such that
+	\begin{equation}\label{eq682306a7}
+		\forall v\in H^1_0(\Omega),\qquad
+		\langle A\grad u,\grad v \rangle_{L^2(\Omega)} = \langle f,v \rangle_{L^2(\Omega)} ,
+	\end{equation}
+	where $A\in L^\infty(\Omega;\C^{n\times n})$ satisfies the ellipticity condition~\eqref{eq6820a660}.
+	
+%	Then, for every $j\in\{1,\dots,n\}$ and $h\neq0$,
+%	\begin{equation}\label{eq68230594}
+%		\|\Delta_j^h\grad u\|_{L^2(\Omega)} \le C (\|u\|_{L^2(\Omega)} + \|f\|_{L^2(\Omega)}) .
+%	\end{equation}
+	
+	For every $\Omega''\Subset\Omega$ there exist constants $C$ and $\epsilon$ depending on $\Omega''$, $\| A\|_{L^\infty(\Omega)}$, $\|\Diff A\|_{L^\infty(\Omega)}$, and $\theta$, such that,
+	for every $h$ with $0<|h|<\epsilon$, and for every $j\in\{1,\dots,n\}$,
+	\begin{equation}\label{eq68231837}
+		\|\Delta_j^{h}\grad u\|_{L^2(\Omega'')}^2 \le C ( \|u\|_{L^2(\Omega)}^2 + \| \grad u\|_{L^2(\Omega)}^2 + \|f\|_{L^2(\Omega)}^2 ) .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	 Fix $j\in\{1,\dots,n\}$ and $h\neq0$.
+	 Let $\Omega'\Subset\Omega'\Subset\Omega$ and $\zeta\in C^\infty(\Omega;[0,1])$ be such that
+	\begin{equation}
+		\Omega'' \subset\interior\{\zeta=1\} \subset\spt(\zeta) \Subset \Omega' \Subset\Omega .
+	\end{equation}
+	Then there exists $\epsilon>0$ such that, for every $h$ with $0<|h|<\epsilon$,
+	\begin{equation}
+		v := -\Delta_j^{-h} (\zeta^2 \Delta_j^h u) \in H^1_0(\Omega) .
+	\end{equation}
+	With the aim of applying~\eqref{eq682306a7} with this test function, we make the following estimates.
+	We see that
+	\begin{align}
+		\langle A\grad u,\grad v \rangle_{L^2(\Omega)}
+		&= \langle A\grad u,\grad (-\Delta_j^{-h} (\zeta^2 \Delta_j^h u)) \rangle_{L^2(\Omega)} \\
+		&\overset{\eqref{eq681734d2}}= \langle \Delta_j^{h}(A\grad u),\grad (\zeta^2 \Delta_j^h u) \rangle_{L^2(\Omega)} \\
+		&\overset{\eqref{eq681734d8}}= \langle (\Delta_j^{h}A)\grad u + A^{(h)} \Delta_j^{h}\grad u , 
+			\Delta_j^h u 2\zeta\grad\zeta + \zeta^2 \grad(\Delta_j^h u) \rangle_{L^2(\Omega)} \\
+		&= F_1 + F_2 ,
+	\end{align}
+	where $A^{(h)}(x) = A(x+he_j)$ and
+	\begin{align}
+		F_1
+		&= \langle A^{(h)} \Delta_j^{h}\grad u , 
+			\zeta^2 \grad(\Delta_j^h u) \rangle_{L^2(\Omega)} \\
+		&= \langle A^{(h)} \zeta\Delta_j^{h}\grad u , 
+			\zeta \Delta_j^h\grad u \rangle_{L^2(\Omega)} \\
+		&\overset{\eqref{eq6820a660}}\ge \theta \|\zeta\Delta_j^{h}\grad u\|_{L^2(\Omega)} \\
+		&\ge \theta \|\Delta_j^{h}\grad u\|_{L^2(\Omega'')} ; \\
+%	\end{align}
+%	\begin{align}
+		F_2
+		&= \langle (\Delta_j^{h}A)\grad u , \Delta_j^h u 2\zeta\grad\zeta \rangle_{L^2(\Omega)} \\
+		&\qquad	+ \langle (\Delta_j^{h}A)\grad u ,\zeta^2 \grad(\Delta_j^h u) \rangle_{L^2(\Omega)} \\
+		&\qquad	+ \langle A^{(h)} \Delta_j^{h}\grad u , \Delta_j^h u 2\zeta\grad\zeta \rangle_{L^2(\Omega)} \\
+		%
+		&\le 2 \|\Delta_j^{h}A\|_{L^\infty(\Omega')} \|\grad u \|_{L^2(\Omega')} \| \Delta_j^h u\|_{L^2(\Omega')}
+			\| \grad\zeta \|_{L^\infty(\Omega')} \\
+		&\qquad	+ \|\Delta_j^{h}A\|_{L^\infty(\Omega')} \|\grad u \|_{L^2(\Omega')} \| \zeta\Delta_j^h \grad u\|_{L^2(\Omega')} \\
+		&\qquad	+ 2 \|A\|_{L^\infty(\Omega')} \|\zeta\Delta_j^{h}\grad u\|_{L^2(\Omega')} \| \Delta_j^h u\|_{L^2(\Omega')} 
+			\| \grad\zeta \|_{L^\infty(\Omega')} \\
+		%
+		&\le 2 \|\Diff A\|_{L^\infty(\Omega)} \|\grad u \|_{L^2(\Omega)}^2 \| \grad\zeta \|_{L^\infty(\Omega)} \\
+		&\qquad	+ \|\Diff A\|_{L^\infty(\Omega)} \|\grad u \|_{L^2(\Omega)} \|\zeta\Delta_j^{h}\grad u\|_{L^2(\Omega)} \\
+		&\qquad	+ 2 \|A\|_{L^\infty(\Omega)} \|\zeta\Delta_j^{h}\grad u\|_{L^2(\Omega)} \| \grad u\|_{L^2(\Omega)} 
+			\| \grad\zeta \|_{L^\infty(\Omega)} \\
+		%
+		&\overset{\eqref{Cauchy}}\le 2 \|\Diff A\|_{L^\infty(\Omega)} \| \grad\zeta \|_{L^\infty(\Omega)} \|\grad u \|_{L^2(\Omega)}^2\\
+		&\qquad		+ 4\| \grad\zeta \|_{L^\infty(\Omega)}^2 \frac{ \|A\|_{L^\infty(\Omega)}^2 +  \|\Diff A\|_{L^\infty(\Omega)}^2 }{ \theta } \| \grad u\|_{L^2(\Omega)}^2 \\
+		&\qquad	+ \frac{\theta}{2} \|\zeta \Delta_j^{h}\grad u\|_{L^2(\Omega)}^2 .
+	\end{align}
+	Since
+	\begin{equation}
+		\langle A\grad u,\grad v \rangle_{L^2(\Omega)} 
+		= \langle u,f \rangle_{L^2(\Omega)}\le \|u\|_{L^2(\Omega)}\|f\|_{L^2(\Omega)} 
+		\overset{\eqref{Cauchy}}\le \frac{ \|u\|_{L^2(\Omega)}^2 }{2} + \frac{ \|f\|_{L^2(\Omega)}^2 }{2} ,
+	\end{equation}
+	we obtain
+	\begin{align}
+		\frac{\theta}{2} \|\zeta \Delta_j^{h}\grad u\|_{L^2(\Omega)}^2
+		&\le \frac{ \|u\|_{L^2(\Omega)}^2 }{2} + \frac{ \|f\|_{L^2(\Omega)}^2 }{2} \\
+		&\qquad	+ 2 \|\Diff A\|_{L^\infty(\Omega)} \| \grad\zeta \|_{L^\infty(\Omega)} \|\grad u \|_{L^2(\Omega)}^2 \\
+		&\qquad	+ 4\| \grad\zeta \|_{L^\infty(\Omega)}^2 \frac{ \|A\|_{L^\infty(\Omega)}^2 +  \|\Diff A\|_{L^\infty(\Omega)}^2 }{ \theta } \| \grad u\|_{L^2(\Omega)}^2 .
+	\end{align}
+	We conclude that there is a constant $C\in\R$ depending on $\| A\|_{L^\infty(\Omega)}$, $\|\Diff A\|_{L^\infty(\Omega)}$, $\| \grad\zeta \|_{L^\infty(\Omega)}$ and $\theta$ such that
+	\begin{equation}
+		\|\zeta \Delta_j^{h}\grad u\|_{L^2(\Omega)}^2 \le C ( \|u\|_{L^2(\Omega)}^2 + \| \grad u\|_{L^2(\Omega)}^2 + \|f\|_{L^2(\Omega)}^2 ) .
+	\end{equation}
+	Since $\zeta=1$ on $\Omega''$, then we get~\eqref{eq68231837}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Regularity of solutions to Elliptic PDE]\label{thm68237c1b}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	
+	Let $L$ be a differential operator as in~\eqref{eq6820970d},
+	with bounded coefficients~\eqref{eq6820a660},
+	and satisfying the ellipticity condition~\eqref{eq6820a731}.
+	Moreover, we assume that
+	\begin{equation}
+		\|\Diff A\|_{L^\infty(\Omega)} < \infty ,
+	\end{equation}
+	that is, that $A$ is Lipschitz.
+	
+	Then, for every $\Omega'\Subset\Omega$ there exists a constant $C$ such that
+	\begin{equation}\label{eq68237d5d}
+		\forall u\in H^1(\Omega),\qquad
+		\|\Diff^2u\|_{L^2(\Omega')} \le C (\|u\|_{L^2(\Omega)} + \|Lu\|_{L^2(\Omega)} ) .
+	\end{equation}
+	In particular, if $u\in H^1(\Omega)$ is such that $Lu\in L^2(\Omega)$, then $u\in H^2_\loc(\Omega)$.
+\end{theorem}
+\begin{proof}
+	Let $\Omega'\Subset\Omega$ and $u\in H^1(\Omega)$ with $f=Lu\in L^2(\Omega)$ 
+	(if $\|Lu\|_{L^2(\Omega)}=\infty$, then~\eqref{eq68237d5d} is trivial.
+	Define $M$ as the differential operator
+	\begin{equation}
+		\forall w\in H^1(\Omega),\qquad
+		Mw = -\div(A\grad w) = Lw - ( b\cdot\grad w + cw ) .
+	\end{equation}
+	Notice that, if $w\in H^1(\Omega)$, then $b\cdot\grad w + cw\in L^2(\Omega)$.
+	So,
+	\begin{equation}
+		 Mu = \tilde f := f - (b\cdot\grad u + cu) \in L^2(\Omega) .
+	\end{equation}
+	Notice that
+	\begin{equation}\label{eq6823846a}
+		\|\tilde f\|_{L^2(\Omega)}
+		\le \|b\|_{L^\infty(\Omega)} \|\grad u\|_{L^2(\Omega)} + \|c\|_{L^\infty(\Omega)} \|u\|_{L^2(\Omega)}.
+	\end{equation}
+	Applying first Lemma~\ref{lem6823059f},
+%	and then the Caccioppoli Inequality of Lemma~\ref{lem6822fc0f},
+	we obtain a constant $C$ (independent of $u$) such that
+	\begin{equation}
+		\limsup_{h\to0}\|\Delta_j^{h}\grad u\|_{L^2(\Omega'')} 
+		\le C (\|u\|_{L^2(\Omega)} + \|\grad u\|_{L^2(\Omega)} + \|\tilde f\|_{L^2(\Omega)} ) 
+	\end{equation}
+	The estimate~\eqref{eq6823846a} and the Caccioppoli Inequality of Lemma~\ref{lem6822fc0f}, then implies that there exists a constant $C$ (independent of $u$) such that
+	\begin{equation}
+		\limsup_{h\to0}\|\Delta_j^{h}\grad u\|_{L^2(\Omega'')} 
+		\le C (\|u\|_{L^2(\Omega)} + \| f\|_{L^2(\Omega)} ) .
+	\end{equation}
+	By Theorem~\ref{thm681736aa} (using also the quantitative version given by Proposition~\ref{prop68176bc1}), we obtain~\eqref{eq68237d5d}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{corollary}[Regularity of solutions to Elliptic PDE]\label{cor68237f2f}
+	Let $n\ge2$ and $\Omega\subset\R^n$ open.
+	
+	Let $L$ be a differential operator as in~\eqref{eq6820970d},
+	with bounded coefficients~\eqref{eq6820a660},
+	and satisfying the ellipticity condition~\eqref{eq6820a731}.
+	Moreover, we assume that, for some $m\in\N$, we have
+	\begin{equation}\label{eq682385e0}
+		A\in W^{m+1,\infty}(\Omega;\C^{n\times n}),\qquad
+		b\in W^{m,\infty}(\Omega;\C^n),\qquad
+		c\in W^{m,\infty}(\Omega;\C).
+	\end{equation}
+		
+	Then, for every $\Omega'\Subset\Omega$ there exists a constant $C$ such that
+	\begin{equation}\label{eq68237d5d}
+		\forall u\in H^1(\Omega),\qquad
+		\|u\|_{H^{m+2}(\Omega')} \le C (\|u\|_{L^2(\Omega)} + \|Lu\|_{H^m(\Omega)} ) .
+	\end{equation}
+	In particular, if $u\in H^1(\Omega)$ is such that $Lu\in H^m(\Omega)$, then $u\in H^2_\loc(\Omega)$.
+\end{corollary}
+\begin{proof}
+	We prove the statement by induction over $m$.
+	Let $\ell\in\N$. If $\ell=0$, then we just apply Theorem~\ref{thm68237c1b}.
+	Suppose $\ell>0$ and suppose that the statement above holds for $m<\ell$:
+	we will prove it for $m=\ell$.
+	Under the hypothesis above on $L$, we have that for every $\Omega'\Subset\Omega$ there exists a constant $C$ such that
+	\begin{equation}\label{eq682387da}
+		\forall u\in H^1(\Omega),\qquad
+		\|u\|_{H^{\ell+1}(\Omega')} \le C (\|u\|_{L^2(\Omega)} + \|Lu\|_{H^{\ell-1}(\Omega)} ) .
+	\end{equation}
+	For each $j\in\{1,\dots,n\}$, we have
+	\begin{equation}\label{eq68239171}
+	\begin{aligned}
+		L\de_ju
+		&= -\div(A\grad\de_ju) + b\cdot\grad \de_ju + c \de_ju\\
+		&= \de_j(-\div(A\grad u) + b\cdot\grad u + cu)
+			- \left( -\div(\de_jA\grad u) + \de_jb\cdot\grad u + \de_jcu \right) \\
+		&= \de_j Lu - L_ju .
+	\end{aligned}
+	\end{equation}
+	Straightforward estimates give, for every $m\in\N$ for which~\eqref{eq682385e0} holds, we have $C_m'<\infty$ such that
+	\begin{equation}\label{eq6823968e}
+	\begin{aligned}
+		\|L_ju\|_{H^m(\Omega)}
+		&\le \|\div(\de_jA\grad u)\|_{H^m(\Omega)} + \|\de_jb\cdot\grad u\|_{H^m(\Omega)} + \|\de_jcu\|_{H^m(\Omega)} \\
+		&\le \sum_{|\alpha|\le m} \|\Diff^\alpha(\div(\de_jA\grad u))\|_{L^2(\Omega)} 
+			+ \|\Diff^\alpha\de_jb\cdot\grad u\|_{L^2(\Omega)} 
+			+ \|\Diff^\alpha\de_jcu\|_{L^2(\Omega)} \\
+		&\le C_m ( \|A\|_{W^{m+2,\infty}(\Omega)} 
+			+ \|b\|_{W^{m+1,\infty}(\Omega)}
+			+ \|c\|_{W^{m+1,\infty}(\Omega)})
+			\|u\|_{H^{m+2}(\Omega)} \\
+		&\overset{\eqref{eq682385e0}}\le C_m' \|u\|_{H^{m+2}(\Omega)} .
+	\end{aligned}
+	\end{equation}
+	So
+	\begin{align}
+		\|u\|_{H^{\ell+2}(\Omega')}
+		&\le \|u\|_{L^2(\Omega)} + \sum_{j=1}^n \|\de_ju\|_{H^{\ell+1}(\Omega')} \\
+		&\overset{\eqref{eq682387da}}\le \|u\|_{L^2(\Omega)} 
+			+ C \sum_{j=1}^n (\|\de_ju\|_{L^2(\Omega)} + \|L\de_ju\|_{H^{\ell-1}(\Omega')} ) \\
+		&\overset{\eqref{eq68239171}}\le \|u\|_{L^2(\Omega)} 
+			+ C \sum_{j=1}^n (\|\de_ju\|_{L^2(\Omega)} + \|\de_jLu\|_{H^{\ell-1}(\Omega')} + \|L_ju\|_{H^{\ell-1}(\Omega')}) \\
+		&\overset{\eqref{eq6823968e}}\le C' \left( \|u\|_{H^1(\Omega)} + \|Lu\|_{H^{\ell}(\Omega)} + \|u\|_{H^{\ell+1}(\Omega)} \right) \\
+		&\overset{\eqref{eq682387da}}\le C'' \left( \|Lu\|_{H^{\ell}(\Omega)} + \|u\|_{L^2(\Omega)} + \|Lu\|_{H^{\ell-1}(\Omega)} \right) \\
+		&\le C''' \left( \|Lu\|_{H^{\ell}(\Omega)} + \|u\|_{L^2(\Omega)} \right) .
+	\end{align}
+	We eventually have~\eqref{eq68237d5d} for $m=\ell$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
