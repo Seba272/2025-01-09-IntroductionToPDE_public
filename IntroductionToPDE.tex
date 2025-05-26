@@ -249,6 +249,7 @@ Other references are:
 \begin{itemize}
 \item \fullcite{MR2597943}
 \item \fullcite{MR1357411}
+\item \fullcite{zbMATH01211561}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1174,6 +1175,10 @@ For $U\subset\R^n$ open and $u\in C^2(U)$, define
 \index{harmonic!-- function}
 \index{function!harmonic --}
 A \emph{harmonic function} on $U\subset\R^n$ open is a function $u\in C^2(U)$ such that $\laplacian u=0$.
+
+\begin{exercise}\label{ex68347bbd}
+	Show that the only harmonic functions on $\R$ are the affine functions.
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Symmetries of Laplace operator}\label{subs67b9d638}
@@ -5797,10 +5802,10 @@ where $k$ normalizes the integral.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Constancy theorem}\label{subs67df2829}
 
-\begin{proposition}
+\begin{theorem}[Constancy theorem]\label{thm68346c5c}
 	If $u\in\scr D'(\Omega)$ is such that $\de_ju = 0$ for all $j\in\{1,\dots,n\}$,
 	then $u$ is a constant function, that is, there is $c\in\C$ such that $u[\phi] = c\int_\Omega\phi(x)\did x$ for all $\phi\in\scr D(\Omega)$.
-\end{proposition}
+\end{theorem}
 \begin{proof}
 	Let $\{\rho_\epsilon\}_{\epsilon>0}$ be an approximation of the identity on $\R^n$.
 	Then $\de_j(u*\rho_\epsilon) = (\de_ju)*\rho_\epsilon = 0$, therefore $u*\rho_\epsilon = c_\epsilon \in\C$.
@@ -6916,6 +6921,32 @@ as $\hat u=\scr F(u)$, where
 
 \begin{exercise}\label{ex67fcc1d2}
 	Compute $\scr F(\delta_0)$.
+\end{exercise}
+
+\begin{exercise}\label{ex6834885c}
+	For $a\in\R^n$, compute $\scr F(\delta_a)$ and $\scr F(e^{ia\cdot x})$.
+	Then compute $\scr F^{-1}(\delta_a)$ and $\scr F^{-1}(e^{ia\cdot x})$.
+	
+	{\it Solution.}
+	Using only definitions, we have,
+	for all $a\in\R^n$ and $\phi\in\scr S$,
+	$\scr F(\delta_a)[\phi]
+	= \delta_a[\scr F\phi]
+	= \scr F\phi(a)
+	= \int_{\R^n} \exp(-2\pi ia\cdot x) \phi(x) \did x$.
+	This identity exactly means that, as distributions over $\R^n$,
+	$\scr F(\delta_a) = \exp(-2\pi ia\cdot x)$.
+	
+	There is not much else to compute.
+	Notice that $\cal I\delta_a[\phi] = \delta_a[\cal I\phi] = \phi(-a) =\delta_{-a}[\phi]$.
+	So,
+	\begin{align}
+		\scr F(\delta_a) &= \exp(-2\pi ia\cdot x) , \\
+		\delta_{-a} &= \cal I \delta_a = \scr F^2(\delta_a) = \scr F_x(\exp(-2\pi ia\cdot x)) ,\\ 
+		\scr F_x(e^{ia\cdot x}) &= \delta_{\frac{a}{2\pi}} , \\
+		\scr F^{-1}\delta_a &= \exp(2\pi ia\cdot x) , \label{eq683488c2}\\
+		\scr F^{-1}(e^{ia\cdot x}) &= \cal I\scr F(e^{ia\cdot x}) = \cal I\delta_{\frac{a}{2\pi}} = \delta_{-\frac{a}{2\pi}} .
+	\end{align}
 \end{exercise}
 
 \begin{exercise}
@@ -9931,7 +9962,7 @@ and that $L$ is elliptic, i.e.,~\eqref{eq6820a660}.
 		\forall u\in H^1(\Omega),\qquad
 		\|u\|_{H^{m+2}(\Omega')} \le C (\|u\|_{L^2(\Omega)} + \|Lu\|_{H^m(\Omega)} ) .
 	\end{equation}
-	In particular, if $u\in H^1(\Omega)$ is such that $Lu\in H^m(\Omega)$, then $u\in H^2_\loc(\Omega)$.
+	In particular, if $u\in H^1(\Omega)$ is such that $Lu\in H^m(\Omega)$, then $u\in H^{m+2}_\loc(\Omega)$.
 \end{corollary}
 \begin{proof}
 	We prove the statement by induction over $m$.
@@ -9984,11 +10015,331 @@ and that $L$ is elliptic, i.e.,~\eqref{eq6820a660}.
 \end{proof}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Exercises}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Eigenvalues of laplacian on interval}
+We want to study, for $\lambda\in\C$ and $\ell>0$,
+\begin{equation}
+\begin{cases}
+	-\laplacian u + \lambda u = 0 &\text{ in }(0,\ell) ,\\
+	u(0) = u(\ell) = 0 .
+\end{cases}
+\end{equation}
+In other words,
+\begin{equation}\label{eq68342701}
+\begin{cases}
+	u'' = \lambda u &\text{ in }(0,\ell) ,\\
+	u\in H^1((0,\ell)) .
+\end{cases}
+\end{equation}
+
+\begin{lemma}\label{lem6834273f}
+	Let $u$ be a solution to~\eqref{eq68342701}.
+	Then $u\in C^\infty((0,\ell))$.
+\end{lemma}
+\begin{proof}
+	This is an application of Corollary~\ref{cor68237f2f}.
+\end{proof}
+
+Be aware that the regularity stated in Lemma~\ref{lem6834273f} is in the open interval $(0,\ell)$ and not on the whole $[0,\ell]$.
+We will procede as follows:
+\begin{enumerate}
+\item
+	the assumption $u\in H^1_0((0,\ell))$ alone gives us that $u$ is continuous on $[0,\ell]$
+and that $u(0)=u(\ell)$;
+see the following two Lemmata~\ref{lem68346d4d} and~\ref{lem68342e8e}.
+\item
+	Then, we will extend $u$ to $\R$ in such a way that the extension $\tilde u =E(u)$ is a bounded function on $\R$ that solves $\laplacian \tilde u=\lambda \tilde u$ on $\R$; see Lemma~\ref{lem68344adb} and Corollary~\ref{cor6834905d}.
+\item
+	We will find all solutions of $\laplacian v=\lambda v$ for $v\in \scr S'(\R)$ using the Fourier transform; see Proposition~\ref{prop6834897a}.
+\item
+	Among the solutions $v$ on $\R$, we look for those $v$ that are extensions of functions in $H^1_0((0,\ell))$;
+	see Proposition~\ref{prop68349083}. 
+	In this way, we will find all solutions to~\eqref{eq68342701}.
+\end{enumerate}
 
 
+\begin{exercise}
+	Try to guess solutions to~\eqref{eq68342701}.
+	Try also to show they are the only one.
+\end{exercise}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Fundamental properties of $u$}
 
+\begin{lemma}\label{lem68346d4d}
+	If $u\in W^{1,1}((0,\ell))$, then, up to changing $u$ on a set of measure zero, $u\in C([0,\ell])$ and 
+	\begin{equation}
+		\forall x\in[0,\ell],\qquad
+		u(x) = u(0) + \int_0^x u'(y) \did y .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Define $v:(0,\ell)\to\C$ by
+	\begin{equation}
+		v(x) = \int_{\ell/2}^x u'(y) \did y .
+	\end{equation}
+	We claim that
+	\begin{equation}\label{eq68346c1c}
+		v' = u' .
+	\end{equation}
+	If $\phi\in C^\infty_c((0,\ell))$, then
+	\begin{align}
+		\int_0^\ell v(x)\phi'(x)\did x
+		&= \int_0^\ell \int_{\ell/2}^x u'(y) \phi'(x)\did y \did x \\
+		&= - \int_0^{\ell/2} \int_0^y u'(y) \phi'(x) \did x\did y 
+			+ \int_{\ell/2}^\ell \int_y^\ell u'(y) \phi'(x) \did x\did y \\
+		&= - \int_0^\ell u'(y) \phi(y) \did y \\
+		&= \int_0^\ell u(y) \phi'(y) \did y .
+	\end{align}
+	This shows~\eqref{eq68346c1c}.
+	
+	Therefore, $(u-v)'=0$ and thus, by the Constancy Theorem~\ref{thm68346c5c}, there exists $c\in \C$ such that, for almost every $x\in(0,\ell)$, $u(x)= c+v(x)$.
+	We conclude that, up to changing $u$ on a set of measure zero, 
+	\begin{equation}
+		u(x) = u(\ell/2) + \int_{\ell/2}^x u'(y) \did y .
+	\end{equation}
+	By the continuity of the integral, not only $u$ is continuous, but also
+	$\lim_{x\to0} u(x)$ exists and it is equal to $u(\ell/2) - \int_0^{\ell/2} u'(y) \did y$,
+	and similarly for $\lim_{x\to\ell} u(x)$.
+\end{proof}
 
+\begin{lemma}\label{lem68342e8e}
+	Let $v\in H^1((0,\ell)) = W^{1,2}((0,\ell))$.
+	Then $v\in W^{1,1}((0,\ell))\cap C([0,\ell])$.
+	Moreover, if $v\in H^1_0((0,\ell))$, then $v(0)=v(\ell)=0$.
+\end{lemma}
+\begin{proof}
+	Since $L^2((0,\ell))\subset L^1((0,\ell))$, then $v\in W^{1,1}((0,\ell))$.
+	Lemma~\ref{lem68346d4d} implies that, up to changing $v$ on a set of measure zero, $v\in C([0,\ell])$.
+	
+	Suppose $v\in H^1_0((0,\ell))$.
+	By definition of $H^1_0((0,\ell))$, there exists a sequence $\{v_j\}_{j\in\N}\subset C^\infty_c((0,\ell))$
+	such that $v_j\to v$ in $H^1((0,\ell))$,
+	that is, $\lim_{j\to\infty} \|v-v_j\|_{L^2((0,\ell))} = 0$ and $\lim_{j\to\infty} \|v'-v_j'\|_{L^2((0,\ell))} = 0$.
+	Since the Hölder inequality implies $\|f\|_{L^1((0,\ell))} \le \sqrt{\ell} \|f\|_{L^2((0,\ell))}$,
+	we obtain $\lim_{j\to\infty} \|v-v_j\|_{L^1((0,\ell))} = 0$ and $\lim_{j\to\infty} \|v'-v_j'\|_{L^1((0,\ell))} = 0$.
+	We know then that, up to passing to a subsequence, there exists a set $I\subset(0,\ell)$ of full measure so that $\lim_{j\to\infty} v_j(x) = v(x)$ for every $x\in I$.
+%	If $x,y\in I$, then
+%	\begin{align}
+%		v(x) - v(y) 
+%		&= \lim_{j\to\infty} v_j(x) - v_j(y) \\
+%		&= \lim_{j\to\infty} \int_x^y v_j'(z) \did z \\
+%		&= \int_x^y v'(z) \did z .
+%	\end{align}
+%	Since the function $x\mapsto \int_{\ell/2^x} v'(z) \did z$ is continuous, we obtain that $v$ is continuous on $I$ and thus, up to changing $v$ on a set of measure zero, and~\eqref{eq68342e86} holds.
+	
+%	Since $\int_0^\ell |v'(z)| \did z<\infty$, then $v(0):= \lim_{x\to0} v(x)$ and $v(\ell):=\lim_{x\to\ell} v(x)$ exist.
+
+	We claim that in fact the convergence $v_j\to v$ is pointwise on $[0,\ell]$ (in fact, we prove that it is uniform).
+	Indeed, if $\bar x\in I$ and $x\in[0,\ell]$, then, for every $j\in\N$,
+	\begin{align}
+		|v(x) - v_j(x)|
+		&= \left| v(\bar x) - v_j(\bar x) + \int_{\bar x}^x (v'(y)-v_j'(y)) \did y \right| \\
+		&\le |v(\bar x) - v_j(\bar x)| + \int_0^\ell |v'(y)-v_j'(y)| \did y .
+	\end{align}
+	Therefore, $\lim_{j\to\infty} |v(x) - v_j(x)| = 0$ for every $x\in[0,\ell]$.
+	
+	Since $v_j(0)=v_j(\ell)=0$ for all $j$, then $v(0)=v(\ell)=0$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Extension of $u$ to $\R$}
+
+\begin{lemma}\label{lem68344adb}
+	Let $v\in W^{1,1}((0,\ell))$. 
+%	We should know, and in any case we assume, that, for every $x\in[0,\ell]$,
+%	\begin{equation}\label{eq683435d0}
+%		v(x) = v(0) + \int_0^x v'(y) \did y .
+%	\end{equation}
+	Define $E(v):\R\to\C$ as
+	\begin{equation}
+		E(v)(x) = \sum_{k\in\Z} \left( u(x\mod\ell\Z) \one_{\ell[2k,2k+1]} - u(-x\mod\ell\Z) \one_{\ell[2k+1,2k+2]} \right) .
+	\end{equation}
+	Then, distributionally,
+	\begin{equation}\label{eq6834343d}
+		E(v') = E(v)' .
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	From Lemma~\ref{lem68346d4d}, we know that, up to modifying $v$ on a set of measure zero, $v\in C([0,\ell])$ 
+	and, for all $x\in[0,\ell]$,
+	\begin{equation}\label{eq683435d0}
+		v(x) = v(0) + \int_0^x v'(y) \did y .
+	\end{equation}
+	
+	The identity~\eqref{eq683435d0} implies that, for every $\phi\in\scr D(\R)$,
+	\begin{equation}\label{eq6834365d}
+		\int_0^\ell u(x) \phi'(x) \did x
+		= u(\ell)\phi(\ell) - u(0) \phi(0) - \int_0^\ell u'(x) \phi(x) \did x .
+	\end{equation}
+	Let $\phi\in\scr D(\R)$.
+	\begin{align}
+		- \int_\R E(v)'(x) \phi(x) \did x
+		&\overset{\text{def}}= \int_\R E(v)(x) \phi'(x) \did x \\
+		&= \sum_{k\in\Z} \int_0^\ell \left( u(x) \phi'(2k\ell+x) - u(\ell-x) \phi'((2k+1)\ell+x) \right) \did x \\
+		&\overset{\eqref{eq6834365d}}=  \sum_{k\in\Z} u(\ell) \phi'(2k\ell+\ell) - u(0) \phi'(2k\ell) \\
+		&\qquad	- u(0) \phi'((2k+1)\ell+\ell) + u(\ell) \phi'((2k+1)\ell)  \\
+		&\qquad - \int_0^\ell \left( u'(x) \phi(2k\ell+x) - u'(\ell-x) \phi((2k+1)\ell+x) \right) \did x \\
+		&\overset{\text{def}}= - \int_\R E(v')(x) \phi(x) \did x .
+	\end{align}
+\end{proof}
+
+\begin{corollary}\label{cor6834905d}
+	Let $u$ be a solution to~\eqref{eq68342701}.
+	Let $\tilde u = E(u)$ be the extension of $u$ as in Lemma~\ref{lem68344adb}.
+	Then
+	\begin{equation}\label{eq6834683a}
+		\laplacian \tilde u = \lambda \tilde u \text{ in }\R .
+	\end{equation}
+\end{corollary}
+\begin{proof}
+	If $u\in H^1_0((0,\ell))$, then $u,u'\in W^{1,1}((0,\ell))\cap C([0,\ell])$ by Lemma~\ref{}.
+	Therefore, by Lemma~\ref{lem68344adb}, we have the following identities of distributions on $\R$:
+	\begin{equation}
+		\lambda E(u) 
+		= E(\lambda u)
+		= E(u'')
+		=  E(u')' = E(u)'' .
+	\end{equation}
+	This is~\eqref{eq6834683a}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Solve $v''=\lambda v$ in $\R$}
+
+\begin{proposition}\label{prop6834897a}
+	Let $\lambda\in\C$.
+	A Schwartz distribution $v\in\scr S'(\R)\setminus\{0\}$ solves 
+	\begin{equation}\label{eq68347805}
+		v''=\lambda v 
+	\end{equation}
+	if and only if $\lambda=0$ and $v$ is affine,
+	or $\lambda\in(-\infty,0)$ and there are $a,b\in\C$ with
+	\begin{equation}\label{eq68347852}
+		v = a \exp(i\sqrt{-\lambda} x)  + b \exp(-i\sqrt{-\lambda} x) 
+		= a \exp(i\mu x)  + b \exp(-i\mu x) ,
+	\end{equation}
+	wher $\mu>0$ and $\lambda=-\mu^2$.
+\end{proposition}
+\begin{proof}
+	$\eqref{eq68347852}\THEN\eqref{eq68347805}$.
+	This just a direct computation, see Exercise~\ref{ex68347888}
+
+	$\eqref{eq68347805}\THEN\eqref{eq68347852}$.
+	Apply the Fourier transform to both sides of~\eqref{eq68347805}, to obtain
+	\begin{equation}
+		(2\pi i\xi)^2\scr F(v)
+		\overset{\eqref{eq67fe65d6}}=\scr F(v'')
+		\overset{\eqref{eq68347805}}= \scr F(\lambda v)
+		= \lambda \scr F(v) .
+	\end{equation}
+	This means that, for every $\phi\in\scr S(\R)$,
+	\begin{equation}\label{eq68347c6d}
+		0 = {}_{\scr S'}\langle (2\pi i\xi)^2\scr F(v) - \lambda \scr F(v) | \phi \rangle_{\scr S}
+		= {}_{\scr S'}\langle \scr F(v) | (-4\pi^2 \xi^2 - \lambda)\phi \rangle_{\scr S} .
+	\end{equation}
+	It follows that $\scr F(v)$ is supported on $\{\xi\in\R: 4\pi^2 \xi^2 + \lambda=0\}$.
+	So, if $\lambda\notin(-\infty,0]$, then $\spt(\scr F(v))=\emptyset$ and thus $v=0$.
+	If $\lambda=0$, then $v''=0$ and we know that $v$ must be affine; see Exercise~\ref{ex68347bbd}.
+	
+	Suppose $\lambda\in(-\infty,0)$, and let $\mu>0$ such that
+	\begin{equation}
+		\lambda = -\mu^2 .
+	\end{equation}
+	Thus, we have $\sqrt{ -\frac{\lambda}{4\pi^2} } = \frac{\mu}{2\pi}$
+	The above statement about the support of $\scr F(v)$ now reads
+	\begin{equation}
+		\spt( \scr F(v) ) \subset \left\{ \frac{\mu}{2\pi}, - \frac{\mu}{2\pi} \right\} .
+	\end{equation}
+	By Proposition~\ref{prop67fe6632},
+	\begin{equation}
+		\scr F(v) = \sum_{\alpha=0}^\infty \left( a_\alpha \de^\alpha \delta_{\frac{\mu}{2\pi}} + b_\alpha \de^\alpha \delta_{-\frac{\mu}{2\pi}} \right) .
+	\end{equation}
+	We use again~\eqref{eq68347c6d} to obtain that, for every $\phi\in\scr S'(\R)$,
+	\begin{align}
+		0 
+		&= {}_{\scr S'}\langle \scr F(v) | (-4\pi^2 \xi^2 - \lambda)\phi \rangle_{\scr S} \\
+		&= \sum_{\alpha=0}^\infty \left( a_\alpha \de^\alpha \delta_{\frac{\mu}{2\pi}}[(-4\pi^2 \xi^2 - \lambda)\phi] + b_\alpha \de^\alpha \delta_{-\frac{\mu}{2\pi}}[(-4\pi^2 \xi^2 - \lambda)\phi] \right) \\
+		&= \sum_{\alpha=0}^\infty \sum_{\beta=0}^\alpha \binom{\alpha}{\beta} 
+			\left( a_\alpha \delta_{\frac{\mu}{2\pi}}[\de^\beta(4\pi^2 \xi^2 + \lambda)\de^{\alpha-\beta}\phi] + b_\alpha \delta_{-\frac{\mu}{2\pi}}[\de^\beta(4\pi^2 \xi^2 + \lambda)\de^{\alpha-\beta}\phi] \right) \\
+		%
+		&\overset{(*)}= \sum_{\alpha=1}^\infty \sum_{\beta=1}^\alpha \binom{\alpha}{\beta} 
+			\left( a_\alpha \delta_{\frac{\mu}{2\pi}}[\de^\beta(4\pi^2 \xi^2 + \lambda)\de^{\alpha-\beta}\phi] + b_\alpha \delta_{-\frac{\mu}{2\pi}}[\de^\beta(4\pi^2 \xi^2 + \lambda)\de^{\alpha-\beta}\phi] \right) \\
+		%
+		&=  a_1  8\pi^2 \frac{\mu}{2\pi} \phi(\frac{\mu}{2\pi})  
+			- b_1 8\pi^2 \frac{\mu}{2\pi} \phi(-\frac{\mu}{2\pi})  \\
+		&\qquad+ \sum_{\alpha=2}^\infty 
+			\bigg( a_\alpha (\alpha 8\pi^2 \frac{\mu}{2\pi} \de^{\alpha-1}\phi(\frac{\mu}{2\pi}) 
+				+ \alpha(\alpha-1) 8\pi^2 \de^{\alpha-2}\phi(\frac{\mu}{2\pi})  ) \\
+		&\qquad\qquad	+ b_\alpha (-\alpha 8\pi^2 \frac{\mu}{2\pi} \de^{\alpha-1}\phi(-\frac{\mu}{2\pi}) 
+				+ \alpha(\alpha-1) 8\pi^2 \de^{\alpha-2}\phi(-\frac{\mu}{2\pi}) )
+			\bigg) ,
+	\end{align}
+	where in $(*)$ we observed that, if $\beta=0$, then the summand is zero.
+	Since $\phi$ is an arbitrary function in $\scr S(\R)$, we obtain $a_\alpha=b_\alpha=0$ for all $\alpha\ge1$.
+	Hence,
+	\begin{equation}
+		\scr F(v) = a_0 \delta_{\frac{\mu}{2\pi}} + b_0 \delta_{-\frac{\mu}{2\pi}} .
+	\end{equation}
+	From Exercise~\ref{ex6834885c}, we obtain
+	\begin{align}
+		v(x) 
+		&\overset{\eqref{eq683488c2}}= a_0 \exp(2\pi i\frac{\mu}{2\pi} x)  + b_0 \exp(-2\pi i\frac{\mu}{2\pi} x) \\
+		&= a_0 \exp(i\mu x)  + b_0 \exp(-i\mu x) .
+	\end{align}
+\end{proof}
+
+\begin{exercise}\label{ex68347888}
+	Show $\eqref{eq68347852}\THEN\eqref{eq68347805}$ in Proposition~\ref{prop6834897a}.
+\end{exercise}
+
+Proposition~\ref{prop6834897a} states that the spectrum of $-\de^2=-\laplacian$ on $\R$ is $[0,+\infty)$:
+\begin{equation}
+	\sigma(-\laplacian) = [0,+\infty) .
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Select solutions that are extensions}
+
+\begin{proposition}\label{prop68349083}
+	A non-zero function $u\in H^1_0((0,\ell))$ solves~\eqref{eq68342701} if and only if the following two hold
+	\begin{enumerate}
+	\item
+	there is $k\in\N\setminus\{0\}$ such that $\lambda = - \left( \frac{\pi}{\ell} k \right)^2$, and
+	\item
+	there is $a\in\C\setminus\{0\}$ such that
+	\begin{equation}
+		u(x) = a \left( \exp\left(i \frac{k\pi}{\ell} x \right) - \exp\left(-i \frac{k\pi}{\ell} x \right) \right) \\
+		= 2ia \sin\left(\frac{k\pi}{\ell} x\right) .
+	\end{equation}
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	If $u$ solves~\eqref{eq68342701},
+	then its extension $\tilde u = E(u)$ defined in Lemma~\ref{lem68344adb} is of the form given by Proposition~\ref{prop6834897a},
+	with the additional boundary conditions $\tilde u(0)=\tilde u(\ell)=0$.
+	If $\tilde u$ is affine, then $\tilde u =0$.
+	Therefore, if $\tilde u\neq0$, then
+	there are $a,b\in\C$ with~\eqref{eq68347852}, i.e.,
+	\begin{equation}
+		\tilde u(x) = a \exp(i\mu x) + b \exp(-i\mu x) ,
+	\end{equation}
+	where $\mu>0$ and $\lambda=-\mu^2$.
+	
+	The condition $\tilde u(0)=0$ implies $b=-a$.
+	The condition $\tilde u(\ell)=0$, implies 
+	\begin{equation}
+		0 = a \exp(i\mu \ell) - a \exp(-i\mu \ell)
+		= a\exp(i\mu\ell) (1-\exp(-2i\mu\ell)) .
+	\end{equation}
+	Therefore, either $a=v=0$, or $2\mu\ell\in 2\pi\Z$, 
+	i.e., $\mu\ell\in \pi\Z$, 
+	i.e., $\sqrt{-\lambda} = \mu\in \frac{\pi}{\ell}\N$.
+\end{proof}
 
 
 
